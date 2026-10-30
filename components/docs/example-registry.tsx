@@ -40,6 +40,7 @@ export const examples: Record<string, ComponentType | undefined> = {
   "button-link": dynamic(() => import("@/components/examples/button-link")),
   "button-record": dynamic(() => import("@/components/examples/button-record")),
   "button-sizes": dynamic(() => import("@/components/examples/button-sizes")),
+  "button-styles": dynamic(() => import("@/components/examples/button-styles")),
   "button-variants": dynamic(
     () => import("@/components/examples/button-variants")
   ),

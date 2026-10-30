@@ -10,6 +10,9 @@ const ButtonVariants = () => (
     <Button variant="ghost">Ghost</Button>
     <Button variant="destructive">Delete</Button>
     <Button variant="link">Link</Button>
+    <Button variant="solid">Solid</Button>
+    <Button variant="chromatic">Chromatic</Button>
+    <Button variant="glitch">Glitch</Button>
   </div>
 );
 
