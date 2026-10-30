@@ -1660,6 +1660,188 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "status-word",
+      "type": "registry:lib",
+      "title": "Status Word",
+      "description": "The status vocabulary StatusBadge and StatusDot share: five tones (good, warn, error, live, neutral) and their tone utilities, and a guard that a status says a sentence-case word, never a raw machine value. A raw value throws under test and logs in development.",
+      "files": [
+        {
+          "path": "lib/status-word.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "status-badge",
+      "type": "registry:component",
+      "title": "Status Badge",
+      "description": "The status pill: a round 22 px glass chip with monochrome words and the tone glowing in its dot or leading icon. A failure or an on-air session tints the whole chip.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/status-word",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/status-badge.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:component",
+      "title": "Status Dot",
+      "description": "Ambient status: the glass dot in its tone, optionally pulsing, beside a quiet monochrome label. It replaces a loud header badge.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/status-word",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/status-dot.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "media-card",
+      "type": "registry:component",
+      "title": "Media Card",
+      "description": "A card for an object with a picture: the row radius, a 4% fill, a hairline and no shadow. The one in use wears the chrome plate, and render puts the look on a button or a link.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/media-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "kebab-menu",
+      "type": "registry:component",
+      "title": "Kebab Menu",
+      "description": "The \u22ef menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/button",
+        "@videorc/disabled-reason",
+        "@videorc/dropdown-menu",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/kebab-menu.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "kebab-context-menu",
+      "type": "registry:component",
+      "title": "Kebab Context Menu",
+      "description": "The right-click twin of a row's \u22ef menu, built from the same item list so the two menus can never disagree.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/kebab-menu",
+        "@videorc/context-menu",
+        "@videorc/disabled-reason"
+      ],
+      "files": [
+        {
+          "path": "components/kebab-context-menu.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "confirm-dialog",
+      "type": "registry:component",
+      "title": "Confirm Dialog",
+      "description": "The one recipe for a destructive confirmation over AlertDialog: a \"Verb object?\" title, one sentence on what is lost, a focused ghost Cancel and a verb + object answer. Controlled, so the owner closes it once an async action settles.",
+      "registryDependencies": ["@videorc/theme", "@videorc/alert-dialog"],
+      "files": [
+        {
+          "path": "components/confirm-dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "lock-alert",
+      "type": "registry:component",
+      "title": "Lock Alert",
+      "description": "Why the controls under it are off: a lock, the reason in one line and at most one action (Sign in or View Premium), resolved by your app. With SessionLockAlert and OfflineAlert for the recording, live and reconnecting locks.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/alert",
+        "@videorc/button"
+      ],
+      "files": [
+        {
+          "path": "components/lock-alert.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "power-slider",
+      "type": "registry:component",
+      "title": "Power Slider",
+      "description": "A labelled slider for one engine setting: the value with its unit or a typed number, a reset to the default, marks under the track, and a live preview apart from the commit. Its value math is a pure lib beside it.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/input",
+        "@videorc/label",
+        "@videorc/slider",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/power-slider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "lib/power-slider-math.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "device-picker",
+      "type": "registry:component",
+      "title": "Device Picker",
+      "description": "The one picker for a screen, window, camera or microphone: a popover list with words for every state (finding, none found, not found, needs permission), an optional search, and screens and windows under their own headings.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/command",
+        "@videorc/field",
+        "@videorc/popover",
+        "@videorc/select",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/device-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "lib/source-select-state.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }

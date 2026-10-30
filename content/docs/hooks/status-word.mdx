@@ -1,0 +1,51 @@
+---
+title: Status word
+description: The status vocabulary Status Badge and Status Dot share. Five tones, their chip utilities, and a guard that a status says a word, never a machine value.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/status-word
+```
+
+## Usage
+
+```tsx
+import {
+  assertStatusWord,
+  STATUS_TONE_CLASS,
+  statusWordFromValue,
+} from "@/lib/status-word";
+import type { StatusTone } from "@/lib/status-word";
+```
+
+```tsx
+const TONE: Record<ConnectionState, StatusTone> = {
+  connected: "good",
+  reconnecting: "warn",
+  failed: "error",
+};
+
+<span className={STATUS_TONE_CLASS[TONE[state]]}>…</span>;
+```
+
+## Tones
+
+A tone says what a status means, never how it looks. `STATUS_TONE_CLASS` maps each one to the `tone-*` utility that sets `--chip-tone`.
+
+| Tone      | Means                              | Utility            |
+| --------- | ---------------------------------- | ------------------ |
+| `good`    | It works                           | `tone-success`     |
+| `warn`    | It's degraded, or can't happen now | `tone-warning`     |
+| `error`   | It failed and needs you            | `tone-destructive` |
+| `live`    | Recording or on air                | `tone-live`        |
+| `neutral` | Idle                               | `tone-neutral`     |
+
+## Words, not values
+
+A status chip or dot says a word in sentence case ("Needs permission"), never a machine value ("permission-needed"). Map every state to its word where the state lives; don't recase it in the component.
+
+- `isRawStatusValue(text)` is true for a lower-case, hyphenated value such as `device-missing`. Words, numbers and units pass.
+- `statusWordFromValue(value)` is the last resort for a state no map names yet: `device-missing` reads "Device missing".
+- `assertStatusWord(text, component)` reports a raw value that reached a status primitive. Under test (`NODE_ENV` is `test`) it throws, so a leak fails CI; a development build logs it; a production build says nothing. Status Badge and Status Dot call it on every render.

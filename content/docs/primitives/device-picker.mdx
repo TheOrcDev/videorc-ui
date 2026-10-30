@@ -1,0 +1,162 @@
+---
+title: Device Picker
+description: The one picker for a screen, window, camera or microphone. A popover list with words for every state, so it's never blank while discovery runs or a device is gone.
+---
+
+<ComponentPreview name="device-picker-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/device-picker
+```
+
+It installs `lib/source-select-state.ts`, the picker's words, beside the component.
+
+## Usage
+
+```tsx
+import { DevicePicker } from "@/components/device-picker";
+import type { PickerDevice } from "@/components/device-picker";
+```
+
+```tsx
+<DevicePicker
+  devices={cameras}
+  discoveryPending={!camerasListed}
+  kind="camera"
+  label="Camera"
+  noneLabel="Off"
+  onChange={setCameraId}
+  selectedName={savedCameraName}
+  value={cameraId}
+/>
+```
+
+A device is `{ id, name, kind, status, detail? }`. `status` is `"available"`, `"permission-required"` or `"unavailable"`; only an available device can be chosen, and the others say why in a muted word after their name. `onChange` gets the device id, or `undefined` for the "no device" item.
+
+Use it everywhere a screen, window, camera or microphone is chosen, so they all say the same words. Don't use a [Select](/docs/components/select) for devices: it has no words for discovery, a missing device or a search.
+
+## Words for every state
+
+The picker never shows a blank surface. With nothing chosen, discovery and an empty list win over the "no device" words, so a missing camera never hides behind "Off".
+
+| State | The trigger says | The list says |
+| --- | --- | --- |
+| Discovery hasn't reported | "Finding cameras…" | "Finding cameras…" |
+| Nothing found | "No cameras found" | "No cameras found" |
+| A device that can't run | Its name, then "Needs permission" or "Unavailable" | The same, disabled |
+| A saved device that's gone | `selectedName` (or "Saved camera"), then "Not found" | The same, disabled |
+| A search with no match |  | "No matching cameras" |
+
+`kind` decides the nouns: `capture` for screens and windows, `camera`, or `microphone`. A saved device is only called "Not found" once discovery has reported.
+
+## Examples
+
+### Search, and screens and windows
+
+`searchable` adds a search field that matches every word against a device's name, kind and `detail` (the app that owns a window), never its id. `groupByKind` puts screens and windows under their own headings when both are present.
+
+<ComponentPreview name="device-picker-search" />
+
+### Inline
+
+`trigger="inline"` is a row's right-aligned value for a row whose label sits beside it. A long name truncates, and its title shows it whole.
+
+<ComponentPreview name="device-picker-inline" />
+
+## The picker's words
+
+`lib/source-select-state.ts` is pure, so every picker says the same thing in the same state, and the words are tested without a DOM.
+
+| Export | What it does |
+| --- | --- |
+| `devicePickerTriggerView(input)` | What the closed picker says: label, status and whether it's a placeholder |
+| `devicePickerGroups(input)` | The list: the "no device" item, a missing selection, then the matches |
+| `devicePickerListStatus(input)` | The one status line, or null |
+| `deviceStatusLabel(status)` | "Needs permission", "Unavailable", "Not found", or null |
+| `devicePickerCopy(kind)` | Every sentence for a kind |
+| `sourceMatchesQuery(device, query)` | The search rule |
+| `DEVICE_PICKER_NONE_VALUE` | The "no device" item's value |
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `selectTriggerClassName` | The field trigger is exactly a [Select](/docs/components/select)'s |
+| `data-popup-open` | On the trigger while the list is open; an inline trigger takes the hover block |
+| `data-placeholder` | A prompt or a state, in the secondary tone |
+| `min-h-7` | List rows at the menu item height |
+| `--anchor-width` | The field list is as wide as its trigger |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | On the trigger, opens the list |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Moves the highlight, which starts on the current choice |
+| <kbd>Enter</kbd> | Chooses the highlighted device |
+| <kbd>Esc</kbd> | Closes without changing the choice, and clears the search |
+
+## Accessibility
+
+The trigger is a `combobox` named by `label`, with `aria-haspopup="listbox"`, or `"dialog"` with a search field. A field trigger is labelled by its visible label (`labelHidden` keeps it for screen readers only) and described by `description`, a polite live line for a switch in progress. Without a search field the list takes focus on open and names the highlighted row; with one, the field does. The list's status line is a `status`.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["kind", '"capture" | "camera" | "microphone"', null, "Decides the words."],
+    [
+      "label",
+      "string",
+      null,
+      "The accessible name, and a field's visible label.",
+    ],
+    ["devices", "readonly PickerDevice[]", null, null],
+    ["value", "string | undefined", null, "The chosen device id."],
+    ["onChange", "(value: string | undefined) => void", null, null],
+    [
+      "noneLabel",
+      "string",
+      null,
+      'The "no device" item: "Off", "None". No item when unset.',
+    ],
+    [
+      "selectedName",
+      "string",
+      null,
+      "The saved name, for a chosen device the list doesn't hold.",
+    ],
+    [
+      "selectedDevice",
+      "PickerDevice",
+      null,
+      "The chosen device when it's connected but the list hides it.",
+    ],
+    [
+      "selectionLabel",
+      "string",
+      null,
+      "A choice that isn't a device, such as a test pattern.",
+    ],
+    ["discoveryPending", "boolean", "false", "Discovery hasn't reported yet."],
+    ["searchable", "boolean", "false", null],
+    ["groupByKind", "boolean", "false", "Screens and Windows headings."],
+    ["trigger", '"field" | "inline"', '"field"', null],
+    ["description", "ReactNode", null, "A status line under a field trigger."],
+    [
+      "statusInTrigger",
+      "boolean",
+      "true",
+      "Off where the row's own chip already says it.",
+    ],
+    ["disabled", "boolean", "false", null],
+    [
+      "labelHidden",
+      "boolean",
+      "false",
+      "Keeps a field's label for screen readers.",
+    ],
+  ]}
+/>

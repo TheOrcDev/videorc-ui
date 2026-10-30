@@ -1,0 +1,70 @@
+---
+title: Status Dot
+description: Ambient status. The glass dot in its tone, pulsing while something runs, beside a quiet label. It replaces a loud header badge.
+---
+
+<ComponentPreview name="status-dot-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/status-dot
+```
+
+It brings [Status word](/docs/hooks/status-word) with it.
+
+## Usage
+
+```tsx
+import { StatusDot } from "@/components/status-dot";
+```
+
+```tsx
+<StatusDot label="Recording" pulse tone="live" />
+```
+
+It takes the same tones as [Status Badge](/docs/primitives/status-badge): `live` is recording and on air, `error` a failure. The label is a word in sentence case, already mapped from its state; a raw value throws under test.
+
+Use it for ambient state in a header, a status bar or a row's meta. Use a Status Badge when the state needs a chip of its own.
+
+## Examples
+
+### In a header
+
+The dot sits beside a window's or a pane's title and says what it's doing, without competing with the title.
+
+<ComponentPreview name="status-dot-header" />
+
+## Theming
+
+| Token or attribute         | Meaning                                      |
+| -------------------------- | -------------------------------------------- |
+| `glass-dot`                | The 6 px dot with its halo and glow          |
+| `motion-safe:animate-ping` | The pulse; reduced motion stills it          |
+| `tone-*`                   | The tone, through `--chip-tone`              |
+| `data-tone`                | `good`, `warn`, `error`, `live` or `neutral` |
+
+## Accessibility
+
+Only the label is read; the dot is decoration. A dot with no label says nothing to a screen reader, so give the state a word somewhere nearby.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "tone",
+      '"good" | "warn" | "error" | "live" | "neutral"',
+      '"neutral"',
+      null,
+    ],
+    ["label", "string", null, "A word in sentence case."],
+    [
+      "pulse",
+      "boolean",
+      "false",
+      "Rings out from the dot while something runs.",
+    ],
+    ["className", "string", null, null],
+  ]}
+/>

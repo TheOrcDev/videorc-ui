@@ -1,0 +1,110 @@
+---
+title: Lock Alert
+description: Why the controls under it are off. A lock, the reason in one line and at most one action, leading the section it locks. Premium features stay on screen behind it.
+---
+
+<ComponentPreview name="lock-alert-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/lock-alert
+```
+
+## Usage
+
+```tsx
+import {
+  LockAlert,
+  OfflineAlert,
+  SessionLockAlert,
+} from "@/components/lock-alert";
+```
+
+```tsx
+<LockAlert
+  action={{ kind: "view-premium", url: premiumUrl, onClick: openExternal }}
+  reason="Live captions are part of Videorc Premium."
+/>
+```
+
+Locked means disabled with one reason. The alert leads the tab or section it locks, and every control under it is disabled. A Premium feature stays on screen behind the lock, never hidden: the locked page is what sells it.
+
+Use it for a section a plan, an account, a running session or a reconnect turns off. Don't hide the locked controls, and don't offer more than one action. For a single disabled control, use [Disabled Reason](/docs/components/disabled-reason) instead.
+
+## The action
+
+Your app decides whether a lock has an action (is this a Premium gate? is anyone signed in?) and passes the resolved one. A limit or a turned-off feature locks with its reason alone.
+
+- `{ kind: "sign-in", onClick }` reads "Sign in" and calls `onClick`: start your app's sign-in there.
+- `{ kind: "view-premium", url, onClick? }` reads "View Premium". With `onClick` it's a button that calls `onClick(url)`, so an Electron app can hand the link to the system browser. Without one it's a link that opens `url` in a new tab.
+
+Either can bring its own words in `label`. The Premium sentence is always the same: `{Feature} is part of Videorc Premium.`
+
+## Examples
+
+### Recording, live and reconnecting
+
+`SessionLockAlert` says the one wording for controls a running recording or livestream locks. Give it `locks` to name them, as a plural subject, when a page holds more than one kind of control. `OfflineAlert` is for controls that wait for the app to reconnect. Either takes a `reason` to replace its words.
+
+<ComponentPreview name="lock-alert-session" />
+
+## Theming
+
+It's an [Alert](/docs/components/alert) with `variant="locked"`.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `data-variant="locked"` | The neutral tint, the lock icon and the reason in secondary text |
+| `Button` `outline`, `size="xs"` | The action |
+
+## Accessibility
+
+It's a polite `status`, so a lock that appears (when a recording starts) is announced without interrupting. The action is a real button, or a real link when it only opens a page.
+
+## API reference
+
+### LockAlert
+
+Every [Alert](/docs/components/alert) prop except `variant`, `icon` and `children`, plus:
+
+<PropsTable
+  rows={[
+    [
+      "reason",
+      "ReactNode",
+      null,
+      "One line: why the controls under it are off.",
+    ],
+    [
+      "action",
+      "LockAlertAction | null",
+      "null",
+      "The one thing that unlocks it.",
+    ],
+  ]}
+/>
+
+### SessionLockAlert
+
+<PropsTable
+  rows={[
+    [
+      "locks",
+      "string",
+      null,
+      'What it locks, as a plural subject: "Destinations and stream details".',
+    ],
+    ["reason", "ReactNode", null, "Replaces the wording."],
+  ]}
+/>
+
+### OfflineAlert
+
+<PropsTable
+  rows={[
+    ["reason", "ReactNode", "OFFLINE_LOCK_REASON", "Replaces the wording."],
+  ]}
+/>
+
+`SESSION_LOCK_REASON`, `OFFLINE_LOCK_REASON`, `sessionLockReason(locks?)` and `unlockActionLabel(action)` are exported too, for a toast or a tooltip that should say the same words.

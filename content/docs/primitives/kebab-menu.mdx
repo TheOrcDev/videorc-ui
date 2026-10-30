@@ -1,0 +1,140 @@
+---
+title: Kebab Menu
+description: The ⋯ menu for an item's low-frequency actions. One item list grouped by hairlines, the destructive item last in red, keys on the right, and a trigger that can wait for its row's hover.
+---
+
+<ComponentPreview name="kebab-menu-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/kebab-menu
+```
+
+## Usage
+
+```tsx
+import { KebabMenu } from "@/components/kebab-menu";
+```
+
+```tsx
+<KebabMenu
+  items={[
+    { id: "rename", label: "Rename…", icon: EditIcon, onSelect: rename },
+    {
+      id: "delete",
+      label: "Delete…",
+      destructive: true,
+      onSelect: askToDelete,
+    },
+  ]}
+  label="Actions for Launch demo"
+/>
+```
+
+Use it for per-item actions in every list and card: recordings, assets, scenes, scheduled livestreams, chat rows. The row's primary action stays a click on the row; the menu holds what you do less often.
+
+Don't build a menu by hand for a row, and don't put the row's one main action in it.
+
+## Examples
+
+### Groups, keys and a busy item
+
+Items with the same `group` sit together, a hairline between groups, in the order each group first appears. Destructive items always go last, in a group of their own. `shortcut` takes a [Shortcut Keys](/docs/components/shortcut-keys). While an item's work runs, `busy` swaps the dots for a spinner, and a disabled item says why on hover.
+
+<ComponentPreview name="kebab-menu-groups" />
+
+### Revealed on hover
+
+`reveal="hover"` hides the trigger until its host row is hovered or holds focus. Mark the row with `group/kebab-host`. The trigger stays visible while its menu is open, while it has keyboard focus and while it's busy.
+
+<ComponentPreview name="media-card-backgrounds" />
+
+### With a confirm dialog
+
+A destructive item that can't be undone opens a [Confirm Dialog](/docs/primitives/confirm-dialog), and its label ends in "…". The recordings list above does this for Delete.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `Button` `ghost`, `size="icon"` | The 28 px trigger |
+| `group/kebab-host` | The row the trigger waits for with `reveal="hover"` |
+| `data-popup-open` | On the trigger while its menu is open; keeps it visible |
+| `aria-busy` | On the trigger while `busy`; keeps it visible |
+| `data-slot="kebab-menu-trigger"` | The trigger |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | On the trigger, opens the menu |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Moves through the items, disabled ones included |
+| <kbd>Enter</kbd> | Runs the highlighted item |
+| <kbd>Esc</kbd> | Closes the menu and returns focus to the trigger |
+
+## Accessibility
+
+The trigger is a button named by `label`: name the item it acts on ("Actions for Launch demo"), never just "More". A click on the trigger or in the menu never reaches a clickable row behind it. A disabled item stays in the arrow-key order and is described by its `disabledReason`, through [Disabled Reason](/docs/components/disabled-reason).
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["items", "KebabMenuItem[]", null, null],
+    ["label", "string", '"More actions"', "The trigger's accessible name."],
+    [
+      "busy",
+      "boolean",
+      "false",
+      "An item's work is running: a spinner replaces the dots.",
+    ],
+    ["disabled", "boolean", "false", "The whole menu is unavailable."],
+    [
+      "reveal",
+      '"always" | "hover"',
+      '"always"',
+      "hover: hidden until the group/kebab-host row is hovered or focused.",
+    ],
+    [
+      "tabIndex",
+      "number",
+      null,
+      "-1 in a roving-focus row that isn't the active one.",
+    ],
+    ["className", "string", null, "Layout for the trigger."],
+  ]}
+/>
+
+### KebabMenuItem
+
+<PropsTable
+  rows={[
+    ["id", "string", null, null],
+    ["label", "string", null, null],
+    ["icon", "AppIcon", null, null],
+    [
+      "destructive",
+      "boolean",
+      "false",
+      "The destructive tone, last, in a group of its own.",
+    ],
+    ["disabled", "boolean", "false", null],
+    [
+      "disabledReason",
+      "string | null",
+      null,
+      "Why a disabled item is off, in one sentence.",
+    ],
+    ["group", "string", null, "Items with the same group sit together."],
+    ["shortcut", "ReactNode", null, "The item's keys, right-aligned."],
+    [
+      "onSelect",
+      "() => void",
+      null,
+      "Runs when the item is chosen, by click or by key.",
+    ],
+  ]}
+/>
+
+`kebabMenuGroups(items)` returns the items in their groups, destructive last, for a menu of your own that should agree with this one.

@@ -1,0 +1,73 @@
+---
+title: Status Badge
+description: The status pill, a round glass chip. The words stay monochrome and the tone glows in its dot; a failure or an on-air session tints the whole chip.
+---
+
+<ComponentPreview name="status-badge-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/status-badge
+```
+
+It brings [Status word](/docs/hooks/status-word) with it, for the tones and the raw-value guard.
+
+## Usage
+
+```tsx
+import { StatusBadge } from "@/components/status-badge";
+```
+
+```tsx
+<StatusBadge label="Chat" tone="good" value="Connected" />
+```
+
+`value` is a word in sentence case, already mapped from its state ("Reconnecting", "On air"). The badge never recases it, and a raw value such as `device-missing` throws under test.
+
+Use it for a state that needs a chip: a connection, a destination, a device. Don't color the words, and don't hand-roll a rounded span for a status: that's this or a [Badge](/docs/components/badge).
+
+## Examples
+
+### Labels and icons
+
+`label` adds a muted word before the value. A leading `icon` replaces the dot and takes the tone, except on `error` and `live`, where the whole chip carries it.
+
+<ComponentPreview name="status-badge-label" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-chip`, `glass-dot` | The chip and its glowing 6 px dot |
+| `glass-chip-tinted` | The emphasis chip for `error` and `live` |
+| `tone-success`, `tone-warning`, `tone-destructive`, `tone-live`, `tone-neutral` | The tone, through `--chip-tone` |
+| `data-tone` | `good`, `warn`, `error`, `live` or `neutral` |
+
+## Accessibility
+
+The badge is text: the value is read as it's written, and the dot and the icon are hidden from screen readers. The tone is never the only signal, because the word says it too.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "value",
+      "string",
+      null,
+      "A word in sentence case, already mapped from its state.",
+    ],
+    ["label", "string", null, "A muted word before the value."],
+    [
+      "tone",
+      '"good" | "warn" | "error" | "live" | "neutral"',
+      '"neutral"',
+      null,
+    ],
+    ["icon", "AppIcon", null, "Replaces the dot and takes the tone."],
+    ["className", "string", null, null],
+  ]}
+/>
+
+`StatusTone` and `STATUS_TONE_CLASS` are re-exported from [Status word](/docs/hooks/status-word), for a readout that draws its own status in the same tones.

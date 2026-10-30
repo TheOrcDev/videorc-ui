@@ -1,0 +1,124 @@
+---
+title: Confirm Dialog
+description: The one recipe for a destructive confirmation, over Alert Dialog. A "Verb object?" title, one sentence on what is lost, a focused safe answer, and the owner closes it.
+---
+
+<ComponentPreview name="confirm-dialog-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/confirm-dialog
+```
+
+## Usage
+
+```tsx
+import { ConfirmDialog } from "@/components/confirm-dialog";
+```
+
+```tsx
+<ConfirmDialog
+  confirmLabel="Delete scene"
+  description="Only the saved snapshot is deleted. Your current scene and recording continue."
+  onCancel={() => setOpen(false)}
+  onConfirm={deleteScene}
+  open={open}
+  title="Delete saved scene?"
+/>
+```
+
+## Confirm and undo
+
+Every destructive action either asks first or can be undone.
+
+- **Confirm** with `ConfirmDialog` when the loss is real and hard to restore:
+  - the title is "Verb object?": "Delete saved scene?";
+  - one sentence names exactly what is lost;
+  - the safe answer ("Cancel", or "Keep …") is a ghost button with focus on open, and Escape is the same answer;
+  - the destructive button reads verb + object: "Delete scene";
+  - there's no close button: the two answers are the only way out.
+- **Undo** a frequent, cheap-to-restore action instead of asking: run it after a short window unless it's undone, with an Undo action on its [toast](/docs/components/sonner). Asking every time trains people to click through the question.
+
+The dialog is controlled, and the owner closes it by dropping `open`: at once after a synchronous action, or once an async one settles. Meanwhile `confirmLabel` says "Deleting…" and `confirmDisabled` keeps it from running twice, as in the demo above.
+
+Use it for deletes and anything else that destroys work. Don't use it for a question that isn't a destructive confirmation, or for a cheap action that can be undone.
+
+## Examples
+
+### A replace that destroys nothing
+
+A consequential step that destroys nothing, such as replacing what's been typed, passes `confirmVariant="default"`, so the answer is the chrome fill instead of the destructive tint. The safe answer can name what it keeps.
+
+<ComponentPreview name="confirm-dialog-replace" />
+
+## Theming
+
+It's [Alert Dialog](/docs/components/alert-dialog) underneath: the dialog tier of the float glass, the panel radius and no backdrop blur.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `Button` `ghost` | The safe answer |
+| `Button` `destructive` or `default` | The answer, by `confirmVariant` |
+| `data-testid` | `{testId}-dialog`, `{testId}-cancel` and `{testId}-confirm` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Esc</kbd> | Cancels: the same answer as the safe button |
+| <kbd>Tab</kbd> | Moves between the answers; focus stays inside |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | Presses the focused answer, which starts on the safe one |
+
+## Accessibility
+
+The dialog is an `alertdialog`, named by its title and described by its sentence. The safe answer has focus on open, so a stray <kbd>Enter</kbd> never destroys anything. A click outside doesn't close it.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["open", "boolean", null, null],
+    ["title", "ReactNode", null, '"Verb object?"'],
+    [
+      "description",
+      "ReactNode",
+      null,
+      "One sentence naming exactly what is lost.",
+    ],
+    [
+      "confirmLabel",
+      "ReactNode",
+      null,
+      'Verb + object, or "Deleting…" while it runs.',
+    ],
+    [
+      "cancelLabel",
+      "ReactNode",
+      '"Cancel"',
+      'The safe answer: "Cancel", or "Keep …".',
+    ],
+    [
+      "confirmVariant",
+      '"destructive" | "default"',
+      '"destructive"',
+      "default for a step that destroys nothing.",
+    ],
+    ["confirmDisabled", "boolean", "false", null],
+    ["cancelDisabled", "boolean", "false", null],
+    [
+      "children",
+      "ReactNode",
+      null,
+      "Extra body between the sentence and the answers: an Alert, a field.",
+    ],
+    ["testId", "string", null, "Adds -dialog, -cancel and -confirm test ids."],
+    ["onCancel", "() => void", null, "The safe button and Escape."],
+    [
+      "onConfirm",
+      "() => void",
+      null,
+      "The answer. The dialog stays open until you drop open.",
+    ],
+  ]}
+/>

@@ -16,6 +16,16 @@
     "pin-window-button",
     "chrome-ground",
     "theme-toggle",
-    "error-boundary"
+    "error-boundary",
+    "---Controls and feedback---",
+    "kebab-menu",
+    "kebab-context-menu",
+    "confirm-dialog",
+    "lock-alert",
+    "media-card",
+    "status-badge",
+    "status-dot",
+    "device-picker",
+    "power-slider"
   ]
 }

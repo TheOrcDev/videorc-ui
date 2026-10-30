@@ -1,0 +1,65 @@
+---
+title: Kebab Context Menu
+description: The right-click twin of a row's ⋯ menu, built from the same item list, so the two menus can never disagree.
+---
+
+<ComponentPreview name="kebab-context-menu-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/kebab-context-menu
+```
+
+It brings [Kebab Menu](/docs/primitives/kebab-menu) with it, for the item type and the grouping.
+
+## Usage
+
+```tsx
+import { KebabContextMenu } from "@/components/kebab-context-menu";
+import { KebabMenu } from "@/components/kebab-menu";
+```
+
+```tsx
+<KebabContextMenu items={items}>
+  <div className="group/kebab-host flex items-center">
+    Launch demo
+    <KebabMenu items={items} label="Actions for Launch demo" />
+  </div>
+</KebabContextMenu>
+```
+
+The child is the row itself: it becomes the trigger and keeps its own element. Pass the same `items` to both menus. Groups, keys, disabled reasons and the destructive item last come out exactly as in the ⋯ menu.
+
+Use it on rows that already have a ⋯ menu, so a right-click finds the same actions. Don't give the context menu items the ⋯ menu doesn't have: a right-click is a shortcut, never the only way.
+
+## Theming
+
+It's [Context Menu](/docs/components/context-menu) underneath: the same float glass, 28 px items and hairline groups as the ⋯ menu.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `data-slot="context-menu-trigger"` | Added to the row |
+| `select-none` | Added to the row, so a right-click doesn't select its text |
+
+## Keyboard
+
+| Key                       | Action                    |
+| ------------------------- | ------------------------- |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Moves through the items   |
+| <kbd>Enter</kbd>          | Runs the highlighted item |
+| <kbd>Esc</kbd>            | Closes the menu           |
+
+## Accessibility
+
+A context menu has no keyboard way in of its own, which is why it only ever repeats the row's ⋯ menu: keyboard and screen reader users reach every action there.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["items", "KebabMenuItem[]", null, "The same list the row's ⋯ menu takes."],
+    ["children", "ReactElement", null, "The row: it becomes the trigger."],
+    ["onOpenChange", "(open: boolean) => void", null, null],
+  ]}
+/>

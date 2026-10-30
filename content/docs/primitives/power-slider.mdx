@@ -1,0 +1,123 @@
+---
+title: Power Slider
+description: A labelled slider for one engine setting. The value with its unit or a typed number, a reset to the default, marks under the track, and a live preview apart from the commit.
+---
+
+<ComponentPreview name="power-slider-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/power-slider
+```
+
+It installs `lib/power-slider-math.ts`, the value math, beside the component.
+
+## Usage
+
+```tsx
+import { PowerSlider } from "@/components/power-slider";
+```
+
+```tsx
+<PowerSlider
+  defaultValue={40}
+  label="Noise cleanup"
+  max={100}
+  min={0}
+  onChange={setPreview}
+  onCommit={saveNoiseCleanup}
+  suffix="%"
+  value={value}
+/>
+```
+
+`onChange` is the live preview, fired while dragging and on every key: keep it cheap. `onCommit` fires on release, on a key, on reset and on a typed number, so write the expensive update (the engine, a saved setting) there and a drag can't flood it. Without `onCommit`, `onChange` does both.
+
+Use it for a setting with a range, a unit and a default: noise cleanup, gain, exposure, delays. Use a plain [Slider](/docs/components/slider) for a scrubber or a level with no label row. Don't ship a slider with nothing behind it.
+
+## Examples
+
+### Bipolar, with marks
+
+`bipolar` signs positive values ("+0.5 EV"). `marks` puts labelled points under the track; `rangeHints` puts the ends there instead (and the middle, when bipolar).
+
+<ComponentPreview name="power-slider-bipolar" />
+
+### Typed numbers and disabled
+
+`numericInput` replaces the readout with a field: <kbd>Enter</kbd> or leaving the field commits, clamped and snapped to the step; <kbd>Esc</kbd> drops the draft. A disabled slider says why under the track, and `status` adds a chip after the label.
+
+<ComponentPreview name="power-slider-numeric" />
+
+## The value math
+
+`lib/power-slider-math.ts` is pure and framework-free, so the exact clamping, stepping and formatting the slider relies on is tested directly.
+
+| Function | What it does |
+| --- | --- |
+| `clampToRange(value, range)` | Clamps into the range and snaps to the step grid from `min`, without floating-point drift. NaN reads as `min` |
+| `stepValue(value, range, direction, { large?, largeStep? })` | One keyboard move; the large one is 10 steps unless given |
+| `parseNumericInput(raw, range)` | A typed number, clamped and snapped, or null for blank and non-numeric input |
+| `formatValue(value, { suffix?, decimals?, bipolar?, step? })` | The readout, with decimals from the step and a "+" on a positive bipolar value |
+| `valuePercent(value, range)` | Where a value sits along the track, 0 to 100 |
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill`, `chrome-bead` | The range and the thumb, from [Slider](/docs/components/slider) |
+| `text-label` | The marks under the track |
+| `--mark` | Each mark's place along the track |
+| `data-slot="power-slider"` | The whole control |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Moves by one step |
+| <kbd>Shift</kbd> + arrow, <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Moves by `largeStep` |
+| <kbd>Home</kbd> <kbd>End</kbd> | Goes to `min` or `max` |
+
+A double-click on the track resets to `defaultValue`; the reset button is the keyboard way.
+
+## Accessibility
+
+The thumb is named by the label. The reset button is named `Reset {label}` and the typed field `{label} value`. A disabled slider's reason is visible text under it.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["label", "string", null, null],
+    ["value", "number", null, null],
+    ["min", "number", null, null],
+    ["max", "number", null, null],
+    ["onChange", "(value: number) => void", null, "The live preview."],
+    [
+      "onCommit",
+      "(value: number) => void",
+      "onChange",
+      "Release, keys, reset and typed numbers.",
+    ],
+    ["step", "number", "1", null],
+    ["largeStep", "number", "step × 10", "Shift+arrow and Page Up/Down."],
+    ["defaultValue", "number", null, "Enables reset once the value drifts."],
+    ["suffix", "string", null, 'The unit: "%", " ms", " dB".'],
+    ["decimals", "number", null, "From step when unset."],
+    ["bipolar", "boolean", "false", 'Signs positives: "+12".'],
+    ["marks", "{ value: number; label?: string }[]", null, null],
+    ["rangeHints", "boolean", "false", "The ends under the track."],
+    ["numericInput", "boolean", "false", "A typed number for the readout."],
+    ["icon", "AppIcon", null, null],
+    [
+      "status",
+      '{ label: string; tone?: "default" | "success" | "warning" | "destructive" }',
+      null,
+      "A chip after the label.",
+    ],
+    ["disabled", "boolean", "false", null],
+    ["disabledReason", "string", null, "Why it's disabled, under the track."],
+    ["className", "string", null, null],
+  ]}
+/>

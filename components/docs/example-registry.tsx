@@ -62,11 +62,26 @@ export const examples: Record<string, ComponentType | undefined> = {
   "command-dialog": dynamic(
     () => import("@/components/examples/command-dialog")
   ),
+  "confirm-dialog-demo": dynamic(
+    () => import("@/components/examples/confirm-dialog-demo")
+  ),
+  "confirm-dialog-replace": dynamic(
+    () => import("@/components/examples/confirm-dialog-replace")
+  ),
   "context-menu-checkboxes": dynamic(
     () => import("@/components/examples/context-menu-checkboxes")
   ),
   "context-menu-demo": dynamic(
     () => import("@/components/examples/context-menu-demo")
+  ),
+  "device-picker-demo": dynamic(
+    () => import("@/components/examples/device-picker-demo")
+  ),
+  "device-picker-inline": dynamic(
+    () => import("@/components/examples/device-picker-inline")
+  ),
+  "device-picker-search": dynamic(
+    () => import("@/components/examples/device-picker-search")
   ),
   "dialog-body": dynamic(() => import("@/components/examples/dialog-body")),
   "dialog-demo": dynamic(() => import("@/components/examples/dialog-demo")),
@@ -126,6 +141,15 @@ export const examples: Record<string, ComponentType | undefined> = {
   "input-states": dynamic(() => import("@/components/examples/input-states")),
   "kbd-demo": dynamic(() => import("@/components/examples/kbd-demo")),
   "kbd-in-button": dynamic(() => import("@/components/examples/kbd-in-button")),
+  "kebab-context-menu-demo": dynamic(
+    () => import("@/components/examples/kebab-context-menu-demo")
+  ),
+  "kebab-menu-demo": dynamic(
+    () => import("@/components/examples/kebab-menu-demo")
+  ),
+  "kebab-menu-groups": dynamic(
+    () => import("@/components/examples/kebab-menu-groups")
+  ),
   "label-demo": dynamic(() => import("@/components/examples/label-demo")),
   "list-row-button": dynamic(
     () => import("@/components/examples/list-row-button")
@@ -134,6 +158,18 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/list-row-controls")
   ),
   "list-row-demo": dynamic(() => import("@/components/examples/list-row-demo")),
+  "lock-alert-demo": dynamic(
+    () => import("@/components/examples/lock-alert-demo")
+  ),
+  "lock-alert-session": dynamic(
+    () => import("@/components/examples/lock-alert-session")
+  ),
+  "media-card-backgrounds": dynamic(
+    () => import("@/components/examples/media-card-backgrounds")
+  ),
+  "media-card-demo": dynamic(
+    () => import("@/components/examples/media-card-demo")
+  ),
   "navigable-row-demo": dynamic(
     () => import("@/components/examples/navigable-row-demo")
   ),
@@ -160,6 +196,15 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/popover-anchor")
   ),
   "popover-demo": dynamic(() => import("@/components/examples/popover-demo")),
+  "power-slider-bipolar": dynamic(
+    () => import("@/components/examples/power-slider-bipolar")
+  ),
+  "power-slider-demo": dynamic(
+    () => import("@/components/examples/power-slider-demo")
+  ),
+  "power-slider-numeric": dynamic(
+    () => import("@/components/examples/power-slider-numeric")
+  ),
   "progress-demo": dynamic(() => import("@/components/examples/progress-demo")),
   "progress-inline": dynamic(
     () => import("@/components/examples/progress-inline")
@@ -225,11 +270,23 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/spinner-button")
   ),
   "spinner-demo": dynamic(() => import("@/components/examples/spinner-demo")),
+  "status-badge-demo": dynamic(
+    () => import("@/components/examples/status-badge-demo")
+  ),
+  "status-badge-label": dynamic(
+    () => import("@/components/examples/status-badge-label")
+  ),
   "status-bar-action-demo": dynamic(
     () => import("@/components/examples/status-bar-action-demo")
   ),
   "status-bar-demo": dynamic(
     () => import("@/components/examples/status-bar-demo")
+  ),
+  "status-dot-demo": dynamic(
+    () => import("@/components/examples/status-dot-demo")
+  ),
+  "status-dot-header": dynamic(
+    () => import("@/components/examples/status-dot-header")
   ),
   "switch-demo": dynamic(() => import("@/components/examples/switch-demo")),
   "switch-disabled": dynamic(

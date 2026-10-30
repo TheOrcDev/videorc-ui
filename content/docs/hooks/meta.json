@@ -8,6 +8,8 @@
     "modal-open",
     "---Theme and motion---",
     "use-theme-toggle",
-    "use-reduced-motion"
+    "use-reduced-motion",
+    "---Status---",
+    "status-word"
   ]
 }

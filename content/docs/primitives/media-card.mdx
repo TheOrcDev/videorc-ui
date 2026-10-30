@@ -1,0 +1,84 @@
+---
+title: Media Card
+description: A card for an object with a picture, such as a scene, a background or a takeover screen. The row radius, a 4% fill, a hairline and no shadow; the one in use wears the chrome plate.
+---
+
+<ComponentPreview name="media-card-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/media-card
+```
+
+## Usage
+
+```tsx
+import { MediaCard } from "@/components/media-card";
+```
+
+```tsx
+<MediaCard
+  interactive
+  onClick={() => setScene(scene.id)}
+  render={<button type="button" />}
+  selected={scene.id === current}
+>
+  <SceneThumbnail scene={scene} />
+  {scene.name}
+</MediaCard>
+```
+
+Use it for objects with a picture: a scene thumbnail, a background, a takeover screen. Lists of like things without one stay rows; only a picture earns a card.
+
+Don't put a card on a card, give it a shadow, or mark the selected one with a color.
+
+## Examples
+
+### With a menu
+
+A card that isn't itself a button can hold a [Kebab Menu](/docs/primitives/kebab-menu). Mark the card `group/kebab-host` and the ⋯ waits for its hover.
+
+<ComponentPreview name="media-card-backgrounds" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-row` | The 8 px card radius |
+| `bg-foreground/4`, `border-border` | The 4% fill and the hairline |
+| `hover:bg-accent` | The hover block, with `interactive` |
+| `chrome-plate`, `border-foreground/25` | The one in use: a brighter rim on the plate |
+| `data-selected` | Set while `selected` |
+| `data-slot="media-card"` | On whichever element carries the look |
+
+## Accessibility
+
+A card you click is a `<button>` (or a link): pass it to `render`. When the card is one of a set and `selected` marks the one in use, say so with `aria-pressed` or by the set's own semantics, since the plate alone is visual.
+
+## API reference
+
+Every [Base UI useRender](https://base-ui.com/react/utils/use-render) prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "selected",
+      "boolean",
+      "false",
+      "The one in use: a brighter rim on the chrome plate.",
+    ],
+    [
+      "interactive",
+      "boolean",
+      "false",
+      "The hover block, for a card that is a button or a link.",
+    ],
+    [
+      "render",
+      "ReactElement | (props, state) => ReactElement",
+      null,
+      "Puts the look on another element, such as a button.",
+    ],
+  ]}
+/>
