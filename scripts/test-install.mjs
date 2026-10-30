@@ -9,6 +9,8 @@
 //   for rsc: false); Vite ignores the directive, as Videorc's own files show.
 //
 // VIDEORC_UI_FIXTURE=next|vite runs one; VIDEORC_UI_FIXTURE_DIR keeps them.
+// VIDEORC_UI_REGISTRY=https://ui.videorc.com/r/{name}.json installs from a
+// deployed registry instead of this checkout's public/r.
 import { spawn } from "node:child_process";
 import { once } from "node:events";
 import {
@@ -133,7 +135,9 @@ const installFixture = async (fixture) => {
       ...config.registries,
       // The audiocn forks depend on audiocn's unchanged core and hooks.
       "@audiocn": "https://audiocn.dev/r/{name}.json",
-      "@videorc": `http://localhost:${port}/{name}.json`,
+      "@videorc":
+        process.env.VIDEORC_UI_REGISTRY ??
+        `http://localhost:${port}/{name}.json`,
     };
   });
   // Vite splits its config; the app's own sources compile under tsconfig.app.json.
