@@ -1923,6 +1923,77 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "platform-filter",
+      "type": "registry:block",
+      "title": "Platform Filter",
+      "description": "The one platform filter for the Stream Manager's chat and Activity: an All chip and a chip per platform mark, and the same choice as radio items for a Filters menu. Nothing at all with one platform.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-platform",
+        "@videorc/dropdown-menu",
+        "@videorc/shortcut-tooltip",
+        "@videorc/toggle-group"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/platform-filter.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chat-toolbar",
+      "type": "registry:block",
+      "title": "Chat Toolbar",
+      "description": "The Stream Manager chat's filter strip: platform chips, Buddy's Questions, Mentions and a search field with its ⌘F key. Below 640 px of Stream Manager the filters fold into one Filters menu.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-message",
+        "@videorc/chat-platform",
+        "@videorc/platform-filter",
+        "@videorc/icons",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/dropdown-menu",
+        "@videorc/input-group",
+        "@videorc/shortcut-keys",
+        "@videorc/shortcut-tooltip",
+        "@videorc/toggle-group",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/chat-toolbar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chat-composer",
+      "type": "registry:block",
+      "title": "Chat Composer",
+      "description": "The Stream Manager's composer: the \"To:\" picker, the message field with its count, the ↵ key and send, local commands after \"/\", and one quiet line for the exceptions: a destination the send skips, a failed send and Retry, a send in flight.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-platform",
+        "@videorc/icons",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/command",
+        "@videorc/dropdown-menu",
+        "@videorc/input-group",
+        "@videorc/shortcut-keys",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/chat-composer.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

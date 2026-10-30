@@ -1,0 +1,73 @@
+---
+title: Platform Filter
+description: The one platform filter for the Stream Manager's chat and Activity. An All chip and a chip per platform mark, and the same choice as radio items for a Filters menu. Nothing at all with one platform.
+---
+
+<ComponentPreview name="platform-filter-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/platform-filter
+```
+
+## Usage
+
+```tsx
+import {
+  PlatformFilter,
+  PlatformFilterMenuItems,
+} from "@/components/blocks/stream-manager/platform-filter";
+```
+
+```tsx
+<PlatformFilter
+  label="Show chat from"
+  onValueChange={setPlatform}
+  platforms={["youtube", "twitch", "x"]}
+  value={platform}
+/>
+```
+
+Chat and Activity share it, so a platform filters the same way in both. A chip clicked again turns back to All. With one platform it renders nothing: there's nothing to filter by.
+
+Below 640 px of Stream Manager the chips move into the pane's Filters menu: put `PlatformFilterMenuItems` inside a [Dropdown Menu](/docs/components/dropdown-menu), with the same props. [Chat Toolbar](/docs/blocks/chat-toolbar) does both.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `ToggleGroup` | The chips; the chosen one is the chrome plate |
+| `ChatPlatformIcon` | Each platform's 20 px mark |
+| `data-slot="platform-filter"` | The group |
+
+## Accessibility
+
+The group is named by `label` ("Show chat from"). Each icon chip is named by its platform and says "Only YouTube" on hover. In the menu, the choice is a radio group under the same label, with "Every platform" first.
+
+## API reference
+
+### PlatformFilter
+
+<PropsTable
+  rows={[
+    [
+      "platforms",
+      "readonly ChatPlatform[]",
+      null,
+      "A chip each, in this order. Fewer than two renders nothing.",
+    ],
+    ["value", 'ChatPlatform | "all"', null, null],
+    ["onValueChange", '(value: ChatPlatform | "all") => void', null, null],
+    [
+      "label",
+      "string",
+      null,
+      'The group\'s name: "Show chat from", "Show activity from".',
+    ],
+  ]}
+/>
+
+### PlatformFilterMenuItems
+
+The same props, as a labelled radio group for a Filters menu.

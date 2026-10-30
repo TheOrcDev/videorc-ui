@@ -1,0 +1,134 @@
+---
+title: Chat Composer
+description: The Stream Manager's composer. The "To:" picker, the message field with its count, the ↵ key and send, local commands after "/", and one quiet line for the exceptions.
+---
+
+<ComponentPreview name="chat-composer-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chat-composer
+```
+
+## Usage
+
+```tsx
+import { ChatComposer } from "@/components/blocks/stream-manager/chat-composer";
+import type { ChatDestination } from "@/components/blocks/stream-manager/chat-platform";
+```
+
+```tsx
+const destinations: ChatDestination[] = [
+  { id: "yt", platform: "youtube", state: "connected", write: "ready" },
+  { id: "tw", platform: "twitch", state: "connected", write: "ready" },
+  { id: "x", platform: "x", state: "connected", write: "read-only" },
+];
+
+<ChatComposer
+  destinations={destinations}
+  onSend={(text, { destinationIds }) => send(text, destinationIds)}
+  pending={sending}
+/>;
+```
+
+A message goes to every destination whose `write` is `ready`. With more than one, the "To:" picker lets the streamer narrow a send; `onSend` then gets the picked `destinationIds`, and without a pick it gets none. The draft must fit the strictest destination it reaches: 200 characters, 140 with X.
+
+The line under the field speaks only for the exceptions: a destination the send skips ("X read-only"), a failed send's reason with Retry, and "Sending…" while a send is on its way. A finished send says nothing: the message shows up in chat.
+
+## Examples
+
+### Local commands
+
+Pass `commands` and the field completes them after "/": ↑ and ↓ move, Tab or ↵ completes. A command runs through `onCommand` and never posts to chat; "//" sends one literal slash. `notice` is the composer's answer, read politely: "Marker saved at 30:44 · Untitled marker". The demo above wires Videorc's `/marker` and `/clip`.
+
+### A failed send
+
+`failures` names each destination a send didn't reach, with its reason; `onRetry` adds Retry. YouTube's chip names it in words: its mark may not shrink to a chip's 12 px.
+
+<ComponentPreview name="chat-composer-failure" />
+
+### The window owns the draft
+
+Pass `value` and `onValueChange` when something else fills the field, such as a row's ⋯ Reply that writes "@Maya Chen ", and `inputRef` for ⌘L to focus it.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `border-t` `px-2 py-2` | The flush region under a hairline, never a card |
+| `InputGroup` | The field, its picker, count, key and send |
+| `text-label` | The count and the notes line |
+| `Badge` `destructive` | A failed destination |
+| `data-slot` | `chat-composer`, `chat-composer-count`, `chat-composer-status` |
+
+## Keyboard
+
+| Key                       | Action                               |
+| ------------------------- | ------------------------------------ |
+| <kbd>Enter</kbd>          | Sends, or runs a local command       |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Move through the command completions |
+| <kbd>Tab</kbd>            | Completes the chosen command         |
+| <kbd>Esc</kbd>            | Closes the completions               |
+
+## Accessibility
+
+The field is named "Message", or "Message or local command" with commands. The send button's name says where it sends: "Send message to all writable destinations", "Send message to Twitch", or why it can't. The picker is named "Send to: All". `notice` is a polite status, and an over-limit count carries the alert icon as well as its number.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["destinations", "readonly ChatDestination[]", null, null],
+    [
+      "onSend",
+      "(text: string, options: { destinationIds?: string[] }) => void",
+      null,
+      null,
+    ],
+    [
+      "commands",
+      "readonly ChatComposerCommand[]",
+      null,
+      'Local commands to complete after "/".',
+    ],
+    ["onCommand", "(text: string) => void", null, "Runs a local command."],
+    ["pending", "boolean", "false", "A send is on its way: Sending…"],
+    ["failures", "readonly ChatSendFailure[]", "[]", null],
+    ["onRetry", "() => void", null, "Adds Retry under a failed send."],
+    ["notice", "ReactNode", null, "The composer's own answer."],
+    ["value", "string", null, "The draft, when the window owns it."],
+    ["defaultValue", "string", '""', null],
+    ["onValueChange", "(value: string) => void", null, null],
+    ["placeholder", "string", '"Send a message…"', null],
+    ["inputRef", "RefObject<HTMLInputElement | null>", null, "For ⌘L."],
+    ["platform", "string", null, "darwin, win32, linux…: how ↵ is printed."],
+  ]}
+/>
+
+### ChatComposerCommand
+
+<PropsTable
+  rows={[
+    ["value", "string", null, '"/marker"'],
+    ["hint", "string", null, '" [title] · Save a timeline point"'],
+    [
+      "argument",
+      "boolean",
+      null,
+      "It takes an argument: completing it leaves a space.",
+    ],
+  ]}
+/>
+
+### ChatSendFailure
+
+<PropsTable
+  rows={[
+    ["destinationId", "string", null, null],
+    ["platform", "ChatPlatform", null, null],
+    ["reason", "string", null, "The destination's reason, in a sentence."],
+  ]}
+/>
+
+`chatDestinationNotes(destinations, sendPlatforms)` and `chatDraftMaxChars(platforms)` are the rules the composer follows, for a status of your own.

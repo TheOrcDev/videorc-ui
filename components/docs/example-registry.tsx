@@ -42,6 +42,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "chart-sparkline": dynamic(
     () => import("@/components/examples/chart-sparkline")
   ),
+  "chat-composer-demo": dynamic(
+    () => import("@/components/examples/chat-composer-demo")
+  ),
+  "chat-composer-failure": dynamic(
+    () => import("@/components/examples/chat-composer-failure")
+  ),
   "chat-message-compact": dynamic(
     () => import("@/components/examples/chat-message-compact")
   ),
@@ -56,6 +62,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   ),
   "chat-platform-states": dynamic(
     () => import("@/components/examples/chat-platform-states")
+  ),
+  "chat-toolbar-demo": dynamic(
+    () => import("@/components/examples/chat-toolbar-demo")
   ),
   "checkbox-demo": dynamic(() => import("@/components/examples/checkbox-demo")),
   "checkbox-description": dynamic(
@@ -218,6 +227,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   ),
   "pin-window-button-status-bar": dynamic(
     () => import("@/components/examples/pin-window-button-status-bar")
+  ),
+  "platform-filter-demo": dynamic(
+    () => import("@/components/examples/platform-filter-demo")
   ),
   "popover-anchor": dynamic(
     () => import("@/components/examples/popover-anchor")

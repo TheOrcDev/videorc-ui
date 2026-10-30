@@ -1,4 +1,12 @@
 {
   "title": "Blocks",
-  "pages": ["index", "---Stream Manager---", "chat-message", "chat-platform"]
+  "pages": [
+    "index",
+    "---Stream Manager---",
+    "chat-message",
+    "chat-toolbar",
+    "chat-composer",
+    "platform-filter",
+    "chat-platform"
+  ]
 }

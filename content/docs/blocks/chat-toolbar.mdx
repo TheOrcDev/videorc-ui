@@ -1,0 +1,100 @@
+---
+title: Chat Toolbar
+description: The Stream Manager chat's filter strip. Platform chips, Buddy's Questions, Mentions and a search field with its ⌘F key; below 640 px of Stream Manager the filters fold into one Filters menu.
+---
+
+<ComponentPreview name="chat-toolbar-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chat-toolbar
+```
+
+## Usage
+
+```tsx
+import {
+  ChatToolbar,
+  DEFAULT_CHAT_FILTER,
+  filterChatMessages,
+} from "@/components/blocks/stream-manager/chat-toolbar";
+import type { ChatFilter } from "@/components/blocks/stream-manager/chat-toolbar";
+```
+
+```tsx
+const [filter, setFilter] = useState<ChatFilter>(DEFAULT_CHAT_FILTER);
+const shown = filterChatMessages(messages, filter, {
+  mentionNames: ["@nightowlstudio"],
+  questionIds,
+});
+
+<ChatToolbar
+  filter={filter}
+  onFilterChange={setFilter}
+  platforms={["youtube", "twitch", "x"]}
+  questions={questionIds.size > 0}
+/>;
+```
+
+The filter is plain data you own:
+
+```ts
+interface ChatFilter {
+  platform: ChatPlatform | "all";
+  questions: boolean;
+  mentions: boolean;
+  search: string;
+}
+```
+
+`filterChatMessages(messages, filter, { questionIds, mentionNames })` applies it: one platform, the messages behind Buddy's open questions, the ones that mention your accounts, and a search through words and names. `chatFilterActive(filter)` says whether anything narrows chat, for an empty state that reads "No messages match these filters."
+
+The Questions chip shows while Buddy has open questions (`questions`), and stays while it's on. The search field takes ⌘F's focus through `searchRef`; Esc clears it.
+
+## Responsive
+
+Inside the [Stream Manager](/docs/blocks/stream-manager), the strip follows the window's own width: from 640 px the filters are inline chips, and below it they fold into one Filters menu with a count of what's on. On its own, outside the Stream Manager's container, the chips always show.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `border-b` `px-2 py-1.5` | The strip, flush under a hairline |
+| `ToggleGroup` | The filter chips; an active one is the chrome plate |
+| `@max-[639px]/stream-manager:` | Where the chips fold into the Filters menu |
+| `data-slot` | `chat-toolbar`, `chat-search` |
+
+## Keyboard
+
+| Key                       | Action                                           |
+| ------------------------- | ------------------------------------------------ |
+| <kbd>⌘</kbd> <kbd>F</kbd> | Searches chat, when the window wires `searchRef` |
+| <kbd>Esc</kbd>            | In the search field, clears it and leaves        |
+
+## Accessibility
+
+The platform chips are a group named "Show chat from", and Questions and Mentions a group named "Chat filters", each explained on hover. The search field is named "Search chat". Below 640 px the Filters button is named "Chat filters" and its menu holds the same choices as radio and checkbox items.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "platforms",
+      "readonly ChatPlatform[]",
+      null,
+      "The platforms chat comes from: a chip each, from two up.",
+    ],
+    ["filter", "ChatFilter", null, null],
+    ["onFilterChange", "(filter: ChatFilter) => void", null, null],
+    [
+      "questions",
+      "boolean",
+      "false",
+      "Buddy has open questions: the Questions chip shows.",
+    ],
+    ["searchRef", "Ref<HTMLInputElement>", null, "The search field, for ⌘F."],
+    ["platform", "string", null, "darwin, win32, linux…: how ⌘F is printed."],
+  ]}
+/>
