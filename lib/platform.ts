@@ -90,7 +90,7 @@ export function currentPlatform(platform?: string): string | undefined {
   const bootstrapped =
     typeof document === "undefined"
       ? undefined
-      : document.documentElement?.dataset.platform;
+      : document.documentElement?.dataset?.platform;
   return bootstrapped || detectedPlatform();
 }
 

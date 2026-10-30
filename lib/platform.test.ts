@@ -74,6 +74,13 @@ describe("currentPlatform (plan 174 S1.2)", () => {
     });
     expect(currentPlatform(undefined)).toBe("darwin");
   });
+
+  it("reads the user agent when the root element has no dataset", () => {
+    // A test harness's fake document, or a non-HTML root.
+    vi.stubGlobal("document", { documentElement: {} });
+    vi.stubGlobal("navigator", { userAgent: "Mozilla/5.0 (Windows NT 10.0)" });
+    expect(currentPlatform(undefined)).toBe("win32");
+  });
 });
 
 describe("shortcutLabel and shortcutAriaKeys (plan 174 S1.2, A-5)", () => {
