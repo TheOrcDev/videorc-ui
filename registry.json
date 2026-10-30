@@ -2084,6 +2084,36 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "stream-manager",
+      "type": "registry:block",
+      "title": "Stream Manager",
+      "description": "Videorc's live dashboard window, whole: the title row, the stats bar, Chat beside Activity and Buddy, and the status bar. Three tiers by its own width through a container query, every pane rendered once, and the window's ⌘F, ⌘L and ⌘J keys.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/activity-feed",
+        "@videorc/chat-composer",
+        "@videorc/chat-message",
+        "@videorc/chat-platform",
+        "@videorc/chat-toolbar",
+        "@videorc/stream-manager-status-bar",
+        "@videorc/stream-stats-bar",
+        "@videorc/status-dot",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/empty",
+        "@videorc/scroll-area",
+        "@videorc/tabs",
+        "@videorc/window-frame",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/stream-manager.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

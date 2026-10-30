@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "---Stream Manager---",
+    "stream-manager",
     "chat-message",
     "chat-toolbar",
     "chat-composer",

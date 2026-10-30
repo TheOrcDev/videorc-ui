@@ -1,0 +1,201 @@
+---
+title: Stream Manager
+description: Videorc's live dashboard window, whole. The title row, the stats bar, Chat beside Activity and Buddy, and the status bar, laid out by the window's own width.
+full: true
+---
+
+<ComponentPreview className="p-3 sm:p-3" name="stream-manager-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/stream-manager
+```
+
+This installs every part with it: [Chat Message](/docs/blocks/chat-message), [Chat Toolbar](/docs/blocks/chat-toolbar), [Chat Composer](/docs/blocks/chat-composer), [Stream Stats Bar](/docs/blocks/stream-stats-bar), [Activity Feed](/docs/blocks/activity-feed) and [Stream Manager Status Bar](/docs/blocks/stream-manager-status-bar).
+
+## Usage
+
+```tsx
+import { StreamManager } from "@/components/blocks/stream-manager/stream-manager";
+```
+
+```tsx
+<StreamManager
+  activity={activity}
+  destinations={destinations}
+  highlight={onStream}
+  live
+  messages={messages}
+  onHighlight={toggleOnStream}
+  onSend={send}
+  platform={process.platform}
+  stats={stats}
+/>
+```
+
+The window is presentational: your app owns the session and passes it in as plain data, and every action comes back as a callback. Nothing reaches for Electron, IPC or `window.videorc`.
+
+| Prop | The data |
+| --- | --- |
+| `stats` | `StatItem[]`: the clock, viewers, followers and the rest ([Stream Stats Bar](/docs/blocks/stream-stats-bar)) |
+| `messages` | `ChatMessageData[]`, oldest first ([Chat Message](/docs/blocks/chat-message)) |
+| `destinations` | `ChatDestination[]`: each platform's chat state and whether it sends ([Chat Platform](/docs/blocks/chat-platform)) |
+| `activity` | `ActivityItem[]`: follows, subs, gifts, tips and raids ([Activity Feed](/docs/blocks/activity-feed)) |
+| `highlight` | `{ messageId, phase }`: the message on stream, the one slot Chat and Activity share |
+| `buddy` | `{ name, tone, unseen, pane }`: Buddy's tab and its pane, when there is one |
+
+A row's click calls `onHighlight`, and the window shows whatever `highlight` you pass back: `applying` while Studio puts it on stream, then `live`, or `failed` with its reason.
+
+## The window
+
+- **Three tiers by its own width.** The body is `@container/stream-manager`, never the viewport. From 1,040 px Chat sits beside a right pane with Activity and Buddy tabs, and the stats bar draws its sparklines. From 640 px one pane sits behind Chat, Activity and Buddy tabs. Below 640 px (320 minimum) the filters and the status bar's controls fold into menus. Every pane renders once; only its placement changes. Give it any size: a window, a split pane or a docs preview.
+- **The title row carries the title only.** The stats bar says ON AIR, and a finished session (`history`) gets its own bar with Back to live. Pass the `platform` you know so the row leaves room for the macOS traffic lights.
+- **Live and not.** While `live`, a click puts a message on stream, the composer shows, and a row's time and ⋯ wait for the pointer. Off air, chat says how it starts and the rows are plain text.
+- **Keys.** While focus is in the window, ⌘F searches chat, ⌘L writes in it and ⌘J brings Buddy forward. The status bar prints the same keys as clickable hints.
+- **Replies and thanks fill the composer, never send.** A row's ⋯ Reply writes "@name ", and Activity's Thank in chat writes what `thankYouDraft` returns: the streamer sends.
+
+## Examples
+
+### History
+
+Without `live` the window reads a session back: `history` adds its bar with Back to live, the stats are the session's totals, and the rows are plain text with their times. There's no composer, and an empty chat says how it starts.
+
+<ComponentPreview className="p-3 sm:p-3" name="stream-manager-off-air" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `@container/stream-manager` | The window body; every part's tiers read it |
+| `@min-[1040px]/stream-manager:` | Wide: Chat beside the right pane |
+| `bg-glass-content` | The window's content coat (`WindowFrame`) |
+| `data-pane` | `chat`, `activity`, `buddy` |
+| `data-slot` | `stream-manager`, `stream-manager-panes`, `pane-tabs`, `pane-tabs-wide`, `chat-pane`, `history-bar` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>⌘</kbd> <kbd>F</kbd> | Searches chat |
+| <kbd>⌘</kbd> <kbd>L</kbd> | Writes in chat, while live |
+| <kbd>⌘</kbd> <kbd>J</kbd> | Brings Buddy's pane forward |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | On a message, puts it on stream or takes it off |
+
+On Windows and Linux the keys are Ctrl. They answer while focus is inside the window, so a page around it keeps its own.
+
+## Accessibility
+
+The title is the window's `h1`. The stats bar, Chat and Activity are named regions, and the pane tabs are a tab list; Buddy's dot says what it means through `buddy.toneLabel`, never colour alone. Each part brings its own: see their pages.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["title", "string", '"Stream Manager"', null],
+    ["platform", "string", null, "darwin, win32, linux…"],
+    ["live", "boolean", "false", "A live session."],
+    [
+      "history",
+      "{ title: string; date: string; onBackToLive?: () => void }",
+      null,
+      "A finished session, read back.",
+    ],
+    ["stats", "readonly StatItem[]", null, null],
+    ["statsLayout", "StatsLayout", null, null],
+    ["onStatsLayoutChange", "(layout: StatsLayout) => void", null, null],
+    ["screenHidden", "boolean", "false", null],
+    ["messages", "readonly ChatMessageData[]", null, null],
+    ["destinations", "readonly ChatDestination[]", null, null],
+    [
+      "mentionNames",
+      "readonly string[]",
+      null,
+      "Your accounts: @you and Mentions.",
+    ],
+    [
+      "questionIds",
+      "ReadonlySet<string>",
+      null,
+      "Messages behind Buddy's open questions.",
+    ],
+    [
+      "highlight",
+      '{ messageId: string; phase: "applying" | "live" | "failed"; reason?: string } | null',
+      null,
+      "The message on stream.",
+    ],
+    ["onHighlight", "(message) => void", null, null],
+    ["removals", "Record<string, ChatMessageRemoval>", null, "By message id."],
+    [
+      "flags",
+      "Record<string, ChatMessageFlag>",
+      null,
+      "Buddy's flags, by message id.",
+    ],
+    ["suggestedIds", "ReadonlySet<string>", null, null],
+    ["spotlightId", "string | null", null, null],
+    ["onRemoveFromChat", "(message) => void", null, null],
+    [
+      "onSend",
+      "(text, options) => void",
+      null,
+      "The composer shows while live.",
+    ],
+    ["sendPending", "boolean", "false", null],
+    ["sendFailures", "readonly ChatSendFailure[]", null, null],
+    ["onRetrySend", "() => void", null, null],
+    ["composerCommands", "readonly ChatComposerCommand[]", null, null],
+    ["onComposerCommand", "(text: string) => void", null, null],
+    ["composerNotice", "ReactNode", null, null],
+    ["composerPlaceholder", "string", null, null],
+    ["activity", "readonly ActivityItem[]", "[]", null],
+    ["activityNote", "string | null", null, null],
+    ["onShowActivityOnStream", "(item) => void", null, null],
+    ["thankYouDraft", "(item) => string", null, "Adds Thank in chat."],
+    [
+      "twitchNeeds",
+      "{ followNames?: boolean; bitsAndPoints?: boolean }",
+      null,
+      null,
+    ],
+    ["onReconnectTwitch", "() => void", null, null],
+    ["autoShow", "boolean", null, null],
+    ["onAutoShowChange", "(on: boolean) => void", null, null],
+    ["buddy", "StreamManagerBuddy", null, "Buddy's tab and pane."],
+    [
+      "unseen",
+      "{ chat?: number; activity?: number }",
+      null,
+      "Counts on the tabs.",
+    ],
+    ["pinned", "boolean", null, null],
+    ["onPinnedChange", "(pinned: boolean) => void", null, null],
+    ["destinationNotes", "Partial<Record<ChatPlatform, string[]>>", null, null],
+    ["highlightPosition", "HighlightPosition", null, null],
+    ["onHighlightPositionChange", "(position) => void", null, null],
+    ["onMarkClip", "(seconds: 30 | 60) => void", null, "While live."],
+    ["onScreenPrivacy", "(hidden: boolean) => void", null, null],
+    ["banners", "readonly StreamBanner[] | null", null, null],
+    ["onBanner", "(action: BannerAction) => void", null, null],
+    ["onClear", "() => void", null, null],
+    ["onOpenPreview", "() => void", null, null],
+  ]}
+/>
+
+### StreamManagerBuddy
+
+<PropsTable
+  rows={[
+    ["name", "string", null, 'The Buddy\'s name, on its tab: "Orcle".'],
+    [
+      "tone",
+      '"good" | "warn" | "error" | "neutral"',
+      '"neutral"',
+      "Its presence: good while listening.",
+    ],
+    ["toneLabel", "string", null, '"Buddy is listening", read aloud.'],
+    ["unseen", "number", null, "New questions and cards behind the tab."],
+    ["pane", "ReactNode", null, "The Buddy pane."],
+  ]}
+/>
