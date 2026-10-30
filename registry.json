@@ -731,6 +731,693 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "field-context",
+      "type": "registry:ui",
+      "title": "Field Context",
+      "description": "The wiring that lets a Field name and describe its control: the FieldLabel points at the first control a label can name, other controls take the label through aria-labelledby, and every FieldDescription describes them. Form controls read it through its hooks.",
+      "registryDependencies": ["@videorc/theme"],
+      "files": [
+        {
+          "path": "components/ui/field-context.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "The 14 px medium label for a control. It dims beside a disabled control and keeps the desktop's arrow cursor.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text field at the 28 px desktop control height on Base UI's Input, 14 px at every width. Inside a Field, its label names it and its descriptions describe it.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multi-line text field that grows with its content, at 14 px on the chip radius. Inside a Field, its label names it and its descriptions describe it.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "One 28 px field with icons, text and compact buttons inside it, with its focus and invalid rings drawn around the whole group.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/button",
+        "@videorc/input",
+        "@videorc/textarea",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Labels, descriptions and errors for a form control, plus SettingsRow and the grouped settings list. A Field names and describes its control with no ids to wire.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/field-context",
+        "@videorc/label",
+        "@videorc/separator",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A 16 px checkbox on Base UI that wears the chrome fill when checked or indeterminate, with a dash for the mixed state.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "The one control for a boolean, on Base UI: a chrome-fill track when on, with a chrome-bead knob that turns to the inverse bead.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A slider on Base UI with a chrome-fill range and chrome-bead thumbs. Its name and spoken value go on the thumbs, and inside a Field it takes the FieldLabel.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A two-state button on Base UI at the 28 px desktop height. Pressed wears the chrome plate, the same material as a selected segment and an active tab.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "Filter chips on Base UI: array values and multiple, pressed items on the chrome plate, named by a Field's label. Items sit apart, wrap, or join into one outlined strip.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/toggle",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs-variants",
+      "type": "registry:ui",
+      "title": "Tabs Variants",
+      "description": "The glass segmented track and segment shared by Tabs and SegmentedControl, in a module with no Base UI import so a segmented control costs the first bundle nothing.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@videorc/theme"],
+      "files": [
+        {
+          "path": "components/ui/tabs-variants.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Switch a view on Base UI. The default list is the glass segmented track with the active tab as a chrome plate, the line variant underlines it, and a Field's label names the list.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/tabs-variants",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "Pick one of 2\u20134 exclusive options on the glass Tabs track: a radio group with roving focus and one tab stop, manual activation for heavy changes, icon options with tooltips, and a disabled state that says why.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/tabs-variants",
+        "@videorc/field-context",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "One determinate bar on Base UI: a 6 px round track with the chrome fill, with an optional label and value above it.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Videorc's key chip: a glass keycap with a bright top edge and a dark bottom edge, which takes the button's own ink inside a filled button.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "shortcut-keys",
+      "type": "registry:ui",
+      "title": "Shortcut Keys",
+      "description": "The one way to show a shortcut: takes an Electron accelerator and prints it the way the platform's menus do (\u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere), as a keycap or as quiet status bar text.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/kbd",
+        "@videorc/platform",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/shortcut-keys.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "shortcut-tooltip",
+      "type": "registry:ui",
+      "title": "Shortcut Tooltip",
+      "description": "A control's tooltip with its bound shortcut as one keycap. It wraps the control, so the tooltip never touches the control's own attributes.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/shortcut-keys",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/shortcut-tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "shadcn's Recharts wrapper on Videorc's tokens: series stay neutral unless their colour means something, and the tooltip floats on the popup glass.",
+      "dependencies": ["recharts"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "A flush inline status row on the row radius: default, quiet, locked, success, warning and destructive tones, each with its own icon. Only destructive is an assertive alert; every other tone is a polite status.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Glass chips for status, tags and counts on the 7 px tag radius. Status chips keep their text monochrome and glow their tone in a dot; destructive and live tint the glass, and chrome and plate wear the Liquid Chrome.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A round picture of a chat author or a channel on Base UI's Avatar, with initials as the fallback, three sizes, a status badge and an overlapping group.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "An empty state in words only: short muted text, centred, with an optional 14 px title and an action. No media tile, no illustration and no dashed box.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A muted placeholder that pulses where content is loading, on the 8 px row radius.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "The one spinner for work in flight, on the icon set's SpinnerIcon. It is a status named Loading unless it sits beside its own words, and takes its size from its slot.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A 1 px hairline between groups, horizontal or vertical, on Base UI's Separator.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "A native scroller on Base UI's Scroll Area with a thumb-only scrollbar that shows while scrolling, like macOS overlay scrollbars, on the theme's scrollbar tokens. A viewport class takes a height cap.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Stacked sections that open in place on Base UI's Accordion, in a bordered group on the row radius, with one or several items open and a 150 ms height ease.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "One section that opens and closes under its trigger, on Base UI's Collapsible. Unstyled, so the trigger is whatever control fits.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme"],
+      "files": [
+        {
+          "path": "components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "info-tooltip",
+      "type": "registry:ui",
+      "title": "Info Tooltip",
+      "description": "Explains a chip, a dot or a short status word on hover and on keyboard focus. A focusable wrapper is the trigger, and the text stays in the DOM as its description.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/info-tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "disabled-reason",
+      "type": "registry:ui",
+      "title": "Disabled Reason",
+      "description": "Says why a control is disabled, on hover and on keyboard focus: a focusable wrapper with a tooltip and aria-describedby, or the item itself in a menu or select.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/disabled-reason.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chrome-row",
+      "type": "registry:ui",
+      "title": "Chrome Row",
+      "description": "The class names for the Stream Manager's chrome rows: the Liquid Chrome plate on the row that is on stream and the quieter plate with a member-hue edge on a member's row.",
+      "registryDependencies": ["@videorc/theme"],
+      "files": [
+        {
+          "path": "components/ui/chrome-row.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A short label for a control on the tooltip tier of the float glass, never an inverted pill. It waits 600 ms for a deliberate hover, and its neighbours under one provider then open at once.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A floating panel for a short task on the popup tier of the float glass, fading and scaling from 0.98. An Anchor part lines it up with something other than its trigger.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "A preview of what a link points at, on hover or focus, on the popup tier of the float glass. Base UI's Preview Card under shadcn's name.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions from a button on the popup tier of the float glass: 28 px items, a destructive variant, shortcuts, checkbox and radio items and submenus. It keeps the wheel from reaching what sits behind it.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A menu at the pointer on right-click or long press, with Dropdown Menu's popup tier and 28 px items. It keeps the wheel from reaching what sits behind it.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Choose one value from a list: a 28 px trigger (24 px in dense rows) and a list on the popup tier of the float glass. Inside a Field, its label names it; the wheel stops at the list.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/field-context",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal on the dialog tier of the float glass in four widths (sm, md, lg, xl), with a DialogBody that scrolls between a header and a footer that stay put, and no backdrop blur.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/button",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "The question before something destructive, on Dialog's surface and widths: no close button, Cancel focused on open, and Escape as the safe answer. The action leaves closing to its owner.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/button",
+        "@videorc/dialog",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "A searchable list on cmdk at the \u2318K palette scale: a borderless 18 px search field, 40 px rows and a footer. It paints no coat, and CommandDialog wraps its children in Command.",
+      "dependencies": ["cmdk"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/dialog",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "Toasts on sonner: every toast is the same neutral float glass, a type colours its 16 px icon only, and each one has a close button.",
+      "dependencies": ["next-themes", "sonner"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/spinner"
+      ],
+      "files": [
+        {
+          "path": "components/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
