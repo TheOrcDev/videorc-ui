@@ -111,6 +111,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   "error-boundary-demo": dynamic(
     () => import("@/components/examples/error-boundary-demo")
   ),
+  "fader-console": dynamic(() => import("@/components/examples/fader-console")),
+  "fader-demo": dynamic(() => import("@/components/examples/fader-demo")),
+  "fader-gain": dynamic(() => import("@/components/examples/fader-gain")),
   "field-choice-card": dynamic(
     () => import("@/components/examples/field-choice-card")
   ),
@@ -185,6 +188,15 @@ export const examples: Record<string, ComponentType | undefined> = {
   ),
   "panel-section-nested": dynamic(
     () => import("@/components/examples/panel-section-nested")
+  ),
+  "parameter-slider-demo": dynamic(
+    () => import("@/components/examples/parameter-slider-demo")
+  ),
+  "parameter-slider-frequency": dynamic(
+    () => import("@/components/examples/parameter-slider-frequency")
+  ),
+  "parameter-slider-value": dynamic(
+    () => import("@/components/examples/parameter-slider-value")
   ),
   "pin-window-button-demo": dynamic(
     () => import("@/components/examples/pin-window-button-demo")

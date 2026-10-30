@@ -1842,6 +1842,45 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "fader",
+      "type": "registry:ui",
+      "title": "Fader",
+      "description": "audiocn's volume fader in decibels, painted in Liquid Chrome: a chrome-fill range and a chrome-bead thumb, with tapers, detents, a scale, reset and an editable value. Forked from audiocn (MIT).",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@audiocn/core",
+        "@audiocn/db-scale",
+        "@audiocn/use-audio-config",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/fader.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "parameter-slider",
+      "type": "registry:ui",
+      "title": "Parameter Slider",
+      "description": "audiocn's labelled slider with a numeric input, unit, marks and reset, painted in Liquid Chrome: a chrome-fill range and a chrome-bead thumb. Forked from audiocn (MIT).",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@audiocn/core",
+        "@audiocn/use-audio-config",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/parameter-slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,171 @@
+---
+title: Parameter Slider
+description: audiocn's labelled slider with a numeric input, unit, marks and reset, painted in Liquid Chrome. For every setting that isn't a volume.
+---
+
+<ComponentPreview name="parameter-slider-demo" />
+
+This is a fork of [audiocn's Parameter Slider](https://audiocn.dev/docs/components/parameter-slider) (MIT). Its behaviour, parts and props are upstream's; only the paint differs:
+
+- The range is `chrome-fill`, not `bg-primary`.
+- The thumb is a `chrome-bead` on the knob's hairline rim (`ring-knob-ring`), like every Videorc slider.
+- Reset sits on `rounded-row`.
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/parameter-slider
+```
+
+The slider builds on audiocn's core (`@audiocn/core` and `@audiocn/use-audio-config`), so add the `@audiocn` namespace to `components.json` as well:
+
+```json title="components.json"
+{
+  "registries": {
+    "@videorc": "https://ui.videorc.com/r/{name}.json",
+    "@audiocn": "https://audiocn.dev/r/{name}.json"
+  }
+}
+```
+
+## Usage
+
+```tsx
+import {
+  ParameterSlider,
+  ParameterSliderControl,
+  ParameterSliderHeader,
+  ParameterSliderInput,
+  ParameterSliderLabel,
+} from "@/components/ui/parameter-slider";
+```
+
+```tsx
+<ParameterSlider
+  max={1000}
+  min={-1000}
+  onValueChange={setOffsetMs}
+  unit="ms"
+  value={offsetMs}
+>
+  <ParameterSliderHeader>
+    <ParameterSliderLabel>Microphone sync</ParameterSliderLabel>
+    <ParameterSliderInput />
+  </ParameterSliderHeader>
+  <ParameterSliderControl />
+</ParameterSlider>
+```
+
+Use it for gain trims, delays, thresholds, times, frequencies and percentages. For a volume, use [Fader](/docs/components/fader).
+
+## Anatomy
+
+```tsx
+<ParameterSlider>
+  <ParameterSliderHeader>
+    <ParameterSliderLabel />
+    <ParameterSliderReset />
+    <ParameterSliderInput />
+    <ParameterSliderValue />
+  </ParameterSliderHeader>
+  <ParameterSliderControl />
+  <ParameterSliderMarks />
+  <ParameterSliderDescription />
+</ParameterSlider>
+```
+
+## Examples
+
+### Read-only value
+
+Show `ParameterSliderValue` in place of the input when typing a number adds nothing, as for a banner's opacity.
+
+<ComponentPreview name="parameter-slider-value" />
+
+### Log scale with marks
+
+`scale="log"` gives each octave the same travel, which suits frequencies and times. `marks` labels points along the track.
+
+<ComponentPreview name="parameter-slider-frequency" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The range |
+| `bg-input/90` | The 4 px track |
+| `chrome-bead` | The thumb |
+| `ring-knob-ring` | The thumb's hairline rim; a 4 px ring on hover, focus and drag |
+| `rounded-row` | Reset |
+| `data-modified` | The value differs from `resetValue` |
+| `data-disabled` | Dims to 50% |
+| `data-slot` | `parameter-slider`, `parameter-slider-header`, `parameter-slider-label`, `parameter-slider-input-group`, `parameter-slider-input`, `parameter-slider-unit`, `parameter-slider-value`, `parameter-slider-reset`, `parameter-slider-control`, `parameter-slider-track`, `parameter-slider-range`, `parameter-slider-thumb`, `parameter-slider-marks`, `parameter-slider-description` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Changes the value by `step` |
+| <kbd>Shift</kbd> with an arrow, <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Changes it by `largeStep` |
+| <kbd>Home</kbd> <kbd>End</kbd> | Moves to the minimum or maximum |
+
+The number input takes the arrow keys and typing, and dragging the unit beside it scrubs the value.
+
+## Accessibility
+
+- The label names both the slider thumb and the number input.
+- `ParameterSliderDescription` describes the thumb.
+- The thumb's `aria-valuetext` is the formatted value with its unit.
+
+## API reference
+
+### ParameterSlider
+
+Every `div` prop, plus:
+
+<PropsTable
+  rows={[
+    ["value", "number", null, null],
+    ["defaultValue", "number", null, null],
+    [
+      "onValueChange",
+      "(value, details) => void",
+      null,
+      "details.reason is drag, keyboard, input or reset.",
+    ],
+    [
+      "onValueCommitted",
+      "(value) => void",
+      null,
+      "Fires when a drag ends, after keyboard input, typing and reset.",
+    ],
+    ["min", "number", "0", null],
+    ["max", "number", "100", null],
+    ["step", "number", "1", null],
+    [
+      "largeStep",
+      "number",
+      "10",
+      "Shift with an arrow, Page Up and Page Down.",
+    ],
+    ["unit", "string", null, 'A suffix such as "ms", "dB", "Hz" or "%".'],
+    ["decimals", "number", "from step", null],
+    ["scale", '"linear" | "log"', '"linear"', "log suits frequency and time."],
+    ["origin", "number", "min", "Where the fill starts."],
+    ["resetValue", "number", "defaultValue ?? min", null],
+    [
+      "marks",
+      "{ value: number; label?: string }[]",
+      null,
+      "Shown by ParameterSliderMarks.",
+    ],
+    ["format", "(value: number) => string", null, null],
+    ["disabled", "boolean", "false", null],
+  ]}
+/>
+
+### ParameterSliderInput
+
+<PropsTable
+  rows={[["scrub", "boolean", "true", "Drag the unit to change the value."]]}
+/>

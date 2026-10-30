@@ -1,0 +1,201 @@
+---
+title: Fader
+description: audiocn's volume fader in decibels, painted in Liquid Chrome. The range is the chrome fill and the thumb a chrome bead, with tapers, detents, a scale, reset and an editable value.
+---
+
+<ComponentPreview name="fader-demo" />
+
+This is a fork of [audiocn's Fader](https://audiocn.dev/docs/components/fader) (MIT). Its behaviour, parts and props are upstream's; only the paint differs:
+
+- The range is `chrome-fill`, not `bg-primary`.
+- The default thumb is a `chrome-bead` on the knob's hairline rim (`ring-knob-ring`), like every Videorc slider.
+- The console thumb's cap is `rounded-chip`, and the value, its editor and Reset sit on `rounded-row`.
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/fader
+```
+
+The fader builds on audiocn's core (`@audiocn/core`, `@audiocn/use-audio-config` and `@audiocn/db-scale`), so add the `@audiocn` namespace to `components.json` as well:
+
+```json title="components.json"
+{
+  "registries": {
+    "@videorc": "https://ui.videorc.com/r/{name}.json",
+    "@audiocn": "https://audiocn.dev/r/{name}.json"
+  }
+}
+```
+
+## Usage
+
+```tsx
+import {
+  Fader,
+  FaderLabel,
+  FaderRange,
+  FaderThumb,
+  FaderTrack,
+  FaderValue,
+} from "@/components/ui/fader";
+```
+
+```tsx
+const [volumeDb, setVolumeDb] = useState(0);
+
+<Fader onValueChange={setVolumeDb} value={volumeDb}>
+  <FaderLabel>Microphone</FaderLabel>
+  <FaderValue />
+  <FaderTrack>
+    <FaderRange />
+    <FaderThumb />
+  </FaderTrack>
+</Fader>;
+```
+
+The value is always in dB. The taper decides where each value sits on the travel. The thumb snaps to its detents (0 dB by default) while dragging, and double-clicking it resets.
+
+## Anatomy
+
+```tsx
+<Fader>
+  <FaderLabel />
+  <FaderReset />
+  <FaderValue />
+  <FaderTrack>
+    <FaderRange />
+    <FaderThumb />
+  </FaderTrack>
+  <FaderScale />
+</Fader>
+```
+
+`FaderTrack` takes any children, so a level meter can sit inside it.
+
+## Examples
+
+### Bipolar gain
+
+Videorc's Gain faders: `origin={0}` grows the fill from the middle, whole-dB steps, a detent at 0 dB and a value you can type into.
+
+<ComponentPreview name="fader-gain" />
+
+### Console faders
+
+Vertical faders with `variant="console"` and `taper="audio"`, which gives more travel around 0 dB, like a mixing console.
+
+<ComponentPreview name="fader-console" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The range |
+| `bg-input/90` | The track |
+| `chrome-bead` | The default thumb |
+| `ring-knob-ring` | The default thumb's hairline rim; a 4 px ring on hover, focus and drag |
+| `rounded-chip` | The console thumb's cap |
+| `rounded-row` | The value, its editor and Reset |
+| `--fader-track-size`, `--fader-thumb-size` | Set by `size` |
+| `data-orientation`, `data-variant`, `data-size` | The current settings |
+| `data-dragging` | The thumb is held |
+| `data-at-detent` | The value sits on a detent |
+| `data-silent` | The value is `-Infinity` |
+| `data-disabled` | Dims to 50% |
+| `data-slot` | `fader`, `fader-label`, `fader-control`, `fader-track`, `fader-range`, `fader-thumb`, `fader-scale`, `fader-value`, `fader-value-input`, `fader-reset` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Changes the value by `step` |
+| <kbd>Shift</kbd> with an arrow, <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Changes it by `largeStep` |
+| <kbd>Alt</kbd> with an arrow | Changes it by `fineStep` |
+| <kbd>Home</kbd> <kbd>End</kbd> | Moves to the minimum (or silence) or the maximum |
+
+Holding <kbd>Alt</kbd> while dragging uses `fineStep` too.
+
+## Accessibility
+
+The thumb holds a native range input with `role="slider"`, and its `aria-valuetext` is the formatted value, such as "−6.0 dB" or "Silent". Name the fader with `FaderLabel` or `aria-label`. The editable value's input is named "Value in dB".
+
+## API reference
+
+### Fader
+
+Every [Base UI Slider](https://base-ui.com/react/components/slider) root prop, plus:
+
+<PropsTable
+  rows={[
+    ["value", "number", null, "The value in dB."],
+    ["defaultValue", "number", "resetValue", null],
+    [
+      "onValueChange",
+      "(value, details) => void",
+      null,
+      "details.reason is drag, track-press, keyboard, wheel, reset or input.",
+    ],
+    [
+      "onValueCommitted",
+      "(value) => void",
+      null,
+      "Fires when a drag ends, after keyboard input and on reset.",
+    ],
+    ["min", "number", "-60", null],
+    ["max", "number", "6", null],
+    ["step", "number", "0.5", "Arrow keys and drag resolution."],
+    ["largeStep", "number", "6", "Shift with an arrow, Page Up and Page Down."],
+    ["fineStep", "number", "0.1", "Alt with an arrow, and Alt while dragging."],
+    ["resetValue", "number", "0", "Restored by double-click and FaderReset."],
+    ["taper", '"linear" | "audio" | Taper', '"linear"', "The position law."],
+    ["origin", "number", "min", "Where the range fill starts."],
+    ["detents", "number[]", "[0]", "Values the thumb snaps to while dragging."],
+    [
+      "silenceAtMin",
+      "boolean",
+      "false",
+      "The lowest position reports -Infinity.",
+    ],
+    [
+      "allowWheel",
+      "boolean",
+      "false",
+      "The wheel changes the value while the fader is focused.",
+    ],
+    ["orientation", '"horizontal" | "vertical"', '"horizontal"', null],
+    [
+      "variant",
+      '"default" | "console"',
+      '"default"',
+      "console has a wide cap thumb.",
+    ],
+    ["size", '"sm" | "default" | "lg"', '"default"', null],
+    [
+      "format",
+      "(db: number) => string",
+      null,
+      "Used by FaderValue and assistive technology.",
+    ],
+    ["disabled", "boolean", "false", null],
+  ]}
+/>
+
+### FaderValue
+
+The value is as wide as the longest text the fader's range can show, and right-aligned, so moving the fader never shifts the layout. The editor opens at the same width.
+
+<PropsTable
+  rows={[
+    [
+      "editable",
+      "boolean",
+      "false",
+      'Click to type a value. Accepts "-6", "−6 dB" and "-inf".',
+    ],
+  ]}
+/>
+
+### FaderScale
+
+Takes [audiocn's DbScale](https://audiocn.dev/docs/components/db-scale) props. The range, taper and orientation come from the fader.

@@ -48,6 +48,9 @@
     "accordion",
     "collapsible",
     "chrome-row",
-    "chart"
+    "chart",
+    "---Audio---",
+    "fader",
+    "parameter-slider"
   ]
 }
