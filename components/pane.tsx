@@ -73,10 +73,22 @@ function Pane({
 const PANE_OWNS_SCROLL = { "data-pane-scroll": "own" } as const;
 
 /**
+ * The attribute a page puts on its root when its width must not move as it
+ * grows past the pane's height: PaneBody keeps the scrollbar's gutter
+ * (`scrollbar-gutter: stable`), so a classic scrollbar (Linux, Windows)
+ * showing up never narrows the page. Overlay scrollbars (macOS) take no
+ * gutter, so nothing changes there.
+ */
+const PANE_STABLE_GUTTER = { "data-pane-gutter": "stable" } as const;
+
+/**
  * The pane's scroll container: the only thing that scrolls. A page whose root
  * carries `PANE_OWNS_SCROLL` turns it into a flex column instead, so the
  * page's own scroll region gets the height; `scroll={false}` does the same
- * for a body that always owns its scroll.
+ * for a body that always owns its scroll. It is `relative`, the containing
+ * block of what it scrolls: an absolute descendant with no other positioned
+ * ancestor (an `sr-only` label) would otherwise be placed against <body>,
+ * escape this clip and give the window a scrollbar.
  */
 function PaneBody({
   children,
@@ -90,9 +102,9 @@ function PaneBody({
   return (
     <div
       className={cn(
-        "min-h-0 flex-1",
+        "relative min-h-0 flex-1",
         scroll
-          ? "overflow-y-auto overscroll-contain has-[>[data-pane-scroll=own]]:flex has-[>[data-pane-scroll=own]]:flex-col has-[>[data-pane-scroll=own]]:overflow-y-hidden"
+          ? "overflow-y-auto overscroll-contain has-[>[data-pane-gutter=stable]]:[scrollbar-gutter:stable] has-[>[data-pane-scroll=own]]:flex has-[>[data-pane-scroll=own]]:flex-col has-[>[data-pane-scroll=own]]:overflow-y-hidden"
           : "flex flex-col",
         className
       )}
@@ -131,5 +143,6 @@ export {
   PaneBody,
   PaneStrip,
   PANE_OWNS_SCROLL,
+  PANE_STABLE_GUTTER,
   WINDOW_TITLE_CLASS,
 };

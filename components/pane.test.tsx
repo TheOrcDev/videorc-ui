@@ -6,6 +6,7 @@ import { GroupedList, ListRow, ListRowButton } from "@/components/list-row";
 import { ConfigGrid, Gallery, PageHeader } from "@/components/page";
 import {
   PANE_OWNS_SCROLL,
+  PANE_STABLE_GUTTER,
   Pane,
   PaneBody,
   PaneStrip,
@@ -67,6 +68,23 @@ describe("Toolbar", () => {
     for (const rule of ["flex", "flex-col", "overflow-y-hidden"]) {
       expect(markup).toContain(`has-[&gt;[data-pane-scroll=own]]:${rule}`);
     }
+  });
+
+  it("is the containing block of what it scrolls, so nothing escapes to the window", () => {
+    // An `sr-only` span positioned against <body> stretched the document past
+    // the window, and a window scrollbar narrowed the page.
+    for (const scroll of [true, false]) {
+      expect(
+        renderToStaticMarkup(<PaneBody scroll={scroll}>x</PaneBody>)
+      ).toMatch(/class="relative\s/u);
+    }
+  });
+
+  it("keeps the gutter for a page whose width must not move", () => {
+    expect(PANE_STABLE_GUTTER).toEqual({ "data-pane-gutter": "stable" });
+    expect(renderToStaticMarkup(<PaneBody>x</PaneBody>)).toContain(
+      "has-[&gt;[data-pane-gutter=stable]]:[scrollbar-gutter:stable]"
+    );
   });
 
   it("titles the toolbar with the one window title recipe: 14 px / 600", () => {
