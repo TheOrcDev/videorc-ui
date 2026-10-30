@@ -1,0 +1,238 @@
+---
+title: Using it in Electron
+description: Install videorc/ui into an Electron renderer built with Vite. The aliases, the chrome ground under the window, platform glyphs, accelerators, and keeping your copy in sync.
+---
+
+Videorc runs these components in Electron, in a React renderer built with Vite and `rsc: false`. Nothing in the registry imports `next/*` or Electron, so the same steps work for electron-vite, Electron Forge's Vite plugin or a plain Vite app.
+
+## Set up the renderer
+
+<Steps>
+
+<Step>
+
+### Point components.json at the renderer
+
+Paths and aliases are relative to the renderer's source. With electron-vite's layout:
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-rhea",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/renderer/src/styles.css",
+    "baseColor": "stone",
+    "cssVariables": true
+  },
+  "iconLibrary": "phosphor",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "registries": {
+    "@videorc": "https://ui.videorc.com/r/{name}.json"
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+### Resolve the `@` alias
+
+Vite resolves it in the renderer's config:
+
+```ts title="electron.vite.config.ts"
+import { resolve } from "node:path";
+
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "electron-vite";
+
+export default defineConfig({
+  // main and preload stay as they are
+  renderer: {
+    plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: { "@": resolve("src/renderer/src") },
+    },
+  },
+});
+```
+
+TypeScript resolves it through `paths`. Add them to the renderer's tsconfig and to the root `tsconfig.json`, which the shadcn CLI reads:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/renderer/src/*"]
+    }
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+### Import shadcn's variants
+
+The renderer's stylesheet needs `shadcn/tailwind.css` after Tailwind. The theme lands below these lines.
+
+```css title="src/renderer/src/styles.css"
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+```
+
+</Step>
+
+<Step>
+
+### Add the theme and the desktop base
+
+```npm
+npx shadcn@latest add @videorc/theme @videorc/desktop
+```
+
+The [desktop base](/docs/concepts/desktop) makes the window behave like an app: chrome text doesn't select, the arrow stays the pointer, and nothing rubber-bands.
+
+</Step>
+
+</Steps>
+
+### About `"use client"`
+
+Registry files that run in the browser start with `"use client"`, and the CLI keeps the directive even for `rsc: false` projects. Vite ignores it, so it's harmless. Leave it in: a file that matches the registry exactly diffs cleanly the next time you sync.
+
+## The ground under the window
+
+Videorc's surfaces are translucent coats, tuned to sit on the chrome ground: a frosted still of Liquid Chrome. The window itself is opaque. There's no vibrancy, no Mica and no `transparent: true`, so the desktop never shows through and nothing depends on the wallpaper or the compositor.
+
+Give the window the theme's solid as its background, so the first frame is already the right tone:
+
+```ts title="src/main/index.ts"
+const mainWindow = new BrowserWindow({
+  // --glass-solid: #070707 in dark, #FAFAFA in light
+  backgroundColor: nativeTheme.shouldUseDarkColors ? "#070707" : "#FAFAFA",
+});
+```
+
+Then mount [ChromeGround](/docs/primitives/chrome-ground) once per window, at the root, under everything. It takes the URLs of a dark and a light still as props. Import the images as files, so they don't end up inlined in your bundle as data URIs:
+
+```tsx
+import groundDark from "./assets/chrome-ground-dark.webp?no-inline";
+import groundLight from "./assets/chrome-ground-light.webp?no-inline";
+```
+
+- Both stills stay mounted, and the `.dark` class picks one, so a theme toggle never shows a frame of the other ground.
+- It's sized to the display and centered on the window: resizing shows more or less chrome and never rescales it.
+- It's hidden from assistive tech and from the pointer.
+- No filter, transition or animation runs on it. It's a still, so it costs nothing while you record.
+- Under Reduce Transparency, the theme hides it and the coats go solid.
+
+Don't reach for `backdrop-filter` to fake the frost. On a window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display.
+
+The theme sets `color-scheme` on `body`. Don't set it inline on `<html>`: a root `color-scheme: light` makes Chromium paint an opaque canvas over the window.
+
+## Platform glyphs
+
+Shortcuts and OS words depend on the platform: ⌘ or Ctrl, Finder or Explorer, Trash or Recycle Bin. [Platform](/docs/hooks/platform) works it out in this order:
+
+1. the platform you pass, such as Electron's `process.platform`;
+2. `data-platform` on `<html>`;
+3. the user agent.
+
+Set `data-platform` before the first paint, so a Mac never flashes "Ctrl". Use a small script file in the `<head>`, not a module, so it runs before the page draws. A file also passes a strict Content Security Policy where an inline script wouldn't.
+
+```js title="src/renderer/public/platform.js"
+const agent = navigator.userAgent;
+let platform = "linux";
+if (agent.includes("Macintosh")) {
+  platform = "darwin";
+} else if (agent.includes("Windows")) {
+  platform = "win32";
+}
+document.documentElement.dataset.platform = platform;
+```
+
+```html title="src/renderer/index.html"
+<head>
+  <script src="/platform.js"></script>
+</head>
+```
+
+When your app knows the platform for sure (from `process.platform`, passed through your preload), pass it in: `<ShortcutKeys accelerator="CmdOrCtrl+K" platform={platform} />`.
+
+The theme can't ship a custom variant, so add one yourself for Windows-only chrome. It keys on the same attribute, so it never pops in:
+
+```css title="src/renderer/src/styles.css"
+@custom-variant win32 (&:is([data-platform="win32"] *));
+```
+
+```tsx
+<div className="hidden win32:flex">…</div>
+```
+
+## Accelerators
+
+Write every shortcut once, as an Electron accelerator, the same string you give a menu item or `globalShortcut`:
+
+```ts title="src/main/menu.ts"
+const streamManagerItem: MenuItemConstructorOptions = {
+  accelerator: "CmdOrCtrl+Shift+J",
+  click: openStreamManager,
+  label: "Stream Manager",
+};
+```
+
+Then print it in the renderer with [ShortcutKeys](/docs/components/shortcut-keys):
+
+```tsx
+<ShortcutKeys accelerator="CmdOrCtrl+Shift+J" />
+```
+
+That reads ⇧⌘J on macOS and Ctrl+Shift+J on Windows and Linux, the way each platform's menus print it. In running text, use `shortcutLabel` from [platform](/docs/hooks/platform), and `shortcutAriaKeys` for `aria-keyshortcuts`. Keep the accelerators in one table that main and the renderer both import, so a menu and its key chip can't disagree. [Accelerator](/docs/hooks/accelerator) parses every spelling Electron accepts.
+
+## Electron state comes in through props
+
+Registry components never call `window.*` bridges, `ipcRenderer` or anything else Electron. Whatever Electron knows (the platform, whether a window is pinned, the list of cameras) comes in as props, and changes go out as callbacks. Your screens talk to the preload API:
+
+```tsx
+function KeepOnTopButton() {
+  const [pinned, setPinned] = useState(false);
+  const togglePinned = () => {
+    // The screen talks to Electron; the button only sees a prop and a callback.
+    window.desktop.setAlwaysOnTop(!pinned);
+    setPinned(!pinned);
+  };
+  return (
+    <Button aria-pressed={pinned} onClick={togglePinned} variant="ghost">
+      Keep on top
+    </Button>
+  );
+}
+```
+
+Here `window.desktop` stands for your own preload API. Keeping it out of the components means they render the same in a browser, in tests and in these docs, and the registry never learns your IPC names.
+
+## Keeping your copy in sync
+
+The registry stays the source of a component after you install it. To pull a newer version, add it again with `--overwrite`:
+
+```npm
+npx shadcn@latest add @videorc/button --overwrite
+```
+
+Then run your formatter on the files it touched, so the diff shows only real changes, and review it. Don't edit a synced file in place: change it upstream, or stop syncing that item, as Videorc does with its own icon set.

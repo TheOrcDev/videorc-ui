@@ -1,0 +1,223 @@
+---
+title: Theme
+description: The Videorc tokens in light and dark, the glass, chrome and tone utilities, and the base layer. Every videorc/ui component depends on it.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/theme
+```
+
+Every component lists the theme as a dependency, so the CLI also adds it with the first component you install.
+
+Your global stylesheet must import `shadcn/tailwind.css` after `tailwindcss`. It defines the `data-open`, `data-checked`, `data-horizontal` and other variants the components style with. Every `base-*` project has it. Keep shadcn's class-based dark variant too, so `dark:` utilities follow the same `.dark` class the tokens do:
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+```
+
+## What gets added
+
+The CLI merges the theme into your global stylesheet:
+
+| Part | Where it lands | What it is |
+| --- | --- | --- |
+| Light tokens | `:root` | The light column: porcelain, graphite and black chrome |
+| Dark tokens | `.dark` | The dark column, the reference: black glass and silver chrome |
+| `@theme` mappings | `@theme inline` | Colors, radius tiers, the desktop scale, type tokens and fonts, as Tailwind utilities |
+| Utilities | `@utility` blocks | `glass-*`, `chrome-*` and `tone-*` |
+| Media queries | Top level | Increase Contrast and Reduce Transparency |
+| Toast styles | Top level | Sonner's toasts on the float glass |
+| Base layer | `@layer base` | Borders, the body coat, the focus ring, reduced motion |
+
+The base layer:
+
+- gives every element the border color and a ring-colored outline;
+- paints `body` with the window coat (`bg-glass-window`) and primary text, so the first paint is already the theme's tone;
+- sets `color-scheme` on `body`, never on the root. A root `color-scheme: light` makes Chromium paint an opaque canvas over a transparent window;
+- sets the font to the system stack: SF Pro on macOS, Segoe UI on Windows;
+- draws a 2 px focus ring on `:focus-visible`;
+- collapses motion under `prefers-reduced-motion`.
+
+The theme declares no `@custom-variant`. The shadcn CLI can't carry one through a registry item, so the components use built-in variants only.
+
+## Tokens
+
+Values are dark · light. Neutrals are OKLCH with chroma 0, written here as their lightness.
+
+### Surfaces and coats
+
+| Token | Utility | Dark · light | What it is |
+| --- | --- | --- | --- |
+| `--glass-base` |  | `0.13 0 0` · `0.985 0 0` | The solid's OKLCH components. Every coat is cut from it |
+| `--glass-solid` | `bg-glass-solid` | `#070707` · `#FAFAFA` | The theme's solid tone, opaque |
+| `--glass-cover-sidebar` |  | 0.88 · 0.92 | How much of the solid the sidebar paints over the ground |
+| `--glass-cover-work` |  | 0.82 · 0.86 | How much of the solid the work area paints |
+| `--glass-cover-body` |  | Derived | The lighter of the two covers |
+| `--glass-window` | `bg-glass-window` | Derived | The body's coat |
+| `--glass-sidebar` | `bg-glass-sidebar` | Derived | The sidebar's delta over the body |
+| `--glass-content` | `bg-glass-content` | Derived | A content pane's delta over the body |
+| `--color-inset` | `bg-inset` | Text at 3% | A well inside a section: a grouped list, a read-only field |
+| `--video-ground` | `bg-video-ground` | `0.13` in both | The letterbox behind video. Dark in both themes, because it frames a picture |
+
+Set the covers and leave the coats alone: they're computed so each region composites to exactly its cover. See [The ground and the coats](/docs/concepts/design-language#the-ground-and-the-coats).
+
+### Floats
+
+| Token | Utility | Dark | Light |
+| --- | --- | --- | --- |
+| `--glass-float` | `glass-float` | The dialog tier plus 3% white, about `#1D1D1D` | `0.99` |
+| `--glass-float-dialog` | `glass-float-dialog` | The solid plus 6% white, about `#161616` | `0.99` |
+| `--glass-float-tooltip` | `glass-float-tooltip` | The solid | `0.99` |
+| `--glass-float-rim` |  | White 10% | Black 10% |
+| `--glass-float-drop` |  | `0 14px 44px` black 50%, `0 1px 3px` black 30% | `0 12px 36px` black 14%, `0 1px 3px` black 8% |
+| `--glass-float-dialog-drop` |  | The same as `--glass-float-drop` | `0 16px 48px` black 20%, `0 1px 10px` black 14% |
+
+A light dialog gets the deeper drop so porcelain separates from the white chrome under it.
+
+### Text tiers
+
+| Token | Utility | Dark · light | Increase Contrast |
+| --- | --- | --- | --- |
+| `--foreground` | `text-foreground` | 0.97 · 0.17 | Unchanged |
+| `--muted-foreground` | `text-muted-foreground` | 0.71 · 0.47 | 0.8 · 0.38 |
+| `--subtle` | `text-subtle` | 0.62 · 0.54 | 0.68 · 0.45 |
+
+### Semantic tones
+
+| Token | Dark | Light | Use |
+| --- | --- | --- | --- |
+| `--live` | `oklch(0.62 0.24 27)` | `oklch(0.55 0.24 27)` | Record, on air |
+| `--destructive` | `oklch(0.6 0.23 27)` | `oklch(0.55 0.24 27)` | Failed, delete |
+| `--success` | `oklch(0.7 0.15 150)` | `oklch(0.6 0.14 150)` | Healthy, connected |
+| `--warning` | `oklch(0.81 0.15 75)` | `oklch(0.75 0.15 75)` | Needs attention |
+| `--info` | `oklch(0.68 0.14 250)` | `oklch(0.58 0.14 250)` | Neutral news, rarely |
+| `--member` | `oklch(0.7 0.12 300)` | `oklch(0.55 0.13 300)` | Paid membership. Only a member row's edge, never text |
+| `--reward` | `oklch(0.72 0.11 200)` | `oklch(0.55 0.11 200)` | Channel point rewards. Only a row tint, never text |
+
+Each has a `-foreground` partner except `--reward`, and each maps to Tailwind colors (`bg-success`, `bg-live/10`). Show a status through a [tone utility](#utilities) on a chip or a dot rather than coloring text.
+
+The theme also carries theme-invariant brand tints for platform marks (`text-platform-youtube`, `-twitch`, `-instagram`, `-facebook`, `-kick`), and meter and channel tones (`--meter-ok`, `--meter-warn`, `--meter-clip`, `--channel-mute`) for audio components.
+
+### Hairlines and selection
+
+| Token | Utility | Dark · light | Increase Contrast |
+| --- | --- | --- | --- |
+| `--border` | `border-border` | White 10% · black 12% | 24% · 28% |
+| `--input` | `border-input` | White 10% · black 12% | 24% · 28% |
+| `--ring` | `ring-ring` | White 28% · black 25% | Unchanged |
+| `--accent` | `bg-accent` | White 8% · black 6% | Unchanged |
+| `--accent-pressed` | `bg-accent-pressed` | White 12% · black 10% | Unchanged |
+
+A hairline is always 1 px. `bg-accent` is the hover and selected block for rows and menu items: a full-row fill, no outline.
+
+shadcn's own tokens (`--background`, `--card`, `--primary`, `--secondary`, `--muted`, `--popover`, `--sidebar-*`) are all set, monochrome. `--primary` is ink on porcelain and chrome on black, and `--popover` follows `--glass-float`.
+
+### Radius
+
+| Utility         | Token            | Size  | For                      |
+| --------------- | ---------------- | ----- | ------------------------ |
+| `rounded-panel` | `--radius-panel` | 12 px | Containers, dialogs      |
+| `rounded-row`   | `--radius-row`   | 8 px  | Rows, cards, tooltips    |
+| `rounded-chip`  | `--radius-chip`  | 6 px  | Controls, key chips      |
+| `rounded-tag`   | `--radius-tag`   | 7 px  | Tags                     |
+| `rounded-lg`    | `--radius-lg`    | 10 px | Menus, selects, popovers |
+
+`--radius` is `0.625rem`, and shadcn's `rounded-sm` to `rounded-xl` scale stays on it for stock components. Videorc's own code uses the tiers.
+
+### Desktop scale
+
+| Utility                     | Token                   | Size  |
+| --------------------------- | ----------------------- | ----- |
+| `h-control`, `size-control` | `--spacing-control`     | 28 px |
+| `h-row`                     | `--spacing-row`         | 32 px |
+| `h-row-compact`             | `--spacing-row-compact` | 28 px |
+| `h-toolbar`                 | `--spacing-toolbar`     | 40 px |
+| `h-status-bar`              | `--spacing-status-bar`  | 26 px |
+| `px-gutter`                 | `--spacing-gutter`      | 16 px |
+
+They're spacing tokens, so every spacing utility takes them: `min-h-row`, `gap-gutter`, `py-gutter`. See [Desktop scale](/docs/concepts/desktop-scale).
+
+### Type
+
+| Utility        | Size  | Line height | Weight  |
+| -------------- | ----- | ----------- | ------- |
+| `text-label`   | 11 px | 16 px       | 600     |
+| `text-meta`    | 12 px | 16 px       | Regular |
+| `text-section` | 13 px | 20 px       | 600     |
+
+Body text stays `text-sm` (14 px).
+
+### Chip and chrome tokens
+
+The `--chip-*`, `--keycap-*`, `--chrome-*`, `--chrome-row-*`, `--knob*` and `--scrollbar-thumb*` tokens tune the utilities below: fills, rims, highlights, drops and gradient stops, per theme. Tune the tokens, not the utilities.
+
+## Utilities
+
+| Utility | What it paints |
+| --- | --- |
+| `glass-chip` | A neutral chip: a gradient fill, rim, top highlight and soft drop |
+| `glass-chip-tinted` | An emphasis chip: the same glass tinted with `--chip-tone`, with tone-mixed text |
+| `glass-dot` | A status dot in `--chip-tone`, with a 2 px halo and a glow |
+| `glass-keycap` | A key chip: a brighter top edge and a dark bottom edge |
+| `glass-float` | The popup tier: menus, selects, popovers, hover cards, toasts |
+| `glass-float-dialog` | The dialog tier: dialogs and the command palette |
+| `glass-float-tooltip` | The tooltip tier |
+| `chrome-fill` | The polished primary fill. Lifts on hover, turns concave when pressed, flat when disabled |
+| `chrome-plate` | The selected or active plate |
+| `chrome-bead` | A knob or thumb: a silver bead in dark, a pearl in light |
+| `chrome-bead-ink` | The dark bead for a knob on a chrome track |
+| `chrome-led` | The record LED. Glows with `data-lit` |
+| `chrome-row-live` | A row that's on stream: a plate with a polished 2 px edge on the left |
+| `chrome-row-member` | A member's row: a quieter plate with a 2 px edge in the member hue |
+| `tone-success`, `tone-warning`, `tone-destructive`, `tone-live`, `tone-info` | Set `--chip-tone` for the chip and dot utilities |
+| `tone-neutral` | A gray tone whose dot doesn't glow |
+
+Pair a `glass-*` utility with `border`: it sets the rim's color, and the element brings the width. The `chrome-*` utilities write their light and shade into Tailwind's shadow stack, so focus rings still compose with them.
+
+## Toasts
+
+The theme restyles [Sonner](/docs/components/sonner): every toast is the same `glass-float` panel with monochrome text, and a typed toast colors its icon only. `richColors` would paint solid green, amber and red panels; here its colors point back at the glass.
+
+## Accessibility
+
+The theme follows three system settings. They're media queries, so a change applies at once, with no reload.
+
+| Setting | What changes |
+| --- | --- |
+| `prefers-contrast: more` | Hairlines, input borders and every rim get stronger. The secondary and tertiary text tiers move a step closer to primary. Both covers go to 95%. A chrome fill and the record LED gain a 1 px edge |
+| `prefers-reduced-transparency: reduce` | The window coat becomes `--glass-solid`, the sidebar and content coats go transparent, and anything marked `data-chrome-ground` is hidden, so text contrast never depends on what's behind it. It wins when Increase Contrast is on too |
+| `prefers-reduced-motion: reduce` | Every animation and transition collapses to 0.01 ms with one iteration, and `scroll-behavior` goes to `auto`. Behavior stays the same |
+
+Under both contrast settings, the chrome controls keep their gradients: they're opaque.
+
+## Customizing
+
+The components read the variables, so customizing is editing them in your global stylesheet:
+
+- Change a cover (`--glass-cover-sidebar`, `--glass-cover-work`), not a coat. The coats are derived from the covers.
+- After changing a surface or a text color, check the contrast of all three text tiers over your own background.
+- Keep neutrals at chroma 0 to keep the monochrome look.
+
+Running `npx shadcn@latest add @videorc/theme` again merges the registry's values back over your edits.
+
+In this repository the theme is generated. `styles/videorc.css` is the source of truth, comments and all, and `pnpm theme:build` turns it into the registry's `theme` item. Edit the stylesheet, then run the build; `pnpm theme:check` fails while the registry is out of date.
+
+## On a web page
+
+The coats are translucent and tuned to sit on the chrome ground. On a plain page, give the page the theme's solid so they composite to the right tone:
+
+```css title="app/globals.css"
+@layer base {
+  html {
+    background-color: var(--glass-solid);
+  }
+}
+```
+
+Or mount [ChromeGround](/docs/primitives/chrome-ground) for the full material. Leave out the [desktop base](/docs/concepts/desktop) on a website, so text stays selectable.

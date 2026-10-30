@@ -23,7 +23,9 @@ export default defineConfig({
   },
   webServer: {
     command: `pnpm start --hostname 127.0.0.1 --port ${PORT}`,
-    reuseExistingServer: true,
+    // Always this build: a leftover server from an older build serves stale
+    // chunks, and every page comes back blank.
+    reuseExistingServer: false,
     timeout: 120_000,
     url: `http://127.0.0.1:${PORT}`,
   },

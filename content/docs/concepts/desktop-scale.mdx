@@ -1,0 +1,76 @@
+---
+title: Desktop scale
+description: One control height, one row, one toolbar and one status bar for every screen. The sizes that make videorc/ui feel like a desktop app.
+---
+
+A desktop app is denser than a web page, on purpose:
+
+- **A pointer, not a finger.** A mouse or trackpad hits a 28 px control easily. A 44 px touch target spends room a pointer doesn't need.
+- **Windows share the screen.** A recording app sits beside the thing it records, often in a fraction of the display. Its controls should leave room for the preview, the chat and the work.
+- **It matches the OS.** Native controls on macOS and Windows are in the same range, so the app reads as part of the desktop rather than a site in a frame.
+- **It's used for hours, by people who know it.** Dense, steady layouts and keyboard shortcuts serve repeat use better than big, airy ones.
+
+Density comes from structure, not from smaller text. Body text stays 14 px.
+
+## The scale
+
+| Utility | Size | For |
+| --- | --- | --- |
+| `h-control`, `size-control` | 28 px | Every control: a button, an input, a select trigger, a toggle |
+| `h-row` | 32 px | A list row |
+| `h-row-compact` | 28 px | A compact row: the sidebar, a dense list |
+| `h-toolbar` | 40 px | A pane's toolbar and a window's title row |
+| `h-status-bar` | 26 px | The status bar |
+| `px-gutter` | 16 px | The pane gutter |
+
+They're Tailwind spacing tokens, so every spacing utility takes them: `min-h-row`, `gap-gutter`, `py-gutter`. Change one in the [theme](/docs/concepts/theme) and every screen follows.
+
+## Controls
+
+- **28 px is the default** for a [button](/docs/components/button), an input, a select trigger and a toggle. It's set once, in the component; a screen never sets a control's height.
+- **One compact size, `xs`, at 24 px.** Use it only where a control sits inside something denser than a page:
+  - an alert's action;
+  - a row's trailing or hover actions;
+  - a card's actions;
+  - a status bar or a dense side pane;
+  - a small inline action under a field, such as Reset.
+- **A page's or a dialog's own actions stay 28 px,** and so does a control beside a 28 px control in the same row.
+- **`lg`, 32 px,** is for a dialog's or a card's single call to action.
+- **There's no `sm`.** It would be 28 px under another name. A [badge](/docs/components/badge) has one size, 20 px.
+
+## Type
+
+| Utility | Size | Weight | For |
+| --- | --- | --- | --- |
+| `text-label` | 11 px | 600 | Section labels, in the tertiary tier |
+| `text-meta` | 12 px | Regular | Descriptions and metadata |
+| `text-section` | 13 px | 600 | Section headers |
+| `text-sm` | 14 px | Regular | Body text |
+| `text-sm font-semibold` | 14 px | 600 | A page or window title |
+
+No text is smaller than 11 px, and an arbitrary `text-[13px]` never stands in for a token. The font is the system stack: SF Pro on macOS, Segoe UI on Windows.
+
+## Radius
+
+| Utility         | Size  | For                      |
+| --------------- | ----- | ------------------------ |
+| `rounded-panel` | 12 px | Containers, dialogs      |
+| `rounded-row`   | 8 px  | Rows, cards, tooltips    |
+| `rounded-chip`  | 6 px  | Controls, key chips      |
+| `rounded-tag`   | 7 px  | Tags                     |
+| `rounded-lg`    | 10 px | Menus, selects, popovers |
+
+Menu items are 6 px inside a 4 px inset, so the corners stay concentric with their 10 px menu. Status chips are fully round, and window corners belong to the OS.
+
+## Layout
+
+- **No page column.** Content fills its pane edge to edge, with the 16 px gutter.
+- **Flush panes.** Panes are split by 1 px hairlines. Inside a window there are no floating panels, no shadows and no big cards.
+- **Flush sections.** A 13 px header, a 12 px description, a hairline between sections and 16 px of padding. No border, background, radius or shadow. See [PanelSection](/docs/primitives/panel-section).
+- **Lists, not card stacks.** Like things are one grouped list of 32 px rows with hairline separators. See [ListRow](/docs/primitives/list-row). Cards are only for objects with a picture.
+- **The toolbar holds the title.** Actions live with the content they act on.
+- **The status bar** carries the state on the left and quiet shortcut hints on the right. See [StatusBar](/docs/primitives/status-bar).
+
+## The one exception
+
+The ⌘K command palette keeps a larger, launcher-sized scale: an 18 to 20 px search field and 40 px rows. It's read at a glance and gone again. Nothing else uses that scale.

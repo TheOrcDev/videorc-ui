@@ -1,0 +1,53 @@
+---
+title: useReducedMotion
+description: True when the system asks to reduce motion, plus smoothScrollBehavior() for script-driven scrolls.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/use-reduced-motion
+```
+
+## Usage
+
+```tsx
+import {
+  smoothScrollBehavior,
+  useReducedMotion,
+} from "@/hooks/use-reduced-motion";
+```
+
+Use the hook for motion CSS can't see, such as a JavaScript animation or a canvas:
+
+```tsx
+function LevelMeter({ level }: { level: number }) {
+  const reducedMotion = useReducedMotion();
+  return reducedMotion ? (
+    <StaticLevel level={level} />
+  ) : (
+    <AnimatedLevel level={level} />
+  );
+}
+```
+
+Pass `smoothScrollBehavior()` instead of a bare `"smooth"` to a script-driven scroll:
+
+```tsx
+row.scrollIntoView({ behavior: smoothScrollBehavior(), block: "nearest" });
+```
+
+## Behavior
+
+- **CSS motion doesn't need it.** The [theme](/docs/concepts/theme#accessibility) already collapses every CSS transition and animation, and `scroll-behavior`, under reduced motion. The hook and the helper cover what runs in JavaScript.
+- **It follows the setting live.** The hook subscribes to `(prefers-reduced-motion: reduce)` and re-renders when it changes, with no reload.
+- **It's `false` on the server,** and during hydration, then the real value right after.
+- **`smoothScrollBehavior()` isn't a hook.** It reads the setting when you call it, so call it in the event handler or effect that scrolls. It returns `"auto"` under reduced motion and `"smooth"` otherwise, including on a server.
+- **It shares a path with audiocn's hook.** audiocn ships `hooks/use-reduced-motion.ts` with the same `useReducedMotion`; this file adds `smoothScrollBehavior`. If you use both registries and the CLI asks to overwrite this file with audiocn's, keep this one.
+
+## API reference
+
+| Export | Signature | Returns |
+| --- | --- | --- |
+| `useReducedMotion` | `() => boolean` | True when the system asks to reduce motion |
+| `smoothScrollBehavior` | `() => ScrollBehavior` | `"auto"` under reduced motion, else `"smooth"` |

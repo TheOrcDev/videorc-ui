@@ -65,13 +65,13 @@ These follow audiocn's `plans/002-conventions.md`, adapted for Videorc.
 
 - The item name is kebab-case, equals the file name, and equals the docs slug. A test enforces the last part.
 - Types: `registry:style` or `registry:theme` for the theme, `registry:lib`, `registry:hook`, `registry:ui`, `registry:component` for primitives, and later `registry:block`.
-- `registryDependencies` uses `@videorc/<name>` for our items, `@audiocn/<name>` for upstream audiocn items, and bare names only for stock shadcn items we don't customise.
+- `registryDependencies` uses `@videorc/<name>` for our items, `@audiocn/<name>` for upstream audiocn items, and bare names only for stock shadcn items we don't customise. `cn` is our own `@videorc/utils` (clsx and tailwind-merge, taught the theme's sizes, type tokens and radius tiers), never the stock `utils`.
   - Every customised shadcn component is **our** item (`@videorc/button`), even though it installs to `components/ui/button.tsx`.
 - Every UI item depends on `@videorc/theme`, so installing anything brings the tokens.
 - Components import only through the standard aliases (`@/components/ui/*`, `@/components/*`, `@/lib/*`, `@/hooks/*`).
   - No `next/*` imports in registry code. Videorc is Vite and Electron.
   - No `window.videorc` calls. The app passes Electron state in through props.
-- `"use client"` stays in sources. The CLI strips it for `rsc: false` consumers; `test-install` proves that.
+- `"use client"` stays in sources. The CLI keeps it even for `rsc: false` consumers (found while building `test-install`), and Vite ignores the directive, as Videorc's own files already show.
 
 ### Theme item
 
@@ -79,7 +79,6 @@ These follow audiocn's `plans/002-conventions.md`, adapted for Videorc.
 
 - the light and dark tokens from Videorc's `styles.css`: the translucent surfaces, the three text tiers (`--subtle`), `--live`, `--success`, `--warning`, `--info`, the radius tiers (`rounded-panel`, `rounded-row`, `rounded-chip`), and the shadows;
 - the `@utility` classes (`glass-chip*`, `glass-float*`, `glass-dot`, `glass-keycap`, `chrome-*`, `tone-*`);
-- the `win32` variant;
 - the base layer (focus ring, scrollbars, reduced motion, typing-dot keyframes).
 
 **Spike, first thing in Phase 1:** can a registry item's `css` field carry `@utility` and `@custom-variant` blocks through `shadcn add`?
@@ -229,7 +228,7 @@ Each phase lands as small PRs. "Done when" is the bar for each.
    - Theming and tokens
    - Icons
    - Desktop scale
-   - Using it in Electron (translucency, the `win32` variant, passing window state in as props)
+   - Using it in Electron (translucency, passing window state in as props)
 5. **Build `PreviewGround`**, and set the site's dark and light look on the Videorc tokens.
 
 **Done when:**
@@ -245,7 +244,6 @@ Each phase lands as small PRs. "Done when" is the bar for each.
    - Dialog: `size`, `DialogBody`, `shadow-glass`, no blur.
    - Command, select and dropdown: the fixes listed above.
    - Kbd: Videorc's chip.
-   - Input: `inputVariants`.
 2. Normalise the radius tiers while porting. Videorc's copies are inconsistent: some are `rounded-md`, others `rounded-2xl`, `rounded-3xl` or `rounded-xl`. Panel, row and chip are the only tiers.
 3. Each item gets a docs page, a default example, and a states example (disabled, invalid, open).
 
@@ -354,6 +352,27 @@ Never edit a synced file in Videorc. `ui:check` fails if anyone does.
   - Nucleo never enters this repo.
   - Brand glyphs follow each platform's rules.
   - The Videorc trademark is separate from MIT.
+
+## Findings while building (2026-10-30)
+
+- **The shadcn CLI can't carry `@custom-variant` through an item's `css`.** The theme is generated from `styles/videorc.css` into `cssVars` and `css` by `pnpm theme:build`. Videorc's `win32` variant (unused by any component) stays in the app.
+- **The CLI keeps `"use client"` in `rsc: false` apps.** That's harmless: Vite ignores the directive.
+- **Stock `cn` drops Videorc's type tokens and can't override the size and radius tokens.** The registry ships Videorc's configured `cn` as `@videorc/utils`.
+- **Base UI differences Videorc's call sites must absorb in Phase 7:**
+  - `asChild` → `render`.
+  - Menu items: `onSelect` → `onClick`.
+  - Select needs `items`.
+  - `onValueChange` arguments: ToggleGroup and Accordion take arrays, and a single-thumb Slider takes a scalar.
+  - `onValueCommit` → `onValueCommitted`.
+  - Checkbox: `checked="indeterminate"` → `indeterminate`.
+  - Attribute selectors:
+    - `data-state=open` → `data-open` / `data-popup-open` / `data-panel-open`;
+    - `data-state=active` → `data-active`;
+    - `data-state=on` → `data-pressed`.
+  - HoverCard delays move to the trigger.
+  - Focus props: `onOpenAutoFocus` / `onCloseAutoFocus` → `initialFocus` / `finalFocus`.
+
+  The family ports list these in their reports, and Phase 7 works through them family by family.
 
 ## Owner answers (2026-10-30)
 

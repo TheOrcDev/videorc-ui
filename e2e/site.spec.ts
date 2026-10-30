@@ -123,7 +123,7 @@ test("the search dialog lists docs and links before anything is typed", async ({
   await trigger.click();
   const dialog = page.getByRole("dialog");
   await Promise.all(
-    ["Getting started", "Components", "Links", "Theme"].map((heading) =>
+    ["Getting started", "Concepts", "Components", "Links"].map((heading) =>
       expect(dialog.getByText(heading, { exact: true })).toBeVisible()
     )
   );

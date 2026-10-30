@@ -1,0 +1,191 @@
+---
+title: Design language
+description: Liquid Chrome and the window family. How Videorc looks, and the rules every videorc/ui component follows.
+---
+
+Videorc is a desktop app, not a web page. Every window sits on its own Liquid Chrome ground, panes are flush and split by hairlines, controls are desktop-sized, and color is information.
+
+The reference is Videorc's logo: black metal with soft silver streaks, polished chrome on the controls you touch, and one LED-red accent. Every window shares one material and one set of rules, which is why the design is called the window family.
+
+## Dark first, light as its twin
+
+Dark is the reference. Light is the same structure with the light token column, never a separately designed theme: porcelain with graphite streaks and black-chrome controls, the dark chrome turned the other way around.
+
+Every token has a dark and a light value. A component never checks which theme is on; it reads the tokens, and the `.dark` class swaps them.
+
+## Color is information
+
+The chrome is monochrome, and every neutral is truly neutral (chroma 0, no blue or warm cast). Saturated color appears only where it means something:
+
+| Color | Token | Means |
+| --- | --- | --- |
+| Red | `--live`, `--destructive` | Record, on air, failed, destructive. The logo's LED red |
+| Green | `--success` | Healthy, connected |
+| Amber | `--warning` | Needs attention |
+| Blue | `--info` | Neutral news. Rare |
+| Brand colors | `--color-platform-*` | Source and platform icons, the only large color on screen |
+
+- Never tint a panel, a row or text for decoration.
+- Never color a status word. The tone rides on an icon, a dot, a chip or an alert, and the word stays monochrome.
+- There's no colored action accent. The primary action is chrome, not blue.
+
+## The ground and the coats
+
+Every Videorc window is opaque and sits on the chrome ground: a frosted still of Liquid Chrome, black with silver streaks in dark and its invert in light. [ChromeGround](/docs/primitives/chrome-ground) paints it once per window, under everything. The frost is baked into the image, so it costs nothing to draw.
+
+Over the ground, each region paints a coat of the theme's solid tone. How much of the solid a region paints is its cover:
+
+| Region          | Utility            | Cover, dark | Cover, light |
+| --------------- | ------------------ | ----------- | ------------ |
+| The window body | `bg-glass-window`  | 82%         | 86%          |
+| The sidebar     | `bg-glass-sidebar` | 88%         | 92%          |
+| Content panes   | `bg-glass-content` | 82%         | 86%          |
+
+The body paints the lighter cover, and the sidebar and content panes add exactly the delta that brings them to theirs. The sidebar is the heavier region; the work area shows more chrome.
+
+- **Never stack a third coat.** Each region composites to exactly its cover. A coated card on a coated pane comes out darker than anything was tuned for.
+- **Change covers, not coats.** The coats are derived from `--glass-cover-sidebar` and `--glass-cover-work`. See [Theme](/docs/concepts/theme).
+- **Contrast is measured, not eyeballed.** Each text tier is checked over the ground's brightest and darkest pixels: primary at 7:1, secondary at 4.5:1, tertiary at 3:1. That sets a floor for each cover, about 78% in dark and 83% in light.
+- **No `backdrop-filter`, anywhere.** On an Electron window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display, and in Videorc it once froze the compositor. A live blur also costs GPU time on every frame, which a recording app can't spare. The baked-in frost gives the look for free.
+
+## Floating glass
+
+What floats is flat and opaque: a tier of the window's solid tone with a 1 px rim and a drop shadow. No sheen, no highlight, no blur. Without a frost, any translucency only leaks: at 97% opacity, the white text under a hover card still reads through.
+
+| Utility | For | Dark | Light |
+| --- | --- | --- | --- |
+| `glass-float` | Menus, selects, popovers, hover cards, chart tooltips, toasts | About `#1D1D1D` | Porcelain |
+| `glass-float-dialog` | Dialogs and the command palette | About `#161616` | Porcelain, with a deeper drop |
+| `glass-float-tooltip` | Tooltips | The solid itself | Porcelain |
+
+- Pair each with `border`: the utility sets the rim's color, and the element brings its width.
+- One surface per float. A `Command` inside a [Dialog](/docs/components/dialog) stays transparent.
+- Never `bg-popover` with a ring or a shadow. In this theme `--popover` follows `glass-float`, so a freshly added shadcn component still lands on the right tone.
+
+## Chrome materials
+
+The controls you touch shine, and nothing else does. Light is the crisp invert: black chrome on porcelain.
+
+| Utility | What it is | Who wears it |
+| --- | --- | --- |
+| `chrome-fill` | The polished primary fill | [Button](/docs/components/button) `default`, a checked checkbox, a switch that's on, progress, slider ranges |
+| `chrome-plate` | Selected or active | The active segment of a [SegmentedControl](/docs/components/segmented-control), the active tab, a pressed toggle, the sidebar's current page |
+| `chrome-bead`, `chrome-bead-ink` | Knobs and thumbs | Slider thumbs and the switch knob; `-ink` is the dark bead for a knob on a chrome track |
+| `chrome-led` | A red LED | Button `record` only: Record and its stop button. `data-lit` makes it glow while a recording or livestream runs |
+
+- **Only components wear materials.** A screen gets the shine through a component's variant, never by adding a class.
+- **Everything else stays flat.** Panels, sections, rows, menus, dialogs, toasts and text never take a material or a gradient. No gradient text, no sheen on toolbars or panes.
+- **States.** A fill lifts a little on hover and turns concave when pressed. Disabled is flat. Hover on a plated segment stays the flat `bg-accent`, because the plate means selected.
+- **A lit LED only ever means record or live.** Delete stays `destructive`, never `record`.
+- The materials write into Tailwind's shadow stack, so a `ring-*` focus ring still draws over them.
+
+## Glass chips and tones
+
+Badges, status pills, tags and key chips are small pieces of the window glass: a gradient fill, a 1 px rim, a top highlight and a soft drop. They never move and never blur.
+
+| Utility | What it is |
+| --- | --- |
+| `glass-chip` | A neutral chip: a [Badge](/docs/components/badge), a secondary [Button](/docs/components/button) |
+| `glass-chip-tinted` | An emphasis chip: the tone tints the glass. Only for failed, on air and destructive |
+| `glass-dot` | A status dot: the tone, a 2 px halo and a soft glow |
+| `glass-keycap` | A key, not a tag: a brighter top edge and a dark bottom edge. [Kbd](/docs/components/kbd) wears it |
+
+Color rides in one variable, `--chip-tone`, which a tone utility sets:
+
+| Utility            | Means                         |
+| ------------------ | ----------------------------- |
+| `tone-success`     | Healthy, connected            |
+| `tone-warning`     | Needs attention               |
+| `tone-destructive` | Failed                        |
+| `tone-live`        | On air, recording             |
+| `tone-info`        | Neutral news                  |
+| `tone-neutral`     | Idle: a gray dot with no glow |
+
+A status chip keeps monochrome text and shows its tone in a 6 px dot. Only an emphasis chip tints the glass itself. Reach for [Badge](/docs/components/badge) rather than a hand-rolled pill.
+
+## Three text tiers
+
+| Utility | Tier | For |
+| --- | --- | --- |
+| `text-foreground` | Primary | Titles, labels, values |
+| `text-muted-foreground` | Secondary | Descriptions, metadata, placeholders, and every fact the user needs |
+| `text-subtle` | Tertiary | Section labels, quiet hints, disabled text |
+
+Three tiers, nothing else. Essential information never goes in `text-subtle`: a reason, a limit, a status or a value is secondary or primary. The tertiary tier passes AA on the solid, but holds only 3:1 over the ground's worst pixel.
+
+No text is smaller than 11 px. The sizes are tokens: see [Desktop scale](/docs/concepts/desktop-scale#type).
+
+## Radius tiers
+
+| Utility         | Size  | For                      |
+| --------------- | ----- | ------------------------ |
+| `rounded-panel` | 12 px | Containers, dialogs      |
+| `rounded-row`   | 8 px  | Rows, cards, tooltips    |
+| `rounded-chip`  | 6 px  | Controls, key chips      |
+| `rounded-tag`   | 7 px  | Tags                     |
+| `rounded-lg`    | 10 px | Menus, selects, popovers |
+
+Status chips are fully round. Window corners belong to the OS. There are no ad hoc radii.
+
+## Motion
+
+Fast and subtle: 100–150 ms, ease-out. Floating surfaces fade and scale from 0.98, and rows highlight instantly. Nothing bounces, chips never move, and a button doesn't shift when pressed. The ground is a still.
+
+When the system asks to reduce motion, the theme collapses every CSS transition and animation. For motion CSS can't see, such as a script-driven scroll, use [useReducedMotion](/docs/hooks/use-reduced-motion).
+
+## Keyboard first
+
+Every primary action has a shortcut, and shows it as a key chip. Global hints live in the [status bar](/docs/primitives/status-bar), not on every surface.
+
+- Write a shortcut once, as an Electron accelerator (`CmdOrCtrl+Shift+J`), and print it with [ShortcutKeys](/docs/components/shortcut-keys): ⇧⌘J on macOS, Ctrl+Shift+J on Windows and Linux. Never type ⌘ or "Cmd+" by hand.
+- A global key never fires from a text field or from under an open dialog or menu. See [Modal open](/docs/hooks/modal-open).
+- A [tooltip](/docs/components/tooltip) carries a control's name and its shortcut. A tooltip is never the only place a fact lives.
+- The focus ring shows on keyboard focus only.
+
+## Toast discipline
+
+A toast is for news the interface doesn't already show. When in doubt, don't toast: someone mid-task reads every popup as an interruption.
+
+- **No success toast for a change the user just watched happen.** In Videorc, switching a scene, a layout or a source never toasts: the stage is the confirmation.
+- **Type by meaning.** The type colors the 16 px icon only, never the panel, its rim or its text. The theme makes [Sonner](/docs/components/sonner) toasts neutral glass even with `richColors`.
+
+| Type | When |
+| --- | --- |
+| Error | It failed, and needs you |
+| Warning | It can't happen now, or it's degraded. A refusal is a warning, never an error |
+| Info | Neutral news, or a step to take somewhere else |
+| Success | Something finished out of view: a recording saved, an import done, an account connected |
+
+- The title is the outcome, with no period: "MP4 ready", "Couldn't import the image". The description is whole sentences. Add at most one action, named by its verb: "Retry", "Show in Finder".
+- About 4 seconds for one line, 8 or more with a description, and until it's dismissed when it has an action.
+- One id per kind of toast, so a newer one replaces the older and the same news never stacks.
+
+## One primitive per job
+
+Each job has one shared primitive. Screens compose them; they don't restyle them. If a primitive lacks something, extend it a little rather than hand-roll a competitor.
+
+| Need | Use |
+| --- | --- |
+| A window's ground | [ChromeGround](/docs/primitives/chrome-ground) |
+| Page sections | [PanelSection](/docs/primitives/panel-section) |
+| A list of like things | A `GroupedList` of [ListRow](/docs/primitives/list-row)s |
+| Global state and hints | [StatusBar](/docs/primitives/status-bar) |
+| A destructive confirmation | [ConfirmDialog](/docs/primitives/confirm-dialog) |
+| Any other modal | [Dialog](/docs/components/dialog) |
+| A choice of 2 to 4 values | [SegmentedControl](/docs/components/segmented-control) |
+| Per-item actions | [DropdownMenu](/docs/components/dropdown-menu) |
+| Why a control is disabled | [DisabledReason](/docs/components/disabled-reason) |
+| A shortcut | [ShortcutKeys](/docs/components/shortcut-keys) |
+| Status, tags and counts | [Badge](/docs/components/badge) |
+| News | [Sonner](/docs/components/sonner) |
+
+## Words
+
+The copy on these surfaces follows a few rules:
+
+- Sentence case everywhere: "Save local recording". Capitalize names only.
+- Plain, short and specific. Say what happened, then what to do. Use contractions and American English, and no em dashes.
+- One "…" character, never three dots. It goes on a command that asks for more ("Rename…") and on a pending label ("Saving…").
+- "Choose", not "Select". Delete destroys; Remove takes something out of a list.
+- A disabled control always says why.
+- An error names what failed ("Couldn't import the image"), then why, then one fix.

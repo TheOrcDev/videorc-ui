@@ -1,0 +1,261 @@
+---
+title: Icons
+description: The semantic icon set. Components ask for a meaning, never a glyph, so you swap an icon or the whole set in one file. Phosphor underneath.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/icons
+```
+
+This adds `components/icons.tsx` and installs `@phosphor-icons/react`.
+
+## Meaning over shape
+
+Every videorc/ui component imports its icons from `@/components/icons`, by meaning: `SourcesIcon`, `AlertIcon`, `RecordIcon`. Nothing imports `@phosphor-icons/react` directly.
+
+- **Swapping is a one-line change.** Point `SourcesIcon` at a different glyph and every component that shows sources follows.
+- **The set stays countable.** 90 slots over 86 glyphs, reviewable in one file.
+- **One glyph per meaning.** A triangle warns (`WarningIcon`), a circle alerts (`AlertIcon`), a crossed circle is an error (`ErrorIcon`). Before adding a slot, check whether one already means what you need; never add a second variant of a meaning.
+- **Copy names what an icon shows,** never its slot: "Trash", not "DeleteIcon".
+
+## Usage
+
+```tsx
+import { RecordIcon, SettingsIcon } from "@/components/icons";
+```
+
+Inside a button, mark an icon's position with `data-icon` so the padding adjusts. The button sizes its icons: 16 px, or 12 px at `xs`.
+
+```tsx
+<Button variant="record">
+  <RecordIcon data-icon="inline-start" weight="fill" />
+  Record
+</Button>
+```
+
+An icon-only button needs an `aria-label`. Icons inside a labelled button are decorative.
+
+```tsx
+<Button aria-label="Settings" size="icon" variant="ghost">
+  <SettingsIcon />
+</Button>
+```
+
+`weight` is Phosphor's: `thin`, `light`, `regular` (the default), `bold`, `fill` or `duotone`. Videorc uses `fill` for the active page in navigation and for status icons. A single-weight set can accept `weight` and ignore it.
+
+Inline and status icons are 16 px and take the secondary text color unless they carry a status. Icons draw in `currentColor`, so they follow their text.
+
+## The set
+
+The slots are grouped as they are in `components/icons.tsx`. Some slots share a glyph today (`StudioIcon` and `CameraIcon`, `SourcesIcon` and `DisplayIcon`, `AssetsIcon` and `ImageIcon`, `OutputIcon` and `RecordIcon`); they're separate slots so they can diverge without touching a component.
+
+### Navigation
+
+One slot per sidebar destination in Videorc.
+
+| Slot | Glyph | Meaning |
+| --- | --- | --- |
+| `StudioIcon` | VideoCamera | The Studio, where you record and go live |
+| `SourcesIcon` | Monitor | Sources: screens, windows, cameras, microphones |
+| `SceneIcon` | SquaresFour | Scenes and their layouts |
+| `AssetsIcon` | ImageSquare | Assets: the media you put on stream |
+| `LivestreamIcon` | Broadcast | Livestream setup and destinations |
+| `CaptionsIcon` | ClosedCaptioning | Captions |
+| `OutputIcon` | Record | Output: where recordings go |
+| `LibraryIcon` | FilmReel | The library of recordings |
+| `SettingsIcon` | GearSix | Settings |
+| `HealthIcon` | Pulse | Health: whether everything is working |
+
+### Status
+
+| Slot            | Glyph         | Meaning                              |
+| --------------- | ------------- | ------------------------------------ |
+| `WarningIcon`   | Warning       | Needs attention. The triangle warns  |
+| `AlertIcon`     | WarningCircle | A notice to read. The circle alerts  |
+| `ErrorIcon`     | XCircle       | It failed                            |
+| `SuccessIcon`   | CheckCircle   | It finished, or it's healthy         |
+| `CheckIcon`     | Check         | Checked, chosen, copied              |
+| `InfoIcon`      | Info          | More information                     |
+| `SpinnerIcon`   | CircleNotch   | Work in progress, spinning           |
+| `HeartbeatIcon` | Heartbeat     | A live signal, such as stream health |
+| `GaugeIcon`     | Gauge         | A measured level, such as bitrate    |
+| `DisabledIcon`  | MinusCircle   | Off or unavailable                   |
+
+### Chrome and controls
+
+| Slot | Glyph | Meaning |
+| --- | --- | --- |
+| `ChevronDownIcon` | CaretDown | Opens downward: a select, a collapsible |
+| `ChevronUpIcon` | CaretUp | Collapses, or scrolls up |
+| `ChevronRightIcon` | CaretRight | Goes deeper: a row that navigates, a submenu |
+| `CloseIcon` | X | Closes a dialog, a toast, a panel |
+| `MoreIcon` | DotsThree | More actions, the ⋯ menu |
+| `SearchIcon` | MagnifyingGlass | Finds |
+| `ZoomInIcon` | MagnifyingGlassPlus | Opens a small picture larger. Never a zoom level control |
+| `AdjustIcon` | SlidersHorizontal | Adjusts: filters, levels, options |
+| `LayoutIcon` | Layout | A layout |
+
+### Arrows and movement
+
+| Slot | Glyph | Meaning |
+| --- | --- | --- |
+| `ArrowUpIcon` | ArrowUp | Up, move up |
+| `ArrowDownIcon` | ArrowDown | Down, move down |
+| `ArrowLeftIcon` | ArrowLeft | Back |
+| `ArrowRightIcon` | ArrowRight | Forward, next |
+| `ExternalLinkIcon` | ArrowSquareOut | Opens outside the app, in the browser |
+| `RefreshIcon` | ArrowClockwise | Reload this |
+| `SyncIcon` | ArrowsClockwise | Sync with somewhere else |
+| `ResetIcon` | ArrowCounterClockwise | Back to the default |
+| `SortIcon` | ArrowsDownUp | Sort order |
+
+### Capture, media and playback
+
+| Slot | Glyph | Meaning |
+| --- | --- | --- |
+| `CameraIcon` | VideoCamera | A camera |
+| `DisplayIcon` | Monitor | A display or a screen to capture |
+| `DesktopIcon` | Desktop | This computer |
+| `MobileIcon` | DeviceMobile | A phone |
+| `MicrophoneIcon` | Microphone | A microphone |
+| `SpeakerOnIcon` | SpeakerHigh | Sound on |
+| `SpeakerOffIcon` | SpeakerSlash | Sound off |
+| `WaveformIcon` | Waveform | Audio, a level |
+| `WaveformMutedIcon` | WaveformSlash | Audio muted |
+| `RecordIcon` | Record | Record |
+| `StopIcon` | Stop | Stops capture: a recording or a livestream |
+| `PlayIcon` | Play | Plays |
+| `PauseIcon` | Pause | Pauses a player. Stop is the capture action |
+| `VideoFileIcon` | FileVideo | A video file |
+| `ClapperboardIcon` | FilmSlate | A recording |
+| `FrameIcon` | FrameCorners | The output frame |
+| `CrosshairIcon` | Crosshair | A position or a target |
+| `MarkerIcon` | BookmarkSimple | A marker: a point on a recording to find again. Never scissors |
+| `HiddenIcon` | EyeSlash | The screen is hidden from viewers. Never the eye that opens the preview |
+
+### Files, assets and editing
+
+| Slot | Glyph | Meaning |
+| --- | --- | --- |
+| `FolderIcon` | FolderOpen | A folder, or showing a file in the file manager |
+| `DownloadIcon` | DownloadSimple | Download, export |
+| `UploadIcon` | UploadSimple | Upload, import |
+| `SaveIcon` | FloppyDisk | Save |
+| `DeleteIcon` | Trash | Delete |
+| `CopyIcon` | Copy | Copy |
+| `EditIcon` | PencilSimple | Edit, rename |
+| `NoteIcon` | NotePencil | Notes |
+| `ImageIcon` | ImageSquare | An image |
+| `ImageBrokenIcon` | ImageBroken | An image that couldn't load |
+| `PreviewIcon` | Eye | The preview window |
+
+### Account, access and links
+
+| Slot          | Glyph      | Meaning      |
+| ------------- | ---------- | ------------ |
+| `LockIcon`    | LockKey    | Locked       |
+| `SignInIcon`  | SignIn     | Sign in      |
+| `SignOutIcon` | SignOut    | Sign out     |
+| `AccountIcon` | UserCircle | Your account |
+| `LinkIcon`    | LinkSimple | A link       |
+
+### AI, tooling and appearance
+
+| Slot            | Glyph           | Meaning                          |
+| --------------- | --------------- | -------------------------------- |
+| `SparkleIcon`   | Sparkle         | An AI feature                    |
+| `ClipIcon`      | Scissors        | Cutting only: clips, a clean cut |
+| `RepairIcon`    | Wrench          | Repair, fix                      |
+| `BugIcon`       | Bug             | Report a bug                     |
+| `TerminalIcon`  | TerminalWindow  | Logs, a developer console        |
+| `TextIcon`      | TextAa          | Text and typography              |
+| `ChatIcon`      | ChatCircle      | Chat                             |
+| `SendIcon`      | PaperPlaneRight | Send                             |
+| `PinIcon`       | PushPin         | Pin, keep on top                 |
+| `LightModeIcon` | Sun             | Light appearance                 |
+| `DarkModeIcon`  | Moon            | Dark appearance                  |
+
+### Platform marks
+
+| Slot            | Glyph         | Meaning   |
+| --------------- | ------------- | --------- |
+| `YoutubeIcon`   | YoutubeLogo   | YouTube   |
+| `XPlatformIcon` | XLogo         | X         |
+| `TwitchIcon`    | TwitchLogo    | Twitch    |
+| `TiktokIcon`    | TiktokLogo    | TikTok    |
+| `InstagramIcon` | InstagramLogo | Instagram |
+| `FacebookIcon`  | FacebookLogo  | Facebook  |
+
+Platform and source marks are the only full-color icons on screen. The theme carries brand tints for them (`text-platform-youtube`, `text-platform-twitch`, `text-platform-instagram`, `text-platform-facebook`). Each mark is its owner's trademark, with its own rules: see [License](#license).
+
+## AppIcon and AppIconProps
+
+```ts
+export type AppIconProps = {
+  size?: number | string;
+  weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
+} & Omit<SVGProps<SVGSVGElement>, "ref" | "weight">;
+
+export type AppIcon = ComponentType<AppIconProps>;
+```
+
+`AppIcon` is the type of every slot. Use it wherever you store an icon, such as a nav item or a row's metadata:
+
+```tsx
+import type { AppIcon } from "@/components/icons";
+import { CameraIcon, MicrophoneIcon } from "@/components/icons";
+
+const devices: { icon: AppIcon; label: string }[] = [
+  { icon: CameraIcon, label: "Camera" },
+  { icon: MicrophoneIcon, label: "Microphone" },
+];
+```
+
+The type is declared in the file, not re-exported from Phosphor, so your code depends on your own contract. The file's `IconSetCheck` type proves at compile time that every Phosphor glyph it exports accepts `AppIconProps`.
+
+## Swapping a glyph or the whole set
+
+The export names are the contract. Change what's behind a name in your copy of `components/icons.tsx`, and every component keeps working as long as each name still exports an `AppIcon`.
+
+To swap one glyph, point the slot at another Phosphor icon, and add that icon's name to the `IconSetCheck` list so the compiler checks it:
+
+```tsx title="components/icons.tsx"
+export {
+  Plug as SourcesIcon,
+  // …
+} from "@phosphor-icons/react";
+```
+
+To use your own artwork, export a component under the slot's name. Draw in `currentColor` so it follows its text, and accept `weight` even if you ignore it:
+
+```tsx title="components/icons.tsx"
+export function SourcesIcon({
+  size = "1em",
+  weight: _weight,
+  ...props
+}: AppIconProps) {
+  return (
+    <svg
+      fill="currentColor"
+      height={size}
+      viewBox="0 0 24 24"
+      width={size}
+      {...props}
+    >
+      <path d="…" />
+    </svg>
+  );
+}
+```
+
+To swap the whole set, rewrite the exports against your icon package and keep every name. When a newer component needs a slot you don't export, your typecheck tells you.
+
+Once you've swapped anything, stop re-adding `@videorc/icons` with `--overwrite`; bring new slots in by hand. Videorc does exactly this: its copy replaces the YouTube and X slots with each platform's official artwork.
+
+## License
+
+- **Phosphor is MIT.** The registry can ship it, and you can redistribute it in your app.
+- **Why not a licensed set.** Videorc looked at Nucleo, whose open-source terms cap a project at 100 icons and forbid sharing or redistributing the icons. A public registry can't ship that, so the registry stays on Phosphor. A licensed set can only live in your own app's copy of `components/icons.tsx`, under your license. The same cap is one reason the set is kept small and countable.
+- **Brand marks are trademarks,** not MIT. Follow each platform's brand guidelines. Videorc, for example, draws YouTube's official icon at 20 px or more and never tints it, and draws X's mark from X's brand kit in pure black or white.

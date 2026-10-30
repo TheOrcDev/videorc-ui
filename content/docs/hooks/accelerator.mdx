@@ -1,0 +1,79 @@
+---
+title: Accelerator
+description: Parses Electron accelerators such as CmdOrCtrl+Shift+J and prints them the way each platform's menus do, with aria-keyshortcuts to match.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/accelerator
+```
+
+## Usage
+
+```tsx
+import {
+  acceleratorAriaKeyShortcuts,
+  acceleratorLabel,
+} from "@/lib/accelerator";
+```
+
+```tsx
+acceleratorLabel("CmdOrCtrl+Shift+J", "darwin"); // "⇧⌘J"
+acceleratorLabel("CmdOrCtrl+Shift+J", "win32"); // "Ctrl+Shift+J"
+acceleratorAriaKeyShortcuts("CmdOrCtrl+K", "darwin"); // "Meta+K"
+```
+
+Every function takes the platform explicitly, as Node's `process.platform` names it (`"darwin"`, `"win32"`, `"linux"`). It's pure, with no DOM and no React, so main, preload and the renderer can all share it.
+
+In components, reach for [ShortcutKeys](/docs/components/shortcut-keys), which draws the key chip, or for `shortcutLabel` from [platform](/docs/hooks/platform), which fills in the platform for you.
+
+## How shortcuts read
+
+| Accelerator            | macOS | Windows and Linux |
+| ---------------------- | ----- | ----------------- |
+| `CmdOrCtrl+K`          | ⌘K    | Ctrl+K            |
+| `CmdOrCtrl+Shift+J`    | ⇧⌘J   | Ctrl+Shift+J      |
+| `Shift+CmdOrCtrl+N`    | ⇧⌘N   | Ctrl+Shift+N      |
+| `Ctrl+Alt+Shift+Cmd+R` | ⌃⌥⇧⌘R | Ctrl+Alt+Shift+R  |
+| `CmdOrCtrl+Enter`      | ⌘↵    | Ctrl+Enter        |
+| `Shift+Backspace`      | ⇧⌫    | Shift+Backspace   |
+| `Delete`               | ⌦     | Delete            |
+| `Escape`               | Esc   | Esc               |
+| `Space`                | Space | Space             |
+| `Super+F13`            | ⌘F13  | Win+F13           |
+| `Alt`                  | ⌥     | Alt               |
+
+## Behavior
+
+- **One notation per platform.** On macOS: glyphs in the system's order (⌃⌥⇧⌘) with no separator, as macOS menus print them. On Windows and Linux: words in Ctrl, Alt, Shift, Win order, joined by "+", and never a Mac glyph. The order you write the accelerator in doesn't matter.
+- **Every Electron spelling reads,** in any case: `Command`, `Cmd`, `CommandOrControl`, `CmdOrCtrl`, `Control`, `Ctrl`, `Alt`, `Option`, `AltGr`, `Shift`, `Super` and `Meta`. `Return` reads as Enter and `Esc` as Escape, letters are uppercased, and `f5` becomes F5.
+- **`CmdOrCtrl` is ⌘ on macOS and Ctrl elsewhere.** `Command` reads as Ctrl off macOS too: Electron ignores it there, so Ctrl is what it has always meant. `Super` and `Meta` are ⌘ on macOS and Win elsewhere.
+- **One saved spelling.** `parseAccelerator` returns modifiers in a fixed order (Cmd, Ctrl, Alt, Shift, Super), so one binding always has one spelling, which keeps duplicate checks and diffs honest.
+- **Exactly one key.** A value with no key, or with two (`Cmd+A+B`), doesn't parse: `parseAccelerator` returns `null`, and `acceleratorLabel` prints the value unchanged. An empty or missing value prints `""`.
+- **A modifier alone** (`Shift`, `Alt`) prints as a hint for a drag, such as "⇧ constrains".
+- **`aria-keyshortcuts` names the real keys,** in UI Events names: Meta on macOS and Control elsewhere, `ArrowUp` for Up. Modifiers come in Control, Alt, Shift, Meta order.
+- **No platform reads as Windows and Linux.** Passing `undefined` prints Ctrl. Use [platform](/docs/hooks/platform) to fill in the current one.
+- **`commandModifierHeld`** is true for ⌘ alone on macOS and Ctrl alone elsewhere, so an app shortcut on ⌘K leaves ⌃K to text editing on a Mac. It takes Electron's `Input` (`meta`, `control`); map a DOM event's `metaKey` and `ctrlKey` onto it, or use `isCommandKey` from [platform](/docs/hooks/platform).
+
+## API reference
+
+| Export | Signature | Returns |
+| --- | --- | --- |
+| `acceleratorLabel` | `(accelerator: string \| undefined, platform: string \| undefined) => string` | The shortcut as one string: "⇧⌘J", "Ctrl+Shift+J" |
+| `acceleratorDisplayKeys` | `(accelerator: string \| undefined, platform: string \| undefined) => string[]` | Its parts in display order: `["⇧", "⌘", "J"]`, `["Ctrl", "Shift", "J"]` |
+| `acceleratorAriaKeyShortcuts` | `(accelerator: string \| undefined, platform: string \| undefined) => string` | The `aria-keyshortcuts` value, or `""` when nothing parses |
+| `acceleratorModifiersLabel` | `(modifiers: readonly AcceleratorModifier[], platform: string \| undefined) => string` | Modifiers held mid-press, with no key yet: "⇧⌘", "Ctrl+Shift" |
+| `acceleratorModifierLabels` | `(modifiers: readonly AcceleratorModifier[], platform: string \| undefined) => string[]` | The same, as separate labels |
+| `parseAccelerator` | `(value: string \| undefined, platform: string \| undefined) => ParsedAccelerator \| null` | The modifiers and the key, or `null` |
+| `commandModifierHeld` | `(input: { meta: boolean; control: boolean }, platform: string \| undefined) => boolean` | Whether the platform's command modifier is down |
+| `MODIFIER_ORDER` | `readonly AcceleratorModifier[]` | The saved order: Cmd, Ctrl, Alt, Shift, Super |
+
+```ts
+type AcceleratorModifier = "Cmd" | "Ctrl" | "Alt" | "Shift" | "Super";
+
+interface ParsedAccelerator {
+  modifiers: AcceleratorModifier[];
+  key: string;
+}
+```

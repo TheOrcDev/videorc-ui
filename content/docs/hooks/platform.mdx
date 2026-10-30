@@ -1,0 +1,82 @@
+---
+title: Platform
+description: The current platform, from your app, data-platform on the html element or the user agent, for shortcut labels and OS words such as Finder and Trash.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/platform
+```
+
+It brings [Accelerator](/docs/hooks/accelerator) with it.
+
+## Usage
+
+```tsx
+import {
+  revealInFileManagerLabel,
+  shortcutLabel,
+  trashName,
+} from "@/lib/platform";
+```
+
+```tsx
+shortcutLabel("CmdOrCtrl+K"); // "⌘K" on a Mac, "Ctrl+K" elsewhere
+revealInFileManagerLabel(platform); // "Show in Finder", "Show in Explorer" or "Show in folder"
+trashName(platform); // "Trash" or "Recycle Bin"
+```
+
+```tsx
+<DropdownMenuItem onClick={reveal}>
+  {revealInFileManagerLabel(platform)}
+</DropdownMenuItem>
+```
+
+Never type a platform word or a key glyph into copy. "Show in Finder" is wrong on Windows, and "⌘K" is wrong everywhere but macOS.
+
+## Where the platform comes from
+
+`currentPlatform()` decides, in this order:
+
+1. **The platform you pass,** with Node's `process.platform` names: `"darwin"`, `"win32"`, `"linux"`. In Electron, your app knows it for certain; pass it when you have it.
+2. **`data-platform` on `<html>`,** set by a small script before the first paint, so a Mac never flashes "Ctrl". See [Using it in Electron](/docs/concepts/electron#platform-glyphs).
+3. **The user agent:** "Windows" reads as `win32`, "Macintosh" as `darwin`, and anything else as `linux`.
+
+Not every function falls back the same way:
+
+| Function | With no platform passed |
+| --- | --- |
+| `shortcutLabel`, `shortcutAriaKeys`, `isCommandKey`, `displayKeyGlyph` | `currentPlatform()`: `data-platform`, then the user agent |
+| `revealInFileManagerLabel`, `trashName` | The user agent only |
+| `osSettingsName`, `appPlatform`, `isMacPlatform`, `isWindowsPlatform` | No fallback: a missing platform reads as Linux and other systems |
+
+Pass the platform everywhere you can, and every label agrees.
+
+## Behavior
+
+- **Shortcuts read like the platform's menus:** one keycap in system order on macOS (⇧⌘J, ⌘↵), words joined by "+" elsewhere (Ctrl+Shift+J, Ctrl+Enter). [Accelerator](/docs/hooks/accelerator) does the printing.
+- **`isCommandKey` takes ⌘ alone on macOS** and Ctrl alone elsewhere, never the Windows key. On a Mac, ⌃K and ⌃P stay text editing.
+- **`displayKeyGlyph` translates one Mac glyph** for the platform: ⌘ to Ctrl, ⌥ to Alt, ⇧ to Shift. It's for a lone modifier; print whole shortcuts from accelerators.
+- **Linux is "other".** `appPlatform` sorts every platform into `"darwin"`, `"win32"` or `"other"`, and the OS words use their generic form there: "Show in folder", "system settings".
+- **Server rendering.** On a server there's no `data-platform`, and Node's own `navigator` reads as Linux, so a label rendered there says "Ctrl+K". If you render on a server, pass the platform, or render shortcut labels on the client only.
+
+## API reference
+
+| Export | Signature | Returns |
+| --- | --- | --- |
+| `currentPlatform` | `(platform?: string) => string \| undefined` | The platform passed, else `data-platform`, else the user agent's |
+| `shortcutLabel` | `(accelerator: string, platform?: string) => string` | "⇧⌘J" on macOS, "Ctrl+Shift+J" elsewhere |
+| `shortcutAriaKeys` | `(accelerator: string, platform?: string) => string` | The `aria-keyshortcuts` value: "Meta+K", "Control+K" |
+| `isCommandKey` | `(event: { metaKey: boolean; ctrlKey: boolean }, platform?: string) => boolean` | Whether the app's command modifier is down |
+| `displayKeyGlyph` | `(glyph: string, platform: string \| undefined) => string` | One Mac glyph, translated for the platform |
+| `revealInFileManagerLabel` | `(platform?: string) => string` | "Show in Finder", "Show in Explorer" or "Show in folder" |
+| `trashName` | `(platform?: string) => string` | "Trash" or "Recycle Bin" |
+| `osSettingsName` | `(platform: string \| undefined) => string` | "System Settings", "Windows Settings" or "system settings" |
+| `appPlatform` | `(platform: string \| undefined) => AppPlatform` | `"darwin"`, `"win32"` or `"other"` |
+| `isMacPlatform` | `(platform: string \| undefined) => boolean` | True for `"darwin"` |
+| `isWindowsPlatform` | `(platform: string \| undefined) => boolean` | True for `"win32"` |
+
+```ts
+type AppPlatform = "darwin" | "win32" | "other";
+```

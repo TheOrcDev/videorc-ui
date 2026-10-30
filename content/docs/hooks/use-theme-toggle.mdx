@@ -1,0 +1,92 @@
+---
+title: useThemeToggle
+description: Toggles light and dark with next-themes and the D key, never from a field or under a popup. Flipping back to the computer's own look returns to System.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/use-theme-toggle
+```
+
+It adds `hooks/use-theme-toggle.ts` and `lib/theme-toggle.ts`, and brings [Modal open](/docs/hooks/modal-open) and `next-themes` with it.
+
+## Usage
+
+The hook runs on [next-themes](https://github.com/pacocoursey/next-themes), which works outside Next.js too, in a Vite or Electron renderer. Wrap your app in its provider with `attribute="class"`, so the theme's `.dark` column follows:
+
+```tsx
+import { ThemeProvider } from "next-themes";
+import type { ReactNode } from "react";
+
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      disableTransitionOnChange
+    >
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+Then call the hook in the component that owns the toggle:
+
+```tsx
+import { DarkModeIcon, LightModeIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { useThemeToggle } from "@/hooks/use-theme-toggle";
+
+export function ThemeButton() {
+  const { toggleTheme } = useThemeToggle();
+  return (
+    <Button
+      aria-keyshortcuts="D"
+      aria-label="Toggle theme"
+      onClick={toggleTheme}
+      size="icon"
+      variant="ghost"
+    >
+      <LightModeIcon className="dark:hidden" />
+      <DarkModeIcon className="hidden dark:block" />
+    </Button>
+  );
+}
+```
+
+## Behavior
+
+- **Each press flips what the window shows,** light or dark.
+- **It hands back to System when it can.** If the flip lands on the look the computer already asks for, it saves `"system"` instead of that theme. Flip away and back, and the app follows the computer again rather than pinning a theme for good.
+- **The D key works while the hook is mounted.** It listens on the document and ignores the key:
+  - on key repeat;
+  - with ⌘, Ctrl or Alt held, so ⌘D and Ctrl+D stay with the app;
+  - in an input, a textarea, a select or an editable element;
+  - while a dialog, an alert, a menu or a select is open ([Modal open](/docs/hooks/modal-open)).
+- **It matches the character.** Shift+D toggles too. On a keyboard layout where that key types another letter, it doesn't.
+- **A handled D is consumed** with `preventDefault`.
+- **Mount it once.** Two copies both answer the key, but they compute the same next theme, so it still flips once.
+
+| The window shows | The computer asks for | The next choice |
+| ---------------- | --------------------- | --------------- |
+| Dark             | Dark                  | `"light"`       |
+| Light            | Light                 | `"dark"`        |
+| Light            | Dark                  | `"system"`      |
+| Dark             | Light                 | `"system"`      |
+| Dark             | Unknown               | `"light"`       |
+| Unknown          | Unknown               | `"dark"`        |
+
+## API reference
+
+| Export | From | Signature |
+| --- | --- | --- |
+| `useThemeToggle` | `@/hooks/use-theme-toggle` | `() => { toggleTheme: () => void }` |
+| `nextToggledTheme` | `@/lib/theme-toggle` | `({ resolvedTheme, systemTheme }: { resolvedTheme: string \| undefined; systemTheme: string \| undefined }) => ThemeChoice` |
+
+```ts
+type ThemeChoice = "light" | "dark" | "system";
+```
+
+`resolvedTheme` is what the window shows now, and `systemTheme` is what the computer asks for: pass next-themes' values of the same names.

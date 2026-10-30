@@ -1,0 +1,14 @@
+---
+title: Hooks and libs
+description: The small pieces videorc/ui components share. Accelerators, platform glyphs, the modal check, the theme toggle and reduced motion.
+---
+
+These are plain TypeScript, with no Next.js and no Electron in them. The libs are pure functions you can call anywhere, including Electron's main process; the hooks need React. Components install the ones they use, and you can install any of them on its own.
+
+| Item | Path | What it does |
+| --- | --- | --- |
+| [Accelerator](/docs/hooks/accelerator) | `lib/accelerator.ts` | Parses Electron accelerators and prints them per platform: ⇧⌘J on macOS, Ctrl+Shift+J elsewhere |
+| [Platform](/docs/hooks/platform) | `lib/platform.ts` | Works out the platform, and gives shortcut labels and OS words such as Finder and Trash |
+| [Modal open](/docs/hooks/modal-open) | `lib/modal-open.ts` | Tells a global key whether a dialog, menu or select is open, so it doesn't fire from under one |
+| [useThemeToggle](/docs/hooks/use-theme-toggle) | `hooks/use-theme-toggle.ts` | Toggles light and dark with a button and the D key, handing back to System when it can |
+| [useReducedMotion](/docs/hooks/use-reduced-motion) | `hooks/use-reduced-motion.ts` | True when the system asks to reduce motion, plus a scroll behavior that respects it |

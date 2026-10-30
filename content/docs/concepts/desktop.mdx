@@ -1,0 +1,62 @@
+---
+title: Desktop base
+description: How a desktop app's chrome behaves. Chrome text doesn't select, the arrow stays the pointer, and the window doesn't rubber-band.
+---
+
+A desktop app isn't a page. Dragging across a toolbar shouldn't highlight its labels, buttons don't turn the pointer into a hand, and the window doesn't bounce past its edges. The desktop base gives an Electron or Tauri app that feel in a few base rules.
+
+It's separate from the [theme](/docs/concepts/theme) so a website can wear the tokens and keep selectable text. This docs site uses the theme without it.
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/desktop
+```
+
+## What it does
+
+| Rule | Why |
+| --- | --- |
+| `html { user-select: none }` | Chrome text (labels, buttons, headings) doesn't select when you drag across the window, as in a native app |
+| `html { cursor: default }` | The arrow is the pointer. Desktop controls don't switch to the hand, which is why videorc/ui never uses `cursor-pointer` |
+| `html { overscroll-behavior: none }` | The window doesn't rubber-band past its edges |
+| `input, textarea, [contenteditable="true"] { user-select: text }` | Fields always select |
+| `img { -webkit-user-drag: none }` | Images don't drag out of the window |
+
+The whole item is one base layer:
+
+```css
+@layer base {
+  html {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    overscroll-behavior: none;
+  }
+  input,
+  textarea,
+  [contenteditable="true"] {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
+}
+```
+
+## Making content selectable
+
+Content people copy opts back in with `select-text`: chat messages, notes, transcripts, logs, error details. Put it on the element, or on a container to cover everything inside.
+
+```tsx
+<p className="select-text">{message.text}</p>
+```
+
+Copy that's useful to grab, such as a stream key or a file path, is better served by a copy button next to it than by asking someone to drag across it.
+
+## When not to use it
+
+- **On a website or a docs site.** Readers expect to select and copy any text, and to see the hand over a link.
+- **In a window that's mostly content.** A document viewer or a log window would opt back in almost everywhere; leave the base out there, or scope `select-text` to the content pane.
+- **In a component embedded in someone else's page.** The rules sit on `html`, so they'd change the whole host page.

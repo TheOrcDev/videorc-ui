@@ -1,0 +1,57 @@
+---
+title: Modal open
+description: One answer to "is something modal open?" Global keys ask it before acting, so they never fire from under a dialog, an alert, a menu or an open select.
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/modal-open
+```
+
+## Usage
+
+```tsx
+import { isModalOpen } from "@/lib/modal-open";
+```
+
+Ask it first in every global key handler. Here Space starts and stops a recording, but not from under a dialog or a menu, and not from a control that uses Space itself:
+
+```tsx
+useEffect(() => {
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.code !== "Space" || event.repeat || isModalOpen()) {
+      return;
+    }
+    const usesSpace =
+      event.target instanceof Element &&
+      event.target.closest(
+        "button, input, textarea, select, [contenteditable]"
+      );
+    if (usesSpace) {
+      return;
+    }
+    event.preventDefault();
+    toggleRecording();
+  };
+  document.addEventListener("keydown", onKeyDown);
+  return () => document.removeEventListener("keydown", onKeyDown);
+}, [toggleRecording]);
+```
+
+[useThemeToggle](/docs/hooks/use-theme-toggle) does the same for its D key.
+
+## Behavior
+
+- **It reads the page, not React state,** so it sees a popup from any component, including one rendered in a portal.
+- **It matches four roles with Base UI's `data-open`:** `dialog`, `alertdialog`, `menu` and `listbox`. Base UI gives an open dialog, alert dialog, popover, menu or context menu its role and `data-open`, so all of them count.
+- **Only open popups count.** Base UI removes `data-open` as a popup starts to close, so a dialog on its way out no longer blocks keys. A listbox that's part of the page, with no `data-open`, never counts.
+- **It checks `document` by default.** Pass another root to look inside a shadow root, another document or a test container. Call it from an event handler or an effect: on a server there's no `document`.
+- `MODAL_OPEN_SELECTOR` is the same check as a selector, for CSS or tests.
+
+## API reference
+
+| Export | Signature | Returns |
+| --- | --- | --- |
+| `isModalOpen` | `(root?: Pick<Document, "querySelector">) => boolean` | True while a dialog, an alert, a menu or a select is open under `root` (default `document`) |
+| `MODAL_OPEN_SELECTOR` | `string` | `[role="dialog"][data-open], [role="alertdialog"][data-open], [role="menu"][data-open], [role="listbox"][data-open]` |

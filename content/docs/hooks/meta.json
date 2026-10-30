@@ -1,0 +1,13 @@
+{
+  "title": "Hooks and libs",
+  "pages": [
+    "index",
+    "---Keys and platform---",
+    "accelerator",
+    "platform",
+    "modal-open",
+    "---Theme and motion---",
+    "use-theme-toggle",
+    "use-reduced-motion"
+  ]
+}
