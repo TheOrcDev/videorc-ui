@@ -1,0 +1,92 @@
+---
+title: Progress
+description: One determinate bar on Base UI, a 6 px round track with the chrome fill. Name it with a label or aria-label, and say the number in words when the streamer needs it.
+---
+
+<ComponentPreview name="progress-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/progress
+```
+
+## Usage
+
+```tsx
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress";
+```
+
+```tsx
+<Progress aria-label="Update download" value={64} />
+```
+
+## Anatomy
+
+`Progress` draws its own track and indicator after its children, so a label and a value sit above the bar.
+
+```tsx
+<Progress>
+  <ProgressLabel />
+  <ProgressValue />
+</Progress>
+```
+
+## Examples
+
+### Steps
+
+`value` runs from 0 to `max` (100 by default), so count steps directly. `ProgressValue` takes a function to say the count in words.
+
+<ComponentPreview name="progress-steps" />
+
+### Inline
+
+With no label of its own, give the bar an `aria-label` and set it beside the words that explain it, as Settings does for an update.
+
+<ComponentPreview name="progress-inline" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The indicator: the same polished chrome as the primary button |
+| `bg-muted`, `rounded-full`, `h-1.5` | The 6 px round track |
+| `duration-150 ease-out` | The indicator's width change |
+| `data-progressing`, `data-complete` | On every part, from Base UI |
+
+## Accessibility
+
+Base UI renders a `progressbar` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`, and `aria-valuetext` as a percentage. `ProgressLabel` names the bar; without one, pass `aria-label`. A bar is never the only place a fact lives: put the number or the step in words beside it ("3 of 8", "Uploading recording…").
+
+Progress is for work with a known end. For work without one, use a spinner and a pending label that ends in "…".
+
+## API reference
+
+### Progress
+
+Every [Base UI Progress Root](https://base-ui.com/react/components/progress) prop, plus:
+
+<PropsTable
+  rows={[
+    ["value", "number | null", null, "From 0 to max. null is indeterminate."],
+    [
+      "max",
+      "number",
+      "100",
+      "A non-positive max (a total not known yet) reads as 100.",
+    ],
+  ]}
+/>
+
+### ProgressLabel, ProgressValue
+
+Every [Base UI Progress Label and Value](https://base-ui.com/react/components/progress) prop. `ProgressValue` takes `(formattedValue, value) => ReactNode` as its child.
+
+### ProgressTrack, ProgressIndicator
+
+The parts `Progress` draws for you, exported for a custom layout.

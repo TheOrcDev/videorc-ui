@@ -1,0 +1,111 @@
+---
+title: Toggle Group
+description: Filter chips on Base UI. Pressed items wear the chrome plate, a Field's label names the group, and items can sit apart, wrap, or join into one outlined strip.
+---
+
+<ComponentPreview name="toggle-group-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/toggle-group
+```
+
+## Usage
+
+```tsx
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+```
+
+```tsx
+<ToggleGroup aria-label="Chat filters" multiple>
+  <ToggleGroupItem value="questions">Questions</ToggleGroupItem>
+  <ToggleGroupItem value="mentions">Mentions</ToggleGroupItem>
+</ToggleGroup>
+```
+
+## Anatomy
+
+```tsx
+<ToggleGroup>
+  <ToggleGroupItem />
+</ToggleGroup>
+```
+
+## Examples
+
+### Filter chips
+
+`multiple` lets several chips stay on. `size="xs"` and `spacing={1}` make the dense chip row Videorc uses to choose which kinds of cuts to review; `flex-wrap` lets a narrow pane wrap it.
+
+<ComponentPreview name="toggle-group-filters" />
+
+### Joined
+
+`spacing={0}` with `variant="outline"` joins the items into one strip with shared hairlines, rounded at the ends.
+
+<ComponentPreview name="toggle-group-outline" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-plate` | A pressed item, keyed off `data-pressed` |
+| `rounded-chip`, `rounded-row` | An item, and the ends of a joined strip |
+| `h-control`, `h-6` | The `default` and `xs` item heights |
+| `--gap` | The space between items, set from `spacing` |
+| `data-variant`, `data-size`, `data-spacing` | On the group and every item, for styling from a parent |
+| `data-orientation` | `horizontal` or `vertical`, from `orientation` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Tab` | Moves focus into the group, then out of it |
+| `ArrowRight`, `ArrowLeft` | Moves between items in a horizontal group, wrapping |
+| `ArrowDown`, `ArrowUp` | Moves between items in a vertical group, wrapping |
+| `Space`, `Enter` | Presses or releases the focused item |
+
+## Accessibility
+
+The group is a `group` and every item a `<button>` with `aria-pressed`. Name the group with `aria-label`, or put it in a [Field](/docs/components/field): its label names the group through `aria-labelledby` unless the group carries its own `aria-label`. An icon-only item needs its own `aria-label`.
+
+ToggleGroup is for filters. Choosing exactly one value among 2–4 options is [Segmented control](/docs/components/segmented-control), which is a radio group to assistive tech.
+
+## API reference
+
+### ToggleGroup
+
+Every [Base UI Toggle Group](https://base-ui.com/react/components/toggle-group) prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "value",
+      "string[]",
+      null,
+      "The pressed items, when controlled. An array even when one item can be pressed.",
+    ],
+    ["defaultValue", "string[]", null, null],
+    ["onValueChange", "(value: string[], details) => void", null, null],
+    [
+      "multiple",
+      "boolean",
+      "false",
+      'Lets several items stay pressed. Radix\'s type="multiple".',
+    ],
+    ["variant", '"default" | "outline"', null, "Applies to every item."],
+    ["size", '"default" | "xs"', null, "Applies to every item."],
+    [
+      "spacing",
+      "number",
+      "2",
+      "The gap between items in spacing units. 0 joins them.",
+    ],
+    ["orientation", '"horizontal" | "vertical"', '"horizontal"', null],
+  ]}
+/>
+
+### ToggleGroupItem
+
+Every [Base UI Toggle](https://base-ui.com/react/components/toggle) prop. `value` names the item in the group's array; `variant` and `size` apply when the group sets none.

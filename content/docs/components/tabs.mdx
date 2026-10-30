@@ -1,0 +1,112 @@
+---
+title: Tabs
+description: Switch a view on Base UI. The default list is the glass segmented track with the active tab as a chrome plate; the line variant underlines it instead. A Field's label names the list.
+---
+
+<ComponentPreview name="tabs-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/tabs
+```
+
+## Usage
+
+```tsx
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+```
+
+```tsx
+<Tabs defaultValue="chat">
+  <TabsList aria-label="Stream Manager panes">
+    <TabsTrigger value="chat">Chat</TabsTrigger>
+    <TabsTrigger value="activity">Activity</TabsTrigger>
+  </TabsList>
+  <TabsContent value="chat">…</TabsContent>
+  <TabsContent value="activity">…</TabsContent>
+</Tabs>
+```
+
+Tabs switch a view: a page or a pane with its own content. Choosing a value among 2–4 options is [Segmented control](/docs/components/segmented-control), which wears the same track.
+
+## Anatomy
+
+```tsx
+<Tabs>
+  <TabsList>
+    <TabsTrigger />
+  </TabsList>
+  <TabsContent />
+</Tabs>
+```
+
+## Examples
+
+### Line
+
+`variant="line"` drops the track and underlines the active tab: for a strip of words over a pane, where a track would be one box too many.
+
+<ComponentPreview name="tabs-line" />
+
+### Vertical
+
+`orientation="vertical"` stacks the list beside its panels, and the up and down arrows move through it.
+
+<ComponentPreview name="tabs-vertical" />
+
+## Theming
+
+The track and the trigger's shape come from `tabs-variants`, shared with Segmented control: `tabsListVariants({ variant })` and `tabsTriggerBaseClassName`. Tabs re-exports `tabsListVariants`.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-foreground/5`, `ring-border` | The default track |
+| `chrome-plate` | The active tab on the default track, keyed off `data-active` |
+| `after:bg-foreground` | The line variant's underline under the active tab |
+| `h-control` | The 28 px horizontal list |
+| `data-active`, `data-disabled` | On a tab, from Base UI |
+| `data-variant` | On the list: `default` or `line` |
+| `data-orientation` | On the root, for `data-horizontal:` and `data-vertical:` styles |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Tab` | Moves focus to the active tab, then into its panel |
+| `ArrowRight`, `ArrowLeft` | Moves between tabs in a horizontal list and shows each one's panel |
+| `ArrowDown`, `ArrowUp` | Moves between tabs in a vertical list and shows each one's panel |
+| `Home`, `End` | Moves to the first or last tab |
+| `Space`, `Enter` | Shows the focused tab's panel, when `activateOnFocus` is off |
+
+## Accessibility
+
+Base UI wires `tablist`, `tab` and `tabpanel` with their `aria-controls` and `aria-labelledby`. Name the list with `aria-label`, or put the tabs in a [Field](/docs/components/field): the Field's label names the list unless it carries its own `aria-label`. A panel is a tab stop and shows a ring while focused.
+
+The arrow keys show a tab's panel as they move, as Videorc's tabs always have. When showing a view is heavy, pass `activateOnFocus={false}` to the list and Enter or Space shows it instead.
+
+## API reference
+
+### Tabs
+
+Every [Base UI Tabs Root](https://base-ui.com/react/components/tabs) prop. `value` and `defaultValue` take any value, not only strings.
+
+### TabsList
+
+Every [Base UI Tabs List](https://base-ui.com/react/components/tabs) prop, plus:
+
+<PropsTable
+  rows={[
+    ["variant", '"default" | "line"', '"default"', null],
+    [
+      "activateOnFocus",
+      "boolean",
+      "true",
+      "Shows a tab's panel as the arrow keys reach it. Base UI's own default is false.",
+    ],
+  ]}
+/>
+
+### TabsTrigger and TabsContent
+
+Every [Base UI Tab and Panel](https://base-ui.com/react/components/tabs) prop. Both take the `value` they stand for.

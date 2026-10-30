@@ -1,0 +1,76 @@
+---
+title: Shortcut Keys
+description: The one way to show a shortcut. Takes an Electron accelerator and prints it the way the platform's own menus do, as a keycap or as the status bar's quiet text.
+---
+
+<ComponentPreview name="shortcut-keys-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/shortcut-keys
+```
+
+## Usage
+
+```tsx
+import { ShortcutKeys } from "@/components/ui/shortcut-keys";
+```
+
+```tsx
+<ShortcutKeys accelerator="CmdOrCtrl+Shift+J" />
+```
+
+Author a shortcut once, as the accelerator Electron binds (`CmdOrCtrl+Shift+J`, `Enter`, `Space`), and print it only through ShortcutKeys. An unbound shortcut (an empty accelerator) renders nothing.
+
+## Examples
+
+### Per platform
+
+macOS reads as one keycap in system order with its own glyphs (⇧⌘J, ⌘↵, ⌫). Windows and Linux read as words joined by "+" (Ctrl+Shift+J, Ctrl+Enter, Backspace). Pass `platform` when the app knows it; Electron's `process.platform` is the value.
+
+<ComponentPreview name="shortcut-keys-platforms" />
+
+### Text
+
+`variant="text"` is the status bar's quiet hint: the same label with no keycap.
+
+<ComponentPreview name="shortcut-keys-text" />
+
+## Theming
+
+| Token or attribute | Meaning                                                 |
+| ------------------ | ------------------------------------------------------- |
+| `glass-keycap`     | The `chip` variant, through [Kbd](/docs/components/kbd) |
+| `data-accelerator` | The accelerator it prints, on either variant            |
+| `data-slot`        | `kbd` for the chip, `shortcut-keys` for the text        |
+
+## Accessibility
+
+The label is plain text inside a `<kbd>` or a `<span>`. Tell assistive tech about the shortcut on the control it triggers, with `aria-keyshortcuts={shortcutAriaKeys(accelerator)}` from `@/lib/platform` (Meta+K on macOS, Control+K elsewhere).
+
+Without `platform`, ShortcutKeys reads `data-platform` on `<html>` (set it before the first paint), then the user agent, so a Mac never flashes "Ctrl" in a window that renders on the client. A server can't know the reader's platform: server-rendered markup prints the Windows spelling, and the client corrects it as it hydrates.
+
+## API reference
+
+Every `kbd` prop except `children`, plus:
+
+<PropsTable
+  rows={[
+    [
+      "accelerator",
+      "string",
+      null,
+      "An Electron accelerator: CmdOrCtrl+Shift+J, Enter, Space.",
+    ],
+    [
+      "platform",
+      "string",
+      null,
+      "darwin, win32, linux… Defaults to data-platform on <html>, then the user agent.",
+    ],
+    ["variant", '"chip" | "text"', '"chip"', null],
+  ]}
+/>
+
+For running copy and titles, `shortcutLabel(accelerator, platform?)` from `@/lib/platform` returns the same label as a string.

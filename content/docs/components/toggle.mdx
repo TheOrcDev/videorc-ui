@@ -1,0 +1,74 @@
+---
+title: Toggle
+description: A two-state button on Base UI at the 28 px desktop height. Pressed wears the chrome plate, the same material as a selected segment and an active tab.
+---
+
+<ComponentPreview name="toggle-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/toggle
+```
+
+## Usage
+
+```tsx
+import { Toggle } from "@/components/ui/toggle";
+```
+
+```tsx
+<Toggle aria-label="Keep on top">
+  <PinIcon />
+</Toggle>
+```
+
+## Examples
+
+### Outline and compact
+
+`outline` draws a hairline around the toggle, for one that sits beside fields. `xs` (24 px) is for dense rows only. Control it with `pressed` and `onPressedChange` when the app owns the state.
+
+<ComponentPreview name="toggle-outline" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-plate` | The pressed fill, keyed off `data-pressed` |
+| `bg-muted` | Hover. The plate means pressed, never hovered |
+| `text-muted-foreground`, `text-foreground` | Resting and pressed text |
+| `h-control` | The 28 px desktop control height |
+| `data-pressed`, `data-disabled` | Base UI's state attributes, for styling from outside |
+
+## Keyboard
+
+| Key              | Action                          |
+| ---------------- | ------------------------------- |
+| `Space`, `Enter` | Presses or releases the toggle  |
+| `Tab`            | Moves focus to the next control |
+
+## Accessibility
+
+Base UI renders a `<button>` with `aria-pressed`, so the state is announced on its own. An icon-only toggle needs an `aria-label` that stays the same in both states ("Keep on top", never "Unpin"). A toggle is for a mode the user turns on and off; choosing one value among a few is [Segmented control](/docs/components/segmented-control), and a setting that applies at once is a [Switch](/docs/components/switch).
+
+## API reference
+
+Every [Base UI Toggle](https://base-ui.com/react/components/toggle) prop, plus:
+
+<PropsTable
+  rows={[
+    ["variant", '"default" | "outline"', '"default"', null],
+    ["size", '"default" | "xs"', '"default"', null],
+    ["pressed", "boolean", null, "The pressed state, when controlled."],
+    ["defaultPressed", "boolean", "false", null],
+    [
+      "onPressedChange",
+      "(pressed: boolean, details) => void",
+      null,
+      "Called when the pressed state changes.",
+    ],
+  ]}
+/>
+
+`toggleVariants({ variant, size })` returns the classes, for an element styled as a toggle.

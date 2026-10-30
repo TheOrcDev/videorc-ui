@@ -12,6 +12,11 @@ export const examples: Record<string, ComponentType | undefined> = {
   "button-variants": dynamic(
     () => import("@/components/examples/button-variants")
   ),
+  "chart-bar": dynamic(() => import("@/components/examples/chart-bar")),
+  "chart-demo": dynamic(() => import("@/components/examples/chart-demo")),
+  "chart-sparkline": dynamic(
+    () => import("@/components/examples/chart-sparkline")
+  ),
   "checkbox-demo": dynamic(() => import("@/components/examples/checkbox-demo")),
   "checkbox-description": dynamic(
     () => import("@/components/examples/checkbox-description")
@@ -38,7 +43,43 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/input-group-textarea")
   ),
   "input-states": dynamic(() => import("@/components/examples/input-states")),
+  "kbd-demo": dynamic(() => import("@/components/examples/kbd-demo")),
+  "kbd-in-button": dynamic(() => import("@/components/examples/kbd-in-button")),
   "label-demo": dynamic(() => import("@/components/examples/label-demo")),
+  "progress-demo": dynamic(() => import("@/components/examples/progress-demo")),
+  "progress-inline": dynamic(
+    () => import("@/components/examples/progress-inline")
+  ),
+  "progress-steps": dynamic(
+    () => import("@/components/examples/progress-steps")
+  ),
+  "segmented-control-demo": dynamic(
+    () => import("@/components/examples/segmented-control-demo")
+  ),
+  "segmented-control-disabled": dynamic(
+    () => import("@/components/examples/segmented-control-disabled")
+  ),
+  "segmented-control-icons": dynamic(
+    () => import("@/components/examples/segmented-control-icons")
+  ),
+  "segmented-control-sizes": dynamic(
+    () => import("@/components/examples/segmented-control-sizes")
+  ),
+  "shortcut-keys-demo": dynamic(
+    () => import("@/components/examples/shortcut-keys-demo")
+  ),
+  "shortcut-keys-platforms": dynamic(
+    () => import("@/components/examples/shortcut-keys-platforms")
+  ),
+  "shortcut-keys-text": dynamic(
+    () => import("@/components/examples/shortcut-keys-text")
+  ),
+  "shortcut-tooltip-demo": dynamic(
+    () => import("@/components/examples/shortcut-tooltip-demo")
+  ),
+  "shortcut-tooltip-switch": dynamic(
+    () => import("@/components/examples/shortcut-tooltip-switch")
+  ),
   "slider-demo": dynamic(() => import("@/components/examples/slider-demo")),
   "slider-range": dynamic(() => import("@/components/examples/slider-range")),
   "slider-readout": dynamic(
@@ -49,8 +90,24 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/switch-disabled")
   ),
   "switch-sizes": dynamic(() => import("@/components/examples/switch-sizes")),
+  "tabs-demo": dynamic(() => import("@/components/examples/tabs-demo")),
+  "tabs-line": dynamic(() => import("@/components/examples/tabs-line")),
+  "tabs-vertical": dynamic(() => import("@/components/examples/tabs-vertical")),
   "textarea-demo": dynamic(() => import("@/components/examples/textarea-demo")),
   "textarea-states": dynamic(
     () => import("@/components/examples/textarea-states")
+  ),
+  "toggle-demo": dynamic(() => import("@/components/examples/toggle-demo")),
+  "toggle-group-demo": dynamic(
+    () => import("@/components/examples/toggle-group-demo")
+  ),
+  "toggle-group-filters": dynamic(
+    () => import("@/components/examples/toggle-group-filters")
+  ),
+  "toggle-group-outline": dynamic(
+    () => import("@/components/examples/toggle-group-outline")
+  ),
+  "toggle-outline": dynamic(
+    () => import("@/components/examples/toggle-outline")
   ),
 };

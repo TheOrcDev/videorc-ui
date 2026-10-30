@@ -1,0 +1,132 @@
+---
+title: Chart
+description: shadcn's Recharts wrapper on Videorc's tokens. Series stay neutral unless their colour means something, and the tooltip floats on the popup glass.
+---
+
+<ComponentPreview name="chart-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chart
+```
+
+## Usage
+
+```tsx
+import { Area, AreaChart } from "recharts";
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import type { ChartConfig } from "@/components/ui/chart";
+```
+
+```tsx
+const config = {
+  kbps: { color: "var(--foreground)", label: "Bitrate (kbps)" },
+} satisfies ChartConfig;
+
+<ChartContainer className="aspect-auto h-56" config={config}>
+  <AreaChart data={data}>
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <Area dataKey="kbps" fill="var(--color-kbps)" stroke="var(--color-kbps)" />
+  </AreaChart>
+</ChartContainer>;
+```
+
+Every key in the config becomes a `--color-<key>` variable on the chart, per theme. Point a mark's `fill` and `stroke` at it.
+
+## Anatomy
+
+```tsx
+<ChartContainer config={config}>
+  <AreaChart>
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <ChartLegend content={<ChartLegendContent />} />
+  </AreaChart>
+</ChartContainer>
+```
+
+## Examples
+
+### Sparklines
+
+A stats sparkline has no axes, no tooltip and no animation: the number above it is the reading. It's neutral by default and takes the warning tone only when the tile itself is a warning, with an icon beside its label so the colour is never alone.
+
+<ComponentPreview name="chart-sparkline" />
+
+### Bars
+
+One neutral series with its value at the tip of each bar. The platform names on the axis carry identity, so the bars need no colour of their own.
+
+<ComponentPreview name="chart-bar" />
+
+## Theming
+
+The theme has no `--chart-*` palette. Videorc's chrome is monochrome and colour carries meaning, so a chart colours its series from the tokens it already has:
+
+| Colour | When |
+| --- | --- |
+| `var(--foreground)`, `var(--muted-foreground)` | Every series, by default |
+| `var(--warning)` | A reading that needs attention |
+| `var(--destructive)` | A failure |
+| `glass-float` | The tooltip: the popup glass with its rim and drop |
+| `rounded-row` | The tooltip's 8 px radius |
+| `stroke-border`, `fill-muted-foreground` | Grid lines, reference lines and axis text |
+
+Give a series a `theme` instead of a `color` when it needs a different value in light and dark.
+
+## Accessibility
+
+Recharts' `accessibilityLayer` (on by default) lets the keyboard move through a chart's points and opens the tooltip on each. A chart is never the only place its numbers live: say the current reading in words beside it, and mark a decorative sparkline `aria-hidden`.
+
+## API reference
+
+### ChartContainer
+
+Every `div` prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "config",
+      "ChartConfig",
+      null,
+      "Each series' label, icon and color (or theme: { light, dark }).",
+    ],
+    [
+      "initialDimension",
+      "{ width: number; height: number }",
+      "{ width: 320, height: 200 }",
+      "The first frame's size, before the container is measured.",
+    ],
+  ]}
+/>
+
+### ChartTooltipContent
+
+Every Recharts `Tooltip` content prop, plus:
+
+<PropsTable
+  rows={[
+    ["indicator", '"dot" | "line" | "dashed"', '"dot"', null],
+    ["hideLabel", "boolean", "false", null],
+    ["hideIndicator", "boolean", "false", null],
+    ["nameKey", "string", null, "The payload key that names a series."],
+    ["labelKey", "string", null, "The payload key for the tooltip's label."],
+  ]}
+/>
+
+### ChartLegendContent
+
+<PropsTable
+  rows={[
+    ["hideIcon", "boolean", "false", null],
+    ["nameKey", "string", null, "The payload key that names a series."],
+  ]}
+/>
+
+`ChartTooltip` and `ChartLegend` are Recharts' `Tooltip` and `Legend`.

@@ -1,0 +1,56 @@
+---
+title: Kbd
+description: Videorc's key chip, a glass keycap with a bright top edge and a dark bottom edge. Inside a filled button it takes the button's own ink instead.
+---
+
+<ComponentPreview name="kbd-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/kbd
+```
+
+## Usage
+
+```tsx
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
+```
+
+```tsx
+<Kbd>Esc</Kbd>
+```
+
+Kbd draws a key. A shortcut goes through [Shortcut keys](/docs/components/shortcut-keys), which prints it the way the reader's platform does and draws this chip: never type a modifier glyph or "Cmd+" by hand.
+
+## Examples
+
+### In a button
+
+Inside a `default`, `destructive` or `record` button the gray keycap reads at under 3:1, so there the chip takes the button's text colour on a faint fill of it, with no glass. It matches by ancestry: nothing to remember at the call site.
+
+<ComponentPreview name="kbd-in-button" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-keycap` | The keycap: a gradient fill, a rim, a bright top edge and a dark bottom edge |
+| `--keycap-fill-top`, `--keycap-fill-bottom`, `--keycap-rim` | The keycap's fill and rim, per theme |
+| `--keycap-highlight`, `--keycap-base` | Its top and bottom edges |
+| `rounded-chip` | The 6 px chip radius |
+| `KBD_ON_FILLED_BUTTON` | The classes for a chip inside a filled button, exported |
+
+## Accessibility
+
+Kbd is a `<kbd>` element, and KbdGroup a `<span>` that spaces several. Screen readers read the text inside, so pair a key with words that say what it does ("Move between questions"), and give a control its shortcut with `aria-keyshortcuts` (`shortcutAriaKeys` from `@/lib/platform`).
+
+## API reference
+
+### Kbd
+
+Every `kbd` prop.
+
+### KbdGroup
+
+Every `span` prop.

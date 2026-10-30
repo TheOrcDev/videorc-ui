@@ -13,6 +13,17 @@
     "field",
     "checkbox",
     "switch",
-    "slider"
+    "slider",
+    "---Toggles and keys---",
+    "toggle",
+    "toggle-group",
+    "segmented-control",
+    "tabs",
+    "progress",
+    "kbd",
+    "shortcut-keys",
+    "shortcut-tooltip",
+    "---Display---",
+    "chart"
   ]
 }

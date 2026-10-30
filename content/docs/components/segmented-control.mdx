@@ -1,0 +1,144 @@
+---
+title: Segmented Control
+description: Pick one of 2–4 exclusive options on the glass Tabs track. A radio group with roving focus and one tab stop, manual activation for heavy changes, and a disabled state that always says why.
+---
+
+<ComponentPreview name="segmented-control-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/segmented-control
+```
+
+## Usage
+
+```tsx
+import { SegmentedControl } from "@/components/ui/segmented-control";
+```
+
+```tsx
+<SegmentedControl
+  aria-label="Theme"
+  onValueChange={setTheme}
+  options={[
+    { label: "Light", value: "light" },
+    { label: "Dark", value: "dark" },
+    { label: "System", value: "system" },
+  ]}
+  value={theme}
+/>
+```
+
+Which control when:
+
+- **Segmented control** chooses a value: theme, fit, corner, kind of cut.
+- [Tabs](/docs/components/tabs) switch a view, a page or a pane with its own content.
+- [Toggle group](/docs/components/toggle-group) is for filter chips: several on at once, or a filter row.
+- A [Switch](/docs/components/switch) is for a boolean, and a one-shot action is a [Button](/docs/components/button).
+
+## Examples
+
+### Sizes
+
+`size="sm"` (20 px segments) fits a toolbar or a small window. `activationMode="manual"` makes the arrow keys only move focus, and Space or Enter choose: use it when a change is heavy, such as switching a live scene.
+
+<ComponentPreview name="segmented-control-sizes" />
+
+### Disabled with a reason
+
+A disabled control always says why. Pass `disabledReason` with `disabled` and the reason shows as a line under the control and describes the group.
+
+<ComponentPreview name="segmented-control-disabled" />
+
+### Icons
+
+Draw an option as an icon with an `aria-label`, and give it a `tooltip`: its name on hover and on focus, never a native `title`.
+
+<ComponentPreview name="segmented-control-icons" />
+
+## Theming
+
+Segmented control wears the same track and segment as [Tabs](/docs/components/tabs). Both read it from `tabs-variants`, a small module with no Base UI import, so a segmented control costs a window's first bundle nothing:
+
+- `tabsListVariants({ variant })` is the track.
+- `tabsTriggerBaseClassName` is one segment, before its selected state.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-foreground/5`, `ring-border` | The recessed track |
+| `chrome-plate` | The checked segment, keyed off `aria-checked` |
+| `rounded-row`, `rounded-chip` | The track and a segment |
+| `min-h-control`, `min-h-6` | The `default` and `sm` track heights |
+| `data-checked`, `data-unchecked` | On every segment, as a Base UI radio marks it |
+| `data-size` | On the track: `default` or `sm` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Tab` | Lands on the checked option, or the first enabled one; `Tab` again leaves the group |
+| `ArrowRight`, `ArrowDown` | Moves to the next enabled option, wrapping; checks it unless activation is manual |
+| `ArrowLeft`, `ArrowUp` | Moves to the previous enabled option, wrapping; checks it unless activation is manual |
+| `Home`, `End` | Moves to the first or last enabled option |
+| `Space`, `Enter` | Checks the focused option |
+
+## Accessibility
+
+It follows the WAI-ARIA radio group pattern: the track is a `radiogroup` and each option a `radio` with `aria-checked`. Name it with `aria-label`, or put it in a [Field](/docs/components/field): the Field's label names the group through `aria-labelledby` unless the group carries its own `aria-label`. While disabled with a reason, the group is `aria-disabled` and `aria-describedby` the reason, so a screen reader hears why.
+
+`onValueChange` fires only with a newly checked value. An option's own `onClick` still runs on the checked option: the hook for choosing it again (replay, re-apply).
+
+## API reference
+
+Every `div` prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "options",
+      "SegmentedControlOption<T>[]",
+      null,
+      "The options, in order. Each also takes any button prop and data-* attributes.",
+    ],
+    [
+      "value",
+      "T | null | undefined",
+      null,
+      "The checked option. A value not offered checks none.",
+    ],
+    [
+      "onValueChange",
+      "(value: T) => void",
+      null,
+      "Called with a newly checked value, never with the one already checked.",
+    ],
+    ["disabled", "boolean", "false", null],
+    [
+      "disabledReason",
+      "string | null",
+      null,
+      "Why the control is disabled: shown under it while disabled.",
+    ],
+    ["activationMode", '"automatic" | "manual"', '"automatic"', null],
+    ["size", '"default" | "sm"', '"default"', null],
+  ]}
+/>
+
+### SegmentedControlOption
+
+<PropsTable
+  rows={[
+    ["value", "T", null, null],
+    ["label", "ReactNode", null, "Text, or an icon with an aria-label."],
+    ["disabled", "boolean", "false", null],
+    [
+      "tooltip",
+      "ReactNode",
+      null,
+      "The option's name on hover and focus, for an icon option.",
+    ],
+  ]}
+/>
+
+`segmentedTargetIndex(enabled, current, key)` and `segmentedTabStop(enabled, checkedIndex)` are the keyboard rules as pure functions, for a control that needs the same roving focus.

@@ -1,0 +1,65 @@
+---
+title: Shortcut Tooltip
+description: A control's tooltip with its bound shortcut as one keycap, keyboard-first and quiet. It wraps the control, so the tooltip never touches the control's own attributes.
+---
+
+<ComponentPreview name="shortcut-tooltip-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/shortcut-tooltip
+```
+
+## Usage
+
+```tsx
+import { ShortcutTooltip } from "@/components/ui/shortcut-tooltip";
+```
+
+```tsx
+<ShortcutTooltip accelerator="CmdOrCtrl+K" label="Search">
+  <Button aria-label="Search" size="icon" variant="ghost">
+    <SearchIcon />
+  </Button>
+</ShortcutTooltip>
+```
+
+With no `accelerator` (nothing bound yet) the tooltip shows the label alone.
+
+## Examples
+
+### Around a switch
+
+The trigger is a wrapping `<span>`, so the tooltip's handlers and its `data-popup-open` land there: a Switch keeps its own `data-checked`, and a Button its own `render`. `className` lays the wrapper out (`flex flex-col` around a whole row); it never styles the control.
+
+<ComponentPreview name="shortcut-tooltip-switch" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float-tooltip` | The tooltip, through [Tooltip](/docs/components/tooltip) |
+| `glass-keycap` | The shortcut, through [Shortcut keys](/docs/components/shortcut-keys) |
+| `data-slot="tooltip-trigger"` | On the wrapper |
+
+## Accessibility
+
+The tooltip opens on hover and on keyboard focus of the control inside the wrapper. It names the control for sighted users only, so an icon-only control still needs its own `aria-label`, and a tooltip is never the only place a fact lives. Give the control `aria-keyshortcuts` when its shortcut matters to assistive tech.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["label", "string", null, "What the control does."],
+    [
+      "accelerator",
+      "string",
+      null,
+      "The bound shortcut as an Electron accelerator; empty or absent when none is bound.",
+    ],
+    ["platform", "string", null, "Passed to Shortcut keys."],
+    ["className", "string", null, "Layout for the wrapper, never styling."],
+    ["children", "ReactElement", null, "The control."],
+  ]}
+/>
