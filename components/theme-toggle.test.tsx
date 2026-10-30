@@ -20,7 +20,8 @@ describe("ThemeToggle", () => {
   it("keeps one name whatever the theme, and flips it on a click", () => {
     renderToggle();
     const button = screen.getByRole("button", { name: "Toggle color theme" });
-    expect(button).toHaveAttribute("data-slot", "theme-toggle");
+    // A Button keeps its own slot, so selectors keyed on it still match.
+    expect(button).toHaveAttribute("data-slot", "button");
     expect(button).not.toHaveAttribute("title");
     expect(document.documentElement.classList.contains("dark")).toBe(true);
     act(() => {
@@ -36,6 +37,14 @@ describe("ThemeToggle", () => {
     renderToggle();
     act(() => {
       fireEvent.keyDown(document.body, { key: "d" });
+    });
+    expect(document.documentElement.classList.contains("light")).toBe(true);
+  });
+
+  it("matches the character, so Shift+D flips too", () => {
+    renderToggle();
+    act(() => {
+      fireEvent.keyDown(document.body, { key: "D", shiftKey: true });
     });
     expect(document.documentElement.classList.contains("light")).toBe(true);
   });
