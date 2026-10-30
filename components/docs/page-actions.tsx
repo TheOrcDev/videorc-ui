@@ -142,7 +142,6 @@ export const PageActions = ({
         onClick={copyPrompt}
         onFocus={prefetch}
         onMouseEnter={prefetch}
-        size="sm"
         variant="secondary"
       >
         <CopyStateIcon idleIcon={<SparkleIcon />} state={state} />
@@ -154,7 +153,7 @@ export const PageActions = ({
           render={
             <Button
               aria-label="More actions for AI agents"
-              size="icon-sm"
+              size="icon"
               variant="secondary"
             />
           }

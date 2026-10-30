@@ -1,19 +1,22 @@
-// Installs audiocn registry items into fresh shadcn apps and type-checks them.
-// Run `pnpm registry:build` first.
+// Installs every videorc/ui registry item into fresh shadcn apps and
+// type-checks them. Run `pnpm registry:build` first.
 //
 // Two fixtures:
-// - base: a Base UI app, every item.
-// - radix: a Radix app compiled against ES2022, every item that does not
-//   compose a Base-only shadcn API (the blocks and audio-device-select do).
-//   This is how a Radix project such as Videorc installs audiocn, and the
-//   ES2022 lib catches newer APIs (`toSorted`) the default config hides.
-import { execFileSync, spawn } from "node:child_process";
+// - next: a Next.js Base UI app (rsc: true), the docs site's own shape.
+// - vite: a Vite Base UI app (rsc: false) compiled against ES2022 and
+//   formatted with Videorc's Prettier settings, the shape Videorc's renderer
+//   installs into. "use client" stays in the files (the CLI keeps it even
+//   for rsc: false); Vite ignores the directive, as Videorc's own files show.
+//
+// VIDEORC_UI_FIXTURE=next|vite runs one; VIDEORC_UI_FIXTURE_DIR keeps them.
+import { spawn } from "node:child_process";
 import { once } from "node:events";
 import {
   createReadStream,
   existsSync,
   mkdtempSync,
   readFileSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { createServer } from "node:http";
@@ -32,29 +35,31 @@ if (!existsSync(path.join(registryDir, "registry.json"))) {
 const { items } = JSON.parse(
   readFileSync(path.join(root, "registry.json"), "utf-8")
 );
-const allNames = items.map((item) => item.name);
-// Built on a Base-only shadcn API: the Select `items` prop, render-function
-// `SelectValue`, `render` composition.
-const baseOnly = new Set(["audio-device-select"]);
-const radixNames = items
-  .filter((item) => item.type !== "registry:block" && !baseOnly.has(item.name))
-  .map((item) => item.name);
+const names = items.map((item) => item.name);
 
 const fixtures = [
-  { base: "base", lib: null, name: "base", names: allNames },
+  { lib: null, name: "next", prettier: false, template: "next" },
   {
-    base: "radix",
     lib: ["ES2022", "DOM", "DOM.Iterable"],
-    name: "radix",
-    names: radixNames,
+    name: "vite",
+    prettier: true,
+    template: "vite",
   },
 ];
 
-const only = process.env.AUDIOCN_FIXTURE;
+// Videorc's prettier.config.cjs.
+const VIDEORC_PRETTIER = {
+  printWidth: 100,
+  semi: false,
+  singleQuote: true,
+  trailingComma: "none",
+};
+
+const only = process.env.VIDEORC_UI_FIXTURE;
 
 const server = createServer((request, response) => {
   const file = path.join(registryDir, path.basename(request.url ?? ""));
-  if (!existsSync(file)) {
+  if (!existsSync(file) || !statSync(file).isFile()) {
     response.writeHead(404).end();
     return;
   }
@@ -76,8 +81,21 @@ const run = async (command, args, cwd) => {
   }
 };
 
+const BLOCK_COMMENT = /\/\*[\s\S]*?\*\//gu;
+const LINE_COMMENT = /^\s*\/\/.*$/gmu;
+const TRAILING_COMMA = /,(?=\s*[}\]])/gu;
+
+/** Reads JSON with comments and trailing commas, as tsconfig files allow. */
+const readJsonc = (file) =>
+  JSON.parse(
+    readFileSync(file, "utf-8")
+      .replaceAll(BLOCK_COMMENT, "")
+      .replaceAll(LINE_COMMENT, "")
+      .replaceAll(TRAILING_COMMA, "")
+  );
+
 const editJson = (file, edit) => {
-  const json = JSON.parse(readFileSync(file, "utf-8"));
+  const json = readJsonc(file);
   edit(json);
   writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
 };
@@ -85,8 +103,8 @@ const editJson = (file, edit) => {
 const installFixture = async (fixture) => {
   const workspace = mkdtempSync(
     path.join(
-      process.env.AUDIOCN_FIXTURE_DIR ?? tmpdir(),
-      `audiocn-install-${fixture.name}-`
+      process.env.VIDEORC_UI_FIXTURE_DIR ?? tmpdir(),
+      `videorc-ui-install-${fixture.name}-`
     )
   );
   const app = path.join(workspace, "fixture");
@@ -100,9 +118,9 @@ const installFixture = async (fixture) => {
       "--name",
       "fixture",
       "--template",
-      "next",
+      fixture.template,
       "--base",
-      fixture.base,
+      "base",
       "--preset",
       "nova",
       "--yes",
@@ -113,12 +131,16 @@ const installFixture = async (fixture) => {
   editJson(path.join(app, "components.json"), (config) => {
     config.registries = {
       ...config.registries,
-      "@audiocn": `http://localhost:${port}/{name}.json`,
+      "@videorc": `http://localhost:${port}/{name}.json`,
     };
   });
+  // Vite splits its config; the app's own sources compile under tsconfig.app.json.
+  const tsconfig = existsSync(path.join(app, "tsconfig.app.json"))
+    ? "tsconfig.app.json"
+    : "tsconfig.json";
   if (fixture.lib) {
-    editJson(path.join(app, "tsconfig.json"), (tsconfig) => {
-      tsconfig.compilerOptions.lib = fixture.lib;
+    editJson(path.join(app, tsconfig), (config) => {
+      config.compilerOptions.lib = fixture.lib;
     });
   }
 
@@ -128,20 +150,33 @@ const installFixture = async (fixture) => {
       "dlx",
       "shadcn@rc",
       "add",
-      ...fixture.names.map((name) => `@audiocn/${name}`),
+      ...names.map((name) => `@videorc/${name}`),
       "--yes",
       "--overwrite",
     ],
     app
   );
-  await run("pnpm", ["exec", "tsc", "--noEmit"], app);
-  console.log(
-    `\n[${fixture.name}] installed and type-checked ${fixture.names.length} items in ${app}`
+  const { aliases } = JSON.parse(
+    readFileSync(path.join(app, "components.json"), "utf-8")
   );
-  execFileSync("ls", ["components/ui", "hooks", "lib/audio"], {
-    cwd: app,
-    stdio: "inherit",
-  });
+  const sourceRoot = aliases.ui.startsWith("@/")
+    ? path.join(existsSync(path.join(app, "src")) ? "src" : ".", "components")
+    : "components";
+  if (fixture.prettier) {
+    writeFileSync(
+      path.join(app, ".prettierrc.json"),
+      `${JSON.stringify(VIDEORC_PRETTIER, null, 2)}\n`
+    );
+    await run(
+      "pnpm",
+      ["dlx", "prettier@3", "--write", `${sourceRoot}/**/*.{ts,tsx}`],
+      app
+    );
+  }
+  await run("pnpm", ["exec", "tsc", "--noEmit", "-p", tsconfig], app);
+  console.log(
+    `\n[${fixture.name}] installed and type-checked ${names.length} items in ${app}`
+  );
 };
 
 // One after the other: both fixtures use the same registry server and port.

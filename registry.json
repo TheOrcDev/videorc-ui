@@ -704,6 +704,20 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Desktop-sized buttons on Base UI: a polished chrome default, a glass-chip secondary, ghost, outline, destructive, link, and the record LED that lights while a session runs.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@videorc/theme", "utils"],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

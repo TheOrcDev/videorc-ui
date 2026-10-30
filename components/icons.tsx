@@ -41,8 +41,9 @@ export type AppIcon = ComponentType<AppIconProps>;
 // The compile-only check preserves the app prop contract. Direct re-exports
 // let each consumer own its glyph chunks; optional panels must not pull the
 // whole registry into the initial renderer asset graph.
-type _AssertIconProps<T extends Record<string, AppIcon>> = T;
-type _RegistryIconProps = _AssertIconProps<
+type AssertIconProps<T extends Record<string, AppIcon>> = T;
+/** Compile-time proof that every glyph exported below accepts `AppIconProps`. */
+export type IconSetCheck = AssertIconProps<
   Pick<
     typeof PhosphorIcons,
     | "ArrowClockwise"

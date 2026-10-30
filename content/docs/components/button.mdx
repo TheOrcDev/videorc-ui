@@ -1,0 +1,92 @@
+---
+title: Button
+description: Desktop-sized buttons on Base UI. The default is polished chrome, secondary is a glass chip, and record is the red LED that lights while a session runs.
+---
+
+<ComponentPreview name="button-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/button
+```
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+```
+
+```tsx
+<Button>Go Live…</Button>
+```
+
+## Examples
+
+### Variants
+
+`default` is the one chrome fill on a surface: the primary action. `secondary` is the everyday button, a glass chip. `ghost` sits in toolbars and rows, `outline` beside a field, and `destructive` deletes.
+
+<ComponentPreview name="button-variants" />
+
+### Sizes
+
+Every control is 28 px tall. `xs` and `icon-xs` (24 px) are for dense rows only; `lg` (32 px) is for a dialog's or a card's single call to action.
+
+<ComponentPreview name="button-sizes" />
+
+### Record
+
+`record` is for Record and its stop button, nothing else. Set `data-lit` while a recording or livestream runs and the LED glows. Delete stays `destructive`.
+
+<ComponentPreview name="button-record" />
+
+### As a link
+
+Render another element with `render`. When it isn't a `<button>`, pass `nativeButton={false}` so Base UI drops the button semantics it would otherwise add.
+
+<ComponentPreview name="button-link" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The default fill: polished silver in dark, graphite in light |
+| `chrome-led` | The record fill; `--chrome-led-glow` while `data-lit` |
+| `glass-chip` | The secondary fill |
+| `h-control`, `size-control` | The 28 px desktop control height |
+| `data-variant`, `data-size` | The variant and size, for styling from a parent |
+
+## Accessibility
+
+An icon-only button needs an `aria-label`. Icons inside a labelled button are decorative; mark their position with `data-icon="inline-start"` or `"inline-end"` so the padding adjusts. Disabled buttons take no hover, so explain why with [Disabled reason](/docs/components/disabled-reason).
+
+## API reference
+
+Every [Base UI Button](https://base-ui.com/react/components/button) prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "variant",
+      '"default" | "secondary" | "outline" | "ghost" | "destructive" | "link" | "record"',
+      '"default"',
+      null,
+    ],
+    ["size", '"default" | "xs" | "lg" | "icon" | "icon-xs"', '"default"', null],
+    [
+      "render",
+      "ReactElement | (props, state) => ReactElement",
+      null,
+      "Replaces the rendered element.",
+    ],
+    [
+      "nativeButton",
+      "boolean",
+      "true",
+      "Set to false when render is not a button.",
+    ],
+  ]}
+/>
+
+`buttonVariants({ variant, size })` returns the classes, for a link or any element styled as a button.
