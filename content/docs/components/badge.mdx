@@ -1,0 +1,81 @@
+---
+title: Badge
+description: Glass chips for status, tags and counts. A status chip keeps its text monochrome and glows its tone in a dot; failed and on air tint the glass itself.
+---
+
+<ComponentPreview name="badge-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/badge
+```
+
+## Usage
+
+```tsx
+import { Badge } from "@/components/ui/badge";
+```
+
+```tsx
+<Badge variant="success">Connected</Badge>
+```
+
+## Examples
+
+### Variants
+
+`default` is neutral glass and `outline` is a tag (9:16, counts, Beta) in secondary text. `success`, `warning` and `neutral` are status chips. `destructive` and `live` tint the glass, only for failed, on air and destructive. `chrome` is a highlight's On stream, `plate` a member's chip, and `ghost` a borderless word.
+
+<ComponentPreview name="badge-variants" />
+
+### Status
+
+A status chip carries its tone in a 6 px dot with a halo and a soft glow. A leading icon marked `data-icon="inline-start"` replaces the dot and takes the tone. The word is a human, sentence-case state ("Reconnecting"), never a raw value.
+
+<ComponentPreview name="badge-status" />
+
+### As a button
+
+Render another element with `render` when the chip is the control, as the chat's jump-to-latest chip is. A badge isn't a Base UI button, so no `nativeButton` is needed.
+
+<ComponentPreview name="badge-render" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-chip` | The neutral glass: a gradient fill, a 1 px rim, a top highlight and a soft drop |
+| `glass-chip-tinted` | The emphasis glass, tinted by the tone |
+| `tone-success`, `tone-warning`, `tone-neutral`, `tone-destructive`, `tone-live` | Set `--chip-tone` for the dot, the leading icon or the tint |
+| `glass-dot` | The status dot, drawn by the chip's `::before` |
+| `chrome-fill`, `chrome-plate` | The `chrome` and `plate` chips |
+| `rounded-tag` | The 7 px tag radius, between chip and row |
+| `data-variant`, `data-slot="badge"` | The variant, for styling from a parent |
+
+## Accessibility
+
+A badge isn't focusable, so a `title` on it never reaches the keyboard or a screen reader. To explain a chip, wrap it in [Info tooltip](/docs/components/info-tooltip). A chip rendered as a `<button>` needs a name that says what it does when its word alone doesn't.
+
+## API reference
+
+Every [Base UI `useRender`](https://base-ui.com/react/utils/use-render) prop for a `<span>`, plus:
+
+<PropsTable
+  rows={[
+    [
+      "variant",
+      '"default" | "outline" | "success" | "warning" | "neutral" | "destructive" | "live" | "chrome" | "plate" | "ghost"',
+      '"default"',
+      null,
+    ],
+    [
+      "render",
+      "ReactElement | (props, state) => ReactElement",
+      null,
+      "Replaces the rendered span.",
+    ],
+  ]}
+/>
+
+`badgeVariants({ variant })` returns the classes, for an element styled as a badge.

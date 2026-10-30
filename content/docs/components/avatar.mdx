@@ -1,0 +1,74 @@
+---
+title: Avatar
+description: A round picture of a chat author or a channel, with initials while the picture loads or when it fails, in three sizes.
+---
+
+<ComponentPreview name="avatar-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/avatar
+```
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+```
+
+```tsx
+<Avatar>
+  <AvatarImage alt="" src={authorAvatarUrl} />
+  <AvatarFallback>MC</AvatarFallback>
+</Avatar>
+```
+
+## Anatomy
+
+```tsx
+<Avatar>
+  <AvatarImage />
+  <AvatarFallback />
+  <AvatarBadge />
+</Avatar>
+
+<AvatarGroup>
+  <Avatar />
+  <AvatarGroupCount />
+</AvatarGroup>
+```
+
+## Examples
+
+### Group
+
+Overlap a few avatars and end with a count for the rest, such as a channel's moderators.
+
+<ComponentPreview name="avatar-group" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `data-size` | `sm` (24 px), `default` (32 px) or `lg` (40 px) |
+| `after:border-border` | The hairline over the picture, blended so it reads on any photo |
+| `bg-muted`, `text-muted-foreground` | The fallback's fill and initials |
+
+## Accessibility
+
+Give `AvatarImage` an `alt` that names the person or channel. When the name is printed beside the avatar, as it is in a chat row, use `alt=""` and `aria-hidden` on the avatar so the name isn't read twice.
+
+## API reference
+
+### Avatar
+
+Every [Base UI Avatar](https://base-ui.com/react/components/avatar) Root prop, plus:
+
+<PropsTable rows={[["size", '"default" | "sm" | "lg"', '"default"', null]]} />
+
+### AvatarFallback
+
+Every Base UI Avatar Fallback prop. `delay` waits that many milliseconds before showing the initials, so a fast image never flashes them.
+
+`AvatarBadge`, `AvatarGroup` and `AvatarGroupCount` take `<span>` and `<div>` props.

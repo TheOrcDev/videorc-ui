@@ -1,0 +1,37 @@
+---
+title: Separator
+description: A 1 px hairline between groups, horizontal or vertical, on Base UI.
+---
+
+<ComponentPreview name="separator-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/separator
+```
+
+## Usage
+
+```tsx
+import { Separator } from "@/components/ui/separator";
+```
+
+```tsx
+<Separator orientation="vertical" />
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-border` | The hairline colour, never more than 1 px |
+| `data-orientation` | `horizontal` or `vertical`; a vertical one stretches to its row |
+
+## Accessibility
+
+A separator is `role="separator"` with its `aria-orientation`, so a screen reader hears where one group ends. When a line is only decoration, draw a `border-border` hairline on the element instead.
+
+## API reference
+
+Every [Base UI Separator](https://base-ui.com/react/components/separator) prop.

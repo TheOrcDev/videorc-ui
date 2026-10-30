@@ -1,0 +1,60 @@
+---
+title: Collapsible
+description: One section that opens and closes under its trigger, such as advanced settings. Unstyled, so the trigger is whatever control fits.
+---
+
+<ComponentPreview name="collapsible-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/collapsible
+```
+
+## Usage
+
+```tsx
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+```
+
+```tsx
+<Collapsible>
+  <CollapsibleTrigger>Advanced settings</CollapsibleTrigger>
+  <CollapsibleContent>{settings}</CollapsibleContent>
+</Collapsible>
+```
+
+## Anatomy
+
+```tsx
+<Collapsible>
+  <CollapsibleTrigger />
+  <CollapsibleContent />
+</Collapsible>
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `data-panel-open` | On the trigger while open: turn a chevron with `group-data-panel-open:rotate-180` |
+| `data-open`, `data-closed` | On the root and the panel |
+| `--collapsible-panel-height` | The panel's measured height, to animate it |
+
+## Keyboard
+
+| Key                               | Action                    |
+| --------------------------------- | ------------------------- |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | Opens or closes the panel |
+
+## Accessibility
+
+The trigger is a button with `aria-expanded` and `aria-controls`. Render your own button with `render={<Button variant="ghost" />}` to keep the desktop sizes; wrap the trigger in a heading when the section is one.
+
+## API reference
+
+Every [Base UI Collapsible](https://base-ui.com/react/components/collapsible) prop: `open`, `defaultOpen` and `onOpenChange` on `Collapsible`, `render` on `CollapsibleTrigger`, and `keepMounted` or `hiddenUntilFound` on `CollapsibleContent` (the Base UI Panel).

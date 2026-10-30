@@ -35,6 +35,19 @@
     "command",
     "sonner",
     "---Display---",
+    "alert",
+    "badge",
+    "info-tooltip",
+    "disabled-reason",
+    "empty",
+    "spinner",
+    "skeleton",
+    "avatar",
+    "separator",
+    "scroll-area",
+    "accordion",
+    "collapsible",
+    "chrome-row",
     "chart"
   ]
 }

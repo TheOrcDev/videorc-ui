@@ -5,11 +5,30 @@ import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 
 export const examples: Record<string, ComponentType | undefined> = {
+  "accordion-demo": dynamic(
+    () => import("@/components/examples/accordion-demo")
+  ),
+  "accordion-multiple": dynamic(
+    () => import("@/components/examples/accordion-multiple")
+  ),
+  "alert-demo": dynamic(() => import("@/components/examples/alert-demo")),
   "alert-dialog-demo": dynamic(
     () => import("@/components/examples/alert-dialog-demo")
   ),
   "alert-dialog-pending": dynamic(
     () => import("@/components/examples/alert-dialog-pending")
+  ),
+  "alert-icon": dynamic(() => import("@/components/examples/alert-icon")),
+  "alert-variants": dynamic(
+    () => import("@/components/examples/alert-variants")
+  ),
+  "avatar-demo": dynamic(() => import("@/components/examples/avatar-demo")),
+  "avatar-group": dynamic(() => import("@/components/examples/avatar-group")),
+  "badge-demo": dynamic(() => import("@/components/examples/badge-demo")),
+  "badge-render": dynamic(() => import("@/components/examples/badge-render")),
+  "badge-status": dynamic(() => import("@/components/examples/badge-status")),
+  "badge-variants": dynamic(
+    () => import("@/components/examples/badge-variants")
   ),
   "button-demo": dynamic(() => import("@/components/examples/button-demo")),
   "button-link": dynamic(() => import("@/components/examples/button-link")),
@@ -30,6 +49,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "checkbox-indeterminate": dynamic(
     () => import("@/components/examples/checkbox-indeterminate")
   ),
+  "chrome-row-demo": dynamic(
+    () => import("@/components/examples/chrome-row-demo")
+  ),
+  "collapsible-demo": dynamic(
+    () => import("@/components/examples/collapsible-demo")
+  ),
   "command-demo": dynamic(() => import("@/components/examples/command-demo")),
   "command-dialog": dynamic(
     () => import("@/components/examples/command-dialog")
@@ -43,6 +68,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "dialog-body": dynamic(() => import("@/components/examples/dialog-body")),
   "dialog-demo": dynamic(() => import("@/components/examples/dialog-demo")),
   "dialog-sizes": dynamic(() => import("@/components/examples/dialog-sizes")),
+  "disabled-reason-demo": dynamic(
+    () => import("@/components/examples/disabled-reason-demo")
+  ),
+  "disabled-reason-menu": dynamic(
+    () => import("@/components/examples/disabled-reason-menu")
+  ),
   "dropdown-menu-checkboxes": dynamic(
     () => import("@/components/examples/dropdown-menu-checkboxes")
   ),
@@ -55,6 +86,10 @@ export const examples: Record<string, ComponentType | undefined> = {
   "dropdown-menu-submenu": dynamic(
     () => import("@/components/examples/dropdown-menu-submenu")
   ),
+  "empty-demo": dynamic(() => import("@/components/examples/empty-demo")),
+  "empty-description": dynamic(
+    () => import("@/components/examples/empty-description")
+  ),
   "field-choice-card": dynamic(
     () => import("@/components/examples/field-choice-card")
   ),
@@ -64,6 +99,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   ),
   "hover-card-demo": dynamic(
     () => import("@/components/examples/hover-card-demo")
+  ),
+  "info-tooltip-control": dynamic(
+    () => import("@/components/examples/info-tooltip-control")
+  ),
+  "info-tooltip-demo": dynamic(
+    () => import("@/components/examples/info-tooltip-demo")
   ),
   "input-demo": dynamic(() => import("@/components/examples/input-demo")),
   "input-file": dynamic(() => import("@/components/examples/input-file")),
@@ -91,6 +132,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "progress-steps": dynamic(
     () => import("@/components/examples/progress-steps")
   ),
+  "scroll-area-chat": dynamic(
+    () => import("@/components/examples/scroll-area-chat")
+  ),
+  "scroll-area-demo": dynamic(
+    () => import("@/components/examples/scroll-area-demo")
+  ),
   "segmented-control-demo": dynamic(
     () => import("@/components/examples/segmented-control-demo")
   ),
@@ -109,6 +156,9 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/select-placeholder")
   ),
   "select-sizes": dynamic(() => import("@/components/examples/select-sizes")),
+  "separator-demo": dynamic(
+    () => import("@/components/examples/separator-demo")
+  ),
   "shortcut-keys-demo": dynamic(
     () => import("@/components/examples/shortcut-keys-demo")
   ),
@@ -124,6 +174,7 @@ export const examples: Record<string, ComponentType | undefined> = {
   "shortcut-tooltip-switch": dynamic(
     () => import("@/components/examples/shortcut-tooltip-switch")
   ),
+  "skeleton-demo": dynamic(() => import("@/components/examples/skeleton-demo")),
   "slider-demo": dynamic(() => import("@/components/examples/slider-demo")),
   "slider-range": dynamic(() => import("@/components/examples/slider-range")),
   "slider-readout": dynamic(
@@ -132,6 +183,10 @@ export const examples: Record<string, ComponentType | undefined> = {
   "sonner-demo": dynamic(() => import("@/components/examples/sonner-demo")),
   "sonner-types": dynamic(() => import("@/components/examples/sonner-types")),
   "sonner-undo": dynamic(() => import("@/components/examples/sonner-undo")),
+  "spinner-button": dynamic(
+    () => import("@/components/examples/spinner-button")
+  ),
+  "spinner-demo": dynamic(() => import("@/components/examples/spinner-demo")),
   "switch-demo": dynamic(() => import("@/components/examples/switch-demo")),
   "switch-disabled": dynamic(
     () => import("@/components/examples/switch-disabled")

@@ -1,0 +1,82 @@
+---
+title: Info Tooltip
+description: Explains a chip, a dot or a short status word on hover and on keyboard focus, and keeps the text in the DOM as its description for screen readers.
+---
+
+<ComponentPreview name="info-tooltip-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/info-tooltip
+```
+
+## Usage
+
+```tsx
+import { InfoTooltip } from "@/components/ui/info-tooltip";
+```
+
+```tsx
+<InfoTooltip content="The disk is full.">
+  <Badge variant="destructive">MP4 failed</Badge>
+</InfoTooltip>
+```
+
+## Examples
+
+### On a control
+
+A control that takes focus itself (a button whose outcome needs a sentence) is the trigger and is described, with no wrapper: pass `focusable={false}`. A plain hint on a control is a [Tooltip](/docs/components/tooltip); a disabled control's reason is a [Disabled reason](/docs/components/disabled-reason).
+
+<ComponentPreview name="info-tooltip-control" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-chip`, `focus-visible:ring-3` | The wrapper's focus ring, around the chip |
+| `data-slot="info-tooltip"` | The focusable wrapper |
+| `data-slot="info-tooltip-text"` | The hidden description |
+
+The tooltip itself is the registry's [Tooltip](/docs/components/tooltip).
+
+## Keyboard
+
+| Key            | Action                                     |
+| -------------- | ------------------------------------------ |
+| <kbd>Tab</kbd> | Focuses the chip and shows the explanation |
+| <kbd>Esc</kbd> | Hides it                                   |
+
+## Accessibility
+
+A badge isn't focusable, so a `title` on it never reaches the keyboard or a screen reader. The wrapper is a tab stop, and the explanation stays in the DOM, hidden, as its `aria-describedby`, not only while the tooltip shows. Base UI's tooltip is visual only, so this description is what a screen reader hears. Pass `tabIndex={-1}` for a chip in a roving-focus row that isn't the active one. With no `content` the child renders exactly as it is.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "content",
+      "ReactNode",
+      null,
+      "The explanation in a sentence; null or empty for none.",
+    ],
+    ["children", "ReactElement", null, "The chip, dot or word it explains."],
+    [
+      "focusable",
+      "boolean",
+      "true",
+      "False when the child is a control that takes focus itself.",
+    ],
+    ["tabIndex", "number", "0", "The wrapper's tab stop."],
+    [
+      "className",
+      "string",
+      null,
+      "Layout for the wrapper (shrink-0, min-w-0), never styling.",
+    ],
+    ["side", '"top" | "bottom" | "left" | "right"', '"top"', null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+  ]}
+/>

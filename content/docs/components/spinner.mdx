@@ -1,0 +1,52 @@
+---
+title: Spinner
+description: The one spinner for work in flight, on the icon set's SpinnerIcon. It announces itself as a status unless it sits beside its own words.
+---
+
+<ComponentPreview name="spinner-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/spinner
+```
+
+## Usage
+
+```tsx
+import { Spinner } from "@/components/ui/spinner";
+```
+
+```tsx
+<Spinner aria-label="Loading scenes" />
+```
+
+## Examples
+
+### In a button
+
+Beside a pending label ("Saving…") the spinner is decoration: pass `aria-hidden` and mark it `data-icon="inline-start"` so the button adjusts its padding.
+
+<ComponentPreview name="spinner-button" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `animate-spin` | The turn, which reduced motion stops |
+| `size-*` | Sets a size; without one it takes its slot's icon size, or 1em |
+
+## Accessibility
+
+On its own the spinner is `role="status"`, named "Loading" or its `aria-label`. With `aria-hidden` it drops the role and the name, for a spinner beside its own words or inside a region that already announces the wait.
+
+## API reference
+
+Every icon prop (`AppIconProps`), plus:
+
+<PropsTable
+  rows={[
+    ["aria-label", "string", '"Loading"', "What is loading."],
+    ["aria-hidden", "boolean", null, "Silences it beside its own words."],
+  ]}
+/>

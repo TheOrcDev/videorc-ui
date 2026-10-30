@@ -1,0 +1,93 @@
+---
+title: Alert
+description: A flush inline status row, never a card. The variant is the tone and brings its own icon, and only a destructive alert interrupts a screen reader.
+---
+
+<ComponentPreview name="alert-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/alert
+```
+
+## Usage
+
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+```
+
+```tsx
+<Alert variant="warning">
+  <AlertTitle>Your microphone is muted.</AlertTitle>
+</Alert>
+```
+
+## Anatomy
+
+```tsx
+<Alert>
+  <AlertTitle />
+  <AlertDescription />
+  <AlertAction />
+</Alert>
+```
+
+## Examples
+
+### Variants
+
+The variant is the tone. `default` and `quiet` are notes (`quiet` in secondary text), `locked` says why the controls under it are off, and `success`, `warning` and `destructive` report an outcome. A title alone reads as a message in regular weight; over a description it becomes a heading in medium.
+
+<ComponentPreview name="alert-variants" />
+
+### Icon
+
+Each tone brings one glyph in one weight. Pass `icon` to show the subject's own mark instead (the microphone, a platform), or `icon={null}` for none. Never put an icon in the children.
+
+<ComponentPreview name="alert-icon" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-row` | The 8 px row radius; no border and no shadow |
+| `bg-foreground/4` | The tint of `default`, `quiet` and `locked` |
+| `bg-success/10`, `bg-warning/10`, `bg-destructive/10` | The tone tints; the icon takes the tone colour, the text stays monochrome |
+| `data-variant` | The tone, for styling a part from the alert with `group-data-[variant=…]/alert` |
+| `data-slot="alert-icon"` | The leading icon |
+
+## Accessibility
+
+A `destructive` alert is `role="alert"` and is announced at once. Every other tone is `role="status"`, a polite live region. Pass `role` to override it, for a card that is a group or a note that should stay silent. The icon is `aria-hidden`: the title carries the meaning.
+
+## API reference
+
+### Alert
+
+Every `<div>` prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "variant",
+      '"default" | "quiet" | "locked" | "success" | "warning" | "destructive"',
+      '"default"',
+      "The tone: the tint, the icon and the role.",
+    ],
+    [
+      "icon",
+      "AppIcon | null",
+      null,
+      "Replaces the tone's icon; null drops it.",
+    ],
+    [
+      "role",
+      "AriaRole",
+      '"status"',
+      '"alert" when the variant is destructive.',
+    ],
+  ]}
+/>
+
+`AlertTitle`, `AlertDescription` and `AlertAction` take every `<div>` prop. `AlertAction` sits in the top-right corner, and the alert pads its text to make room.

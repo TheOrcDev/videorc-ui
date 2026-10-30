@@ -1,0 +1,92 @@
+---
+title: Scroll Area
+description: A native scroller with a thumb-only scrollbar, like macOS overlay scrollbars. The thumb shows while you scroll, on the theme's --scrollbar-* tokens.
+---
+
+<ComponentPreview name="scroll-area-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/scroll-area
+```
+
+## Usage
+
+```tsx
+import { ScrollArea } from "@/components/ui/scroll-area";
+```
+
+```tsx
+<ScrollArea className="h-64">{recordings}</ScrollArea>
+```
+
+## Anatomy
+
+```tsx
+<ScrollArea>
+  {children}
+  <ScrollBar orientation="horizontal" />
+</ScrollArea>
+```
+
+`ScrollArea` brings its own vertical `ScrollBar`. Add a horizontal one as a child when the content scrolls sideways.
+
+## Examples
+
+### Capped height
+
+The root's height follows its content, so a cap goes on the viewport with `viewportClassName` (`max-h-56`). `type="hover"` also shows the thumb while the pointer is over the area, which suits a chat you read with the mouse on it.
+
+<ComponentPreview name="scroll-area-chat" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `--scrollbar-thumb`, `--scrollbar-thumb-hover` | The thumb and its hover fill; light mode's is darker to register on porcelain |
+| `--scrollbar-thumb-ring` | The thumb's 1 px inset ring |
+| `data-scrolling`, `data-hovering` | On the scrollbar while scrolling, and while the pointer is over the area |
+| `data-type` | The `type`, on the root |
+
+There is no track and no edge hairline: only the thumb reads.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focuses the viewport when its content overflows |
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | Scroll a step |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Scroll a page |
+| <kbd>Home</kbd> <kbd>End</kbd> | Scroll to the start or the end |
+
+## Accessibility
+
+The viewport is a native scroller, so wheel, trackpad and keyboard scrolling work as everywhere else. It takes focus only while its content overflows, and shows the focus ring then. Name the list inside it (`aria-label="Chat messages"`), not the scroll area.
+
+## API reference
+
+### ScrollArea
+
+Every [Base UI Scroll Area](https://base-ui.com/react/components/scroll-area) Root prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "type",
+      '"scroll" | "hover" | "auto" | "always"',
+      '"scroll"',
+      "When the thumb shows: while scrolling, also on hover, whenever the content overflows, or always.",
+    ],
+    [
+      "viewportClassName",
+      "string",
+      null,
+      "Classes for the element that scrolls, such as a max-h cap.",
+    ],
+  ]}
+/>
+
+### ScrollBar
+
+Every Base UI Scroll Area Scrollbar prop. `orientation` is `"vertical"` by default.

@@ -1,0 +1,34 @@
+---
+title: Skeleton
+description: A muted placeholder that pulses where content is loading, on the 8 px row radius.
+---
+
+<ComponentPreview name="skeleton-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/skeleton
+```
+
+## Usage
+
+```tsx
+import { Skeleton } from "@/components/ui/skeleton";
+```
+
+```tsx
+<Skeleton className="h-4 w-44" />
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-muted` | The placeholder fill |
+| `rounded-row` | The 8 px row radius; pass `rounded-full` for a round picture |
+| `animate-pulse` | The pulse, which reduced motion stops |
+
+## Accessibility
+
+A skeleton is decoration. Announce the loading once, on the region it fills (`aria-busy`), or with a [Spinner](/docs/components/spinner).

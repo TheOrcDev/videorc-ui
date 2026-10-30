@@ -1,0 +1,70 @@
+---
+title: Empty
+description: What a pane or a list says when there's nothing in it. Short muted text, centred, with an optional title and action, and no illustration, media tile or dashed box.
+---
+
+<ComponentPreview name="empty-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/empty
+```
+
+## Usage
+
+```tsx
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
+```
+
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyTitle>No recordings yet</EmptyTitle>
+    <EmptyDescription>
+      Recordings you make in the Studio show up here.
+    </EmptyDescription>
+  </EmptyHeader>
+</Empty>
+```
+
+## Anatomy
+
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyTitle />
+    <EmptyDescription />
+  </EmptyHeader>
+  <EmptyContent />
+</Empty>
+```
+
+## Examples
+
+### Description only
+
+When a list is empty only because of a filter or a search, the description alone is enough. The pane or list it sits in sets the space around it.
+
+<ComponentPreview name="empty-description" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `text-sm`, `text-muted-foreground` | The description: 14 px secondary text |
+| `text-sm font-medium` | The title: 14 px at weight 500, never larger |
+| `gap-3`, `p-6` | The only spacing it brings; it has no radius or border of its own |
+
+## Accessibility
+
+`EmptyTitle` is a `<div>`. When the empty state is what the page is about, put a heading inside it (`<EmptyTitle><h2>…</h2></EmptyTitle>`). An action in `EmptyContent` is an ordinary button or link with its own name.
+
+## API reference
+
+Every part takes every `<div>` prop. Unlike shadcn/ui's Empty there is no `EmptyMedia`: Videorc's empty states are words only.

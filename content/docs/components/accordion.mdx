@@ -1,0 +1,94 @@
+---
+title: Accordion
+description: Stacked sections that open in place, in a bordered group on the row radius. One open at a time, or several with multiple.
+---
+
+<ComponentPreview name="accordion-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/accordion
+```
+
+## Usage
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+```
+
+```tsx
+<Accordion defaultValue={["video"]}>
+  <AccordionItem value="video">
+    <AccordionTrigger>Video</AccordionTrigger>
+    <AccordionContent>Record at 1080p and 60 fps.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Anatomy
+
+```tsx
+<Accordion>
+  <AccordionItem>
+    <AccordionTrigger />
+    <AccordionContent />
+  </AccordionItem>
+</Accordion>
+```
+
+## Examples
+
+### Multiple
+
+Set `multiple` to let several items stay open, as the Go Live details for each destination do. The value is always an array, open or closed, single or multiple.
+
+<ComponentPreview name="accordion-multiple" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-row`, `border` | The group: the 8 px row radius and one hairline |
+| `data-open` | On an open item, which takes a `bg-muted/50` wash |
+| `data-panel-open` | On the trigger of an open item; swaps the chevron |
+| `--accordion-panel-height` | The panel's measured height, eased in 150 ms with `data-starting-style` and `data-ending-style` |
+| `data-disabled` | On a disabled item and its trigger |
+
+## Keyboard
+
+| Key                               | Action                           |
+| --------------------------------- | -------------------------------- |
+| <kbd>Tab</kbd>                    | Moves to the next trigger        |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | Opens or closes the focused item |
+
+## Accessibility
+
+Each trigger is a button inside a heading, with `aria-expanded` and `aria-controls` pointing at its panel. Name the group when it has a job of its own (`aria-label="Details for each destination"`).
+
+## API reference
+
+### Accordion
+
+Every [Base UI Accordion](https://base-ui.com/react/components/accordion) Root prop. The ones that differ from Radix:
+
+<PropsTable
+  rows={[
+    [
+      "multiple",
+      "boolean",
+      "false",
+      'Lets several items stay open; replaces type="multiple".',
+    ],
+    ["value", "Value[]", null, "The open items, always an array."],
+    ["defaultValue", "Value[]", null, "The items open at first."],
+    ["onValueChange", "(value: Value[], eventDetails) => void", null, null],
+  ]}
+/>
+
+`AccordionItem` takes a `value`; `AccordionTrigger` and `AccordionContent` take every Base UI Trigger and Panel prop, and `AccordionContent`'s `className` styles its inner padding box.

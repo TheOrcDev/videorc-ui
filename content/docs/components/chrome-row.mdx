@@ -1,0 +1,47 @@
+---
+title: Chrome Row
+description: The class names for the Stream Manager's chrome rows, the plate on the row that's on stream and the quieter one on a member's row, so a screen never names a chrome material itself.
+---
+
+<ComponentPreview name="chrome-row-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chrome-row
+```
+
+## Usage
+
+```tsx
+import { CHROME_ROW_CLASS } from "@/components/ui/chrome-row";
+```
+
+```tsx
+<li className={cn("rounded-row px-3 py-2", onStream && CHROME_ROW_CLASS.live)}>
+  {message}
+</li>
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `CHROME_ROW_CLASS.live` (`chrome-row-live`) | The row that's on stream: a Liquid Chrome plate, a top line, a rim and a 2 px polished edge down the left |
+| `CHROME_ROW_CLASS.member` (`chrome-row-member`) | A member's row: a plate at half strength with a 2 px edge in `--member`, so a paid message still reads louder |
+| `--chrome-row-*` | The plates' stops, rim and hover lift, per theme |
+
+Both plates sit on the theme's solid, so the text tiers keep their contrast over any part of the chrome ground. Hover adds a faint lift. They're static: no transition, no motion and no `backdrop-filter`, so a long virtualized chat costs no more than a flat tint.
+
+## Accessibility
+
+A plate is colour only. Say what it means in words too: an On stream chip on the live row, a Member chip on a member's row.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["CHROME_ROW_CLASS.live", '"chrome-row-live"', null, "The on-stream row."],
+    ["CHROME_ROW_CLASS.member", '"chrome-row-member"', null, "A member's row."],
+  ]}
+/>

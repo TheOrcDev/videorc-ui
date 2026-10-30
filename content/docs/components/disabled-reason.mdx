@@ -1,0 +1,93 @@
+---
+title: Disabled Reason
+description: Says why a control is disabled, on hover and on keyboard focus. A focusable wrapper carries the tooltip, and the reason stays the control's description.
+---
+
+<ComponentPreview name="disabled-reason-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/disabled-reason
+```
+
+## Usage
+
+```tsx
+import { DisabledReason } from "@/components/ui/disabled-reason";
+```
+
+```tsx
+<DisabledReason
+  reason={canGoLive ? null : "Add a destination before you go live."}
+>
+  <Button disabled={!canGoLive}>Go Live…</Button>
+</DisabledReason>
+```
+
+Pass the reason only while the control is disabled. With no reason the control renders exactly as it is, with no extra tab stop.
+
+## Examples
+
+### In a menu
+
+A menu or select item is reachable while disabled: Base UI keeps it in the arrow-key order as `aria-disabled`, and the highlight lands on it. Pass `focusable={false}` and the item itself takes the hover and the focus and is described, with no wrapper and no second stop in the list.
+
+<ComponentPreview name="disabled-reason-menu" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-chip`, `focus-visible:ring-3` | The wrapper's focus ring, around the control |
+| `data-disabled:pointer-events-auto` | Added to a menu or select item with `focusable={false}`, so it takes the hover |
+| `data-slot="disabled-reason"` | The focusable wrapper |
+| `data-slot="disabled-reason-text"` | The hidden description |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focuses the wrapper of a disabled control and shows the reason |
+| <kbd>↑</kbd> <kbd>↓</kbd> | In a menu, highlight a disabled item and show its reason |
+| <kbd>Esc</kbd> | Hides the reason |
+
+## Accessibility
+
+A disabled control takes no pointer events and no focus, so a `title` on it never shows. The wrapper is a tab stop with the reason as its `aria-describedby`, kept in the DOM, hidden, not only while the tooltip shows. Use `label` when the control's own name isn't enough to say what the wrapper stands for. Never pass `focusable={false}` for a native disabled `<button>`: it gets no pointer events and no focus, so only the wrapper works.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "reason",
+      "ReactNode",
+      null,
+      "The one reason in a sentence; null or empty while the control works.",
+    ],
+    ["children", "ReactElement", null, "The disabled control."],
+    [
+      "id",
+      "string",
+      null,
+      "The description's id, when a caller needs a stable one.",
+    ],
+    ["label", "string", null, "The wrapper's accessible name."],
+    [
+      "focusable",
+      "boolean",
+      "true",
+      "False for a menu or select item, which takes the highlight itself.",
+    ],
+    ["tabIndex", "number", "0", "The wrapper's tab stop."],
+    [
+      "className",
+      "string",
+      null,
+      "Layout for the wrapper (flex-1, w-full), never styling.",
+    ],
+    ["side", '"top" | "bottom" | "left" | "right"', '"top"', null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+  ]}
+/>
