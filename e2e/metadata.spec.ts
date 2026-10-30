@@ -139,3 +139,41 @@ test("the capture routes are 404 in production and stay out of the sitemap", asy
   expect(sitemap).not.toContain("social-preview");
   expect(sitemap).not.toContain("social-cards");
 });
+
+const readJsonLd = async (page: Page): Promise<unknown[]> => {
+  const scripts = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
+  return scripts.map((text) => JSON.parse(text) as unknown);
+};
+
+test("the home page names the site for search engines", async ({ page }) => {
+  await page.goto("/");
+  expect(await readJsonLd(page)).toContainEqual(
+    expect.objectContaining({
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    })
+  );
+});
+
+test("a docs page gives search engines its breadcrumb trail", async ({
+  page,
+}) => {
+  await page.goto("/docs/primitives/list-row");
+  const [data] = await readJsonLd(page);
+  expect(data).toMatchObject({
+    "@graph": [
+      { "@type": "TechArticle", headline: "List Row" },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { name: "Docs", position: 1 },
+          { item: `${siteConfig.url}/docs/primitives`, name: "Primitives" },
+          { name: "List Row", position: 3 },
+        ],
+      },
+    ],
+  });
+});

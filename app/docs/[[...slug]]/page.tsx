@@ -8,12 +8,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageActions } from "@/components/docs/page-actions";
+import { JsonLd } from "@/components/json-ld";
 import { buildCompactPrompt, markdownUrlFor } from "@/lib/docs/ai-prompt";
 import {
   registryItemForPath,
   registryItemPath,
   registryItemUrl,
 } from "@/lib/docs/registry";
+import { docsCrumbs, docsPageJsonLd } from "@/lib/json-ld";
 import { siteConfig } from "@/lib/site";
 import { getPageMetadata } from "@/lib/social-metadata";
 import { source } from "@/lib/source";
@@ -33,9 +35,21 @@ const Page = async ({ params }: PageProps) => {
 
   const MdxContent = page.data.body;
   const item = registryItemForPath(page.url);
+  const crumbs = docsCrumbs(
+    page.url,
+    (pathname) => source.getPage(pathname.split("/").slice(2))?.data.title
+  );
 
   return (
     <DocsPage full={page.data.full} toc={page.data.toc}>
+      <JsonLd
+        data={docsPageJsonLd({
+          crumbs,
+          description: page.data.description,
+          pathname: page.url,
+          title: page.data.title,
+        })}
+      />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       {item && (

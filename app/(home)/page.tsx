@@ -6,7 +6,9 @@ import { ArrowUpRightIcon } from "@/components/home/arrow-up-right-icon";
 import { HeroChrome } from "@/components/home/hero-chrome";
 import { ShowcaseGrid } from "@/components/home/showcase-grid";
 import { ThemeSwatches } from "@/components/home/theme-swatches";
+import { JsonLd } from "@/components/json-ld";
 import { buttonVariants } from "@/components/ui/button";
+import { websiteJsonLd } from "@/lib/json-ld";
 import { siteConfig } from "@/lib/site";
 import { getPageMetadata } from "@/lib/social-metadata";
 import { source } from "@/lib/source";
@@ -28,6 +30,7 @@ const itemCount = source
 
 const Page = () => (
   <main className="w-full">
+    <JsonLd data={websiteJsonLd()} />
     {/* Videorc's first-run chrome moves behind the hero and fades out
         before the showcase. */}
     <section className="relative isolate overflow-hidden px-4 pt-16 pb-24 sm:px-6 lg:pt-24 lg:pb-32">
