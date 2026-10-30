@@ -1,9 +1,15 @@
 "use client";
 
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
-import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
-import { cn } from "cn";
+
+import { useFieldLabelledBy } from "@/components/ui/field-context";
+// oxlint-disable-next-line unicorn/prefer-export-from -- shadcn's shape: one export list at the end.
+import {
+  tabsListVariants,
+  tabsTriggerBaseClassName,
+} from "@/components/ui/tabs-variants";
+import { cn } from "@/lib/utils";
 
 function Tabs({
   className,
@@ -12,42 +18,37 @@ function Tabs({
 }: TabsPrimitive.Root.Props) {
   return (
     <TabsPrimitive.Root
-      data-slot="tabs"
-      data-orientation={orientation}
       className={cn(
         "group/tabs flex gap-2 data-horizontal:flex-col",
         className
       )}
+      data-orientation={orientation}
+      data-slot="tabs"
+      orientation={orientation}
       {...props}
     />
   );
 }
 
-const tabsListVariants = cva(
-  "group/tabs-list text-muted-foreground inline-flex w-fit items-center justify-center rounded-2xl p-[3px] group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col group-data-vertical/tabs:p-1 data-[variant=line]:rounded-none",
-  {
-    defaultVariants: {
-      variant: "default",
-    },
-    variants: {
-      variant: {
-        default: "bg-muted",
-        line: "gap-1 bg-transparent",
-      },
-    },
-  }
-);
-
+// Tabs switch a view (a page or a pane). Choosing a value among 2–4 options is
+// `SegmentedControl`, which shares this look.
 function TabsList({
   className,
   variant = "default",
+  // The arrow keys switch the view as they move, as Videorc's tabs always
+  // have. Pass `false` when showing a view is heavy: then Enter or Space does.
+  activateOnFocus = true,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+  const labelledBy = useFieldLabelledBy(ariaLabelledBy, props["aria-label"]);
   return (
     <TabsPrimitive.List
+      activateOnFocus={activateOnFocus}
+      aria-labelledby={labelledBy}
+      className={cn(tabsListVariants({ variant }), className)}
       data-slot="tabs-list"
       data-variant={variant}
-      className={cn(tabsListVariants({ variant }), className)}
       {...props}
     />
   );
@@ -56,14 +57,17 @@ function TabsList({
 function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
   return (
     <TabsPrimitive.Tab
-      data-slot="tabs-trigger"
       className={cn(
-        "text-foreground/60 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:text-muted-foreground dark:hover:text-foreground relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-2xl border border-transparent! px-1.5 py-0.5 text-sm font-medium whitespace-nowrap transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-vertical/tabs:px-3 group-data-vertical/tabs:py-0.5 focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
-        "data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground",
-        "after:bg-foreground after:absolute after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
+        tabsTriggerBaseClassName,
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        // Selected: primary text, and on the track the chrome plate, so the
+        // choice reads at a glance without leaning on the focus ring.
+        "data-active:text-foreground group-data-[variant=default]/tabs-list:data-active:chrome-plate",
+        // The line variant underlines the selected tab instead.
+        "after:bg-foreground after:absolute after:opacity-0 after:transition-opacity after:duration-100 group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:-bottom-0.5 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
         className
       )}
+      data-slot="tabs-trigger"
       {...props}
     />
   );
@@ -72,8 +76,12 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
 function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
+      className={cn(
+        // Base UI makes a panel a tab stop: it shows when it has focus.
+        "focus-visible:ring-ring flex-1 text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset",
+        className
+      )}
       data-slot="tabs-content"
-      className={cn("flex-1 text-sm outline-none", className)}
       {...props}
     />
   );
