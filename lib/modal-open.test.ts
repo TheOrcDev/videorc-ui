@@ -24,6 +24,7 @@ describe("isModalOpen (plan 174 S3.21, A-2)", () => {
       '<div role="alertdialog" data-open>End livestream?</div>',
       '<div role="menu" data-open><div role="menuitem">Rename</div></div>',
       '<div role="listbox" data-open><div role="option">1080p</div></div>',
+      '<div role="presentation" data-open><div role="listbox"><div role="option">720p</div></div></div>',
     ]) {
       document.body.innerHTML = "";
       mount(html);

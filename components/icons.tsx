@@ -60,7 +60,7 @@ export type IconSetCheck = AssertIconProps<
     | "Bug"
     | "CaretDown"
     | "CaretRight"
-    | "CaretUpIcon"
+    | "CaretUp"
     | "ChatCircle"
     | "Check"
     | "CheckCircle"
@@ -175,7 +175,7 @@ export {
  */
 export {
   CaretDown as ChevronDownIcon,
-  CaretUpIcon as ChevronUpIcon,
+  CaretUp as ChevronUpIcon,
   CaretRight as ChevronRightIcon,
   X as CloseIcon,
   DotsThree as MoreIcon,

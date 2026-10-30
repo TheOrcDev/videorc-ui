@@ -45,10 +45,12 @@ describe("resolveInstall", () => {
     expect(plan.npmDependencies).toEqual(["next-themes"]);
   });
 
-  it("splits shadcn items from videorc/ui items", () => {
+  it("installs Videorc's own cn, never the stock shadcn utils", () => {
     const plan = resolveInstall(item("button"));
-    expect(plan.registryItems.map((entry) => entry.name)).toContain("theme");
-    expect(plan.shadcnItems).toEqual(["utils"]);
+    expect(plan.registryItems.map((entry) => entry.name)).toEqual(
+      expect.arrayContaining(["theme", "utils"])
+    );
+    expect(plan.shadcnItems).toEqual([]);
     expect(plan.npmDependencies).toEqual(
       expect.arrayContaining(["@base-ui/react", "class-variance-authority"])
     );

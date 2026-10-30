@@ -9,6 +9,8 @@ export const MODAL_OPEN_SELECTOR = [
   '[role="alertdialog"][data-open]',
   '[role="menu"][data-open]',
   '[role="listbox"][data-open]',
+  // A Base UI Select puts the listbox role on its List, inside the open popup.
+  '[data-open] [role="listbox"]',
 ].join(", ");
 
 /** True while a dialog, an alert, a menu or a select is open anywhere in the window. */

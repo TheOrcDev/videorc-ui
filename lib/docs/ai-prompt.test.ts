@@ -87,7 +87,8 @@ describe("buildAiPrompt", () => {
 
   it("lists what the CLI installs with it", () => {
     expect(prompt).toContain("`@videorc/theme`");
-    expect(prompt).toContain("- shadcn/ui components: `utils`");
+    expect(prompt).toContain("`@videorc/utils`");
+    expect(prompt).not.toContain("shadcn/ui components:");
     expect(prompt).toContain("`@base-ui/react`");
     expect(prompt).toContain("CSS variables added to the global stylesheet");
   });

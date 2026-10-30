@@ -31,8 +31,8 @@ export function isWindowsPlatform(platform: string | undefined): boolean {
 }
 
 /** Human name for the OS Settings app, for permission copy. */
-export function osSettingsName(platform: string | undefined): string {
-  switch (appPlatform(platform)) {
+export function osSettingsName(platform?: string): string {
+  switch (appPlatform(currentPlatform(platform))) {
     case "darwin": {
       return "System Settings";
     }
@@ -119,10 +119,8 @@ export function isCommandKey(
 }
 
 /** Label for "reveal this file in the OS file manager" actions. */
-export function revealInFileManagerLabel(
-  platform: string | undefined = detectedPlatform()
-): string {
-  switch (appPlatform(platform)) {
+export function revealInFileManagerLabel(platform?: string): string {
+  switch (appPlatform(currentPlatform(platform))) {
     case "darwin": {
       return "Show in Finder";
     }
@@ -136,8 +134,8 @@ export function revealInFileManagerLabel(
 }
 
 /** The OS's name for where a deleted file goes. */
-export function trashName(
-  platform: string | undefined = detectedPlatform()
-): string {
-  return appPlatform(platform) === "win32" ? "Recycle Bin" : "Trash";
+export function trashName(platform?: string): string {
+  return appPlatform(currentPlatform(platform)) === "win32"
+    ? "Recycle Bin"
+    : "Trash";
 }

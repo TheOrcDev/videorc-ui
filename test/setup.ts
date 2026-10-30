@@ -12,12 +12,13 @@ class ResizeObserverStub {
   disconnect = vi.fn();
 }
 
-if (!("ResizeObserver" in globalThis)) {
+if (typeof globalThis.ResizeObserver !== "function") {
   globalThis.ResizeObserver =
     ResizeObserverStub as unknown as typeof ResizeObserver;
 }
 
-if (!("matchMedia" in globalThis)) {
+// jsdom defines the property but leaves it undefined.
+if (typeof globalThis.matchMedia !== "function") {
   Object.defineProperty(globalThis, "matchMedia", {
     value: (query: string) => ({
       addEventListener: vi.fn(),
@@ -31,4 +32,14 @@ if (!("matchMedia" in globalThis)) {
     }),
     writable: true,
   });
+}
+
+// Base UI's ScrollArea and transitions read element animations; jsdom has none.
+if (typeof Element.prototype.getAnimations !== "function") {
+  Element.prototype.getAnimations = () => [];
+}
+
+// cmdk scrolls the active item into view; jsdom doesn't lay anything out.
+if (typeof Element.prototype.scrollIntoView !== "function") {
+  Element.prototype.scrollIntoView = vi.fn();
 }

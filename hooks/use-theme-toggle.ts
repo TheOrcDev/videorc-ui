@@ -24,11 +24,12 @@ export function useThemeToggle(): { toggleTheme: () => void } {
         return;
       }
 
-      if (event.metaKey || event.ctrlKey || event.altKey) {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
         return;
       }
 
-      if (event.key.toLowerCase() !== "d") {
+      // Autofill fires keydown events with no key.
+      if (event.key?.toLowerCase() !== "d") {
         return;
       }
 

@@ -642,7 +642,7 @@
       "name": "accelerator",
       "type": "registry:lib",
       "title": "Accelerator",
-      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: ⇧⌘J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
+      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: \u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
       "files": [
         {
           "path": "lib/accelerator.ts",
@@ -711,11 +711,24 @@
       "title": "Button",
       "description": "Desktop-sized buttons on Base UI: a polished chrome default, a glass-chip secondary, ghost, outline, destructive, link, and the record LED that lights while a session runs.",
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["@videorc/theme", "utils"],
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
       "files": [
         {
           "path": "components/ui/button.tsx",
           "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "cn(): clsx and tailwind-merge, taught Videorc's desktop sizes, type tokens and radius tiers so a call site's class always overrides a component's.",
+      "dependencies": ["clsx", "tailwind-merge"],
+      "files": [
+        {
+          "path": "lib/utils.ts",
+          "type": "registry:lib"
         }
       ]
     }
