@@ -148,7 +148,7 @@ fader, level-meter, mixer, parameter-slider, lcd-display, lcd-meter, sound-pad, 
 - Cards and menus: media-card, kebab-menu (with kebab-context-menu).
 - Dialogs and alerts: confirm-dialog, lock-alert.
 - Status: status-badge, status-dot, status-bar (`StatusBarAction`, `StatusBarHint`).
-- Window chrome: window-frame (`WindowHeader`), pin-window-button, chrome-ground.
+- Window chrome: window-frame (`WindowHeader`), pin-window-button. (chrome-ground shipped, then left with Videorc #943.)
 - Controls: device-picker, power-slider, theme-toggle.
 - Other: error-boundary, platform-glyph.
 
@@ -373,6 +373,10 @@ Never edit a synced file in Videorc. `ui:check` fails if anyone does.
   - Focus props: `onOpenAutoFocus` / `onCloseAutoFocus` → `initialFocus` / `finalFocus`.
 
   The family ports list these in their reports, and Phase 7 works through them family by family.
+
+- **Videorc keeps changing while the library catches up.** Before syncing a family, diff Videorc's origin/main against the extraction SHA for the files the registry owns, and port anything new upstream first; a sync would overwrite it. Two landed during Phase 7:
+  - #932: PaneBody is `relative` and keeps its gutter on request (`PANE_STABLE_GUTTER`). Ported in e79076e.
+  - #943: the chrome ground is gone. Every window paints the plain solid, so `chrome-ground`, its stills and the theme's `[data-chrome-ground]` rule left the registry.
 
 ## Owner answers (2026-10-30)
 

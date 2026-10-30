@@ -1,6 +1,6 @@
 ---
 title: Using it in Electron
-description: Install videorc/ui into an Electron renderer built with Vite. The aliases, the chrome ground under the window, platform glyphs, accelerators, and keeping your copy in sync.
+description: Install videorc/ui into an Electron renderer built with Vite. The aliases, the window's background, platform glyphs, accelerators, and keeping your copy in sync.
 ---
 
 Videorc runs these components in Electron, in a React renderer built with Vite and `rsc: false`. Nothing in the registry imports `next/*` or Electron, so the same steps work for electron-vite, Electron Forge's Vite plugin or a plain Vite app.
@@ -116,9 +116,9 @@ The [desktop base](/docs/concepts/desktop) makes the window behave like an app: 
 
 Registry files that run in the browser start with `"use client"`, and the CLI keeps the directive even for `rsc: false` projects. Vite ignores it, so it's harmless. Leave it in: a file that matches the registry exactly diffs cleanly the next time you sync.
 
-## The ground under the window
+## The window's background
 
-Videorc's surfaces are translucent coats, tuned to sit on the chrome ground, a frosted still under every window. The window itself is opaque. There's no vibrancy, no Mica and no `transparent: true`, so the desktop never shows through and nothing depends on the wallpaper or the compositor.
+Videorc's surfaces are translucent coats that composite to the theme's solid. The window itself is opaque and paints that solid. There's no vibrancy, no Mica and no `transparent: true`, so the desktop never shows through and nothing depends on the wallpaper or the compositor.
 
 Give the window the theme's solid as its background, so the first frame is already the right tone:
 
@@ -129,20 +129,7 @@ const mainWindow = new BrowserWindow({
 });
 ```
 
-Then mount [ChromeGround](/docs/primitives/chrome-ground) once per window, at the root, under everything. It takes the URLs of a dark and a light still as props. Import the images as files, so they don't end up inlined in your bundle as data URIs:
-
-```tsx
-import groundDark from "./assets/chrome-ground-dark.webp?no-inline";
-import groundLight from "./assets/chrome-ground-light.webp?no-inline";
-```
-
-- Both stills stay mounted, and the `.dark` class picks one, so a theme toggle never shows a frame of the other ground.
-- It's sized to the display and centered on the window: resizing shows more or less chrome and never rescales it.
-- It's hidden from assistive tech and from the pointer.
-- No filter, transition or animation runs on it. It's a still, so it costs nothing while you record.
-- Under Reduce Transparency, the theme hides it and the coats go solid.
-
-Don't reach for `backdrop-filter` to fake the frost. On a window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display.
+Don't reach for `backdrop-filter` to add a frost. On a window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display.
 
 The theme sets `color-scheme` on `body`. Don't set it inline on `<html>`: a root `color-scheme: light` makes Chromium paint an opaque canvas over the window.
 

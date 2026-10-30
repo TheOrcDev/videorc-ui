@@ -29,11 +29,11 @@ The chrome is monochrome, and every neutral is truly neutral (chroma 0, no blue 
 - Never color a status word. The tone rides on an icon, a dot, a chip or an alert, and the word stays monochrome.
 - There's no colored action accent. The primary action is chrome, not blue.
 
-## The ground and the coats
+## The window and its coats
 
-Every Videorc window is opaque and sits on the chrome ground: a frosted still, black with silver streaks in dark and its invert in light. [ChromeGround](/docs/primitives/chrome-ground) paints it once per window, under everything. The frost is baked into the image, so it costs nothing to draw.
+Every Videorc window is opaque and paints the theme's plain solid: #070707 in dark, #FAFAFA in light, the same on every platform. Chrome lives in the controls and the chrome rows, never behind them.
 
-Over the ground, each region paints a coat of the theme's solid tone. How much of the solid a region paints is its cover:
+Each region paints a coat of the theme's solid tone. How much of the solid a region paints is its cover:
 
 | Region          | Utility            | Cover, dark | Cover, light |
 | --------------- | ------------------ | ----------- | ------------ |
@@ -41,12 +41,12 @@ Over the ground, each region paints a coat of the theme's solid tone. How much o
 | The sidebar     | `bg-glass-sidebar` | 88%         | 92%          |
 | Content panes   | `bg-glass-content` | 82%         | 86%          |
 
-The body paints the lighter cover, and the sidebar and content panes add exactly the delta that brings them to theirs. The sidebar is the heavier region; the work area shows more chrome.
+The body paints the lighter cover, and the sidebar and content panes add exactly the delta that brings them to theirs. The sidebar is the heavier region. On the solid window every region composites to the solid; the covers still decide the frost when something translucent sits behind.
 
 - **Never stack a third coat.** Each region composites to exactly its cover. A coated card on a coated pane comes out darker than anything was tuned for.
 - **Change covers, not coats.** The coats are derived from `--glass-cover-sidebar` and `--glass-cover-work`. See [Theme](/docs/concepts/theme).
-- **Contrast is measured, not eyeballed.** Each text tier is checked over the ground's brightest and darkest pixels: primary at 7:1, secondary at 4.5:1, tertiary at 3:1. That sets a floor for each cover, about 78% in dark and 83% in light.
-- **No `backdrop-filter`, anywhere.** On an Electron window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display, and in Videorc it once froze the compositor. A live blur also costs GPU time on every frame, which a recording app can't spare. The baked-in frost gives the look for free.
+- **Contrast is measured, not eyeballed.** Each text tier is checked over the solid and at Increase Contrast: primary at 7:1, secondary at 4.5:1, tertiary at 3:1.
+- **No `backdrop-filter`, anywhere.** On an Electron window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display, and in Videorc it once froze the compositor. A live blur also costs GPU time on every frame, which a recording app can't spare.
 
 ## Floating glass
 
@@ -166,7 +166,6 @@ Each job has one shared primitive. Screens compose them; they don't restyle them
 
 | Need | Use |
 | --- | --- |
-| A window's ground | [ChromeGround](/docs/primitives/chrome-ground) |
 | Page sections | [PanelSection](/docs/primitives/panel-section) |
 | A list of like things | A `GroupedList` of [ListRow](/docs/primitives/list-row)s |
 | Global state and hints | [StatusBar](/docs/primitives/status-bar) |

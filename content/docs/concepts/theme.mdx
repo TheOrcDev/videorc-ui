@@ -191,7 +191,7 @@ The theme follows three system settings. They're media queries, so a change appl
 | Setting | What changes |
 | --- | --- |
 | `prefers-contrast: more` | Hairlines, input borders and every rim get stronger. The secondary and tertiary text tiers move a step closer to primary. Both covers go to 95%. A chrome fill and the record LED gain a 1 px edge |
-| `prefers-reduced-transparency: reduce` | The window coat becomes `--glass-solid`, the sidebar and content coats go transparent, and anything marked `data-chrome-ground` is hidden, so text contrast never depends on what's behind it. It wins when Increase Contrast is on too |
+| `prefers-reduced-transparency: reduce` | The window coat becomes `--glass-solid`, and the sidebar and content coats go transparent, so text contrast never depends on what's behind it. It wins when Increase Contrast is on too |
 | `prefers-reduced-motion: reduce` | Every animation and transition collapses to 0.01 ms with one iteration, and `scroll-behavior` goes to `auto`. Behavior stays the same |
 
 Under both contrast settings, the chrome controls keep their gradients: they're opaque.
@@ -210,7 +210,7 @@ In this repository the theme is generated. `styles/videorc.css` is the source of
 
 ## On a web page
 
-The coats are translucent and tuned to sit on the chrome ground. On a plain page, give the page the theme's solid so they composite to the right tone:
+The coats are translucent and composite to the theme's solid. On a web page, give the page that solid so they come out the tone Videorc shows:
 
 ```css title="app/globals.css"
 @layer base {
@@ -220,4 +220,4 @@ The coats are translucent and tuned to sit on the chrome ground. On a plain page
 }
 ```
 
-Or mount [ChromeGround](/docs/primitives/chrome-ground) for the full material. Leave out the [desktop base](/docs/concepts/desktop) on a website, so text stays selectable.
+Leave out the [desktop base](/docs/concepts/desktop) on a website, so text stays selectable.

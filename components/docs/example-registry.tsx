@@ -79,9 +79,6 @@ export const examples: Record<string, ComponentType | undefined> = {
   "checkbox-indeterminate": dynamic(
     () => import("@/components/examples/checkbox-indeterminate")
   ),
-  "chrome-ground-demo": dynamic(
-    () => import("@/components/examples/chrome-ground-demo")
-  ),
   "chrome-row-demo": dynamic(
     () => import("@/components/examples/chrome-row-demo")
   ),

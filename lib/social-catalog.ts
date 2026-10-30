@@ -127,8 +127,6 @@ export const previewDescriptions: Record<string, string | undefined> = {
   "chat-toolbar-demo":
     "the chat toolbar with platform chips, Questions, Mentions and search above the chat",
   "checkbox-demo": "a checked checkbox, Include markers in the export",
-  "chrome-ground-demo":
-    "the frosted chrome ground under a sidebar of Studio, Sources and Library",
   "chrome-row-demo":
     "chat rows in chrome, one shown on stream and one from a member",
   "collapsible-demo":

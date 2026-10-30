@@ -10,9 +10,9 @@
 /*
  * Site-only additions. The theme above is the registry's; nothing here ships.
  *
- * Videorc's body paints a translucent coat over the window's chrome ground.
- * A web page has no ground, so the page itself is the theme's solid, and the
- * coat composites over it to the window tone Videorc shows.
+ * Videorc's body paints a translucent coat over the window's solid. A web
+ * page is no window, so the page itself is the theme's solid, and the coat
+ * composites over it to the window tone Videorc shows.
  */
 :root,
 .dark {

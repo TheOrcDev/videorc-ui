@@ -401,9 +401,6 @@
             "--glass-window": "var(--glass-solid)",
             "--glass-sidebar": "transparent",
             "--glass-content": "transparent"
-          },
-          "[data-chrome-ground]": {
-            "display": "none"
           }
         },
         ":root, .dark": {
@@ -1611,19 +1608,6 @@
       "files": [
         {
           "path": "components/pin-window-button.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "chrome-ground",
-      "type": "registry:component",
-      "title": "Chrome Ground",
-      "description": "The frosted still under every Videorc window, black with silver streaks in dark and porcelain with graphite streaks in light. Sized to the display, swapped by the theme class, and never filtered or animated.",
-      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
-      "files": [
-        {
-          "path": "components/chrome-ground.tsx",
           "type": "registry:component"
         }
       ]
