@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import {
+  Command,
   CommandDialog,
   CommandFooter,
   CommandGroup,
@@ -53,5 +54,25 @@ describe("CommandDialog", () => {
       "false"
     );
     expect(selected).toHaveClass("data-[selected=true]:bg-accent", "min-h-10");
+  });
+});
+
+describe("Command scrolling", () => {
+  it("scrolls its own list, never the page, to the selected row", () => {
+    const pageScroll = vi.spyOn(Element.prototype, "scrollIntoView");
+    render(
+      <Command>
+        <CommandList>
+          <CommandGroup heading="Session">
+            <CommandItem>Start recording</CommandItem>
+            <CommandItem>Go Live…</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    );
+    const [first] = screen.getAllByRole("option");
+    first?.scrollIntoView();
+    expect(pageScroll).not.toHaveBeenCalled();
+    pageScroll.mockRestore();
   });
 });
