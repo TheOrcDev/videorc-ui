@@ -4,12 +4,14 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
   LockAlert,
-  OFFLINE_LOCK_REASON,
   OfflineAlert,
-  SESSION_LOCK_REASON,
   SessionLockAlert,
-  sessionLockReason,
 } from "@/components/lock-alert";
+import {
+  OFFLINE_LOCK_REASON,
+  SESSION_LOCK_REASON,
+  sessionLockReason,
+} from "@/lib/lock-reason";
 
 // A lock says why in one line and offers at most one action. Premium features
 // stay on screen behind it, so the lock is a row, never a replacement for the

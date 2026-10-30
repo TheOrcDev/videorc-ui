@@ -107,4 +107,4 @@ Every [Alert](/docs/components/alert) prop except `variant`, `icon` and `childre
   ]}
 />
 
-`SESSION_LOCK_REASON`, `OFFLINE_LOCK_REASON`, `sessionLockReason(locks?)` and `unlockActionLabel(action)` are exported too, for a toast or a tooltip that should say the same words.
+`unlockActionLabel(action)` is exported too. The wording itself, `SESSION_LOCK_REASON`, `OFFLINE_LOCK_REASON` and `sessionLockReason(locks?)`, lives in `@/lib/lock-reason`, which comes with Lock Alert, so a toast, a tooltip or code that isn't UI can say the same words without importing a component.

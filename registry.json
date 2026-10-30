@@ -1759,6 +1759,19 @@
       ]
     },
     {
+      "name": "lock-reason",
+      "type": "registry:lib",
+      "title": "Lock Reason",
+      "description": "The one wording for each lock: SESSION_LOCK_REASON for controls a recording or livestream locks, OFFLINE_LOCK_REASON for controls that wait to reconnect, and sessionLockReason(locks) to name what's locked. Strings only, for LockAlert and anything else that should say the same words.",
+      "files": [
+        {
+          "path": "lib/lock-reason.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
       "name": "lock-alert",
       "type": "registry:component",
       "title": "Lock Alert",
@@ -1766,7 +1779,8 @@
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/alert",
-        "@videorc/button"
+        "@videorc/button",
+        "@videorc/lock-reason"
       ],
       "files": [
         {
