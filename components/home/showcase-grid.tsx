@@ -14,14 +14,9 @@ const WIDE: ShowcaseItem[] = [
     label: "⌘K palette",
   },
   {
-    example: "window-frame-demo",
-    href: "/docs/primitives/window-frame",
-    label: "Window frame",
-  },
-  {
-    example: "list-row-controls",
-    href: "/docs/primitives/list-row",
-    label: "Grouped list",
+    example: "stream-manager-demo",
+    href: "/docs/blocks/stream-manager",
+    label: "Stream Manager",
   },
   {
     example: "status-bar-demo",
@@ -52,6 +47,11 @@ const LEFT: ShowcaseItem[] = [
     href: "/docs/components/toggle-group",
     label: "Filter chips",
   },
+  {
+    example: "chat-message-demo",
+    href: "/docs/blocks/chat-message",
+    label: "Chat message",
+  },
 ];
 
 const RIGHT: ShowcaseItem[] = [
@@ -75,6 +75,11 @@ const RIGHT: ShowcaseItem[] = [
     example: "confirm-dialog-demo",
     href: "/docs/primitives/confirm-dialog",
     label: "Confirm dialog",
+  },
+  {
+    example: "list-row-controls",
+    href: "/docs/primitives/list-row",
+    label: "Grouped list",
   },
 ];
 

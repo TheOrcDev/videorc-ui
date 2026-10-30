@@ -23,6 +23,7 @@ export const baseOptions = ({
       : [{ active: "nested-url", text: "Docs", url: "/docs" } as const]),
     { active: "nested-url", text: "Components", url: "/docs/components" },
     { active: "nested-url", text: "Primitives", url: "/docs/primitives" },
+    { active: "nested-url", text: "Blocks", url: "/docs/blocks" },
   ],
   slots: { navTitle: docs ? DocsBrandNavTitle : HomeBrandNavTitle },
   ...(docs && { themeSwitch: { component: <SidebarControls /> } }),

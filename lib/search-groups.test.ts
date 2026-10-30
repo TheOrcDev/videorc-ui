@@ -28,6 +28,13 @@ const tree: Root = {
       name: "Primitives",
       type: "folder",
     },
+    { name: "Blocks", type: "separator" },
+    page("Blocks", "/docs/blocks"),
+    { name: "Stream Manager", type: "separator" },
+    page("Stream Manager", "/docs/blocks/stream-manager"),
+    page("Chat Message", "/docs/blocks/chat-message"),
+    { name: "Hooks and libs", type: "separator" },
+    page("Accelerator", "/docs/hooks/accelerator"),
   ],
   name: "Docs",
 };
@@ -60,6 +67,18 @@ describe("searchGroups", () => {
           { title: "List row", url: "/docs/primitives/list-row" },
         ],
         label: "Primitives",
+      },
+      {
+        items: [
+          { title: "All blocks", url: "/docs/blocks" },
+          { title: "Stream Manager", url: "/docs/blocks/stream-manager" },
+          { title: "Chat Message", url: "/docs/blocks/chat-message" },
+        ],
+        label: "Blocks",
+      },
+      {
+        items: [{ title: "Accelerator", url: "/docs/hooks/accelerator" }],
+        label: "Hooks and libs",
       },
     ]);
   });

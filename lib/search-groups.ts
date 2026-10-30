@@ -17,6 +17,7 @@ const SECTIONS = [
   { label: "Concepts", path: "/docs/concepts" },
   { label: "Components", path: "/docs/components" },
   { label: "Primitives", path: "/docs/primitives" },
+  { label: "Blocks", path: "/docs/blocks" },
   { label: "Hooks and libs", path: "/docs/hooks" },
 ] as const;
 

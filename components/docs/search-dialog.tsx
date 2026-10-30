@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AppWindowIcon,
   ArrowSquareOutIcon,
   CubeIcon,
   FunctionIcon,
@@ -41,6 +42,7 @@ const DOCS_GROUPS: { label: string; icon: Icon }[] = [
   { icon: LightbulbIcon, label: "Concepts" },
   { icon: CubeIcon, label: "Components" },
   { icon: SquaresFourIcon, label: "Primitives" },
+  { icon: AppWindowIcon, label: "Blocks" },
   { icon: FunctionIcon, label: "Hooks and libs" },
 ];
 

@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { PinWindowButton } from "@/components/pin-window-button";
 import { StatusBar } from "@/components/status-bar";
-import { Badge } from "@/components/ui/badge";
+import { StatusDot } from "@/components/status-dot";
 import { WindowFrame, WindowHeader } from "@/components/window-frame";
 
-const MESSAGES = [
-  { author: "nightowl", id: 1, text: "What camera is that?" },
-  { author: "maya_streams", id: 2, text: "Hi from Lisbon!" },
-  { author: "jonas", id: 3, text: "The new overlay looks great." },
+const NOTES = [
+  "Open with the two-camera podcast scene.",
+  "Show the Shure MV7 gain staging, then the noise cleanup.",
+  "Mention Thursday's livestream at 8 PM.",
 ] as const;
 
 // Stand-ins for the macOS traffic lights, which the OS draws in a real window.
@@ -23,30 +23,23 @@ const TrafficLights = () => (
 );
 
 const WindowFrameDemo = () => {
-  const [pinned, setPinned] = useState(false);
+  const [pinned, setPinned] = useState(true);
   return (
     <WindowFrame className="rounded-panel relative flex h-72 w-full max-w-xl flex-col overflow-hidden border">
       <TrafficLights />
-      <WindowHeader platform="darwin" title="Stream Manager" />
+      <WindowHeader platform="darwin" title="Notes">
+        <PinWindowButton onPinnedChange={setPinned} pinned={pinned} />
+      </WindowHeader>
       <ol
-        aria-label="Chat"
-        className="px-gutter flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto py-3 text-sm select-text"
+        aria-label="Notes for this recording"
+        className="px-gutter flex min-h-0 flex-1 list-decimal flex-col gap-2 overflow-y-auto py-3 pl-9 text-sm select-text"
       >
-        {MESSAGES.map((message) => (
-          <li key={message.id}>
-            <span className="text-muted-foreground font-medium">
-              {message.author}
-            </span>{" "}
-            {message.text}
-          </li>
+        {NOTES.map((note) => (
+          <li key={note}>{note}</li>
         ))}
       </ol>
-      <StatusBar leading={<Badge variant="live">On air</Badge>}>
-        <PinWindowButton
-          onPinnedChange={setPinned}
-          pinned={pinned}
-          variant="status-bar"
-        />
+      <StatusBar leading={<StatusDot label="Saved" tone="good" />}>
+        <span className="text-subtle pr-1.5">3 notes</span>
       </StatusBar>
     </WindowFrame>
   );

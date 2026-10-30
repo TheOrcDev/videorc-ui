@@ -5,28 +5,27 @@ import { useState } from "react";
 import { ChatMessage } from "@/components/blocks/stream-manager/chat-message";
 import type { ChatMessageData } from "@/components/blocks/stream-manager/chat-message";
 
+// While live the rows keep their time out of sight until the pointer comes:
+// these carry none at all, so the words have the room.
 const MESSAGES: ChatMessageData[] = [
   {
     authorName: "Maya Chen",
     id: "m1",
     platform: "youtube",
     text: "Which microphone are you using on stream today?",
-    time: "8:41 PM",
   },
   {
-    authorName: "nightowl_jonas",
+    authorName: "jonas",
     authorRoles: ["member"],
     id: "m2",
     platform: "twitch",
     text: "The new two-camera scene looks so clean.",
-    time: "8:42 PM",
   },
   {
-    authorName: "Priya Raman",
+    authorName: "priya",
     id: "m3",
     platform: "x",
     text: "Watching from Lisbon. Audio is perfectly in sync!",
-    time: "8:42 PM",
   },
 ];
 
