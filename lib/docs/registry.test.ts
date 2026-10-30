@@ -23,7 +23,7 @@ const item = (name: string): RegistryItem => {
   return found;
 };
 
-const SECTIONS = ["components", "primitives", "hooks"] as const;
+const SECTIONS = ["components", "primitives", "blocks", "hooks"] as const;
 
 const pageSlugs = (section: string) => {
   const dir = path.join(process.cwd(), "content/docs", section);
@@ -109,7 +109,7 @@ describe("registryItemForPath", () => {
   });
 
   // The whole feature rests on the last path segment being the item name.
-  it("has an item for every component, primitive and hook page", () => {
+  it("has an item for every component, primitive, block and hook page", () => {
     for (const section of SECTIONS) {
       for (const slug of pageSlugs(section)) {
         const found = registryItemForPath(`/docs/${section}/${slug}`);

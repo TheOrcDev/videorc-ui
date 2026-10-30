@@ -1,0 +1,250 @@
+---
+title: Chat Message
+description: One chat message in the Stream Manager, the big-text row. A click puts it on stream under the live chrome plate; members, paid messages, mentions, Buddy's marks and removals each read at a glance, and the rest waits in its ⋯ menu.
+---
+
+<ComponentPreview name="chat-message-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chat-message
+```
+
+## Usage
+
+```tsx
+import { ChatMessage } from "@/components/blocks/stream-manager/chat-message";
+import type { ChatMessageData } from "@/components/blocks/stream-manager/chat-message";
+```
+
+```tsx
+const message: ChatMessageData = {
+  id: "m1",
+  platform: "youtube",
+  authorName: "Maya Chen",
+  text: "Which microphone are you using on stream today?",
+  time: "8:41 PM",
+};
+
+<ol aria-label="Chat messages">
+  <ChatMessage
+    highlight={{ phase: onStream === message.id ? "live" : "idle" }}
+    message={message}
+    onHighlight={toggleOnStream}
+    onReply={replyTo}
+  />
+</ol>;
+```
+
+A message is plain data. `ChatMessage` renders one `<li>`, so put the rows in an `<ol>`. With `onHighlight` the row is one button: a click puts the message on stream, and a click on the row that's on stream takes it off. Without it the row is plain text, as in History.
+
+Format `time` yourself, once, so the server and the browser agree: `formatChatTime(receivedAt)` gives Videorc's "8:42 PM".
+
+## Examples
+
+### Every state
+
+The row on stream wears the live chrome plate. A member's row is the quieter plate with a member-hue edge, a paid message is the warning fill with a hairline ring, and Buddy's "Talking about this" is the flat accent. A row paints one of them at most, and the row on stream beats them all. Chips sit after the name: roles, first chat, `@you` for a mention, the amount, Buddy's mark, the stream state and the removal. A failed show and an unusual removal say why on the row's own line.
+
+<ComponentPreview align="start" name="chat-message-states" />
+
+### Compact
+
+`density="compact"` sets 12 px text and a 32 px avatar, for a narrow rail beside the Studio. The Stream Manager keeps the 15 px rows.
+
+<ComponentPreview name="chat-message-compact" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-row-live` | The row on stream (`CHROME_ROW_CLASS.live`) |
+| `chrome-row-member` | A member's row (`CHROME_ROW_CLASS.member`) |
+| `bg-warning/10 ring-warning/30` | A paid message |
+| `bg-accent` | The message the streamer is talking about |
+| `Badge` `chrome`, `destructive`, `warning`, `plate` | On stream, Failed, the amount, Member |
+| `group/chat-message`, `group/kebab-host` | The row the time and the ⋯ wait for |
+| `data-highlight-phase` | `idle`, `applying`, `live` or `failed` |
+| `data-row-tint` | `paid`, `spotlight` or `member` |
+| `data-mention`, `data-member` | Set on a mention and on a member's row |
+| `data-slot` | `chat-message`, `chat-message-author`, `chat-message-text`, `chat-message-reply`, `chat-message-problem`, `chat-message-outcome` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | Puts the message on stream, or takes it off |
+| <kbd>Tab</kbd> | Moves to the row's ⋯ menu |
+
+## Accessibility
+
+A highlightable row is one button named by what it says: author, platform and words ("Maya Chen on YouTube: Which microphone…"). `aria-pressed` says it's on stream and the description says what a click does, then any outcome the row shows. A drag that selects words in the row copies them and never puts the message on stream. The time and the ⋯ wait for the pointer while live (`timestamps="hover"`) and appear with keyboard focus. Every chip that stands for more says it in a tooltip, never a native `title`.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["message", "ChatMessageData", null, null],
+    [
+      "density",
+      '"comfortable" | "compact"',
+      '"comfortable"',
+      "15 px rows with a 40 px avatar, or 12 px with 32 px.",
+    ],
+    [
+      "timestamps",
+      '"always" | "hover"',
+      '"always"',
+      "hover: the time waits for the pointer, as while live.",
+    ],
+    ["highlight", "ChatMessageHighlight", '{ phase: "idle" }', null],
+    ["removal", "ChatMessageRemoval | null", null, null],
+    ["flag", "ChatMessageFlag", null, "What Buddy flagged on it."],
+    [
+      "suggested",
+      "boolean",
+      "false",
+      "Buddy suggests showing it. Shown only on an idle, highlightable row.",
+    ],
+    [
+      "spotlight",
+      "boolean",
+      "false",
+      "The streamer is talking about it: Talking about this.",
+    ],
+    [
+      "mentionNames",
+      "readonly string[]",
+      "[]",
+      "The streamer's own accounts: a message naming one shows @you.",
+    ],
+    [
+      "onHighlight",
+      "(message) => void",
+      null,
+      "Makes the row a button that puts the message on stream or takes it off.",
+    ],
+    ["onReply", "(message) => void", null, "Adds Reply to the ⋯ menu."],
+    [
+      "onCopy",
+      "(message) => void",
+      null,
+      'Copy\'s action. Copies "Author: text" to the clipboard when absent.',
+    ],
+    [
+      "onRemoveFromChat",
+      "(message) => void",
+      null,
+      "Adds Remove from chat, destructive and last.",
+    ],
+    [
+      "removeFromChatReason",
+      "string | null",
+      null,
+      "Keeps Remove from chat, disabled, with this reason on hover.",
+    ],
+    [
+      "tabIndex",
+      "number",
+      "0",
+      "-1 on every row but the active one in a roving-focus list.",
+    ],
+    [
+      "ref",
+      "Ref<HTMLLIElement>",
+      null,
+      "For a virtualized list to measure it.",
+    ],
+    ["style", "CSSProperties", null, "For a virtualized list to place it."],
+  ]}
+/>
+
+### ChatMessageData
+
+<PropsTable
+  rows={[
+    ["id", "string", null, null],
+    ["platform", "ChatPlatform", null, "Where it came from."],
+    ["authorName", "string", null, null],
+    [
+      "authorAvatarUrl",
+      "string",
+      null,
+      "Initials show until it loads, and without one.",
+    ],
+    [
+      "authorRoles",
+      '("owner" | "moderator" | "vip" | "member")[]',
+      null,
+      "Host, Mod, VIP and Member chips. A member's row wears the member plate.",
+    ],
+    ["text", "string", null, null],
+    [
+      "kind",
+      '"message" | "paid" | "membership" | "system" | "moderation"',
+      '"message"',
+      "System and moderation lines are italic and never go on stream.",
+    ],
+    ["amountText", "string", null, 'A paid message\'s amount: "$5.00".'],
+    ["firstMessage", "boolean", null, "First chat."],
+    [
+      "reply",
+      "{ authorName: string; text: string }",
+      null,
+      "The message it answers, above its own words.",
+    ],
+    ["deleted", "boolean", null, "Struck through, never on stream."],
+    ["time", "string", null, 'The time as shown: "8:42 PM".'],
+    ["receivedAt", "string", null, "ISO, for the time element."],
+  ]}
+/>
+
+### ChatMessageHighlight
+
+<PropsTable
+  rows={[
+    ["phase", '"idle" | "applying" | "live" | "failed"', null, null],
+    ["reason", "string", null, "Why a show failed, on the row's own line."],
+    [
+      "commandError",
+      "string",
+      null,
+      "A failed action on a message already on stream.",
+    ],
+  ]}
+/>
+
+### ChatMessageRemoval
+
+<PropsTable
+  rows={[
+    [
+      "kind",
+      '"removing" | "removed" | "hidden" | "failed" | "unknown"',
+      null,
+      "Removing…, Removed, Hidden in Videorc, Not removed, Unconfirmed.",
+    ],
+    [
+      "detail",
+      "string | null",
+      null,
+      "The outcome: on hover for a plain removal, the row's own line otherwise.",
+    ],
+  ]}
+/>
+
+### ChatMessageFlag
+
+<PropsTable
+  rows={[
+    ["label", "string", null, 'The chip: "Spam".'],
+    ["detail", "string", null, "Why Buddy flagged it, on hover."],
+    ["severity", '"high" | "low"', null, "high tints the chip."],
+    ["action", "string", null, 'A suggestion after the chip: "Remove?".'],
+  ]}
+/>
+
+### Helpers
+
+`HighlightStatus` and `RemovalStatus` are the row's two status chips, for rows of your own that share the slot (Activity rows do). `chatMessageMenu(message, options)` builds the ⋯ items; `chatMessageMentions(message, names)`, `chatMessageCanHighlight(message)`, `chatMessageInitials(name)` and `formatChatTime(iso)` are the rules the row follows.

@@ -1,0 +1,106 @@
+---
+title: Chat Platform
+description: The Stream Manager's platform vocabulary. One name per platform, its 20 px mark in its brand tint, and a destination's chat state in the words every window shares.
+---
+
+<ComponentPreview name="chat-platform-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chat-platform
+```
+
+## Usage
+
+```tsx
+import {
+  CHAT_PLATFORM_LABELS,
+  ChatPlatformIcon,
+  chatStateLabel,
+} from "@/components/blocks/stream-manager/chat-platform";
+```
+
+```tsx
+<ChatPlatformIcon platform="twitch" />
+```
+
+Every Stream Manager part names a platform through it: a message's mark, the filter chips, the stats' hover cards and the status bar's chat states. Pass `decorative` when the words beside the mark already name the platform.
+
+## Examples
+
+### Chat states
+
+`chatStateLabel(destination)` turns a destination's connection into Videorc's chat vocabulary: "Connected", "Read-only", "Reconnect to send", "Reconnecting…". It never says "receive-only", and never shows a raw value.
+
+<ComponentPreview name="chat-platform-states" />
+
+## The marks
+
+Platform marks are the one place saturated colour is allowed in the chrome. Each mark is 20 px wherever it appears: YouTube's icon may not go below 20 px, so the others match it, and YouTube keeps clear space after it. A surface with no room for 20 px, such as a [Badge](/docs/components/badge), leaves the mark out and keeps the platform's name. The glyphs come from [Icons](/docs/concepts/icons) (`YoutubeIcon`, `TwitchIcon`, `XPlatformIcon`…), so swapping one there swaps it here.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `text-platform-youtube`, `text-platform-twitch-ink`, `text-platform-facebook`, `text-platform-instagram` | The brand tints |
+| `text-foreground` | X and TikTok: black or white by theme |
+| `size-5` | The 20 px mark |
+| `data-platform` | The platform the mark stands for |
+| `data-slot="chat-platform-icon"` | The mark |
+
+## Accessibility
+
+A mark is an image named by its platform. With `decorative` it's hidden from assistive tech, so the platform is named once.
+
+## API reference
+
+### ChatPlatformIcon
+
+<PropsTable
+  rows={[
+    [
+      "platform",
+      '"youtube" | "twitch" | "x" | "facebook" | "tiktok" | "instagram" | "custom"',
+      null,
+      null,
+    ],
+    [
+      "decorative",
+      "boolean",
+      "false",
+      "Hidden from assistive tech, for a mark beside its platform's name.",
+    ],
+    ["className", "string", null, "Spacing; the size stays 20 px."],
+  ]}
+/>
+
+### ChatDestination
+
+<PropsTable
+  rows={[
+    ["id", "string", null, null],
+    ["platform", "ChatPlatform", null, null],
+    [
+      "state",
+      '"connected" | "connecting" | "reconnecting" | "waiting" | "paused" | "failed" | "ended" | "off" | "unavailable"',
+      null,
+      "The chat connection.",
+    ],
+    [
+      "write",
+      '"ready" | "read-only" | "missing-scope" | "failed"',
+      '"read-only"',
+      "Whether Videorc can send to it.",
+    ],
+    ["accountLabel", "string", null, "The account chat is read as."],
+    [
+      "message",
+      "string",
+      null,
+      "The destination's own words when chat is stuck.",
+    ],
+  ]}
+/>
+
+`CHAT_PLATFORM_LABELS` maps each platform to its one name ("X", never "X / Twitter"; "Custom RTMP", never "Custom").

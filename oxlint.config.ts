@@ -71,7 +71,13 @@ export default defineConfig({
       // fits.
       // Registry components keep shadcn's own shape (function declarations,
       // one export list at the end), so a diff against upstream reads cleanly.
-      files: ["components/ui/**", "components/*.tsx", "hooks/*.ts", "lib/*.ts"],
+      files: [
+        "components/ui/**",
+        "components/*.tsx",
+        "components/blocks/**",
+        "hooks/*.ts",
+        "lib/*.ts",
+      ],
       rules: {
         "eslint/func-style": "off",
         "eslint/no-use-before-define": "off",

@@ -73,7 +73,8 @@ export const generateMetadata = async ({
 
   const isReactExample =
     page.url.startsWith("/docs/components/") ||
-    page.url.startsWith("/docs/primitives/");
+    page.url.startsWith("/docs/primitives/") ||
+    page.url.startsWith("/docs/blocks/");
   const defaultTitle = isReactExample
     ? `${page.data.title} for React`
     : page.data.title;

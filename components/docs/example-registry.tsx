@@ -42,6 +42,21 @@ export const examples: Record<string, ComponentType | undefined> = {
   "chart-sparkline": dynamic(
     () => import("@/components/examples/chart-sparkline")
   ),
+  "chat-message-compact": dynamic(
+    () => import("@/components/examples/chat-message-compact")
+  ),
+  "chat-message-demo": dynamic(
+    () => import("@/components/examples/chat-message-demo")
+  ),
+  "chat-message-states": dynamic(
+    () => import("@/components/examples/chat-message-states")
+  ),
+  "chat-platform-demo": dynamic(
+    () => import("@/components/examples/chat-platform-demo")
+  ),
+  "chat-platform-states": dynamic(
+    () => import("@/components/examples/chat-platform-states")
+  ),
   "checkbox-demo": dynamic(() => import("@/components/examples/checkbox-demo")),
   "checkbox-description": dynamic(
     () => import("@/components/examples/checkbox-description")

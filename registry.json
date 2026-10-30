@@ -1881,6 +1881,48 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "chat-platform",
+      "type": "registry:block",
+      "title": "Chat Platform",
+      "description": "The Stream Manager's platform vocabulary: one name per platform, its 20 px mark in its brand tint, and a destination's chat state in the words every window shares.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/chat-platform.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chat-message",
+      "type": "registry:block",
+      "title": "Chat Message",
+      "description": "One chat message in the Stream Manager: the big-text row with its avatar, author, platform mark and words. A click puts it on stream under the live chrome plate; members, paid messages, mentions, Buddy's marks and removals each read at a glance, and the rest waits in its ⋯ menu.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-platform",
+        "@videorc/icons",
+        "@videorc/kebab-menu",
+        "@videorc/avatar",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/chrome-row",
+        "@videorc/spinner",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/chat-message.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

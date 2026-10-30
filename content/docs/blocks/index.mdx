@@ -1,0 +1,15 @@
+---
+title: Blocks
+description: Whole pieces of Videorc's windows, built from the components and primitives. The Stream Manager first, and every part of it on its own.
+---
+
+Blocks are whole pieces of Videorc's screens, composed from the [components](/docs/components) and [primitives](/docs/primitives) the way Videorc composes them. They're presentational: plain data and callbacks go in, and nothing reaches for Electron, IPC or `window.videorc`. Your app owns the state and the side effects.
+
+## Stream Manager
+
+Videorc's live dashboard window, and every part of it on its own.
+
+- [Chat Message](/docs/blocks/chat-message): one message, the big-text row.
+- [Chat Platform](/docs/blocks/chat-platform): the platform marks, names and chat states the parts share.
+
+Every block sizes itself to its container, never the viewport, so it works in a window, a split pane or a docs preview alike.

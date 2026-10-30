@@ -81,6 +81,7 @@ const ITEM_SECTIONS = [
   "/docs/concepts/",
   "/docs/components/",
   "/docs/primitives/",
+  "/docs/blocks/",
   "/docs/hooks/",
 ] as const;
 
