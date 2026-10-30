@@ -8,6 +8,7 @@
     "chat-composer",
     "stream-stats-bar",
     "activity-feed",
+    "stream-manager-status-bar",
     "platform-filter",
     "chat-platform"
   ]

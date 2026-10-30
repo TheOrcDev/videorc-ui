@@ -2054,6 +2054,36 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "stream-manager-status-bar",
+      "type": "registry:block",
+      "title": "Stream Manager Status Bar",
+      "description": "The Stream Manager's 32 px status bar: each destination's chat state as its mark and a dot, with a word only when something needs the streamer, and the window's labelled controls (Search, Write, Buddy, Hide screen, Keep on top, Highlight position, Clip, Banners, Clear, Preview) folding into one ⋯ menu below 640 px.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-platform",
+        "@videorc/stream-stats-bar",
+        "@videorc/confirm-dialog",
+        "@videorc/icons",
+        "@videorc/pin-window-button",
+        "@videorc/status-bar",
+        "@videorc/status-bar-action",
+        "@videorc/status-dot",
+        "@videorc/button",
+        "@videorc/disabled-reason",
+        "@videorc/dropdown-menu",
+        "@videorc/hover-card",
+        "@videorc/shortcut-keys",
+        "@videorc/shortcut-tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/stream-manager-status-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

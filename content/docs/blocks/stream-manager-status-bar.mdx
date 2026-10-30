@@ -1,0 +1,137 @@
+---
+title: Stream Manager Status Bar
+description: The Stream Manager's 32 px status bar. Each destination's chat state as its mark and a dot, a word only when something needs the streamer, and the window's labelled controls, folding into one ⋯ menu below 640 px.
+---
+
+<ComponentPreview name="stream-manager-status-bar-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/stream-manager-status-bar
+```
+
+## Usage
+
+```tsx
+import { StreamManagerStatusBar } from "@/components/blocks/stream-manager/stream-manager-status-bar";
+```
+
+```tsx
+<StreamManagerStatusBar
+  destinations={destinations}
+  onClear={clearView}
+  onMarkClip={(seconds) => saveClip(seconds)}
+  onOpenPreview={openPreview}
+  onPinnedChange={setPinned}
+  onSearchChat={focusSearch}
+  onWriteInChat={focusComposer}
+  pinned={pinned}
+/>
+```
+
+The left side is chat, per destination: its 20 px mark and a status dot. Quiet when fine: a platform that reads and sends says nothing more, and a word appears only when something needs the streamer ("X read-only", "Twitch reconnect to send"), or the destination's own words when chat is stuck. The details open on hover and on focus: what chat can do there, the account it reads as, and any `destinationNotes`.
+
+The right side is the window's controls, each one there only when you pass its callback, and every one labelled:
+
+- the window's keys as clickable hints: ⌘F Search, ⌘L Write and ⌘J Buddy;
+- Hide screen, Keep on top ([Pin Window Button](/docs/primitives/pin-window-button)) and Highlight position (a menu);
+- Clip 30 s and 1 min, with the clip icon and words: mid-stream there's no time to hover;
+- Banners (a menu of checks), Clear (it asks first, because it can't be undone) and Open Preview.
+
+## Examples
+
+### Narrow
+
+Below 800 px of Stream Manager the hints keep their keys and the words go to screen readers. Below 640 px every control folds into one ⋯ menu, "More Stream Manager actions", with the stats bar's show, hide and reset choices; a dot that isn't green keeps its word beside it.
+
+<ComponentPreview name="stream-manager-status-bar-narrow" />
+
+## Responsive
+
+The bar folds by the width of the `@container/stream-manager` around it, never the viewport: from 1,040 px Hide screen shows its word, from 800 px the hints show theirs, and below 640 px the ⋯ menu takes over. The examples wrap it in that container; the Stream Manager window is one. On its own, outside the container, every control shows.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-8` | 32 px, not the shared 26: the 20 px marks need room |
+| `StatusDot` | Each destination's tone: good, warn, error |
+| `StatusBarHint`, `StatusBarAction` | The hints and the labelled actions |
+| `@max-[639px]/stream-manager:` | Where the controls fold into the ⋯ menu |
+| `data-slot` | `chat-states`, `chat-state`, `stream-manager-controls`, `stream-manager-actions` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the chat states (each opens its details on focus) and the controls |
+| <kbd>Enter</kbd> <kbd>Space</kbd> | Runs a control, or opens its menu |
+
+The hints print the window's keys; the Stream Manager window answers them.
+
+## Accessibility
+
+Each chat state is a button named by its first line ("X chat: read-only"). Every action has a name and a tooltip, never a native `title`; an icon alone is named by its tooltip. Hide screen says why when it can't run, through [Disabled Reason](/docs/components/disabled-reason). Clear asks in a [Confirm Dialog](/docs/primitives/confirm-dialog) first.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["destinations", "readonly ChatDestination[]", null, null],
+    [
+      "destinationNotes",
+      "Partial<Record<ChatPlatform, readonly string[]>>",
+      null,
+      "More lines for a platform's hover card.",
+    ],
+    ["onSearchChat", "() => void", null, "⌘F Search."],
+    ["onWriteInChat", "() => void", null, "⌘L Write."],
+    ["onFocusBuddy", "() => void", null, "⌘J Buddy."],
+    ["pinned", "boolean", "false", null],
+    ["onPinnedChange", "(pinned: boolean) => void", null, "Keep on top."],
+    [
+      "highlightPosition",
+      '"top-left" | "top-right" | "bottom-left" | "bottom-right"',
+      null,
+      null,
+    ],
+    ["onHighlightPositionChange", "(position) => void", null, null],
+    ["onMarkClip", "(seconds: 30 | 60) => void", null, "The two Clip buttons."],
+    ["screenHidden", "boolean", "false", null],
+    [
+      "onScreenPrivacy",
+      "(hidden: boolean) => void",
+      null,
+      "Hide screen, or Show screen.",
+    ],
+    [
+      "screenHideDisabledReason",
+      "string | null",
+      null,
+      "Why a hide can't run now. Showing again always runs.",
+    ],
+    [
+      "banners",
+      "readonly { id: string; name: string; shown: boolean }[] | null",
+      null,
+      "null until the list loads.",
+    ],
+    ["onBanner", "(action: BannerAction) => void", null, null],
+    ["onClear", "() => void", null, "Clear view, after it asks."],
+    ["onOpenPreview", "() => void", null, null],
+    [
+      "statsLayout",
+      "StatsLayout",
+      null,
+      "For the ⋯ menu's Show or hide stats.",
+    ],
+    ["onStatsLayoutChange", "(layout: StatsLayout) => void", null, null],
+    [
+      "platform",
+      "string",
+      null,
+      "darwin, win32, linux…: how the keys are printed.",
+    ],
+  ]}
+/>

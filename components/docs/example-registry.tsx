@@ -333,6 +333,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "status-dot-header": dynamic(
     () => import("@/components/examples/status-dot-header")
   ),
+  "stream-manager-status-bar-demo": dynamic(
+    () => import("@/components/examples/stream-manager-status-bar-demo")
+  ),
+  "stream-manager-status-bar-narrow": dynamic(
+    () => import("@/components/examples/stream-manager-status-bar-narrow")
+  ),
   "stream-stats-bar-demo": dynamic(
     () => import("@/components/examples/stream-stats-bar-demo")
   ),
