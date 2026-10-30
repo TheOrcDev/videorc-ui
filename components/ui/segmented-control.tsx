@@ -93,8 +93,6 @@ type SegmentedControlProps<T extends string = string> = Omit<
   size?: "default" | "sm";
 };
 
-/** The option a key moves to, skipping disabled ones; `null` for other keys. */
-
 /**
  * The last of the ascending `indexes` before `current`. `findLast` is ES2023,
  * and installs may compile against ES2022.
@@ -113,6 +111,7 @@ function lastIndexBefore(
   return found;
 }
 
+/** The option a key moves to, skipping disabled ones; `null` for other keys. */
 function segmentedTargetIndex(
   enabled: readonly boolean[],
   current: number,

@@ -39,7 +39,8 @@ describe("ChartTooltipContent", () => {
     const tooltip = container.querySelector('[data-slot="chart-tooltip"]');
     expect(tooltip?.className).toMatch(/\bborder\b/u);
     expect(tooltip?.className).toContain("glass-float");
-    expect(tooltip?.className).toContain("rounded-row");
+    // The popup radius, as on every menu, popover and hover card.
+    expect(tooltip?.className).toContain("rounded-lg");
     expect(tooltip?.className).not.toMatch(/bg-popover|shadow-lg|rounded-xl/u);
     expect(tooltip?.textContent).toContain("Bitrate");
     expect(tooltip?.textContent).toContain((6000).toLocaleString());
