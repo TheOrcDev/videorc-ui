@@ -45,7 +45,6 @@ function ThemeToggle(): ReactElement {
     >
       <Button
         aria-label="Toggle color theme"
-        data-slot="theme-toggle"
         onClick={toggleTheme}
         size="icon"
         variant="ghost"

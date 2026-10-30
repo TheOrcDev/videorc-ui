@@ -232,7 +232,7 @@ function ChatToolbar({
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <InputGroup className="min-w-28 flex-1 basis-40" data-slot="chat-search">
+      <InputGroup className="min-w-28 flex-1 basis-40">
         <InputGroupAddon>
           <SearchIcon />
         </InputGroupAddon>

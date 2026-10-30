@@ -48,7 +48,6 @@ function PlatformFilter({
   return (
     <ToggleGroup
       aria-label={label}
-      data-slot="platform-filter"
       onValueChange={(next) =>
         onValueChange((next[0] as PlatformFilterValue | undefined) ?? "all")
       }

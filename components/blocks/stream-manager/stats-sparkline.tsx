@@ -48,7 +48,6 @@ function StatsSparkline({
       aria-hidden
       className={cn("aspect-auto h-6 w-full", className)}
       config={config}
-      data-slot="stats-sparkline"
       initialDimension={size}
     >
       <AreaChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 2 }}>
