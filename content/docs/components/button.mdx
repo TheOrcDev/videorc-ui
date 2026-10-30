@@ -31,9 +31,9 @@ import { Button } from "@/components/ui/button";
 
 ### Chromatic, solid and glitch
 
-Three more fills for when the chrome default isn't the right voice. `solid` is the regular button: a flat fill in the primary ink, with no chrome. `chromatic` is the chrome fill under an oil-slick spectrum that slides across on hover. `glitch` is a broadcast breaking up: a CRT face with scanlines and red and cyan ink that tears on hover, dark in both themes.
+Three more fills for when the chrome default isn't the right voice. `solid` is the regular button: a flat fill in the primary ink, with no chrome. `chromatic` is a face of the theme's solid in a 2px ring of liquid chrome: bands of silver flow around the ring, glints run against them, and hover surges the flow. `glitch` is a broadcast breaking up: a CRT face with scanlines and red and cyan ink that tears on hover, dark in both themes.
 
-`chromatic` and `glitch` bring colour where the theme otherwise keeps chrome neutral, so give one moment on a screen to them, not every button. Under reduced motion, the glitch holds its resting frame and the spectrum stops sliding.
+`chromatic` is always moving and `glitch` brings colour where the theme otherwise keeps chrome neutral, so give one moment on a screen to them, not every button. Under reduced motion, the ring's metal holds still and the glitch holds its resting frame.
 
 <ComponentPreview name="button-styles" />
 
@@ -61,7 +61,7 @@ A link that looks like a button is still a link: put `buttonVariants()` on a pla
 | --- | --- |
 | `chrome-fill` | The default fill: polished silver in dark, graphite in light |
 | `chrome-led` | The record fill; `--chrome-led-glow` while `data-lit` |
-| `chrome-chromatic` | The chromatic fill: `chrome-fill` under `--chrome-chromatic-spectrum` |
+| `chrome-chromatic` | The chromatic ring: `--chrome-chromatic-bands` of metal around `--chrome-chromatic-face-stops` |
 | `signal-glitch` | The glitch fill on `--video-ground`, split by `--signal-glitch-red` and `--signal-glitch-cyan` |
 | `glass-chip` | The secondary fill |
 | `h-control`, `size-control` | The 28 px desktop control height |

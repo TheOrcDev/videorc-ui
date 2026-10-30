@@ -15,10 +15,10 @@ describe("Button variants", () => {
     const solid = screen.getByRole("button", { name: "Save scene" });
     expect(solid).toHaveAttribute("data-variant", "solid");
     expect(solid).toHaveClass("bg-primary", "text-primary-foreground");
-    expect(screen.getByRole("button", { name: "Go Live…" })).toHaveClass(
-      "chrome-chromatic",
-      "border-0"
-    );
+    // The chromatic ring is drawn in the border box, so it keeps the border.
+    const chromatic = screen.getByRole("button", { name: "Go Live…" });
+    expect(chromatic).toHaveClass("chrome-chromatic", "border");
+    expect(chromatic).not.toHaveClass("border-0");
     expect(screen.getByRole("button", { name: "On air" })).toHaveClass(
       "signal-glitch",
       "border-0"
