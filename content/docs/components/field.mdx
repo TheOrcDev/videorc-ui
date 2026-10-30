@@ -1,0 +1,271 @@
+---
+title: Field
+description: Labels, descriptions and errors for a form control, plus Videorc's SettingsRow and the grouped settings list. A Field names and describes its control with no ids to wire.
+---
+
+<ComponentPreview name="field-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/field
+```
+
+This brings `field-context`, the module every form control reads to find its Field.
+
+## Usage
+
+```tsx
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  SettingsRow,
+} from "@/components/ui/field";
+```
+
+```tsx
+<Field>
+  <FieldLabel>Stream title</FieldLabel>
+  <Input placeholder="Untitled livestream" />
+  <FieldDescription>Shown on YouTube and Twitch.</FieldDescription>
+</Field>
+```
+
+## Anatomy
+
+```tsx
+<FieldSet>
+  <FieldLegend />
+  <FieldGroup>
+    <Field>
+      <FieldLabel />
+      {/* the control */}
+      <FieldDescription />
+      <FieldError />
+    </Field>
+    <FieldSeparator />
+    <Field orientation="horizontal">
+      <FieldContent>
+        <FieldLabel />
+        <FieldDescription />
+      </FieldContent>
+      {/* the control */}
+    </Field>
+  </FieldGroup>
+</FieldSet>
+
+<FieldGroup variant="grouped">
+  <SettingsRow label="…" description="…" error="…">
+    {/* the control */}
+  </SettingsRow>
+</FieldGroup>
+```
+
+## Examples
+
+### Settings rows
+
+A settings page is a `FieldGroup variant="grouped"` of `SettingsRow`s: one inset group split by hairlines, each row with its label and 12 px description on the left and its control on the right. `error` puts the row's own refusal or failure under the description. A row whose control is a button names its group with `aria-label`, since a label can't name a button.
+
+<ComponentPreview name="field-settings-row" />
+
+### Choice cards
+
+Wrap a horizontal Field in a `FieldLabel` to make the whole card the checkbox's label: a click anywhere toggles it, and the card shows the focus ring. `data-slot="checkbox-group"` on the FieldGroup tightens the gap.
+
+<ComponentPreview name="field-choice-card" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-row`, `bg-inset`, `divide-border` | The grouped variant: one inset group split by hairlines |
+| `text-meta`, `text-muted-foreground` | Descriptions, at 12 px in the secondary tier |
+| `text-foreground`, `text-destructive` | An error: monochrome words, the error glyph in the destructive tone |
+| `data-orientation` | `vertical`, `horizontal` or `responsive` on a Field |
+| `data-variant` | `default` or `grouped` on a FieldGroup |
+| `data-settings-row` | Marks a SettingsRow's Field |
+| `data-disabled="true"` | On a Field, dims its label |
+
+## Accessibility
+
+### Naming and describing
+
+A Field names its control. Each control and the `FieldLabel` register an id with the Field when they mount (an explicit `id` always wins), and then:
+
+- the label points `htmlFor` at the first control a label element can name: an [Input](/docs/components/input), a [Textarea](/docs/components/textarea), a [Switch](/docs/components/switch) or a [Checkbox](/docs/components/checkbox);
+- a control no label element can point at, such as a [Slider](/docs/components/slider) thumb or a group of toggles, takes the label through `aria-labelledby`, unless it has an `aria-label` of its own;
+- every `FieldDescription` describes the Field's controls through `aria-describedby`, unless a control passes its own.
+
+Nothing points at an id that isn't on the page, two controls in one Field never share an id, and outside a Field nothing is added. So a SettingsRow's label names its switch and its description describes it, with no ids at all.
+
+A `FieldError` is a `role="alert"`, so it is announced when it appears. Mark the control `aria-invalid` too.
+
+### Your own controls
+
+The wiring lives in `components/ui/field-context.ts`, its own module so a control can read it without pulling the Field's styles into its bundle. A control of your own joins in with the same hooks:
+
+```tsx
+"use client";
+
+import type { ComponentProps } from "react";
+
+import {
+  useFieldControlId,
+  useFieldDescribedBy,
+} from "@/components/ui/field-context";
+
+function ColorWell({
+  id,
+  "aria-describedby": ariaDescribedBy,
+  ...props
+}: ComponentProps<"input">) {
+  const controlId = useFieldControlId(id);
+  const describedBy = useFieldDescribedBy(ariaDescribedBy);
+  return (
+    <input
+      aria-describedby={describedBy}
+      id={controlId}
+      type="color"
+      {...props}
+    />
+  );
+}
+```
+
+## API reference
+
+Each part takes every attribute of the element it renders, plus:
+
+### FieldGroup
+
+<PropsTable
+  rows={[
+    [
+      "variant",
+      '"default" | "grouped"',
+      '"default"',
+      "grouped draws one inset group with hairlines between its Fields.",
+    ],
+  ]}
+/>
+
+### Field
+
+<PropsTable
+  rows={[
+    [
+      "orientation",
+      '"vertical" | "horizontal" | "responsive"',
+      '"vertical"',
+      "responsive is vertical until its FieldGroup is wide enough.",
+    ],
+  ]}
+/>
+
+### FieldLabel
+
+A [Label](/docs/components/label).
+
+<PropsTable
+  rows={[
+    [
+      "htmlFor",
+      "string",
+      "the Field's first control",
+      "Points at a control by id. Leave it out inside a Field.",
+    ],
+    ["id", "string", "made inside a Field", null],
+  ]}
+/>
+
+### FieldDescription
+
+<PropsTable
+  rows={[
+    ["id", "string", "made inside a Field", "Describes the Field's controls."],
+  ]}
+/>
+
+### FieldError
+
+<PropsTable
+  rows={[
+    [
+      "errors",
+      "({ message?: string } | undefined)[]",
+      null,
+      "Shown when there are no children: one message, or a list of distinct ones.",
+    ],
+  ]}
+/>
+
+### FieldLegend
+
+<PropsTable
+  rows={[["variant", '"legend" | "label"', '"legend"', "label is 14 px."]]}
+/>
+
+### SettingsRow
+
+Every Field prop except `orientation`, plus:
+
+<PropsTable
+  rows={[
+    ["label", "ReactNode", null, "The row's FieldLabel."],
+    ["description", "ReactNode", null, "A FieldDescription under the label."],
+    [
+      "error",
+      "ReactNode",
+      null,
+      "A FieldError under the description, announced when it appears.",
+    ],
+    ["children", "ReactNode", null, "The control, on the right."],
+  ]}
+/>
+
+### field-context
+
+<PropsTable
+  rows={[
+    [
+      "useFieldControlId(id?)",
+      "string | undefined",
+      null,
+      "A control a label can name: its id, made and registered inside a Field.",
+    ],
+    [
+      "useFieldDescribedBy(ariaDescribedBy?)",
+      "string | undefined",
+      null,
+      "The control's own aria-describedby, else its Field's descriptions.",
+    ],
+    [
+      "useFieldLabelledBy(ariaLabelledBy?, ariaLabel?)",
+      "string | undefined",
+      null,
+      "For a control no label can point at: its own, else the FieldLabel's id unless it has an aria-label.",
+    ],
+    [
+      "useFieldLabelIds(id?)",
+      "{ id?, htmlFor? }",
+      null,
+      "FieldLabel's side: its id and the control it points at.",
+    ],
+    [
+      "useFieldDescriptionId(id?)",
+      "string | undefined",
+      null,
+      "FieldDescription's side: its id, registered with the Field.",
+    ],
+    [
+      "useFieldIds()",
+      "FieldIds",
+      null,
+      "Field's side: the registry it provides through FieldIdsContext.",
+    ],
+  ]}
+/>

@@ -1,0 +1,89 @@
+---
+title: Switch
+description: The one control for a boolean, on Base UI. On, its track is the chrome fill and its knob the inverse chrome bead.
+---
+
+<ComponentPreview name="switch-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/switch
+```
+
+## Usage
+
+```tsx
+import { Switch } from "@/components/ui/switch";
+```
+
+```tsx
+<Field orientation="horizontal">
+  <FieldLabel>Save local recording</FieldLabel>
+  <Switch />
+</Field>
+```
+
+A switch is the one way to turn something on or off: never an On and Off pair, and never a toggle button. In a settings list, put it in a [SettingsRow](/docs/components/field#settings-rows).
+
+## Examples
+
+### Sizes
+
+`sm` is a 16 px track for a row that is denser than a page, such as a source's quick control. It is a track size, not a control height.
+
+<ComponentPreview name="switch-sizes" />
+
+### Disabled
+
+A disabled switch says why in its description. Disable every control a lock covers, rather than leaving one that looks enabled.
+
+<ComponentPreview name="switch-disabled" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The track while on |
+| `bg-input/90` | The recessed track while off |
+| `chrome-bead` | The knob while off |
+| `chrome-bead-ink` | The knob on its chrome track: black in dark, pearl in light |
+| `ring-knob-ring` | The knob's hairline rim |
+| `data-checked`, `data-unchecked`, `data-disabled` | The state, from Base UI |
+| `data-size` | `default` (32 × 20) or `sm` (24 × 16) |
+
+## Keyboard
+
+| Key              | Action                          |
+| ---------------- | ------------------------------- |
+| <kbd>Space</kbd> | Toggles the switch              |
+| <kbd>Enter</kbd> | Toggles the switch              |
+| <kbd>Tab</kbd>   | Moves focus to the next control |
+
+## Accessibility
+
+The switch is a `role="switch"` span with `aria-checked`, beside a hidden native input that carries its form value. Its `id` goes on that hidden input, so a `FieldLabel` toggles it on click and Base UI names the switch by that label. Never put a switch inside a button or a clickable row: a control inside a control can't be reached on its own.
+
+## API reference
+
+Every [Base UI Switch](https://base-ui.com/react/components/switch) root prop, plus:
+
+<PropsTable
+  rows={[
+    ["size", '"default" | "sm"', '"default"', "The track size."],
+    ["checked", "boolean", null, "The controlled state."],
+    ["defaultChecked", "boolean", "false", "The uncontrolled starting state."],
+    [
+      "onCheckedChange",
+      "(checked: boolean, eventDetails) => void",
+      null,
+      "Called with the next state.",
+    ],
+    [
+      "id",
+      "string",
+      null,
+      "Lands on the hidden input. Inside a Field, one is made when it is missing, and the FieldLabel points at it.",
+    ],
+  ]}
+/>

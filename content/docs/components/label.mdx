@@ -1,0 +1,44 @@
+---
+title: Label
+description: The 14 px medium label for a control. It dims with a disabled peer and keeps the desktop's arrow cursor.
+---
+
+<ComponentPreview name="label-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/label
+```
+
+## Usage
+
+```tsx
+import { Label } from "@/components/ui/label";
+```
+
+```tsx
+<div className="flex items-center gap-2">
+  <Checkbox id="include-markers" />
+  <Label htmlFor="include-markers">Include markers in the export</Label>
+</div>
+```
+
+Inside a [Field](/docs/components/field), use `FieldLabel` instead: it points at the Field's control on its own.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `text-sm`, `font-medium` | 14 px, medium weight |
+| `peer-disabled` | Dims to 50% beside a disabled `peer` control |
+| `data-disabled="true"` on a `group` | Dims and stops pointer events |
+| `data-slot="label"` | The label, for styling from a parent |
+
+## Accessibility
+
+Point `htmlFor` at the control's `id`. For a [Checkbox](/docs/components/checkbox) or [Switch](/docs/components/switch), the `id` lands on Base UI's hidden input: a click on the label toggles the control, and Base UI names the control by the label.
+
+## API reference
+
+Every `<label>` attribute.

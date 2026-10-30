@@ -12,4 +12,45 @@ export const examples: Record<string, ComponentType | undefined> = {
   "button-variants": dynamic(
     () => import("@/components/examples/button-variants")
   ),
+  "checkbox-demo": dynamic(() => import("@/components/examples/checkbox-demo")),
+  "checkbox-description": dynamic(
+    () => import("@/components/examples/checkbox-description")
+  ),
+  "checkbox-indeterminate": dynamic(
+    () => import("@/components/examples/checkbox-indeterminate")
+  ),
+  "field-choice-card": dynamic(
+    () => import("@/components/examples/field-choice-card")
+  ),
+  "field-demo": dynamic(() => import("@/components/examples/field-demo")),
+  "field-settings-row": dynamic(
+    () => import("@/components/examples/field-settings-row")
+  ),
+  "input-demo": dynamic(() => import("@/components/examples/input-demo")),
+  "input-file": dynamic(() => import("@/components/examples/input-file")),
+  "input-group-button": dynamic(
+    () => import("@/components/examples/input-group-button")
+  ),
+  "input-group-demo": dynamic(
+    () => import("@/components/examples/input-group-demo")
+  ),
+  "input-group-textarea": dynamic(
+    () => import("@/components/examples/input-group-textarea")
+  ),
+  "input-states": dynamic(() => import("@/components/examples/input-states")),
+  "label-demo": dynamic(() => import("@/components/examples/label-demo")),
+  "slider-demo": dynamic(() => import("@/components/examples/slider-demo")),
+  "slider-range": dynamic(() => import("@/components/examples/slider-range")),
+  "slider-readout": dynamic(
+    () => import("@/components/examples/slider-readout")
+  ),
+  "switch-demo": dynamic(() => import("@/components/examples/switch-demo")),
+  "switch-disabled": dynamic(
+    () => import("@/components/examples/switch-disabled")
+  ),
+  "switch-sizes": dynamic(() => import("@/components/examples/switch-sizes")),
+  "textarea-demo": dynamic(() => import("@/components/examples/textarea-demo")),
+  "textarea-states": dynamic(
+    () => import("@/components/examples/textarea-states")
+  ),
 };

@@ -1,0 +1,78 @@
+---
+title: Input
+description: A text field at the 28 px desktop control height, on Base UI's Input. Inside a Field, its label names it and its descriptions describe it with no ids to wire.
+---
+
+<ComponentPreview name="input-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/input
+```
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+```
+
+```tsx
+<Input aria-label="Stream title" placeholder="Untitled livestream" />
+```
+
+Inside a [Field](/docs/components/field), leave out the id: the Field gives the input one and points its `FieldLabel` at it.
+
+```tsx
+<Field>
+  <FieldLabel>Stream title</FieldLabel>
+  <Input placeholder="Untitled livestream" />
+</Field>
+```
+
+## Examples
+
+### States
+
+Set `aria-invalid` and put a `FieldError` under the input when its value is refused: the ring turns destructive and the error is announced. A disabled input inside a Field says why in its description.
+
+<ComponentPreview name="input-states" />
+
+### File
+
+`type="file"` styles the button inside the field to match the text around it.
+
+<ComponentPreview name="input-file" />
+
+## Theming
+
+| Token or attribute  | Meaning                                      |
+| ------------------- | -------------------------------------------- |
+| `h-control`         | The 28 px desktop control height             |
+| `rounded-chip`      | The 6 px control radius                      |
+| `bg-input/50`       | The recessed field fill                      |
+| `text-sm`           | 14 px at every width, never the mobile 16 px |
+| `aria-invalid`      | Draws the destructive border and ring        |
+| `data-slot="input"` | The input, for styling from a parent         |
+
+## Accessibility
+
+Every input needs a name. Inside a Field, the `FieldLabel` is its name and every `FieldDescription` describes it through `aria-describedby`. Outside one, pass `aria-label`, or a [Label](/docs/components/label) with `htmlFor`. An explicit `id` or `aria-describedby` always wins over the Field's.
+
+The input is 14 px at every width. Mobile Safari zooms into a field under 16 px, but Videorc is a desktop app, and a 16 px field would sit taller than every control beside it.
+
+## API reference
+
+Every `<input>` attribute, rendered through [Base UI Input](https://base-ui.com/react/components/input), plus:
+
+<PropsTable
+  rows={[
+    [
+      "id",
+      "string",
+      null,
+      "Kept as given. Inside a Field, one is made when it is missing, and the FieldLabel points at it.",
+    ],
+    ["aria-describedby", "string", null, "Replaces the Field's descriptions."],
+  ]}
+/>

@@ -1,0 +1,119 @@
+---
+title: Slider
+description: A slider on Base UI with a chrome-fill range and chrome-bead thumbs. Its name and spoken value go on the thumbs, where a screen reader reads them.
+---
+
+<ComponentPreview name="slider-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/slider
+```
+
+## Usage
+
+```tsx
+import { Slider } from "@/components/ui/slider";
+```
+
+```tsx
+<Slider aria-label="Microphone gain" defaultValue={60} />
+```
+
+One thumb takes a number; a range takes an array, and `onValueChange` hands back the same shape.
+
+## Examples
+
+### Value readout
+
+Show the value beside the label, and pass the same words as `aria-valuetext` so a screen reader says "+6.0 dB", not "6".
+
+<ComponentPreview name="slider-readout" />
+
+### Range
+
+Pass two values for two thumbs. `minStepsBetweenValues` keeps them apart, and `format` turns each thumb's spoken value into a unit.
+
+<ComponentPreview name="slider-range" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The range |
+| `bg-foreground/15` | The 4 px track |
+| `chrome-bead` | Every thumb |
+| `ring-knob-ring` | The thumb's hairline rim; a 4 px ring on hover and focus |
+| `data-orientation` | `horizontal` or `vertical` |
+| `data-disabled` | Dims to 50% |
+| `data-slot` | `slider`, `slider-track`, `slider-range`, `slider-thumb` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Moves the focused thumb one `step` |
+| <kbd>Shift</kbd> with an arrow | Moves it one `largeStep` |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Moves it one `largeStep` |
+| <kbd>Home</kbd> <kbd>End</kbd> | Moves it to the minimum or maximum |
+| <kbd>Tab</kbd> | Moves to the next thumb, then the next control |
+
+## Accessibility
+
+Each thumb holds a native range input with `role="slider"`, and that is what a screen reader reads. So `aria-label`, `aria-labelledby`, `aria-describedby` and `aria-valuetext` go to every thumb, never the root. Inside a [Field](/docs/components/field), a slider that names nothing takes the `FieldLabel` through `aria-labelledby` (a label element can't point at a thumb) and the Field's descriptions. Outside a Field, always name it.
+
+## API reference
+
+Every [Base UI Slider](https://base-ui.com/react/components/slider) root prop, plus:
+
+<PropsTable
+  rows={[
+    [
+      "value",
+      "number | number[]",
+      null,
+      "The controlled value: a number for one thumb, an array for a range.",
+    ],
+    [
+      "defaultValue",
+      "number | number[]",
+      "min",
+      "The uncontrolled starting value.",
+    ],
+    [
+      "onValueChange",
+      "(value, eventDetails) => void",
+      null,
+      "Called while the value changes, with the same shape as value.",
+    ],
+    [
+      "onValueCommitted",
+      "(value, eventDetails) => void",
+      null,
+      "Called once a drag or a key press ends.",
+    ],
+    ["min", "number", "0", null],
+    ["max", "number", "100", null],
+    [
+      "aria-label",
+      "string",
+      null,
+      "Names every thumb. Inside a Field it replaces the FieldLabel.",
+    ],
+    ["aria-labelledby", "string", null, "Names every thumb."],
+    ["aria-describedby", "string", null, "Describes every thumb."],
+    [
+      "aria-valuetext",
+      "string",
+      null,
+      "The spoken value of every thumb. For a range, use format instead.",
+    ],
+    [
+      "thumbAlignment",
+      '"center" | "edge" | "edge-client-only"',
+      '"edge"',
+      "Keeps the thumbs inside the track at either end.",
+    ],
+  ]}
+/>

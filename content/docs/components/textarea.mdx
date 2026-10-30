@@ -1,0 +1,66 @@
+---
+title: Textarea
+description: A multi-line text field that grows with its content, at 14 px on the chip radius. Inside a Field, its label names it and its descriptions describe it.
+---
+
+<ComponentPreview name="textarea-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/textarea
+```
+
+## Usage
+
+```tsx
+import { Textarea } from "@/components/ui/textarea";
+```
+
+```tsx
+<Field>
+  <FieldLabel>Description</FieldLabel>
+  <Textarea placeholder="Optional" />
+</Field>
+```
+
+## Examples
+
+### States
+
+Set `aria-invalid` and put a `FieldError` under it when its text is refused. A disabled textarea inside a Field says why in its description.
+
+<ComponentPreview name="textarea-states" />
+
+## Theming
+
+| Token or attribute     | Meaning                                   |
+| ---------------------- | ----------------------------------------- |
+| `field-sizing-content` | Grows with its text, from a 64 px minimum |
+| `rounded-chip`         | The 6 px control radius                   |
+| `bg-input/50`          | The recessed field fill                   |
+| `text-sm`              | 14 px at every width                      |
+| `aria-invalid`         | Draws the destructive border and ring     |
+| `data-slot="textarea"` | The textarea, for styling from a parent   |
+
+It doesn't resize by hand. Pass `resize-y` and a taller `min-h-*` for a long description.
+
+## Accessibility
+
+Inside a [Field](/docs/components/field), the `FieldLabel` names the textarea and every `FieldDescription` describes it. Outside one, pass `aria-label`, or a [Label](/docs/components/label) with `htmlFor`. An explicit `id` or `aria-describedby` always wins.
+
+## API reference
+
+Every `<textarea>` attribute, plus:
+
+<PropsTable
+  rows={[
+    [
+      "id",
+      "string",
+      null,
+      "Kept as given. Inside a Field, one is made when it is missing, and the FieldLabel points at it.",
+    ],
+    ["aria-describedby", "string", null, "Replaces the Field's descriptions."],
+  ]}
+/>

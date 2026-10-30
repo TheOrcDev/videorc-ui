@@ -1,0 +1,91 @@
+---
+title: Checkbox
+description: A 16 px checkbox on Base UI. Checked or mixed, it wears the chrome fill; mixed draws a dash instead of the check.
+---
+
+<ComponentPreview name="checkbox-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/checkbox
+```
+
+## Usage
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox";
+```
+
+```tsx
+<Field orientation="horizontal">
+  <Checkbox defaultChecked />
+  <FieldLabel>Include markers in the export</FieldLabel>
+</Field>
+```
+
+## Examples
+
+### With a description
+
+Put the label and a `FieldDescription` in a `FieldContent` beside the checkbox. The description describes the checkbox, and a disabled one says why.
+
+<ComponentPreview name="checkbox-description" />
+
+### Indeterminate
+
+A header checkbox over some of its rows is `indeterminate`: it fills like checked and draws a dash. Clear it once every row, or none, is checked.
+
+<ComponentPreview name="checkbox-indeterminate" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-fill` | The fill and ink while checked or indeterminate |
+| `bg-input/90` | The recessed box while unchecked |
+| `rounded-chip` | The 6 px control radius |
+| `data-checked`, `data-unchecked`, `data-indeterminate` | The state, from Base UI |
+| `data-disabled` | Dims to 50% |
+| `aria-invalid` | Draws the destructive border and ring |
+
+## Keyboard
+
+| Key              | Action                             |
+| ---------------- | ---------------------------------- |
+| <kbd>Space</kbd> | Toggles the checkbox               |
+| <kbd>Enter</kbd> | Submits its form; it never toggles |
+| <kbd>Tab</kbd>   | Moves focus to the next control    |
+
+## Accessibility
+
+The checkbox is a `role="checkbox"` span with `aria-checked` (`"mixed"` while indeterminate), beside a hidden native input that carries its form value. Its `id` goes on that hidden input, so a `FieldLabel` or a [Label](/docs/components/label) with `htmlFor` toggles it on click, and Base UI names the checkbox by that label. A row of checkboxes with no visible labels, such as a list's select column, names each one with `aria-label`.
+
+## API reference
+
+Every [Base UI Checkbox](https://base-ui.com/react/components/checkbox) root prop, plus:
+
+<PropsTable
+  rows={[
+    ["checked", "boolean", null, "The controlled state."],
+    ["defaultChecked", "boolean", "false", "The uncontrolled starting state."],
+    [
+      "indeterminate",
+      "boolean",
+      "false",
+      "Fills like checked and draws a dash, for a header over some of its rows.",
+    ],
+    [
+      "onCheckedChange",
+      "(checked: boolean, eventDetails) => void",
+      null,
+      "Called with the next state.",
+    ],
+    [
+      "id",
+      "string",
+      null,
+      "Lands on the hidden input. Inside a Field, one is made when it is missing, and the FieldLabel points at it.",
+    ],
+  ]}
+/>

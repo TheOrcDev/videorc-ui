@@ -1,4 +1,18 @@
 {
   "title": "Components",
-  "pages": ["index", "---Actions---", "button", "button"]
+  "pages": [
+    "index",
+    "---Actions---",
+    "button",
+    "button",
+    "---Forms---",
+    "input",
+    "textarea",
+    "input-group",
+    "label",
+    "field",
+    "checkbox",
+    "switch",
+    "slider"
+  ]
 }

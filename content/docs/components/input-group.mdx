@@ -1,0 +1,121 @@
+---
+title: Input Group
+description: One 28 px field with icons, text and buttons inside it, on the chip radius. Its focus and invalid rings draw around the whole group.
+---
+
+<ComponentPreview name="input-group-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/input-group
+```
+
+## Usage
+
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
+```
+
+```tsx
+<InputGroup>
+  <InputGroupInput
+    aria-label="Search recordings"
+    placeholder="Search recordings…"
+  />
+  <InputGroupAddon>
+    <SearchIcon />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+## Anatomy
+
+```tsx
+<InputGroup>
+  <InputGroupInput /> {/* or <InputGroupTextarea /> */}
+  <InputGroupAddon align="inline-start | inline-end | block-start | block-end">
+    <InputGroupText />
+    <InputGroupButton />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+An addon's place comes from `align`, not from where it sits in the markup: write the input first, then its addons.
+
+## Examples
+
+### Buttons
+
+`InputGroupButton` is a ghost [Button](/docs/components/button) at the one compact size, so it sits inside the 28 px field. Use `xs` for a word (Copy) and `icon-xs` for an icon alone (Clear search).
+
+<ComponentPreview name="input-group-button" />
+
+### Textarea
+
+With `InputGroupTextarea` the group grows to fit, and a `block-end` addon becomes the field's footer: a counter and the send button of a chat composer.
+
+<ComponentPreview name="input-group-textarea" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-control` | The 28 px group height; `h-auto` with a textarea or a block addon |
+| `rounded-chip` | The 6 px control radius |
+| `bg-input/50` | The recessed field fill, on the group |
+| `data-align` | The addon's place: `inline-start`, `inline-end`, `block-start`, `block-end` |
+| `data-disabled="true"` on the group | Dims the addons |
+| `data-slot` | `input-group`, `input-group-addon`, `input-group-text`, `input-group-control` |
+
+## Accessibility
+
+The group is a `role="group"`. Name the input itself: an `aria-label`, or a `FieldLabel` when the group sits in a [Field](/docs/components/field). An icon-only `InputGroupButton` needs an `aria-label`. A click on an addon's text or icon focuses the input; a click on its button doesn't.
+
+## API reference
+
+### InputGroup
+
+Every `<div>` attribute.
+
+### InputGroupAddon
+
+Every `<div>` attribute, plus:
+
+<PropsTable
+  rows={[
+    [
+      "align",
+      '"inline-start" | "inline-end" | "block-start" | "block-end"',
+      '"inline-start"',
+      "Where the addon sits: before or after the input, or above or below it.",
+    ],
+  ]}
+/>
+
+### InputGroupButton
+
+Every [Button](/docs/components/button) prop, plus:
+
+<PropsTable
+  rows={[
+    ["size", '"xs" | "icon-xs"', '"xs"', "24 px: a word, or an icon alone."],
+    ["variant", "Button variant", '"ghost"', null],
+    ["type", '"button" | "submit" | "reset"', '"button"', null],
+  ]}
+/>
+
+### InputGroupInput, InputGroupTextarea
+
+Every [Input](/docs/components/input) or [Textarea](/docs/components/textarea) prop, drawn borderless inside the group.
+
+### InputGroupText
+
+Every `<span>` attribute.
