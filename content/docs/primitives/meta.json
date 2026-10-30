@@ -1,4 +1,21 @@
 {
   "title": "Primitives",
-  "pages": ["index"]
+  "pages": [
+    "index",
+    "---Structure---",
+    "pane",
+    "page",
+    "page-tabs",
+    "panel-section",
+    "section-label",
+    "list-row",
+    "navigable-row",
+    "window-frame",
+    "status-bar",
+    "status-bar-action",
+    "pin-window-button",
+    "chrome-ground",
+    "theme-toggle",
+    "error-boundary"
+  ]
 }

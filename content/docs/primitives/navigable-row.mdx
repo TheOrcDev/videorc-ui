@@ -1,0 +1,91 @@
+---
+title: Navigable Row
+description: A fact row of icon, label and value. When the value's home is another page, the row becomes a button with a chevron that jumps there, and a hint lists the facts a short value stands for.
+---
+
+<ComponentPreview name="navigable-row-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/navigable-row
+```
+
+## Usage
+
+```tsx
+import {
+  NavigableRow,
+  NavigableRowHintLines,
+} from "@/components/navigable-row";
+```
+
+```tsx
+<GroupedList label="Session">
+  <NavigableRow
+    icon={CameraIcon}
+    label="Camera"
+    onNavigate={() => openPage("sources")}
+    value="FaceTime HD Camera"
+  />
+</GroupedList>
+```
+
+Use it for a fact another page owns: the Studio's Session rows, a Settings row that points at Output or Livestream. Pass `onNavigate` only when the value lives somewhere else, and send it to the one page that owns it.
+
+Don't use it for a row that changes something in place: that's a [List Row](/docs/primitives/list-row) with a control, or a [Settings row](/docs/components/field).
+
+When a value sums up several facts ("1080p · 60 fps", "2 on"), `hint` shows them on hover and on focus. `NavigableRowHintLines` puts one fact on each line. Only a row that navigates takes a hint, since only a button takes focus.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-row`, `px-3` | The 32 px row with 12 px padding |
+| `rounded-row` | 8 px on a row alone; none inside a GroupedList |
+| `text-muted-foreground` | The icon, the label and the chevron |
+| `text-foreground` | The value, at weight 500 |
+| `hover:bg-accent` | The hover of a row that navigates |
+| `data-slot` | `navigable-row` on the row, `navigable-row-hint` on a hint's lines |
+
+## Keyboard
+
+| Key              | Action                                           |
+| ---------------- | ------------------------------------------------ |
+| `Tab`            | Moves to a row that navigates and shows its hint |
+| `Enter`, `Space` | Opens the value's page                           |
+
+## Accessibility
+
+A row that navigates is a button named by its label and value; the chevron is decorative. Its hint is a [Tooltip](/docs/components/tooltip), never a native `title`. A fact row is plain text.
+
+## API reference
+
+### NavigableRow
+
+<PropsTable
+  rows={[
+    ["label", "string", null, "What the value is."],
+    ["value", "ReactNode", null, "The fact. A string truncates."],
+    ["icon", "AppIcon", null, "A 16 px duotone icon before the label."],
+    [
+      "onNavigate",
+      "() => void",
+      null,
+      "Makes the row a button with a chevron that opens the value's page.",
+    ],
+    [
+      "hint",
+      "ReactNode",
+      null,
+      "The facts the value stands for, on hover and on focus. Only with onNavigate.",
+    ],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### NavigableRowHintLines
+
+<PropsTable
+  rows={[["lines", "readonly string[]", null, "One fact per line."]]}
+/>

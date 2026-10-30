@@ -1,0 +1,74 @@
+---
+title: Pin Window Button
+description: Keep on top, the pin every detached window shares. One name in every window, a filled pin while the window stays over other apps, a pressed state a screen reader hears, and a header or a status-bar look.
+---
+
+<ComponentPreview name="pin-window-button-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/pin-window-button
+```
+
+## Usage
+
+```tsx
+import { PinWindowButton } from "@/components/pin-window-button";
+```
+
+```tsx
+<PinWindowButton onPinnedChange={setAlwaysOnTop} pinned={alwaysOnTop} />
+```
+
+The window's state comes in through props. In Electron, ask the main process to call `setAlwaysOnTop` on the window, and pass back what it reports as `pinned`.
+
+Use it for the one Keep on top control in a detached window: Notes, the Captions reader, Stream Manager. The header look sits in a [Window Header](/docs/primitives/window-frame).
+
+Don't rename it per window or swap its icon, and don't put it in the main window.
+
+## Examples
+
+### In a status bar
+
+`variant="status-bar"` is a [Status Bar Action](/docs/primitives/status-bar-action), for a window whose title row stays bare, such as Stream Manager.
+
+<ComponentPreview name="pin-window-button-status-bar" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `Button` `ghost`, `size="icon"` | The header look |
+| `text-muted-foreground` | Unpinned reads a tier quieter; hover brightens it |
+| `PinIcon` | Regular while unpinned, filled while pinned |
+| `[-webkit-app-region:no-drag]` | Clickable on a header's drag band |
+| `data-testid="pin-window-button"` | On the button, in either look |
+
+## Keyboard
+
+| Key              | Action                    |
+| ---------------- | ------------------------- |
+| `Enter`, `Space` | Pins or unpins the window |
+
+## Accessibility
+
+It's named "Keep on top" (`PIN_WINDOW_LABEL`) in every window, with `aria-pressed` saying whether the window is pinned. A tooltip shows the name on hover, never a native `title`. Base UI's Tooltip needs no provider, so the button works in a window that has none; under one, it joins that window's delay group.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["pinned", "boolean", null, "The window stays over other apps."],
+    [
+      "onPinnedChange",
+      "(pinned: boolean) => void",
+      null,
+      "Called with the state a click asks for.",
+    ],
+    ["variant", '"header" | "status-bar"', '"header"', null],
+    ["className", "string", null, null],
+  ]}
+/>
+
+`PIN_WINDOW_LABEL` is the control's one name, `"Keep on top"`.

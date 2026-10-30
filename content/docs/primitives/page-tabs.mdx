@@ -1,0 +1,110 @@
+---
+title: Page Tabs
+description: A page with tabs. One segmented tab list pinned in a strip under the toolbar, and only the region under it scrolls. The selected tab is the caller's, so the app can remember it and open a named tab from a link.
+---
+
+<ComponentPreview name="page-tabs-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/page-tabs
+```
+
+## Usage
+
+```tsx
+import { PageTabs } from "@/components/page-tabs";
+import { TabsContent } from "@/components/ui/tabs";
+```
+
+```tsx
+<PageTabs
+  label="Settings sections"
+  onValueChange={setTab}
+  tabs={[
+    { id: "general", label: "General" },
+    { id: "recording", label: "Recording" },
+  ]}
+  value={tab}
+>
+  <TabsContent value="general">…</TabsContent>
+  <TabsContent value="recording">…</TabsContent>
+</PageTabs>
+```
+
+Use it for a page whose parts each answer one question: Settings, Livestream, Buddy. A tab's body is a [ConfigGrid](/docs/primitives/page) of two sections with `CONFIG_GRID_PAIR`, or a `PageStack` for one.
+
+PageTabs keeps no state. Keep the tab in the app: remember the last one used on this device, open a named tab from a link, and list every tab in the command palette.
+
+Don't put tabs in the toolbar, which holds only the title. Don't use tabs to choose a value either: that's a [Segmented Control](/docs/components/segmented-control).
+
+## Anatomy
+
+PageTabs draws the strip and the tab list from `tabs`; you pass the panels.
+
+```tsx
+<PageTabs>
+  <PaneStrip>
+    <TabsList>
+      <TabsTrigger />
+    </TabsList>
+  </PaneStrip>
+  <div data-slot="page-tabs-scroll">
+    <TabsContent />
+  </div>
+</PageTabs>
+```
+
+The root is a [Tabs](/docs/components/tabs) carrying `PANE_OWNS_SCROLL`, so the [PaneBody](/docs/primitives/pane) around it stops scrolling, and the region under the strip is keyed by the tab.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `PaneStrip` | The pinned strip: a hairline below, the gutter at the sides |
+| `TabsList` | The glass segmented track; the selected tab is a chrome plate |
+| `data-pane-scroll="own"` | On the root, from `PANE_OWNS_SCROLL` |
+| `data-slot="page-tabs-scroll"` | The one region that scrolls |
+| `triggerAttribute` | A `data-` attribute on each trigger, holding its tab's id |
+
+## Keyboard
+
+| Key                       | Action                                       |
+| ------------------------- | -------------------------------------------- |
+| `ArrowRight`, `ArrowLeft` | Moves between tabs and shows each one        |
+| `Home`, `End`             | Moves to the first or last tab               |
+| `Tab`                     | Moves from the tab list into the tab's panel |
+
+## Accessibility
+
+`label` names the tab list ("Settings sections"); Base UI wires the tabs to their panels. The scroll region is keyed by the tab, so every change, by a click, the arrow keys or a link, starts the new tab at the top while focus stays on the tab list.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "tabs",
+      "readonly { id: Id; label: ReactNode }[]",
+      null,
+      "The tabs, in order.",
+    ],
+    ["value", "Id", null, "The tab on screen."],
+    [
+      "onValueChange",
+      "(tab: Id) => void",
+      null,
+      "Called with the typed id of the tab the streamer picks.",
+    ],
+    ["label", "string", null, "The tab list's accessible name."],
+    [
+      "triggerAttribute",
+      "`data-${string}`",
+      null,
+      "A data attribute each trigger carries with its tab's id, so tests and links can find a tab.",
+    ],
+    ["testId", "string", null, "data-testid on the root."],
+    ["children", "ReactNode", null, "The TabsContent panels."],
+  ]}
+/>

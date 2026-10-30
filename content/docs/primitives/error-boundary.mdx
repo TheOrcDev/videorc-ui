@@ -1,0 +1,93 @@
+---
+title: Error Boundary
+description: The one render-crash boundary. Its fallback draws what it caught and gets a reset that renders the children again, so a crash stays in its page and the window keeps a way back.
+---
+
+<ComponentPreview name="error-boundary-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/error-boundary
+```
+
+## Usage
+
+```tsx
+import { ErrorBoundary, errorDetails } from "@/components/error-boundary";
+```
+
+```tsx
+<ErrorBoundary
+  fallback={(caught, reset) => (
+    <PageErrorPanel caught={caught} onReset={reset} />
+  )}
+  key={page}
+>
+  <Page />
+</ErrorBoundary>
+```
+
+Without a boundary, React unmounts the whole root on a render error. In a desktop window that leaves an empty frame with no way back.
+
+Use it twice in a window:
+
+- **Around each page**, keyed by the page. A crash stays in the page, the sidebar and the status bar keep working, and moving to another page starts clean. The panel says "This page hit a problem" and "Other pages still work.", with Reload page and Copy details.
+- **Around the window's shell.** The panel keeps a drag band (an empty `h-toolbar` with `[-webkit-app-region:drag]`) so the window still moves, and offers Try again, a reload of the window and Copy details. Wrap that panel in a boundary of its own, with a bare reload button as its fallback, in case the panel itself fails.
+
+Don't use it for errors in event handlers or promises: a boundary catches what throws while rendering, and anything else is yours to report, with a toast.
+
+`errorDetails(error, componentStack)` is what Copy details puts on the clipboard: the stack, then where it rendered. A copy is quiet on success ("Copied" on the button) and loud on failure.
+
+## Accessibility
+
+Give the fallback `role="alert"`, so it's announced as it appears, and lead it with a heading or a title that says what happened. Its first button is the way back.
+
+## API reference
+
+### ErrorBoundary
+
+<PropsTable
+  rows={[
+    ["children", "ReactNode", null, "What it guards."],
+    [
+      "fallback",
+      "(caught: CaughtError, reset: () => void) => ReactNode",
+      null,
+      "Draws the caught error. reset renders the children again.",
+    ],
+    [
+      "onError",
+      "(error: Error, info: ErrorInfo) => void",
+      null,
+      "Reports the crash: a log line, a crash reporter. React logs it as well.",
+    ],
+  ]}
+/>
+
+### CaughtError
+
+<PropsTable
+  rows={[
+    ["error", "Error", null, "What was thrown."],
+    [
+      "componentStack",
+      "string | null",
+      null,
+      "Where it rendered; null on the first fallback render, then filled in.",
+    ],
+  ]}
+/>
+
+### errorDetails
+
+<PropsTable
+  rows={[
+    [
+      "errorDetails(error, componentStack?)",
+      "string",
+      null,
+      'The stack (or name and message), then "Rendered by:" and the component stack.',
+    ],
+  ]}
+/>

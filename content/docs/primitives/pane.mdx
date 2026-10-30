@@ -1,0 +1,130 @@
+---
+title: Pane
+description: The flush column every page lives in. A 40 px toolbar with the page title on the window's drag band, a body that's the only thing that scrolls, and a strip pinned under the toolbar for tabs or filters.
+---
+
+<ComponentPreview name="pane-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/pane
+```
+
+## Usage
+
+```tsx
+import {
+  PANE_OWNS_SCROLL,
+  Pane,
+  PaneBody,
+  PaneStrip,
+  Toolbar,
+} from "@/components/pane";
+```
+
+```tsx
+<Pane>
+  <Toolbar title="Sources" />
+  <PaneBody>…</PaneBody>
+</Pane>
+```
+
+Use it for every page's chrome: a Pane, a Toolbar with the title, a PaneBody. Panes are flush, split by 1 px hairlines, and nothing inside a window floats. A tab list or a filter bar pinned under the toolbar is a PaneStrip.
+
+Don't put buttons in the toolbar: actions live with the content they act on, in a section's header, a filter bar or the [PageHeader](/docs/primitives/page) line. Don't nest a second scroll container inside PaneBody either: a page that needs its own says so with `PANE_OWNS_SCROLL`.
+
+## Anatomy
+
+```tsx
+<Pane>
+  <Toolbar title />
+  <PaneBody>
+    {/* a page that pins a strip owns its scroll */}
+    <div {...PANE_OWNS_SCROLL}>
+      <PaneStrip />
+      {/* the region that scrolls */}
+    </div>
+  </PaneBody>
+</Pane>
+```
+
+## Examples
+
+### A pinned strip
+
+A page that pins a strip under the toolbar spreads `PANE_OWNS_SCROLL` on its root. PaneBody sees it, stops scrolling and turns into a flex column, so only the region under the strip scrolls. The shell keeps no list of such pages. [Page Tabs](/docs/primitives/page-tabs) does all of this for a page with tabs.
+
+<ComponentPreview name="pane-strip" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-toolbar` | The 40 px toolbar |
+| `px-gutter` | The 16 px sides of the toolbar and the strip |
+| `border-b`, `border-border` | The hairline under the toolbar and the strip |
+| `WINDOW_TITLE_CLASS` | The title recipe, 14 px / 600 primary text, shared with [Window Frame](/docs/primitives/window-frame) |
+| `[-webkit-app-region:drag]` | The toolbar moves the window in Electron |
+| `overflow-y-auto`, `overscroll-contain` | PaneBody's scroll |
+| `data-pane-scroll="own"` | A page that owns its scroll, from `PANE_OWNS_SCROLL` |
+| `data-slot` | `pane`, `toolbar`, `pane-body`, `pane-strip` |
+
+## Accessibility
+
+The toolbar's title is the page's `h1`, focusable by script only (`tabIndex={-1}`). After keyboard navigation to a page, move the focus to it: the new page is announced and the next `Tab` starts at its top.
+
+The drag band does nothing in a browser. In Electron it moves the window, and any control on a drag band needs `[-webkit-app-region:no-drag]` to take clicks; the toolbar holds none.
+
+## API reference
+
+### Toolbar
+
+<PropsTable
+  rows={[
+    ["title", "ReactNode", null, "The page's title, as its h1."],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### Pane
+
+<PropsTable
+  rows={[
+    ["children", "ReactNode", null, "A Toolbar and a PaneBody."],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### PaneBody
+
+<PropsTable
+  rows={[
+    [
+      "scroll",
+      "boolean",
+      "true",
+      "false for a body that always owns its scroll: a flex column that never scrolls.",
+    ],
+    ["children", "ReactNode", null, null],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### PaneStrip
+
+Every `div` attribute.
+
+### Constants
+
+<PropsTable
+  rows={[
+    [
+      "PANE_OWNS_SCROLL",
+      '{ "data-pane-scroll": "own" }',
+      null,
+      "Spread it on a page's root when the page owns its scroll.",
+    ],
+    ["WINDOW_TITLE_CLASS", "string", null, "The one title recipe."],
+  ]}
+/>

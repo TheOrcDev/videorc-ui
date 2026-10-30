@@ -1432,6 +1432,234 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "pane",
+      "type": "registry:component",
+      "title": "Pane",
+      "description": "The flush column every page lives in. A 40 px toolbar with the page title on the window's drag band, a body that's the only thing that scrolls, and a strip pinned under the toolbar for tabs or filters.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/pane.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "page",
+      "type": "registry:component",
+      "title": "Page",
+      "description": "The page vocabulary under a pane's toolbar. A flush intro line, the config grid of sections in one column or two, the picture gallery and the plain stack, with no page column, so every page fills its pane edge to edge.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/page.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "page-tabs",
+      "type": "registry:component",
+      "title": "Page Tabs",
+      "description": "A page with tabs. One segmented tab list pinned in a strip under the toolbar, and only the region under it scrolls. The selected tab is the caller's, so the app can remember it and open a named tab from a link.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/pane",
+        "@videorc/tabs"
+      ],
+      "files": [
+        {
+          "path": "components/page-tabs.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "panel-section",
+      "type": "registry:component",
+      "title": "Panel Section",
+      "description": "The flush section every pane is built from. A 13 px header as an h2, a 12 px description, an action on the title line, 16 px of padding and a hairline to the next section, with no box around it.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/panel-section.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "section-label",
+      "type": "registry:component",
+      "title": "Section Label",
+      "description": "The small name over a group of rows or fields, 11 px at 600 in the tertiary tier. One recipe for the sidebar's groups, a grouped list's label and a block of fields.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/section-label.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "list-row",
+      "type": "registry:component",
+      "title": "List Row",
+      "description": "The one row for every icon, title and meta list, and the inset grouped list it sits in. 32 px rows split by hairlines, facts unless they say otherwise, with a whole-row button or a stretched title button when a row acts.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/section-label",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/list-row.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "navigable-row",
+      "type": "registry:component",
+      "title": "Navigable Row",
+      "description": "A fact row of icon, label and value. When the value's home is another page, the row becomes a button with a chevron that jumps there, and a hint lists the facts a short value stands for.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/navigable-row.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "window-frame",
+      "type": "registry:component",
+      "title": "Window Frame",
+      "description": "The frame of a single-pane window and its header row. The content coat over the window coat, and a 40 px header that shares its line with the macOS traffic lights, carries the window's title and drags the window.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/pane",
+        "@videorc/platform",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/window-frame.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "status-bar",
+      "type": "registry:component",
+      "title": "Status Bar",
+      "description": "The window's 26 px status bar. The session state on the left, and quiet shortcut hints on the right that stay clickable, each pressed while the window it opens is open.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/shortcut-keys",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/status-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "status-bar-action",
+      "type": "registry:component",
+      "title": "Status Bar Action",
+      "description": "One action in a status bar. An icon, a word or both, with its shortcut, named for assistive tech and on hover by a tooltip, never a native title. It can be a toggle, or a menu's trigger.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/status-bar",
+        "@videorc/shortcut-keys",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/status-bar-action.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "pin-window-button",
+      "type": "registry:component",
+      "title": "Pin Window Button",
+      "description": "Keep on top, the pin every detached window shares. One name in every window, a filled pin while the window stays over other apps, a pressed state a screen reader hears, and a header or a status-bar look.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/status-bar-action",
+        "@videorc/button",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/pin-window-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chrome-ground",
+      "type": "registry:component",
+      "title": "Chrome Ground",
+      "description": "The frosted still of Liquid Chrome under every Videorc window, black with silver streaks in dark and porcelain with graphite streaks in light. Sized to the display, swapped by the theme class, and never filtered or animated.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/chrome-ground.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "theme-toggle",
+      "type": "registry:component",
+      "title": "Theme Toggle",
+      "description": "The light and dark switch. A ghost icon button with D as its shortcut, shown in its tooltip; a flip back to the computer's own look returns to System.",
+      "dependencies": ["next-themes"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/button",
+        "@videorc/shortcut-tooltip",
+        "@videorc/use-theme-toggle"
+      ],
+      "files": [
+        {
+          "path": "components/theme-toggle.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "error-boundary",
+      "type": "registry:component",
+      "title": "Error Boundary",
+      "description": "The one render-crash boundary. Its fallback draws what it caught and gets a reset that renders the children again, so a crash stays in its page and the window keeps a way back.",
+      "registryDependencies": ["@videorc/theme"],
+      "files": [
+        {
+          "path": "components/error-boundary.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

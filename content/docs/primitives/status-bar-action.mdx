@@ -1,0 +1,109 @@
+---
+title: Status Bar Action
+description: One action in a status bar. An icon, a word or both, with its shortcut, named for assistive tech and on hover by a tooltip, never a native title. It can be a toggle, or a menu's trigger.
+---
+
+<ComponentPreview name="status-bar-action-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/status-bar-action
+```
+
+## Usage
+
+```tsx
+import { StatusBarAction } from "@/components/status-bar-action";
+```
+
+```tsx
+<StatusBarAction
+  accelerator="CmdOrCtrl+Shift+C"
+  icon={<ClipIcon aria-hidden />}
+  label="Save a clip"
+  text="Clip"
+/>
+```
+
+Use it for a control in a [Status Bar](/docs/primitives/status-bar) that isn't a window's shortcut hint: an icon action, a toggle, a menu. It's its own module, so a status bar of hints alone never loads its Tooltip.
+
+Don't use it outside a status bar, where a control is a [Button](/docs/components/button). Don't give it a `title`: `label` names it, and the tooltip shows the name or the hint.
+
+The tooltip follows what the action shows:
+
+| It shows                | Its tooltip                                        |
+| ----------------------- | -------------------------------------------------- |
+| An icon alone           | The `label`                                        |
+| A word (`text`)         | None: the word says it                             |
+| Anything, with a `hint` | The `hint`, which is also the button's description |
+
+### As a menu trigger
+
+Its props spread onto the button, so it can be a menu trigger's `render`. The demo's clip length does this:
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger
+    render={<StatusBarAction label="Clip length" text="30 s" />}
+  />
+  <DropdownMenuContent side="top">…</DropdownMenuContent>
+</DropdownMenu>
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `STATUS_BAR_ACTION_CLASS` | 20 px, 11 px tertiary text that brightens on hover, 14 px icons |
+| `aria-pressed:text-foreground` | A toggle that's on |
+| `text-muted-foreground` | The shortcut, a step above the word |
+| `data-slot="status-bar-action"` | The button, kept when a trigger renders it |
+| `data-popup-open` | While its menu or tooltip is open, from Base UI |
+
+## Keyboard
+
+| Key              | Action                                    |
+| ---------------- | ----------------------------------------- |
+| `Tab`            | Moves to the action and shows its tooltip |
+| `Enter`, `Space` | Runs it, toggles it, or opens its menu    |
+
+## Accessibility
+
+`label` is the button's `aria-label`, so an icon alone is still named; pass icons with `aria-hidden`. A `hint` becomes the button's `aria-description` as well as its tooltip. `pressed` sets `aria-pressed` for a toggle.
+
+## API reference
+
+Every `button` attribute except `children` and `title`, plus:
+
+<PropsTable
+  rows={[
+    [
+      "label",
+      "string",
+      null,
+      "The action's name, for assistive tech and the tooltip of an icon alone.",
+    ],
+    ["icon", "ReactNode", null, "A 14 px icon."],
+    ["text", "ReactNode", null, "The visible word, when there's room for one."],
+    [
+      "hint",
+      "string",
+      null,
+      "More than the name: the tooltip and the button's description.",
+    ],
+    [
+      "accelerator",
+      "string",
+      null,
+      "Its shortcut, as an Electron accelerator.",
+    ],
+    [
+      "platform",
+      "string",
+      null,
+      "darwin, win32, linux… Defaults to data-platform on <html>, then the user agent.",
+    ],
+    ["pressed", "boolean", null, "A toggle that's on."],
+  ]}
+/>

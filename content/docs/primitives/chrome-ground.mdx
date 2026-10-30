@@ -1,0 +1,79 @@
+---
+title: Chrome Ground
+description: The frosted still of Liquid Chrome under every Videorc window, black with silver streaks in dark and porcelain with graphite streaks in light. Sized to the display, swapped by the theme class, and never filtered or animated.
+---
+
+<ComponentPreview name="chrome-ground-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/chrome-ground
+```
+
+## Usage
+
+```tsx
+import { ChromeGround } from "@/components/chrome-ground";
+import groundDark from "./assets/chrome-ground-dark.webp?no-inline";
+import groundLight from "./assets/chrome-ground-light.webp?no-inline";
+```
+
+```tsx
+<ChromeGround dark={groundDark} light={groundLight} />
+```
+
+Mount it once per window, at the root, under everything. It takes the URLs of the two stills: download the [dark](/chrome-ground/dark.webp) and [light](/chrome-ground/light.webp) ones. Import them as files, so they don't end up inlined in your bundle as data URIs (`?no-inline` in Vite). The frost is baked into the stills, so the ground costs nothing to draw while you record.
+
+Use it for a window's ground, and nothing else: it's the only image under the UI. To turn it off, for a solid window or a window that frames video, don't mount it.
+
+Don't put a wallpaper, a photo or the desktop under a window, and don't reach for `backdrop-filter` to fake the frost. On a window with a native material, a CSS backdrop blur shows in Chromium's own screenshots but never reaches the display.
+
+- Both stills stay mounted, and the `.dark` class picks one, so a theme toggle never shows a frame of the other ground.
+- It's sized to the display and centred on the window, never smaller than the viewport: resizing shows more or less chrome and never rescales it. A window moved to another display catches up on its next resize.
+- It paints the window coat over the still. The body paints the same coat as the canvas under it, which covers the first paint before the image decodes; the sidebar and the panes add their own coats above.
+- No filter, transition or animation runs on it.
+
+### Inside a container
+
+`className` is for layout only. `absolute` holds the ground inside a positioned container with `isolate`, as the preview above does, instead of the whole window.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `[data-chrome-ground]` | The layer; the theme hides it under Reduce Transparency |
+| `bg-glass-window` | The window coat, painted over the still |
+| `bg-glass-sidebar`, `bg-glass-content` | The region coats you paint above it |
+| `--chrome-ground-width`, `--chrome-ground-height` | The display's size, which each still takes |
+| `data-chrome-ground-image` | `light` or `dark` on each still |
+| `fixed`, `inset-0`, `-z-10` | Under everything, filling the window |
+
+## Accessibility
+
+It's decoration: hidden from assistive tech (`aria-hidden`) and from the pointer, with empty `alt` text and stills that can't be dragged. Under Reduce Transparency the theme hides it and the coats go solid, so text contrast never depends on what's behind. Under Increase Contrast the coats cover 95% of it.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "dark",
+      "string",
+      null,
+      "The dark theme's still: black with silver streaks.",
+    ],
+    [
+      "light",
+      "string",
+      null,
+      "The light theme's still: porcelain with graphite streaks.",
+    ],
+    [
+      "className",
+      "string",
+      null,
+      "Layout only: absolute to hold it inside a container.",
+    ],
+  ]}
+/>

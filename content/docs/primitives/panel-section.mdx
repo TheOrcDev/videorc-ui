@@ -1,0 +1,97 @@
+---
+title: Panel Section
+description: The flush section every pane is built from. A 13 px header as an h2, a 12 px description, an action on the title line, 16 px of padding and a hairline to the next section, with no box around it.
+---
+
+<ComponentPreview name="panel-section-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/panel-section
+```
+
+## Usage
+
+```tsx
+import { PanelSection } from "@/components/panel-section";
+```
+
+```tsx
+<PanelSection
+  description="Recordings save to ~/Movies/Videorc."
+  title="Recording"
+>
+  …
+</PanelSection>
+```
+
+Use it for every section of a page or a pane: Settings, Output, Sources, the inspector. Rules a streamer needs, such as limits or what Premium adds, go in its `description`, never in a footnote.
+
+Don't put a border, a background, a radius or a shadow around page content, and don't put a card inside a section. Sections are flush and split by hairlines.
+
+## Anatomy
+
+```tsx
+<PanelSection title description icon action headingLevel>
+  {/* content */}
+</PanelSection>
+```
+
+## Examples
+
+### Nested sections
+
+A section under another section's heading passes `headingLevel={3}`, so the outline reads h1 (the toolbar's title), h2, h3. A section with no children is only its header: a title, what it says, and its action.
+
+<ComponentPreview name="panel-section-nested" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `p-gutter` | 16 px of padding |
+| `border-b`, `border-border` | The hairline to the next section; the last one has none |
+| `text-section` | The 13 px / 600 title |
+| `text-meta`, `text-muted-foreground` | The 12 px description, in the secondary tier |
+| `h-5` | The action's line, as tall as the title, so a 28 px button or a switch centres on it |
+| `data-slot` | `panel-section`, `panel-section-header`, `panel-section-description`, `panel-section-action`, `panel-section-content` |
+| `data-*` | Any `data-` prop lands on the section, for tests and probes |
+
+## Accessibility
+
+The title is an `h2` under the toolbar's `h1`, or an `h3` with `headingLevel={3}`. A section without a title has no heading, for when the layout around it already names it. A switch or an icon button in `action` needs its own `aria-label`.
+
+## API reference
+
+<PropsTable
+  rows={[
+    [
+      "title",
+      "string",
+      null,
+      "The section's heading. Leave it out for padded content alone.",
+    ],
+    ["description", "ReactNode", null, "A 12 px line under the title."],
+    ["icon", "AppIcon", null, "A 16 px duotone icon before the title."],
+    [
+      "action",
+      "ReactNode",
+      null,
+      "Controls for the whole section, on the title's line.",
+    ],
+    [
+      "headingLevel",
+      "2 | 3",
+      "2",
+      "3 for a section under another section's heading.",
+    ],
+    ["contentClassName", "string", null, "Classes for the content box."],
+    [
+      "children",
+      "ReactNode",
+      null,
+      "The content. Without it, the section is only its header.",
+    ],
+  ]}
+/>

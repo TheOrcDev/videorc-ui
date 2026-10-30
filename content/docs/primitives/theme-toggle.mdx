@@ -1,0 +1,51 @@
+---
+title: Theme Toggle
+description: The light and dark switch. A ghost icon button with D as its shortcut, shown in its tooltip; a flip back to the computer's own look returns to System.
+---
+
+<ComponentPreview name="theme-toggle-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/theme-toggle
+```
+
+## Usage
+
+```tsx
+import { ThemeToggle } from "@/components/theme-toggle";
+```
+
+```tsx
+<ThemeToggle />
+```
+
+It needs next-themes' `ThemeProvider` with `attribute="class"` above it. The click and the D key both come from [useThemeToggle](/docs/hooks/use-theme-toggle), which ignores D in a field and while a dialog or a menu is open. A flip that lands on the computer's own look sets the theme back to System.
+
+Use it for a window's one theme switch. For a control of your own, call `useThemeToggle()` and use its `toggleTheme`.
+
+Don't build a light and dark pair of buttons, or show the shortcut as text beside it: the tooltip shows the key.
+
+## Theming
+
+| Token or attribute              | Meaning                   |
+| ------------------------------- | ------------------------- |
+| `Button` `ghost`, `size="icon"` | The 28 px icon button     |
+| `LightModeIcon`, `DarkModeIcon` | The current theme, filled |
+| `data-slot="theme-toggle"`      | The button                |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `D` | Switches the theme, outside fields and never from under a dialog or a menu |
+| `Enter`, `Space` | On the button, switches the theme |
+
+## Accessibility
+
+The button is named "Toggle color theme" whatever the theme, so scripts and tests can find it. Its [Shortcut Tooltip](/docs/components/shortcut-tooltip) says what a click does, "Switch to light theme" or "Switch to dark theme", with the D key. The theme isn't known on the server, so the icon waits for the client instead of flashing the wrong one as the page hydrates.
+
+## API reference
+
+ThemeToggle takes no props.

@@ -49,6 +49,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   "checkbox-indeterminate": dynamic(
     () => import("@/components/examples/checkbox-indeterminate")
   ),
+  "chrome-ground-demo": dynamic(
+    () => import("@/components/examples/chrome-ground-demo")
+  ),
   "chrome-row-demo": dynamic(
     () => import("@/components/examples/chrome-row-demo")
   ),
@@ -90,6 +93,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   "empty-description": dynamic(
     () => import("@/components/examples/empty-description")
   ),
+  "error-boundary-demo": dynamic(
+    () => import("@/components/examples/error-boundary-demo")
+  ),
   "field-choice-card": dynamic(
     () => import("@/components/examples/field-choice-card")
   ),
@@ -121,6 +127,35 @@ export const examples: Record<string, ComponentType | undefined> = {
   "kbd-demo": dynamic(() => import("@/components/examples/kbd-demo")),
   "kbd-in-button": dynamic(() => import("@/components/examples/kbd-in-button")),
   "label-demo": dynamic(() => import("@/components/examples/label-demo")),
+  "list-row-button": dynamic(
+    () => import("@/components/examples/list-row-button")
+  ),
+  "list-row-controls": dynamic(
+    () => import("@/components/examples/list-row-controls")
+  ),
+  "list-row-demo": dynamic(() => import("@/components/examples/list-row-demo")),
+  "navigable-row-demo": dynamic(
+    () => import("@/components/examples/navigable-row-demo")
+  ),
+  "page-demo": dynamic(() => import("@/components/examples/page-demo")),
+  "page-gallery": dynamic(() => import("@/components/examples/page-gallery")),
+  "page-tabs-demo": dynamic(
+    () => import("@/components/examples/page-tabs-demo")
+  ),
+  "pane-demo": dynamic(() => import("@/components/examples/pane-demo")),
+  "pane-strip": dynamic(() => import("@/components/examples/pane-strip")),
+  "panel-section-demo": dynamic(
+    () => import("@/components/examples/panel-section-demo")
+  ),
+  "panel-section-nested": dynamic(
+    () => import("@/components/examples/panel-section-nested")
+  ),
+  "pin-window-button-demo": dynamic(
+    () => import("@/components/examples/pin-window-button-demo")
+  ),
+  "pin-window-button-status-bar": dynamic(
+    () => import("@/components/examples/pin-window-button-status-bar")
+  ),
   "popover-anchor": dynamic(
     () => import("@/components/examples/popover-anchor")
   ),
@@ -137,6 +172,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   ),
   "scroll-area-demo": dynamic(
     () => import("@/components/examples/scroll-area-demo")
+  ),
+  "section-label-demo": dynamic(
+    () => import("@/components/examples/section-label-demo")
   ),
   "segmented-control-demo": dynamic(
     () => import("@/components/examples/segmented-control-demo")
@@ -187,6 +225,12 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/spinner-button")
   ),
   "spinner-demo": dynamic(() => import("@/components/examples/spinner-demo")),
+  "status-bar-action-demo": dynamic(
+    () => import("@/components/examples/status-bar-action-demo")
+  ),
+  "status-bar-demo": dynamic(
+    () => import("@/components/examples/status-bar-demo")
+  ),
   "switch-demo": dynamic(() => import("@/components/examples/switch-demo")),
   "switch-disabled": dynamic(
     () => import("@/components/examples/switch-disabled")
@@ -198,6 +242,9 @@ export const examples: Record<string, ComponentType | undefined> = {
   "textarea-demo": dynamic(() => import("@/components/examples/textarea-demo")),
   "textarea-states": dynamic(
     () => import("@/components/examples/textarea-states")
+  ),
+  "theme-toggle-demo": dynamic(
+    () => import("@/components/examples/theme-toggle-demo")
   ),
   "toggle-demo": dynamic(() => import("@/components/examples/toggle-demo")),
   "toggle-group-demo": dynamic(
@@ -215,5 +262,11 @@ export const examples: Record<string, ComponentType | undefined> = {
   "tooltip-demo": dynamic(() => import("@/components/examples/tooltip-demo")),
   "tooltip-shortcut": dynamic(
     () => import("@/components/examples/tooltip-shortcut")
+  ),
+  "window-frame-demo": dynamic(
+    () => import("@/components/examples/window-frame-demo")
+  ),
+  "window-frame-header": dynamic(
+    () => import("@/components/examples/window-frame-header")
   ),
 };

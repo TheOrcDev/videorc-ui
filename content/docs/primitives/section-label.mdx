@@ -1,0 +1,56 @@
+---
+title: Section Label
+description: The small name over a group of rows or fields, 11 px at 600 in the tertiary tier. One recipe for the sidebar's groups, a grouped list's label and a block of fields.
+---
+
+<ComponentPreview name="section-label-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/section-label
+```
+
+## Usage
+
+```tsx
+import { SectionLabel } from "@/components/section-label";
+```
+
+```tsx
+<SectionLabel>Setup</SectionLabel>
+```
+
+Use it for the name over a group: the sidebar's "Setup", a block of fields in a dialog, a group of rows. A [grouped list](/docs/primitives/list-row) draws one for you with its `label`. A group of one row carries no label.
+
+Don't use it for a section's header: that's [Panel Section](/docs/primitives/panel-section)'s 13 px title. Don't put anything a streamer must read in it either: the tertiary tier is for labels, and essential copy uses the secondary tier.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `text-label` | 11 px at weight 600 |
+| `text-subtle` | The tertiary text tier |
+| `SECTION_LABEL` | The recipe as a class string, for an element that can't be a SectionLabel |
+| `data-slot="section-label"` | The label |
+
+## Accessibility
+
+It renders a `<span>`, so it adds nothing to the document outline. Pass `as="h3"` or `as="h4"` when the label names a region someone would jump to by heading, such as a sidebar group, and `as="p"` or `as="div"` for a block.
+
+## API reference
+
+Every HTML attribute, plus:
+
+<PropsTable
+  rows={[
+    [
+      "as",
+      '"span" | "div" | "p" | "h3" | "h4"',
+      '"span"',
+      "The element it renders.",
+    ],
+  ]}
+/>
+
+`SECTION_LABEL` is the recipe's class string: `text-label font-semibold text-subtle`.

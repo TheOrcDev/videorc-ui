@@ -1,0 +1,119 @@
+---
+title: Page
+description: The page vocabulary under a pane's toolbar. A flush intro line, the config grid of sections in one column or two, the picture gallery and the plain stack, with no page column, so every page fills its pane edge to edge.
+---
+
+<ComponentPreview name="page-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/page
+```
+
+## Usage
+
+```tsx
+import {
+  CONFIG_GRID_PAIR,
+  ConfigGrid,
+  Gallery,
+  PageHeader,
+  PageStack,
+} from "@/components/page";
+```
+
+```tsx
+<PaneBody>
+  <PageHeader
+    description="Quality for recordings and livestreams on this computer."
+    title="Output"
+  />
+  <ConfigGrid>
+    <PanelSection title="Recording">…</PanelSection>
+    <PanelSection title="Livestream">…</PanelSection>
+  </ConfigGrid>
+</PaneBody>
+```
+
+Pages compose these instead of hand-rolling grids. `lg` is the one layout breakpoint; a form's own sub-grid uses `sm` and `md`.
+
+| Archetype | Pages | Built with |
+| --- | --- | --- |
+| Config grid | Sources, Livestream, Output, Settings | A `ConfigGrid` of [Panel Sections](/docs/primitives/panel-section): one column, two at `lg` |
+| Stack | One section, or a tab | A `PageStack` of Panel Sections |
+| Gallery | Assets, Screens | A `Gallery` of picture cards |
+| Browse | Library | A flush list or table in the pane body |
+| Stage, Bench, Inspect | Studio, Scene, Health | Bespoke |
+
+Don't add a max-width column or a hand-rolled grid. Don't put a page's actions in the toolbar either: they go at the end of the PageHeader's line, or in a section's header.
+
+## Examples
+
+### Gallery
+
+Cards are only for objects with a picture: backgrounds, scenes, Buddies, library items. A Gallery fills its tracks by the width it has. `dense` packs 10 rem cards, for a picker inside a dialog. `rowsOfFive` holds a row to five cards, which may shrink to 11 rem so five fit the default window: ten cards read as two rows of five.
+
+<ComponentPreview name="page-gallery" />
+
+### Two sections that fill the height
+
+A tab of exactly two sections passes `CONFIG_GRID_PAIR` to its ConfigGrid. At `lg` the grid fills the visible height, so the hairline between the columns runs the full height however short the tab is. Stacked, the rows keep their content height. The preview above does this.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `px-gutter` | The PageHeader's 16 px sides |
+| `lg:grid-cols-2` | The config grid's two columns |
+| `lg:[&>*:nth-child(odd)]:border-r` | The hairline between the columns |
+| `CONFIG_GRID_PAIR` | `flex-1 content-start lg:content-stretch lg:[&>*]:border-b-0` |
+| `data-slot` | `page-header`, `config-grid`, `gallery`, `page-stack` |
+
+## Accessibility
+
+The toolbar already shows the page's name as its `h1`, so PageHeader's `title` is a visually hidden `h2` for assistive tech. Its description is plain text. A Gallery is only a grid: give it an `aria-label`, and make each card a button, with `aria-pressed` when the gallery is a choice.
+
+## API reference
+
+### PageHeader
+
+<PropsTable
+  rows={[
+    ["title", "string", null, "The page's name, for assistive tech."],
+    ["description", "ReactNode", null, "The flush intro line."],
+    [
+      "action",
+      "ReactNode",
+      null,
+      "Actions at the end of the line, never in the toolbar.",
+    ],
+    ["media", "ReactNode", null, "A page's own mark, leading the line."],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### ConfigGrid and PageStack
+
+<PropsTable
+  rows={[
+    ["children", "ReactNode", null, "Panel Sections."],
+    ["className", "string", null, "CONFIG_GRID_PAIR on a ConfigGrid of two."],
+  ]}
+/>
+
+### Gallery
+
+Every `div` attribute, plus:
+
+<PropsTable
+  rows={[
+    ["dense", "boolean", "false", "10 rem cards, for a picker in a dialog."],
+    [
+      "rowsOfFive",
+      "boolean",
+      "false",
+      "At most five cards a row, never narrower than 11 rem.",
+    ],
+  ]}
+/>

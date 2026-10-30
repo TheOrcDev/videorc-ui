@@ -1,0 +1,148 @@
+---
+title: List Row
+description: The one row for every icon, title and meta list, and the inset grouped list it sits in. 32 px rows split by hairlines, facts unless they say otherwise, with a whole-row button or a stretched title button when a row acts.
+---
+
+<ComponentPreview name="list-row-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/list-row
+```
+
+## Usage
+
+```tsx
+import { GroupedList, ListRow, ListRowButton } from "@/components/list-row";
+```
+
+```tsx
+<GroupedList label="Cameras">
+  <ListRow
+    context="Built-in"
+    icon={<CameraIcon />}
+    meta="In use"
+    title="FaceTime HD Camera"
+  />
+</GroupedList>
+```
+
+Use it for sets of like things: sources, devices, destinations, scenes, settings. Lists, not card stacks: a card is only for an object with a picture, such as a scene thumbnail or a background.
+
+Don't hand-roll an icon, title and meta row, and don't put cards inside a grouped list. A fact row that jumps to the page owning its value is a [Navigable Row](/docs/primitives/navigable-row).
+
+## Anatomy
+
+```tsx
+<GroupedList label>
+  <ListRow leading icon title context alias statusIcons meta>
+    {/* trailing controls */}
+  </ListRow>
+</GroupedList>
+```
+
+## Examples
+
+### A row with its own controls
+
+A row that holds a control, such as a switch, stays a `div`. Put a `ListRowButton` in its `title` and give the row `relative`: the button stretches over the whole row, so a click anywhere on it acts, while the switch stays its sibling instead of nesting inside a button. `interactive` adds the hover.
+
+<ComponentPreview name="list-row-controls" />
+
+### The whole row as a button
+
+`as="button"` makes the row one button, with the hover and the focus ring. `selected` draws the accent block; pair it with `aria-pressed` or `aria-current`. `compact` is 28 px.
+
+<ComponentPreview name="list-row-button" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-row`, `h-row-compact` | 32 px, or 28 px when `compact` |
+| `rounded-row` | 8 px on a row alone; none inside a GroupedList, which owns the radius |
+| `bg-inset`, `divide-border` | The grouped list's inset fill and its hairlines |
+| `bg-accent` | The hover of an interactive row, and the selected row |
+| `text-meta` | The 12 px meta label |
+| `data-selected` | On a selected row |
+| `data-slot="platform-mark"` | On a platform mark in the icon tile: it's never clipped to the chip radius |
+| `data-slot` | `list-row`, `list-row-icon`, `list-row-title`, `list-row-context`, `list-row-meta`, `grouped-list`, `list-row-button` |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Tab` | Moves to a row that's a button or holds a ListRowButton, then to the row's own controls |
+| `Enter`, `Space` | Activates it |
+
+## Accessibility
+
+A fact row is plain text. A row that's a button is named by its content, the title, context and meta in order, so keep the meta short. Selection is a block of colour: say it with `aria-pressed` or `aria-current` too. A trailing control needs its own name ("Stream to YouTube").
+
+GroupedList passes its attributes to the list itself, so `aria-label` names the group for assistive tech.
+
+## API reference
+
+### ListRow
+
+Every `div` attribute, or every `button` attribute with `as="button"`, plus:
+
+<PropsTable
+  rows={[
+    ["as", '"div" | "button"', '"div"', null],
+    [
+      "title",
+      "ReactNode",
+      null,
+      "The row's title. It's never the native tooltip attribute.",
+    ],
+    [
+      "icon",
+      "ReactNode",
+      null,
+      "The 20 px icon tile: the source's or the app's own icon.",
+    ],
+    [
+      "leading",
+      "ReactNode",
+      null,
+      "A control before the title, never clipped like the icon tile.",
+    ],
+    [
+      "context",
+      "ReactNode",
+      null,
+      "Secondary context after the title: platform, owner, kind.",
+    ],
+    ["alias", "ReactNode", null, "Key chips after the context."],
+    ["statusIcons", "ReactNode", null, "Small status icons before the meta."],
+    ["meta", "ReactNode", null, "Right-aligned secondary metadata."],
+    ["selected", "boolean", "false", "The accent block and data-selected."],
+    [
+      "interactive",
+      "boolean",
+      'true with as="button"',
+      "The hover. Off by default: most rows are facts.",
+    ],
+    ["compact", "boolean", "false", "28 px instead of 32 px."],
+    [
+      "children",
+      "ReactNode",
+      null,
+      "Trailing controls, before the status icons and the meta.",
+    ],
+  ]}
+/>
+
+### GroupedList
+
+Every `div` attribute, on the list itself, plus:
+
+<PropsTable
+  rows={[["label", "ReactNode", null, "A Section Label over the group."]]}
+/>
+
+### ListRowButton
+
+Every `button` attribute. Give its ListRow `relative`, and position any control in the row that must stay clickable (Switch already is).

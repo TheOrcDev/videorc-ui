@@ -1,0 +1,111 @@
+---
+title: Status Bar
+description: The window's 26 px status bar. The session state on the left, and quiet shortcut hints on the right that stay clickable, each pressed while the window it opens is open.
+---
+
+<ComponentPreview name="status-bar-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/status-bar
+```
+
+## Usage
+
+```tsx
+import { StatusBar, StatusBarHint } from "@/components/status-bar";
+```
+
+```tsx
+<StatusBar leading={sessionState}>
+  <StatusBarHint
+    accelerator="CmdOrCtrl+K"
+    label="Search"
+    onClick={openSearch}
+  />
+  <StatusBarHint
+    accelerator="CmdOrCtrl+P"
+    label="Preview"
+    onClick={togglePreview}
+    pressed={previewOpen}
+  />
+</StatusBar>
+```
+
+Use it for the window's global state and hints. On the left, the session state in the session's own words ("Ready", "Recording", "On air 12:04"), as the door to Health. On the right, the window shortcuts: Search, Preview, Notes, Stream Manager. Every clickable thing in a status bar is a StatusBarHint or a [Status Bar Action](/docs/primitives/status-bar-action).
+
+Don't repeat these hints on every surface: global hints live here, once. Don't type a shortcut by hand either: a hint takes an Electron accelerator and prints it per platform through [Shortcut Keys](/docs/components/shortcut-keys).
+
+In a narrow window, `labelClassName` hides a hint's word and keeps its key: `labelClassName="hidden md:inline"`.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `h-status-bar` | The 26 px bar |
+| `border-t`, `border-border` | The hairline above it |
+| `text-label font-normal` | 11 px at the body's weight |
+| `text-muted-foreground` | The bar's own text, and a hint's key |
+| `text-subtle` | A hint's word, brightening to `text-foreground` on hover and while pressed |
+| `STATUS_BAR_ACTION_CLASS` | The 20 px look every hint and action shares |
+| `data-slot` | `status-bar`, `status-bar-leading`, `status-bar-trailing`, `status-bar-hint` |
+
+## Keyboard
+
+| Key              | Action                             |
+| ---------------- | ---------------------------------- |
+| `Tab`            | Moves through the hints            |
+| `Enter`, `Space` | Runs a hint, as its shortcut would |
+
+The shortcuts themselves are the app's to bind.
+
+## Accessibility
+
+The bar is a `<footer>`. A hint is a button named by its key and its word ("⌘K Search"), and `pressed` sets `aria-pressed`. Put the session state in a polite live region (`role="status"`) so a change is announced, and hide its ticking clock from it with `aria-hidden`, or every second would be read out.
+
+## API reference
+
+### StatusBar
+
+<PropsTable
+  rows={[
+    ["leading", "ReactNode", null, "The state, on the left."],
+    ["children", "ReactNode", null, "Hints and actions, on the right."],
+    ["className", "string", null, null],
+  ]}
+/>
+
+### StatusBarHint
+
+<PropsTable
+  rows={[
+    [
+      "accelerator",
+      "string",
+      null,
+      "The shortcut as an Electron accelerator: CmdOrCtrl+K.",
+    ],
+    ["label", "string", null, "The action's word."],
+    ["onClick", "() => void", null, "What the shortcut does."],
+    [
+      "pressed",
+      "boolean",
+      null,
+      "The window it opens is open; a click closes it.",
+    ],
+    [
+      "platform",
+      "string",
+      null,
+      "darwin, win32, linux… Defaults to data-platform on <html>, then the user agent.",
+    ],
+    [
+      "labelClassName",
+      "string",
+      null,
+      "Classes for the word alone, to hide it in a narrow window.",
+    ],
+    ["className", "string", null, null],
+  ]}
+/>

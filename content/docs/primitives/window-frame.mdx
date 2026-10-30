@@ -1,0 +1,103 @@
+---
+title: Window Frame
+description: The frame of a single-pane window and its header row. The content coat over the window coat, and a 40 px header that shares its line with the macOS traffic lights, carries the window's title and drags the window.
+---
+
+<ComponentPreview name="window-frame-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/window-frame
+```
+
+## Usage
+
+```tsx
+import { WindowFrame, WindowHeader } from "@/components/window-frame";
+```
+
+```tsx
+<WindowFrame className="flex flex-col">
+  <WindowHeader platform={platform} title="Notes">
+    <PinWindowButton onPinnedChange={setPinned} pinned={pinned} />
+  </WindowHeader>
+  …
+</WindowFrame>
+```
+
+Use it for a single-pane window: Stream Manager, Notes, the Captions reader. Lead with one WindowHeader: the title as the window's `h1`, an optional quiet `meta` fact after it, and the window's few controls at the end. Stream Manager keeps its row to the title.
+
+Don't use it in the main window, where each page is a [Pane](/docs/primitives/pane) with its Toolbar. Don't stack a third coat inside it either: the frame is the window's one content coat.
+
+## Examples
+
+### A fact and controls, off macOS
+
+`meta` is a quiet fact after the title, such as the Captions reader's state. The children are the window's controls, at the end of the row and out of the drag band. Off macOS the native frame owns the title bar, so the row pads like any other.
+
+<ComponentPreview name="window-frame-header" />
+
+## The traffic lights
+
+Give the window `titleBarStyle: "hiddenInset"`, with the traffic lights centred in the 40 px header row. On macOS the header pads 88 px (`TRAFFIC_LIGHT_GUTTER_CLASS`): the three lights end 74 px in, which leaves the title 14 px of air. It keeps the gutter in fullscreen too. macOS draws the lights over the header when the title bar reveals on hover, and dropping the gutter there would put them on the title.
+
+Pass the platform you know, such as Electron's `process.platform`. Without one, the header reads `data-platform` on `<html>`, then the user agent. A server can't know the reader's platform, so server-rendered markup has no gutter and the client adds it as it hydrates.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-glass-content` | The content coat over the window coat |
+| `h-toolbar` | The 40 px header |
+| `pl-[88px]`, `pl-3` | The traffic-light gutter on macOS, a plain row elsewhere |
+| `[-webkit-app-region:drag]` | The header moves the window; its controls opt out with `no-drag` |
+| `WINDOW_TITLE_CLASS` | The title recipe, 14 px / 600, shared with the Toolbar |
+| `data-slot` | `window-frame`, `window-header`, `window-header-title`, `window-header-meta`, `window-header-actions` |
+
+## Accessibility
+
+The title is the window's `h1`. `meta` is plain text after it: if it changes while the window is open (Listening, Paused), put it in a polite live region. Each control in the header needs a name; [Pin Window Button](/docs/primitives/pin-window-button) brings its own.
+
+## API reference
+
+### WindowHeader
+
+Every `header` attribute, plus:
+
+<PropsTable
+  rows={[
+    ["title", "ReactNode", null, "The window's title, as its h1."],
+    ["meta", "ReactNode", null, "A quiet fact after the title."],
+    [
+      "children",
+      "ReactNode",
+      null,
+      "The window's controls, at the end and out of the drag band.",
+    ],
+    [
+      "platform",
+      "string",
+      null,
+      "darwin, win32, linux… Defaults to data-platform on <html>, then the user agent.",
+    ],
+  ]}
+/>
+
+### WindowFrame
+
+<PropsTable
+  rows={[
+    ["children", "ReactNode", null, "The header and the window's body."],
+    [
+      "className",
+      "string",
+      null,
+      "h-screen by default; add the body's layout.",
+    ],
+  ]}
+/>
+
+### useTrafficLightGutter
+
+`useTrafficLightGutter(platform?)` returns `"pl-[88px]"` on macOS and `"pl-3"` elsewhere, for a header row of your own.
