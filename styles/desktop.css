@@ -1,0 +1,31 @@
+/*
+ * videorc/ui desktop base — how a desktop app's chrome behaves (Videorc plan
+ * 050, D6). Separate from the theme so a website can wear the tokens and keep
+ * selectable text.
+ *
+ * Chrome text does not select, the arrow is the pointer, and the window does
+ * not rubber-band. Content people copy (chat, notes, transcripts, logs) opts
+ * back in with select-text, and fields always select.
+ */
+
+@layer base {
+  html {
+    /* A desktop app, not a page (plan 050, D6): chrome text does not select,
+       the arrow is the pointer, and the window does not rubber-band. Content
+       people copy (chat, notes, transcripts, logs) opts back in with
+       select-text, and fields always select. */
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    overscroll-behavior: none;
+  }
+  input,
+  textarea,
+  [contenteditable="true"] {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
+}
