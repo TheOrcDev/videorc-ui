@@ -1,0 +1,378 @@
+{
+  "/": {
+    "alt": "videorc/ui: Videorc's Stream Manager window, with live stats, platform chat, a paid message, the composer and the status bar, in the dark theme.",
+    "url": "/og/home-b1443c9a5abc.png"
+  },
+  "/docs": {
+    "alt": "Introduction — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
+    "url": "/og/introduction-3ba6614d5973.png"
+  },
+  "/docs/blocks": {
+    "alt": "Blocks — videorc/ui: Videorc's Stream Manager window with live stats, platform chat, a paid message, the composer and the status bar, in the dark theme.",
+    "url": "/og/blocks-a73b8d92393c.png"
+  },
+  "/docs/blocks/activity-feed": {
+    "alt": "Activity Feed — videorc/ui: the Stream Manager's Activity pane with platform filters, Auto-show, a super chat, a resub, gifted subs and a raid, in the dark theme.",
+    "url": "/og/blocks-activity-feed-b932d8995eab.png"
+  },
+  "/docs/blocks/chat-composer": {
+    "alt": "Chat Composer — videorc/ui: the chat composer with its To: All picker, a message field and the X read-only note, in the dark theme.",
+    "url": "/og/blocks-chat-composer-ee28621d3d7d.png"
+  },
+  "/docs/blocks/chat-message": {
+    "alt": "Chat Message — videorc/ui: chat messages from YouTube, Twitch and X, one from a member and one shown on stream, in the dark theme.",
+    "url": "/og/blocks-chat-message-f88165b5987d.png"
+  },
+  "/docs/blocks/chat-platform": {
+    "alt": "Chat Platform — videorc/ui: platform names and glyphs for YouTube, Twitch, X, TikTok, Instagram, Facebook and custom RTMP, in the dark theme.",
+    "url": "/og/blocks-chat-platform-024d5f1bff95.png"
+  },
+  "/docs/blocks/chat-toolbar": {
+    "alt": "Chat Toolbar — videorc/ui: the chat toolbar with platform chips, Questions, Mentions and search above the chat, in the dark theme.",
+    "url": "/og/blocks-chat-toolbar-158d71ac7a82.png"
+  },
+  "/docs/blocks/platform-filter": {
+    "alt": "Platform Filter — videorc/ui: a platform filter of All, YouTube, Twitch and X, in the dark theme.",
+    "url": "/og/blocks-platform-filter-3c3ade1131ca.png"
+  },
+  "/docs/blocks/stream-manager": {
+    "alt": "Stream Manager — videorc/ui: Videorc's Stream Manager window with live stats, platform chat, a paid message, the composer and the status bar, in the dark theme.",
+    "url": "/og/blocks-stream-manager-5cc6f67026ac.png"
+  },
+  "/docs/blocks/stream-manager-status-bar": {
+    "alt": "Stream Manager Status Bar — videorc/ui: the Stream Manager's status bar with platform dots, shortcut hints and clip controls, in the dark theme.",
+    "url": "/og/blocks-stream-manager-status-bar-1cf02bd9f779.png"
+  },
+  "/docs/blocks/stream-stats-bar": {
+    "alt": "Stream Stats Bar — videorc/ui: the Stream Manager's stats bar: on air, the session clock, viewers, followers, supporters and chat pace, in the dark theme.",
+    "url": "/og/blocks-stream-stats-bar-5b7862ecdba4.png"
+  },
+  "/docs/components": {
+    "alt": "Components — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
+    "url": "/og/components-3c891104e9aa.png"
+  },
+  "/docs/components/accordion": {
+    "alt": "Accordion — videorc/ui: an accordion with Video open and Audio and Output closed, in the dark theme.",
+    "url": "/og/components-accordion-df8fe3d9dc4b.png"
+  },
+  "/docs/components/alert": {
+    "alt": "Alert — videorc/ui: a warning alert, Stream health is poor, with an Open Health button, in the dark theme.",
+    "url": "/og/components-alert-8d91f8269426.png"
+  },
+  "/docs/components/alert-dialog": {
+    "alt": "Alert Dialog — videorc/ui: an open alert dialog asking to delete a saved scene, with Cancel and a destructive Delete scene button, in the dark theme.",
+    "url": "/og/components-alert-dialog-ce9d7301ed37.png"
+  },
+  "/docs/components/avatar": {
+    "alt": "Avatar — videorc/ui: three round avatars, one picture and two sets of initials, in the dark theme.",
+    "url": "/og/components-avatar-8d97b82dd33a.png"
+  },
+  "/docs/components/badge": {
+    "alt": "Badge — videorc/ui: badges for On air, Connected, 9:16 and 1080p60, in the dark theme.",
+    "url": "/og/components-badge-07290d1d757f.png"
+  },
+  "/docs/components/button": {
+    "alt": "Button — videorc/ui: a red Record button, a chrome Go Live button, a glass Open Stream Manager button and a ghost Cancel, in the dark theme.",
+    "url": "/og/components-button-7358b4a377dc.png"
+  },
+  "/docs/components/chart": {
+    "alt": "Chart — videorc/ui: a line chart of upload bitrate dipping below its target, in the dark theme.",
+    "url": "/og/components-chart-c80ae98ab3d6.png"
+  },
+  "/docs/components/checkbox": {
+    "alt": "Checkbox — videorc/ui: a checked checkbox, Include markers in the export, in the dark theme.",
+    "url": "/og/components-checkbox-a20fb18a0734.png"
+  },
+  "/docs/components/chrome-row": {
+    "alt": "Chrome Row — videorc/ui: chat rows in chrome, one shown on stream and one from a member, in the dark theme.",
+    "url": "/og/components-chrome-row-cc147c323d09.png"
+  },
+  "/docs/components/collapsible": {
+    "alt": "Collapsible — videorc/ui: open advanced settings: keyframe interval, B-frames and encoder preset, in the dark theme.",
+    "url": "/og/components-collapsible-d8928a99f46a.png"
+  },
+  "/docs/components/command": {
+    "alt": "Command — videorc/ui: a command palette of session actions and pages with their shortcuts, in the dark theme.",
+    "url": "/og/components-command-3592d440d48d.png"
+  },
+  "/docs/components/context-menu": {
+    "alt": "Context Menu — videorc/ui: a context menu at the pointer with Rename, Duplicate and a destructive Delete scene, in the dark theme.",
+    "url": "/og/components-context-menu-fcdf9963fd39.png"
+  },
+  "/docs/components/dialog": {
+    "alt": "Dialog — videorc/ui: an open Rename scene dialog with a name field, Cancel and Save, in the dark theme.",
+    "url": "/og/components-dialog-79610537538b.png"
+  },
+  "/docs/components/disabled-reason": {
+    "alt": "Disabled Reason — videorc/ui: a disabled Go Live button whose tooltip says to add a destination first, in the dark theme.",
+    "url": "/og/components-disabled-reason-c4c31572ffba.png"
+  },
+  "/docs/components/dropdown-menu": {
+    "alt": "Dropdown Menu — videorc/ui: an open menu with Rename, Duplicate, Show in Finder and a destructive Delete recording, in the dark theme.",
+    "url": "/og/components-dropdown-menu-dc95910e7f5d.png"
+  },
+  "/docs/components/empty": {
+    "alt": "Empty — videorc/ui: an empty state, No recordings yet, with an Open Studio button, in the dark theme.",
+    "url": "/og/components-empty-f8da696bbc51.png"
+  },
+  "/docs/components/fader": {
+    "alt": "Fader — videorc/ui: a microphone fader at −6 dB above a decibel scale, in the dark theme.",
+    "url": "/og/components-fader-187facf7e845.png"
+  },
+  "/docs/components/field": {
+    "alt": "Field — videorc/ui: a form with a title and its character count, a description and a Made for kids switch, in the dark theme.",
+    "url": "/og/components-field-4ad505e32d10.png"
+  },
+  "/docs/components/hover-card": {
+    "alt": "Hover Card — videorc/ui: a hover card previewing a live Twitch stream, in the dark theme.",
+    "url": "/og/components-hover-card-70b289ea95da.png"
+  },
+  "/docs/components/info-tooltip": {
+    "alt": "Info Tooltip — videorc/ui: a tooltip explaining a failed MP4 export: the disk is full, in the dark theme.",
+    "url": "/og/components-info-tooltip-8dbbe7b23a5d.png"
+  },
+  "/docs/components/input": {
+    "alt": "Input — videorc/ui: a Stream title text field, in the dark theme.",
+    "url": "/og/components-input-e74ee7dc3565.png"
+  },
+  "/docs/components/input-group": {
+    "alt": "Input Group — videorc/ui: a search field with an icon and a count of 12 results, in the dark theme.",
+    "url": "/og/components-input-group-43fa1bcb9c4a.png"
+  },
+  "/docs/components/kbd": {
+    "alt": "Kbd — videorc/ui: arrow and Esc keycaps beside what they do, in the dark theme.",
+    "url": "/og/components-kbd-d8e47ca942a2.png"
+  },
+  "/docs/components/label": {
+    "alt": "Label — videorc/ui: a checkbox and its label, Include markers in the export, in the dark theme.",
+    "url": "/og/components-label-239ac1183ed5.png"
+  },
+  "/docs/components/parameter-slider": {
+    "alt": "Parameter Slider — videorc/ui: a Microphone sync slider with a millisecond field and a description, in the dark theme.",
+    "url": "/og/components-parameter-slider-0a5c8cc24cd2.png"
+  },
+  "/docs/components/popover": {
+    "alt": "Popover — videorc/ui: an open Add a marker popover with a note field, in the dark theme.",
+    "url": "/og/components-popover-b0e973158fe0.png"
+  },
+  "/docs/components/progress": {
+    "alt": "Progress — videorc/ui: a progress bar, Uploading recording at 42%, in the dark theme.",
+    "url": "/og/components-progress-80c05d9fc830.png"
+  },
+  "/docs/components/scroll-area": {
+    "alt": "Scroll Area — videorc/ui: a scrolling list of recordings and their lengths, in the dark theme.",
+    "url": "/og/components-scroll-area-0d9383cd20e9.png"
+  },
+  "/docs/components/segmented-control": {
+    "alt": "Segmented Control — videorc/ui: a Light, Dark and System segmented control with System selected, in the dark theme.",
+    "url": "/og/components-segmented-control-ca930269ade1.png"
+  },
+  "/docs/components/select": {
+    "alt": "Select — videorc/ui: an open select of frame rates with 60 fps checked, in the dark theme.",
+    "url": "/og/components-select-e1187fb9ec21.png"
+  },
+  "/docs/components/separator": {
+    "alt": "Separator — videorc/ui: hairlines between a heading and Studio, Sources and Library, in the dark theme.",
+    "url": "/og/components-separator-abae1d9767a7.png"
+  },
+  "/docs/components/shortcut-keys": {
+    "alt": "Shortcut Keys — videorc/ui: Search, Open Preview, Open Stream Manager and Start or stop recording with their shortcuts, in the dark theme.",
+    "url": "/og/components-shortcut-keys-ded4805aaf2f.png"
+  },
+  "/docs/components/shortcut-tooltip": {
+    "alt": "Shortcut Tooltip — videorc/ui: a Search tooltip with its ⌘K keycap over a row of icon buttons, in the dark theme.",
+    "url": "/og/components-shortcut-tooltip-c1f776759348.png"
+  },
+  "/docs/components/skeleton": {
+    "alt": "Skeleton — videorc/ui: a loading skeleton of a picture and two lines of text, in the dark theme.",
+    "url": "/og/components-skeleton-b238a203bd34.png"
+  },
+  "/docs/components/slider": {
+    "alt": "Slider — videorc/ui: a Buddy motion slider, in the dark theme.",
+    "url": "/og/components-slider-60ce621ccdb5.png"
+  },
+  "/docs/components/sonner": {
+    "alt": "Sonner — videorc/ui: a Recording saved toast over a Save local recording button, in the dark theme.",
+    "url": "/og/components-sonner-376ee99cceeb.png"
+  },
+  "/docs/components/spinner": {
+    "alt": "Spinner — videorc/ui: two spinners at two sizes, in the dark theme.",
+    "url": "/og/components-spinner-a46209c34f75.png"
+  },
+  "/docs/components/switch": {
+    "alt": "Switch — videorc/ui: a Made for kids switch with its description, in the dark theme.",
+    "url": "/og/components-switch-22ae58195715.png"
+  },
+  "/docs/components/tabs": {
+    "alt": "Tabs — videorc/ui: Chat, Activity and Buddy tabs with Chat selected, in the dark theme.",
+    "url": "/og/components-tabs-7ff64ee6e396.png"
+  },
+  "/docs/components/textarea": {
+    "alt": "Textarea — videorc/ui: a description textarea with its hint, in the dark theme.",
+    "url": "/og/components-textarea-e680d36e7041.png"
+  },
+  "/docs/components/toggle": {
+    "alt": "Toggle — videorc/ui: a pressed pin toggle beside a visibility toggle and Markers, in the dark theme.",
+    "url": "/og/components-toggle-39be8cebe92e.png"
+  },
+  "/docs/components/toggle-group": {
+    "alt": "Toggle Group — videorc/ui: a toggle group of All, YouTube and Twitch with All pressed, in the dark theme.",
+    "url": "/og/components-toggle-group-7c5dff89d703.png"
+  },
+  "/docs/components/tooltip": {
+    "alt": "Tooltip — videorc/ui: a Preview tooltip over a row of icon buttons, in the dark theme.",
+    "url": "/og/components-tooltip-db5b4ed26991.png"
+  },
+  "/docs/concepts/design-language": {
+    "alt": "Design language — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
+    "url": "/og/concepts-design-language-f79a7dd5d907.png"
+  },
+  "/docs/concepts/desktop": {
+    "alt": "Desktop base — videorc/ui: a Notes window with traffic lights, a pinned header, a list and a status bar, in the dark theme.",
+    "url": "/og/concepts-desktop-beb7ebaaf60f.png"
+  },
+  "/docs/concepts/desktop-scale": {
+    "alt": "Desktop scale — videorc/ui: grouped lists of cameras and microphones, one not responding, in the dark theme.",
+    "url": "/og/concepts-desktop-scale-59ba4da70b06.png"
+  },
+  "/docs/concepts/electron": {
+    "alt": "Using it in Electron — videorc/ui: a Notes window with traffic lights, a pinned header, a list and a status bar, in the dark theme.",
+    "url": "/og/concepts-electron-95f9adaf7340.png"
+  },
+  "/docs/concepts/icons": {
+    "alt": "Icons — videorc/ui: twelve semantic icons, from Record and Go Live to Clip and Library, in the dark theme.",
+    "url": "/og/concepts-icons-cf461f754a01.png"
+  },
+  "/docs/concepts/theme": {
+    "alt": "Theme — videorc/ui: chrome, glass and record LED buttons above status chips in each tone, in the dark theme.",
+    "url": "/og/concepts-theme-bd9c1f40653c.png"
+  },
+  "/docs/hooks": {
+    "alt": "Hooks and libs — videorc/ui: Search, Open Preview, Open Stream Manager and Start or stop recording with their shortcuts, in the dark theme.",
+    "url": "/og/hooks-de74dc067434.png"
+  },
+  "/docs/hooks/accelerator": {
+    "alt": "Accelerator — videorc/ui: Search, Open Preview, Open Stream Manager and Start or stop recording with their shortcuts, in the dark theme.",
+    "url": "/og/hooks-accelerator-3e8b4a4aea12.png"
+  },
+  "/docs/hooks/modal-open": {
+    "alt": "Modal open — videorc/ui: an open Rename scene dialog with a name field, Cancel and Save, in the dark theme.",
+    "url": "/og/hooks-modal-open-466efeb5cd7a.png"
+  },
+  "/docs/hooks/platform": {
+    "alt": "Platform — videorc/ui: arrow and Esc keycaps beside what they do, in the dark theme.",
+    "url": "/og/hooks-platform-ba6ba6dba3e3.png"
+  },
+  "/docs/hooks/status-word": {
+    "alt": "Status word — videorc/ui: status badges for Connected, Reconnecting, Upload failed, On air and Idle, in the dark theme.",
+    "url": "/og/hooks-status-word-65b7dd5ec9be.png"
+  },
+  "/docs/hooks/use-reduced-motion": {
+    "alt": "useReducedMotion — videorc/ui: a progress bar, Uploading recording at 42%, in the dark theme.",
+    "url": "/og/hooks-use-reduced-motion-967a18cfe5db.png"
+  },
+  "/docs/hooks/use-theme-toggle": {
+    "alt": "useThemeToggle — videorc/ui: a Light, Dark and System segmented control with System selected, in the dark theme.",
+    "url": "/og/hooks-use-theme-toggle-4e5bfdf66151.png"
+  },
+  "/docs/installation": {
+    "alt": "Installation — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
+    "url": "/og/installation-734dfc08b131.png"
+  },
+  "/docs/primitives": {
+    "alt": "Primitives — videorc/ui: a Settings page with General, Recording and Shortcuts tabs and switch rows, in the dark theme.",
+    "url": "/og/primitives-668cee8e29a3.png"
+  },
+  "/docs/primitives/chrome-ground": {
+    "alt": "Chrome Ground — videorc/ui: the frosted chrome ground under a sidebar of Studio, Sources and Library, in the dark theme.",
+    "url": "/og/primitives-chrome-ground-f349575552e7.png"
+  },
+  "/docs/primitives/confirm-dialog": {
+    "alt": "Confirm Dialog — videorc/ui: an open confirm dialog asking to delete a saved scene, in the dark theme.",
+    "url": "/og/primitives-confirm-dialog-d0ed29e63859.png"
+  },
+  "/docs/primitives/device-picker": {
+    "alt": "Device Picker — videorc/ui: an open camera picker with FaceTime HD Camera checked and Cam Link 4K needing permission, in the dark theme.",
+    "url": "/og/primitives-device-picker-d59edc832df8.png"
+  },
+  "/docs/primitives/error-boundary": {
+    "alt": "Error Boundary — videorc/ui: a pane after a crash, This pane hit a problem, with Reload pane and Copy details, in the dark theme.",
+    "url": "/og/primitives-error-boundary-fb4ac257dac1.png"
+  },
+  "/docs/primitives/kebab-context-menu": {
+    "alt": "Kebab Context Menu — videorc/ui: a row's right-click menu with Rename, Show in Finder and Delete scene, in the dark theme.",
+    "url": "/og/primitives-kebab-context-menu-4dfde4237846.png"
+  },
+  "/docs/primitives/kebab-menu": {
+    "alt": "Kebab Menu — videorc/ui: a list of recordings with one row's ⋯ menu open, in the dark theme.",
+    "url": "/og/primitives-kebab-menu-778324edd5e1.png"
+  },
+  "/docs/primitives/list-row": {
+    "alt": "List Row — videorc/ui: grouped lists of cameras and microphones, one not responding, in the dark theme.",
+    "url": "/og/primitives-list-row-0fcda79def4a.png"
+  },
+  "/docs/primitives/lock-alert": {
+    "alt": "Lock Alert — videorc/ui: locked controls with View Premium and Sign in actions, in the dark theme.",
+    "url": "/og/primitives-lock-alert-b11610cdd8ea.png"
+  },
+  "/docs/primitives/media-card": {
+    "alt": "Media Card — videorc/ui: three media cards for screen and camera layouts, one selected, in the dark theme.",
+    "url": "/og/primitives-media-card-1fd019cb6100.png"
+  },
+  "/docs/primitives/navigable-row": {
+    "alt": "Navigable Row — videorc/ui: session rows for camera, microphone, recording, destinations and dropped frames, in the dark theme.",
+    "url": "/og/primitives-navigable-row-14641856ccd3.png"
+  },
+  "/docs/primitives/page": {
+    "alt": "Page — videorc/ui: an Output page of recording and livestream settings, in the dark theme.",
+    "url": "/og/primitives-page-d5441566bf83.png"
+  },
+  "/docs/primitives/page-tabs": {
+    "alt": "Page Tabs — videorc/ui: a Settings page with General, Recording and Shortcuts tabs and switch rows, in the dark theme.",
+    "url": "/og/primitives-page-tabs-c060228eede7.png"
+  },
+  "/docs/primitives/pane": {
+    "alt": "Pane — videorc/ui: a Sources pane of video and audio sources in grouped lists, in the dark theme.",
+    "url": "/og/primitives-pane-55fcd2c41e08.png"
+  },
+  "/docs/primitives/panel-section": {
+    "alt": "Panel Section — videorc/ui: a Recording section with a folder button, switch rows and a Markers row, in the dark theme.",
+    "url": "/og/primitives-panel-section-ad63071ab6bd.png"
+  },
+  "/docs/primitives/pin-window-button": {
+    "alt": "Pin Window Button — videorc/ui: a Notes window header with its pin button, in the dark theme.",
+    "url": "/og/primitives-pin-window-button-e9bcbee56f74.png"
+  },
+  "/docs/primitives/power-slider": {
+    "alt": "Power Slider — videorc/ui: a Noise cleanup slider at 60% with a Beta tag and a reset button, in the dark theme.",
+    "url": "/og/primitives-power-slider-ac1a2f4629fd.png"
+  },
+  "/docs/primitives/section-label": {
+    "alt": "Section Label — videorc/ui: a sidebar with a Setup section of Sources, Scene, Assets and Livestream, in the dark theme.",
+    "url": "/og/primitives-section-label-8f68be3a72e1.png"
+  },
+  "/docs/primitives/status-badge": {
+    "alt": "Status Badge — videorc/ui: status badges for Connected, Reconnecting, Upload failed, On air and Idle, in the dark theme.",
+    "url": "/og/primitives-status-badge-f5f504bda59a.png"
+  },
+  "/docs/primitives/status-bar": {
+    "alt": "Status Bar — videorc/ui: a window's status bar with the on-air clock and shortcut hints, in the dark theme.",
+    "url": "/og/primitives-status-bar-f6bf05264aaf.png"
+  },
+  "/docs/primitives/status-bar-action": {
+    "alt": "Status Bar Action — videorc/ui: a status bar with its destinations, a clip action and pane toggles, in the dark theme.",
+    "url": "/og/primitives-status-bar-action-058a28ce0b52.png"
+  },
+  "/docs/primitives/status-dot": {
+    "alt": "Status Dot — videorc/ui: status dots for Recording, Ready, Reconnecting, Encoder stopped and Idle, in the dark theme.",
+    "url": "/og/primitives-status-dot-09339f01e248.png"
+  },
+  "/docs/primitives/theme-toggle": {
+    "alt": "Theme Toggle — videorc/ui: the light and dark theme toggle, in the dark theme.",
+    "url": "/og/primitives-theme-toggle-dbe1c3e762ec.png"
+  },
+  "/docs/primitives/window-frame": {
+    "alt": "Window Frame — videorc/ui: a Notes window with traffic lights, a pinned header, a list and a status bar, in the dark theme.",
+    "url": "/og/primitives-window-frame-a7c51bcf1571.png"
+  }
+}

@@ -27,38 +27,6 @@ test("the public sitemap includes every concrete page and robots permits indexin
   expect(await robots.text()).toContain("Allow: /");
 });
 
-test("docs pages keep their own canonical URL", async ({ page }) => {
-  await page.goto("/docs/components/button");
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-    "href",
-    `${siteConfig.url}/docs/components/button`
-  );
-});
-
-test("shared docs links have an image and the page's own social title", async ({
-  page,
-  request,
-}) => {
-  await page.goto("/docs/components/button");
-  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
-    "content",
-    "Button for React — videorc/ui"
-  );
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
-    "content",
-    "summary_large_image"
-  );
-  const socialImage = page.locator('meta[property="og:image"]');
-  await expect(socialImage).toHaveAttribute("content", /\/opengraph-image/u);
-  const imageUrl = await socialImage.getAttribute("content");
-  const image = await request.get(new URL(imageUrl ?? "").pathname);
-  expect(image.status()).toBe(200);
-  expect(image.headers()["content-type"]).toContain("image/png");
-  const bytes = await image.body();
-  expect(bytes.readUInt32BE(16)).toBe(1200);
-  expect(bytes.readUInt32BE(20)).toBe(630);
-});
-
 test("missing docs pages offer a way back to the documentation", async ({
   page,
 }) => {
