@@ -16,7 +16,7 @@ This adds `components/icons.tsx` and installs `@phosphor-icons/react`.
 Every videorc/ui component imports its icons from `@/components/icons`, by meaning: `SourcesIcon`, `AlertIcon`, `RecordIcon`. Nothing imports `@phosphor-icons/react` directly.
 
 - **Swapping is a one-line change.** Point `SourcesIcon` at a different glyph and every component that shows sources follows.
-- **The set stays countable.** 90 slots over 86 glyphs, reviewable in one file.
+- **The set stays countable.** 91 slots over 87 glyphs, reviewable in one file.
 - **One glyph per meaning.** A triangle warns (`WarningIcon`), a circle alerts (`AlertIcon`), a crossed circle is an error (`ErrorIcon`). Before adding a slot, check whether one already means what you need; never add a second variant of a meaning.
 - **Copy names what an icon shows,** never its slot: "Trash", not "DeleteIcon".
 
@@ -160,6 +160,14 @@ One slot per sidebar destination in Videorc.
 | `SignOutIcon` | SignOut    | Sign out     |
 | `AccountIcon` | UserCircle | Your account |
 | `LinkIcon`    | LinkSimple | A link       |
+
+### Livestream audience
+
+What viewers do for the stream, as the Stream Manager's stats bar and Activity show it.
+
+| Slot          | Glyph | Meaning                                     |
+| ------------- | ----- | ------------------------------------------- |
+| `ViewersIcon` | User  | People watching now. Never your own account |
 
 ### AI, tooling and appearance
 

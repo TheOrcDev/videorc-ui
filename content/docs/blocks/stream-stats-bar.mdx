@@ -1,0 +1,161 @@
+---
+title: Stream Stats Bar
+description: The Stream Manager's stats bar. One 32 px row with the ON AIR clock, viewers and followers in the main slots and the rest after a hairline; monochrome numbers, details one hover away, and stats the streamer drags and picks.
+---
+
+<ComponentPreview name="stream-stats-bar-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/stream-stats-bar
+```
+
+This adds `stream-stats-bar.tsx` and its sparkline, `stats-sparkline.tsx`, and installs `recharts`.
+
+## Usage
+
+```tsx
+import {
+  DEFAULT_STATS_LAYOUT,
+  StreamStatsBar,
+} from "@/components/blocks/stream-manager/stream-stats-bar";
+import type { StatItem } from "@/components/blocks/stream-manager/stream-stats-bar";
+```
+
+```tsx
+const items: StatItem[] = [
+  {
+    id: "session",
+    label: "Session",
+    value: "30:44",
+    badge: "live",
+    tone: "neutral",
+    details: [{ label: "Started", value: "8:12 PM" }],
+    description: "On air for 30:44",
+  },
+  {
+    id: "viewers",
+    label: "Viewers",
+    value: "1.2k",
+    tone: "neutral",
+    spark: [880, 940, 1010, 1232],
+    details: [{ label: "YouTube", value: "812", platform: "youtube" }],
+    description: "1.2k viewers, peak 1.4k",
+  },
+];
+
+<StreamStatsBar items={items} layout={layout} onLayoutChange={setLayout} />;
+```
+
+Each stat is plain data you compute: its value as shown, a unit, a change, a tone, its sparkline points and its hover card's rows. The bar never measures anything itself.
+
+- **Never an unmeasured zero.** Give a stat only when its source exists for this session, and show "–" with the reason in its details when a number can't be read.
+- **Quiet when fine.** Numbers stay monochrome and tabular. Tone lives in the session chip (ON AIR is the only emphasis) and in a stat's sparkline when it's in trouble.
+- **Main slots first.** The first three stats in the layout are drawn larger and never clipped: by default the clock, viewers and followers. The rest follow after a hairline in a clipped, wrapping row, so a stat that doesn't fit drops off the end whole.
+
+## Examples
+
+### Off air, with the screen hidden
+
+Off air the clock says so in the subtle tier. `screenHidden` closes the bar with the "Screen hidden" chip, which never moves a stat.
+
+<ComponentPreview name="stream-stats-bar-off-air" />
+
+## Arranging stats
+
+With `onLayoutChange`, the streamer drags a stat onto another to move it, and right-clicks the bar to show or hide stats, move the one under the pointer, or reset. The clock and the viewer count can't be hidden or leave the main slots: the viewer count is never hidden while live. Keep the layout per machine, as Videorc does in `localStorage`. Without `onLayoutChange` the order is fixed.
+
+`arrangeStats`, `moveStat`, `setStatHidden` and `statsLayoutIsDefault` are the rules, and `STAT_NAMES` the stats' names, for a menu of your own (the Stream Manager's status bar folds the same choices into its ⋯ menu).
+
+## Responsive
+
+The sparklines are a Wide luxury: they appear when the `@container/stream-manager` around the bar is 1,040 px or wider. Below it the number is the reading. The examples here wrap the bar in that container; the Stream Manager window is one.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `Badge` `live` | ON AIR, the only emphasis |
+| `text-subtle` | A reading that isn't live (`tone: "subtle"`) |
+| `tabular-nums` | Every number |
+| `@min-[1040px]/stream-manager:` | Where the sparklines appear |
+| `StatusBadge` `warn` | Screen hidden |
+| `data-stat`, `data-group`, `data-tone` | On each stat: its id, `main` or `more`, its tone |
+| `data-slot` | `stream-stats-bar`, `stats-main`, `stats-more`, `stat-item`, `stat-value`, `stats-sparkline` |
+
+## Accessibility
+
+The bar is a region named "Stream stats". Each stat is one image named by its `description`, the whole reading in words, and a stat with details is a tab stop whose hover card also opens on focus. An arrangeable bar is a tab stop too, so its menu opens from the keyboard.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["items", "readonly StatItem[]", null, null],
+    ["layout", "StatsLayout", "DEFAULT_STATS_LAYOUT", null],
+    [
+      "onLayoutChange",
+      "(layout: StatsLayout) => void",
+      null,
+      "Lets the streamer drag and pick stats. Absent: a fixed order.",
+    ],
+    [
+      "screenHidden",
+      "boolean",
+      "false",
+      "The screen is hidden from viewers: the chip closes the bar.",
+    ],
+  ]}
+/>
+
+### StatItem
+
+<PropsTable
+  rows={[
+    [
+      "id",
+      '"session" | "viewers" | "followers" | "supporters" | "tips" | "chat"',
+      null,
+      null,
+    ],
+    ["label", "string", null, "The hover card's heading."],
+    ["value", "string", null, 'The number as shown, or "–".'],
+    ["unit", "string", null, '"followers", "msg/min".'],
+    ["delta", "string", null, '"+12".'],
+    [
+      "tone",
+      '"neutral" | "subtle" | "good" | "warning" | "error"',
+      null,
+      "subtle dims it; warning and error tint its sparkline.",
+    ],
+    [
+      "badge",
+      '"live" | "recording" | "off-air" | "history"',
+      null,
+      "The session's chip: ON AIR, Recording, History.",
+    ],
+    ["spark", "readonly number[]", null, "Sparkline points, oldest first."],
+    [
+      "details",
+      "readonly StatDetailRow[]",
+      null,
+      "The hover card's rows: label, value, platform, note.",
+    ],
+    ["description", "string", null, "The whole reading in words."],
+  ]}
+/>
+
+### StatsLayout
+
+<PropsTable
+  rows={[
+    [
+      "order",
+      "StatId[]",
+      null,
+      "Every stat in order; the first three are the main slots.",
+    ],
+    ["hidden", "StatId[]", null, "Stats the streamer hid."],
+  ]}
+/>

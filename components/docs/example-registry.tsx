@@ -327,6 +327,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "status-dot-header": dynamic(
     () => import("@/components/examples/status-dot-header")
   ),
+  "stream-stats-bar-demo": dynamic(
+    () => import("@/components/examples/stream-stats-bar-demo")
+  ),
+  "stream-stats-bar-off-air": dynamic(
+    () => import("@/components/examples/stream-stats-bar-off-air")
+  ),
   "switch-demo": dynamic(() => import("@/components/examples/switch-demo")),
   "switch-disabled": dynamic(
     () => import("@/components/examples/switch-disabled")

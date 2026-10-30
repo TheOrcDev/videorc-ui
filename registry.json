@@ -1994,6 +1994,34 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "stream-stats-bar",
+      "type": "registry:block",
+      "title": "Stream Stats Bar",
+      "description": "The Stream Manager's stats bar: one 32 px row with the ON AIR clock, viewers and followers in the main slots and the rest after a hairline, dropping off the end whole. Monochrome numbers, details one hover away, sparklines at Wide, and stats the streamer drags and picks.",
+      "dependencies": ["recharts"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-platform",
+        "@videorc/icons",
+        "@videorc/status-badge",
+        "@videorc/badge",
+        "@videorc/chart",
+        "@videorc/context-menu",
+        "@videorc/hover-card",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/stream-stats-bar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/blocks/stream-manager/stats-sparkline.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

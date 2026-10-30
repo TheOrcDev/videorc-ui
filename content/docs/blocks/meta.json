@@ -6,6 +6,7 @@
     "chat-message",
     "chat-toolbar",
     "chat-composer",
+    "stream-stats-bar",
     "platform-filter",
     "chat-platform"
   ]

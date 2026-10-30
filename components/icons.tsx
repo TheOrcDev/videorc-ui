@@ -124,6 +124,7 @@ export type IconSetCheck = AssertIconProps<
     | "XLogo"
     | "YoutubeLogo"
     | "UploadSimple"
+    | "User"
     | "UserCircle"
     | "VideoCamera"
     | "Warning"
@@ -255,6 +256,15 @@ export {
   SignOut as SignOutIcon,
   UserCircle as AccountIcon,
   LinkSimple as LinkIcon,
+} from "@phosphor-icons/react";
+/**
+ * Livestream audience: what viewers do for the stream, as the Stream
+ * Manager's stats bar and Activity show it.
+ */
+export {
+  // People watching now: the stats bar's viewer count. Never AccountIcon,
+  // which is the streamer's own account.
+  User as ViewersIcon,
 } from "@phosphor-icons/react";
 /**
  * AI, tooling and appearance. Buddy (code name `cohost`) has its own mark,
