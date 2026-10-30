@@ -1,14 +1,14 @@
-// Platform awareness for copy and keyboard glyphs. Pass the real platform
-// when the app knows it ('darwin' | 'win32' | 'linux' | …; Electron's
-// process.platform). Without one, `data-platform` on <html> (set before the
-// first paint) stands in, then the user agent, so nothing flashes "Ctrl" on
-// a Mac.
-
 import {
   acceleratorAriaKeyShortcuts,
   acceleratorLabel,
   commandModifierHeld,
 } from "@/lib/accelerator";
+
+// Platform awareness for copy and keyboard glyphs. Pass the real platform
+// when the app knows it ('darwin' | 'win32' | 'linux' | …; Electron's
+// process.platform). Without one, `data-platform` on <html> (set before the
+// first paint) stands in, then the user agent, so nothing flashes "Ctrl" on
+// a Mac.
 
 export type AppPlatform = "darwin" | "win32" | "other";
 

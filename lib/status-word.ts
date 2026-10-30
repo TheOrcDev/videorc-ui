@@ -1,3 +1,5 @@
+declare const process: { env: { NODE_ENV?: string } } | undefined;
+
 // The status vocabulary StatusBadge and StatusDot share: five tones, and the
 // rule that a status chip or dot says a word in sentence case ("Needs
 // permission"), never a machine value ("permission-needed"). The primitives
@@ -6,9 +8,8 @@
 // map every state to a word, and `assertStatusWord` catches the ones that slip
 // through.
 
-// Typed here so the lib needs no Node types; bundlers still replace the
-// `process.env.NODE_ENV` expression below with a literal.
-declare const process: { env: { NODE_ENV?: string } } | undefined;
+// `process` is declared above so the lib needs no Node types; bundlers still
+// replace the `process.env.NODE_ENV` expression below with a literal.
 
 /**
  * What a status means, never how it looks: `good` works, `warn` is degraded,

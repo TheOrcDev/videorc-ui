@@ -170,3 +170,32 @@ describe("registry files", () => {
     }
   });
 });
+
+describe("registry file headers", () => {
+  // The shadcn CLI drops every comment before a file's first statement, so a
+  // header written there never reaches an installed copy (and ui:check in
+  // Videorc would see drift). Headers go below the first statement.
+  it("keep no comment before the first statement", async () => {
+    const ts = await import("typescript");
+    const { readFileSync } = await import("node:fs");
+    for (const entry of registry.items as unknown as RegistryItem[]) {
+      for (const file of entry.files ?? []) {
+        if (!/\.[jt]sx?$/u.test(file.path)) {
+          continue;
+        }
+        const text = readFileSync(file.path, "utf-8");
+        const source = ts.createSourceFile(
+          file.path,
+          text,
+          ts.ScriptTarget.Latest,
+          true
+        );
+        const [first] = source.statements;
+        const leading = first
+          ? (ts.getLeadingCommentRanges(text, first.getFullStart()) ?? [])
+          : [];
+        expect(leading, file.path).toEqual([]);
+      }
+    }
+  });
+});

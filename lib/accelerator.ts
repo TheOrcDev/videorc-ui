@@ -1,9 +1,9 @@
+export type AcceleratorModifier = "Cmd" | "Ctrl" | "Alt" | "Shift" | "Super";
+
 // How an Electron accelerator reads, per platform: "⇧⌘J" on macOS,
 // "Ctrl+Shift+J" elsewhere. Shortcuts are authored once as accelerators
 // (`CmdOrCtrl+Shift+J`) and printed through ShortcutKeys or shortcutLabel.
 // Pure: no DOM, no React.
-
-export type AcceleratorModifier = "Cmd" | "Ctrl" | "Alt" | "Shift" | "Super";
 
 const isMac = (platform: string | undefined): boolean => platform === "darwin";
 

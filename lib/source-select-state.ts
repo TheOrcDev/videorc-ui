@@ -1,11 +1,13 @@
+export type DevicePickerKind = "capture" | "camera" | "microphone";
+
 // The device picker's words. A picker never renders a blank surface:
 // discovery still running, nothing found, and a saved id that no device
 // matches all have words. These pure helpers decide what the trigger and the
 // list say, so every picker (a scene's camera, a microphone section, a source
 // list, a repair step) says it the same way.
-
-/** Which kind of source a picker chooses: it decides the words ("Finding cameras…"). */
-export type DevicePickerKind = "capture" | "camera" | "microphone";
+//
+// DevicePickerKind, above, is which kind of source a picker chooses: it
+// decides the words ("Finding cameras…").
 
 /**
  * Whether a device can run. `permission-required` and `unavailable` list the

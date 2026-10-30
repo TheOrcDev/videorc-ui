@@ -1,13 +1,13 @@
-// PowerSlider's value math. Pure and framework-free, so the exact clamping,
-// stepping and formatting the slider relies on is tested directly: the
-// component never re-implements value logic, and every value clamps through
-// the same helpers the tests use. No DOM and no React here.
-
 export interface SliderRange {
   min: number;
   max: number;
   step: number;
 }
+
+// PowerSlider's value math. Pure and framework-free, so the exact clamping,
+// stepping and formatting the slider relies on is tested directly: the
+// component never re-implements value logic, and every value clamps through
+// the same helpers the tests use. No DOM and no React here.
 
 function stepDecimals(step: number): number {
   if (!Number.isFinite(step) || step <= 0) {

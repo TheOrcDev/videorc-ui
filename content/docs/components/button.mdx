@@ -43,7 +43,7 @@ Every control is 28 px tall. `xs` and `icon-xs` (24 px) are for dense rows only;
 
 ### As a link
 
-Render another element with `render`. When it isn't a `<button>`, pass `nativeButton={false}` so Base UI drops the button semantics it would otherwise add.
+A link that looks like a button is still a link: put `buttonVariants()` on a plain `<a>`. Rendering an `<a>` through `render` with `nativeButton={false}` keeps Base UI's button behaviour and adds `role="button"`, which is right only for an element that acts like a button.
 
 <ComponentPreview name="button-link" />
 

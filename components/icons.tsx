@@ -1,3 +1,6 @@
+import type * as PhosphorIcons from "@phosphor-icons/react";
+import type { ComponentType, SVGProps } from "react";
+
 /**
  * The Videorc icon registry: the single place an icon is named.
  *
@@ -16,8 +19,6 @@
  * Adding an icon: check whether an existing slot already means what you need.
  * If it does, reuse it. Only add a slot for a genuinely new meaning.
  */
-import type * as PhosphorIcons from "@phosphor-icons/react";
-import type { ComponentType, SVGProps } from "react";
 
 /**
  * The props every registry icon accepts.
