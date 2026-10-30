@@ -37,3 +37,13 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# fumadocs
+.source
+
+# shadcn build output (rebuilt on deploy)
+/public/r
+
+# playwright
+/test-results
+/playwright-report

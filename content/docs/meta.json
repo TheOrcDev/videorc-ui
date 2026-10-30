@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "---Getting started---",
+    "index",
+    "installation",
+    "---Concepts---",
+    "...concepts",
+    "---Components---",
+    "...components",
+    "---Primitives---",
+    "...primitives",
+    "---Hooks and libs---",
+    "...hooks"
+  ]
+}

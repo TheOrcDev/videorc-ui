@@ -1,0 +1,28 @@
+---
+title: Introduction
+description: videorc/ui is the component library behind Videorc, the AI-native recording and livestreaming studio. Liquid Chrome surfaces, glass chips and desktop-sized controls, built on Base UI and shipped as a shadcn registry.
+---
+
+videorc/ui is where Videorc's interface is designed and kept. Every button, menu, row and pane the desktop app draws starts here, and the app installs it with the same `shadcn` CLI you use.
+
+It is a [shadcn registry](https://ui.shadcn.com/docs/registry): you get the source, in your project, and you own it.
+
+## What's inside
+
+| Section | What it is |
+| --- | --- |
+| [Concepts](/docs/concepts/design-language) | The design language: Liquid Chrome, the window coats, glass chips, the three text tiers and the desktop scale |
+| [Components](/docs/components) | shadcn/ui components rebuilt for Videorc on Base UI, plus Videorc's own: segmented controls, shortcut keys, disabled reasons |
+| [Primitives](/docs/primitives) | The shared building blocks of every Videorc screen: grouped lists and rows, panes and toolbars, status bars, kebab menus, confirm dialogs |
+| [Hooks and libs](/docs/hooks) | The small pieces the components share: platform glyphs, accelerators, reduced motion |
+
+## Principles
+
+- **Colour is information.** The chrome is monochrome. Saturated colour appears only in status (live, success, warning, destructive) and in source icons.
+- **A desktop app, not a page.** Controls are desktop-sized (28 px), rows are 32 px, toolbars 40 px. Every primary action has a keyboard shortcut.
+- **One primitive per job.** A list of like things is a `GroupedList` of `ListRow`s, a confirmation is a `ConfirmDialog`, a shortcut is `ShortcutKeys`. Screens compose primitives; they don't restyle them.
+- **Dark first, light as its twin.** Dark is the reference; light is the same structure in porcelain and graphite.
+
+## For AI agents
+
+Every component and primitive page has a **Copy prompt for AI** button, and every page is available as Markdown by appending `.md` to its URL. [llms.txt](/llms.txt) indexes every page.
