@@ -14,6 +14,7 @@
     "theme:build": "node scripts/build-theme.mjs",
     "theme:check": "node scripts/build-theme.mjs --check",
     "registry:build": "shadcn build",
+    "og:build": "node scripts/build-social-images.mjs",
     "typecheck": "fumadocs-mdx && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",

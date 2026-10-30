@@ -1,0 +1,27 @@
+/*
+ * Only the social capture route imports this. A dialog or toast opened for a
+ * card sits on the card's stage, without the backdrop dimming the title.
+ */
+[data-slot="dialog-overlay"],
+[data-slot="alert-dialog-overlay"] {
+  display: none !important;
+}
+
+[data-slot="dialog-content"],
+[data-slot="alert-dialog-content"] {
+  left: var(--social-stage-x) !important;
+  top: var(--social-stage-y) !important;
+}
+
+[data-sonner-toaster] {
+  bottom: auto !important;
+  left: var(--social-stage-x) !important;
+  right: auto !important;
+  top: calc(var(--social-stage-y) - 32px) !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Next's dev tools would land in the shot. */
+nextjs-portal {
+  display: none !important;
+}
