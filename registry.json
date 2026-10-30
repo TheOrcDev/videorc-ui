@@ -656,7 +656,7 @@
       "name": "accelerator",
       "type": "registry:lib",
       "title": "Accelerator",
-      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: \u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
+      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: ⇧⌘J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
       "files": [
         {
           "path": "lib/accelerator.ts",
@@ -973,7 +973,7 @@
       "name": "segmented-control",
       "type": "registry:ui",
       "title": "Segmented Control",
-      "description": "Pick one of 2\u20134 exclusive options on the glass Tabs track: a radio group with roving focus and one tab stop, manual activation for heavy changes, icon options with tooltips, and a disabled state that says why.",
+      "description": "Pick one of 2–4 exclusive options on the glass Tabs track: a radio group with roving focus and one tab stop, manual activation for heavy changes, icon options with tooltips, and a disabled state that says why.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/tabs-variants",
@@ -1019,7 +1019,7 @@
       "name": "shortcut-keys",
       "type": "registry:ui",
       "title": "Shortcut Keys",
-      "description": "The one way to show a shortcut: takes an Electron accelerator and prints it the way the platform's menus do (\u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere), as a keycap or as quiet status bar text.",
+      "description": "The one way to show a shortcut: takes an Electron accelerator and prints it the way the platform's menus do (⇧⌘J on macOS, Ctrl+Shift+J elsewhere), as a keycap or as quiet status bar text.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/kbd",
@@ -1400,7 +1400,7 @@
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
-      "description": "A searchable list on cmdk at the \u2318K palette scale: a borderless 18 px search field, 40 px rows and a footer. It paints no coat, and CommandDialog wraps its children in Command.",
+      "description": "A searchable list on cmdk at the ⌘K palette scale: a borderless 18 px search field, 40 px rows and a footer. It paints no coat, and CommandDialog wraps its children in Command.",
       "dependencies": ["cmdk"],
       "registryDependencies": [
         "@videorc/theme",
@@ -1727,7 +1727,7 @@
       "name": "kebab-menu",
       "type": "registry:component",
       "title": "Kebab Menu",
-      "description": "The \u22ef menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/icons",
@@ -1747,7 +1747,7 @@
       "name": "kebab-context-menu",
       "type": "registry:component",
       "title": "Kebab Context Menu",
-      "description": "The right-click twin of a row's \u22ef menu, built from the same item list so the two menus can never disagree.",
+      "description": "The right-click twin of a row's ⋯ menu, built from the same item list so the two menus can never disagree.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/kebab-menu",

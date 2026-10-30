@@ -1,31 +1,95 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { InstallCommand } from "@/components/docs/install-command";
+import { ArrowUpRightIcon } from "@/components/home/arrow-up-right-icon";
+import { ShowcaseGrid } from "@/components/home/showcase-grid";
+import { ThemeSwatches } from "@/components/home/theme-swatches";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
+import { getPageMetadata } from "@/lib/social-metadata";
+import { source } from "@/lib/source";
+
+export const metadata: Metadata = getPageMetadata({
+  pathname: "/",
+  title: siteConfig.name,
+});
+
+const itemCount = source
+  .getPages()
+  .filter(
+    (page) =>
+      (page.url.startsWith("/docs/components/") ||
+        page.url.startsWith("/docs/primitives/")) &&
+      page.url.split("/").length > 3
+  ).length;
 
 const Page = () => (
   <main className="w-full">
-    <section className="px-4 pt-16 pb-24 sm:px-6 lg:pt-24 lg:pb-32">
+    {/* The chrome sits behind the hero and fades out before the showcase. */}
+    <section className="relative isolate overflow-hidden px-4 pt-16 pb-24 sm:px-6 lg:pt-24 lg:pb-32">
+      <div
+        aria-hidden
+        className="bg-chrome-ground pointer-events-none absolute inset-0 -z-20 mask-b-from-40% bg-cover bg-center"
+      />
+      <div
+        aria-hidden
+        className="bg-glass-solid/80 pointer-events-none absolute inset-0 -z-10"
+      />
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 text-center">
-        <h1 className="font-heading max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-          Videorc&apos;s interface, as a component library.
+        <Link
+          className="text-muted-foreground hover:text-foreground glass-chip focus-visible:ring-ring/50 group/pill flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors outline-none focus-visible:ring-3"
+          href={siteConfig.videorcUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          The component library behind Videorc
+          <ArrowUpRightIcon className="size-3 transition-transform group-hover/pill:translate-x-0.5 group-hover/pill:-translate-y-0.5" />
+        </Link>
+        <h1 className="font-heading max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
+          Liquid Chrome, in your project.
         </h1>
         <p className="text-muted-foreground max-w-2xl text-base text-balance sm:text-lg">
-          {siteConfig.description}
+          The buttons, menus, rows, panes and status bars of an AI-native
+          recording studio. Base UI underneath, shadcn/ui on the surface, and
+          every line yours.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link className={buttonVariants({ size: "lg" })} href="/docs">
             Get started
           </Link>
+          <Link
+            className={buttonVariants({ size: "lg", variant: "secondary" })}
+            href="/docs/components"
+          >
+            Browse components
+          </Link>
         </div>
         <div className="w-full max-w-md text-left">
           <InstallCommand
-            command={`npx shadcn@latest add ${siteConfig.registryNamespace}/theme`}
+            command={`npx shadcn@latest add ${siteConfig.registryNamespace}/command`}
           />
         </div>
       </div>
     </section>
+    <div className="mx-auto flex w-full max-w-7xl flex-col px-4 pb-24 sm:px-6">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-muted-foreground text-sm">
+          Everything here is live. Open the palette, flip a switch, drag a
+          fader.
+        </p>
+        <ThemeSwatches />
+      </div>
+      <ShowcaseGrid />
+      <div className="mt-12 flex justify-center">
+        <Link
+          className={buttonVariants({ size: "lg", variant: "secondary" })}
+          href="/docs/components"
+        >
+          Browse all {itemCount} components and primitives
+        </Link>
+      </div>
+    </div>
   </main>
 );
 
