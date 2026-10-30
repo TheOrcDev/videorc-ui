@@ -21,7 +21,8 @@ const itemCount = source
   .filter(
     (page) =>
       (page.url.startsWith("/docs/components/") ||
-        page.url.startsWith("/docs/primitives/")) &&
+        page.url.startsWith("/docs/primitives/") ||
+        page.url.startsWith("/docs/blocks/")) &&
       page.url.split("/").length > 3
   ).length;
 
@@ -87,7 +88,7 @@ const Page = () => (
           className={buttonVariants({ size: "lg", variant: "secondary" })}
           href="/docs/components"
         >
-          Browse all {itemCount} components and primitives
+          Browse all {itemCount} components, primitives and blocks
         </Link>
       </div>
     </div>
