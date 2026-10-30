@@ -39,7 +39,14 @@ export const searchGroups = (tree: Root): SearchGroup[] => {
     items: [],
     label: section.label,
   }));
+  // A folder's pages can reach the tree twice (spread into the root and
+  // listed in the folder), and the dialog keys items by URL.
+  const seen = new Set<string>();
   for (const page of flattenTree(tree.children)) {
+    if (seen.has(page.url)) {
+      continue;
+    }
+    seen.add(page.url);
     const section = sectionOf(page.url);
     const group = groups[SECTIONS.indexOf(section)];
     const isOverview = section !== GETTING_STARTED && page.url === section.path;

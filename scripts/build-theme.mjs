@@ -44,6 +44,20 @@ const toObject = (container) => {
   return out;
 };
 
+// @audiocn/core writes its own meter and channel colours through cssVars,
+// and the CLI merges a lib's cssVars after a theme's, so audiocn's would win.
+// A `css` rule is written after every cssVars block and always replaces its
+// declarations, so these aliases ship there too and win by source order.
+const PINNED = /^--(?:meter|channel)-/u;
+
+const pinVars = (css, selector, rule) => {
+  for (const node of rule.nodes ?? []) {
+    if (node.type === "decl" && PINNED.test(node.prop)) {
+      css[selector] = { ...css[selector], [node.prop]: clean(node.value) };
+    }
+  }
+};
+
 const assignVars = (target, rule) => {
   for (const node of rule.nodes ?? []) {
     if (node.type === "decl") {
@@ -72,6 +86,7 @@ const convert = (file) => {
       } else if (selector === ":root, .dark") {
         assignVars(cssVars.light, node);
         assignVars(cssVars.dark, node);
+        pinVars(css, selector, node);
       } else {
         css[selector] = { ...css[selector], ...toObject(node) };
       }

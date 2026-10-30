@@ -9,7 +9,7 @@ description: Toggles light and dark with next-themes and the D key, never from a
 npx shadcn@latest add @videorc/use-theme-toggle
 ```
 
-It adds `hooks/use-theme-toggle.ts` and `lib/theme-toggle.ts`, and brings [Modal open](/docs/hooks/modal-open) and `next-themes` with it.
+It adds `hooks/use-theme-toggle.ts` and `lib/theme-choice.ts`, and brings [Modal open](/docs/hooks/modal-open) and `next-themes` with it.
 
 ## Usage
 
@@ -83,7 +83,7 @@ export function ThemeButton() {
 | Export | From | Signature |
 | --- | --- | --- |
 | `useThemeToggle` | `@/hooks/use-theme-toggle` | `() => { toggleTheme: () => void }` |
-| `nextToggledTheme` | `@/lib/theme-toggle` | `({ resolvedTheme, systemTheme }: { resolvedTheme: string \| undefined; systemTheme: string \| undefined }) => ThemeChoice` |
+| `nextToggledTheme` | `@/lib/theme-choice` | `({ resolvedTheme, systemTheme }: { resolvedTheme: string \| undefined; systemTheme: string \| undefined }) => ThemeChoice` |
 
 ```ts
 type ThemeChoice = "light" | "dark" | "system";

@@ -131,6 +131,8 @@ const installFixture = async (fixture) => {
   editJson(path.join(app, "components.json"), (config) => {
     config.registries = {
       ...config.registries,
+      // The audiocn forks depend on audiocn's unchanged core and hooks.
+      "@audiocn": "https://audiocn.dev/r/{name}.json",
       "@videorc": `http://localhost:${port}/{name}.json`,
     };
   });

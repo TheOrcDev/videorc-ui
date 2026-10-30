@@ -94,6 +94,25 @@ type SegmentedControlProps<T extends string = string> = Omit<
 };
 
 /** The option a key moves to, skipping disabled ones; `null` for other keys. */
+
+/**
+ * The last of the ascending `indexes` before `current`. `findLast` is ES2023,
+ * and installs may compile against ES2022.
+ */
+function lastIndexBefore(
+  indexes: readonly number[],
+  current: number
+): number | undefined {
+  let found: number | undefined;
+  for (const index of indexes) {
+    if (index >= current) {
+      break;
+    }
+    found = index;
+  }
+  return found;
+}
+
 function segmentedTargetIndex(
   enabled: readonly boolean[],
   current: number,
@@ -118,7 +137,7 @@ function segmentedTargetIndex(
     }
     case "ArrowLeft":
     case "ArrowUp": {
-      return indexes.findLast((index) => index < current) ?? last;
+      return lastIndexBefore(indexes, current) ?? last;
     }
     default: {
       return null;

@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 
 import { isModalOpen } from "@/lib/modal-open";
-import { nextToggledTheme } from "@/lib/theme-toggle";
+import { nextToggledTheme } from "@/lib/theme-choice";
 
 /**
  * The mode switcher: toggle dark/light and listen for D (outside editable

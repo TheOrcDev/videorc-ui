@@ -63,4 +63,20 @@ describe("searchGroups", () => {
       },
     ]);
   });
+
+  it("lists a page reached twice only once", () => {
+    const twice: Root = {
+      children: [
+        page("Button", "/docs/components/button"),
+        page("Button", "/docs/components/button"),
+      ],
+      name: "Docs",
+    };
+    expect(searchGroups(twice)).toEqual([
+      {
+        items: [{ title: "Button", url: "/docs/components/button" }],
+        label: "Components",
+      },
+    ]);
+  });
 });

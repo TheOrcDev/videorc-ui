@@ -152,3 +152,21 @@ describe("registry.json", () => {
     }
   });
 });
+
+describe("registry files", () => {
+  // The shadcn CLI resolves an installed file's imports by file name, so two
+  // files sharing a name (lib/foo.ts beside components/foo.tsx) get their
+  // imports crossed: `@/lib/foo` is rewritten to `@/components/foo`.
+  it("never share a file name", () => {
+    const seen = new Map<string, string>();
+    for (const entry of registry.items as unknown as RegistryItem[]) {
+      for (const file of entry.files ?? []) {
+        const name = file.path.replace(/^.*\//u, "").replace(/\.[^.]+$/u, "");
+        expect(seen.get(name), `${file.path} and ${seen.get(name)}`).toBe(
+          undefined
+        );
+        seen.set(name, file.path);
+      }
+    }
+  });
+});

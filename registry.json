@@ -406,6 +406,20 @@
             "display": "none"
           }
         },
+        ":root, .dark": {
+          "--meter-ok": "color-mix(in oklch, var(--foreground) 80%, transparent)",
+          "--meter-warn": "var(--warning)",
+          "--meter-clip": "var(--destructive)",
+          "--meter-ok-foreground": "var(--foreground)",
+          "--meter-warn-foreground": "var(--warning)",
+          "--meter-clip-foreground": "var(--destructive)",
+          "--channel-mute": "var(--warning)",
+          "--channel-solo": "var(--foreground)",
+          "--channel-monitor": "var(--info)",
+          "--channel-mute-foreground": "var(--warning)",
+          "--channel-solo-foreground": "var(--foreground)",
+          "--channel-monitor-foreground": "var(--info)"
+        },
         "@utility glass-chip": {
           "border-color": "var(--chip-rim)",
           "background-image": "linear-gradient(to bottom, var(--chip-fill-top), var(--chip-fill-bottom))",
@@ -700,7 +714,7 @@
           "type": "registry:hook"
         },
         {
-          "path": "lib/theme-toggle.ts",
+          "path": "lib/theme-choice.ts",
           "type": "registry:lib"
         }
       ]
