@@ -10,6 +10,8 @@ export default defineConfig({
     "**/.claude/skills",
     ".source/**",
     "public/r/**",
+    "lib/hero-chrome/**",
+    "components/home/hero-chrome.tsx",
     "test-results/**",
     "playwright-report/**",
   ],

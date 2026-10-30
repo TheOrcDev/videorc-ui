@@ -32,6 +32,10 @@ MIT License
 Copyright (c) 2026 Chánh Đại
 ```
 
+## The home page hero
+
+`components/home/hero-chrome.tsx` and `lib/hero-chrome/*` are Videorc's first-run Liquid Chrome backdrop, copied for the docs site's home page only; they are not part of the registry. Its shader is ported from React Bits by David Haz (https://reactbits.dev) and used in Videorc with the author's permission.
+
 ## Phosphor Icons
 
 `components/icons.tsx` names its slots over Phosphor's glyphs. https://phosphoricons.com

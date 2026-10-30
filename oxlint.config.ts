@@ -26,6 +26,9 @@ export default defineConfig({
     "**/.claude/skills",
     ".source/**",
     "public/r/**",
+    // Videorc's first-run Liquid Chrome player, copied verbatim for the hero.
+    "lib/hero-chrome/**",
+    "components/home/hero-chrome.tsx",
   ],
   jsPlugins: shadcn.jsPlugins,
   overrides: [

@@ -1,6 +1,6 @@
 export const siteConfig = {
   description:
-    "The component library behind Videorc: Liquid Chrome primitives, glass chips, desktop-sized controls and a ⌘K palette for React and shadcn/ui, built on Base UI.",
+    "The component library behind Videorc: buttons, menus, rows, panes, status bars and a ⌘K palette for React and shadcn/ui, built on Base UI.",
   githubRepo: "TheOrcDev/videorc-ui",
   name: "videorc/ui",
   registryNamespace: "@videorc",

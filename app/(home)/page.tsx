@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { InstallCommand } from "@/components/docs/install-command";
 import { ArrowUpRightIcon } from "@/components/home/arrow-up-right-icon";
+import { HeroChrome } from "@/components/home/hero-chrome";
 import { ShowcaseGrid } from "@/components/home/showcase-grid";
 import { ThemeSwatches } from "@/components/home/theme-swatches";
 import { buttonVariants } from "@/components/ui/button";
@@ -26,16 +27,16 @@ const itemCount = source
 
 const Page = () => (
   <main className="w-full">
-    {/* The chrome sits behind the hero and fades out before the showcase. */}
+    {/* Videorc's first-run chrome moves behind the hero and fades out
+        before the showcase. */}
     <section className="relative isolate overflow-hidden px-4 pt-16 pb-24 sm:px-6 lg:pt-24 lg:pb-32">
       <div
         aria-hidden
-        className="bg-chrome-ground pointer-events-none absolute inset-0 -z-20 mask-b-from-40% bg-cover bg-center"
-      />
-      <div
-        aria-hidden
-        className="bg-glass-solid/80 pointer-events-none absolute inset-0 -z-10"
-      />
+        className="pointer-events-none absolute inset-0 -z-10 mask-b-from-50%"
+      >
+        <HeroChrome />
+        <div className="hero-scrim absolute inset-0" />
+      </div>
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 text-center">
         <Link
           className="text-muted-foreground hover:text-foreground glass-chip focus-visible:ring-ring/50 group/pill flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors outline-none focus-visible:ring-3"
@@ -47,7 +48,7 @@ const Page = () => (
           <ArrowUpRightIcon className="size-3 transition-transform group-hover/pill:translate-x-0.5 group-hover/pill:-translate-y-0.5" />
         </Link>
         <h1 className="font-heading max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
-          Liquid Chrome, in your project.
+          Videorc&apos;s components, in your project.
         </h1>
         <p className="text-muted-foreground max-w-2xl text-base text-balance sm:text-lg">
           The buttons, menus, rows, panes and status bars of an AI-native

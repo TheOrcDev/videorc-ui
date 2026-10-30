@@ -1,9 +1,9 @@
 ---
 title: Design language
-description: Liquid Chrome and the window family. How Videorc looks, and the rules every videorc/ui component follows.
+description: The window family. How Videorc looks, and the rules every videorc/ui component follows.
 ---
 
-Videorc is a desktop app, not a web page. Every window sits on its own Liquid Chrome ground, panes are flush and split by hairlines, controls are desktop-sized, and color is information.
+Videorc is a desktop app, not a web page. Every window sits on its own ground, panes are flush and split by hairlines, controls are desktop-sized, and color is information.
 
 The reference is Videorc's logo: black metal with soft silver streaks, polished chrome on the controls you touch, and one LED-red accent. Every window shares one material and one set of rules, which is why the design is called the window family.
 
@@ -31,7 +31,7 @@ The chrome is monochrome, and every neutral is truly neutral (chroma 0, no blue 
 
 ## The ground and the coats
 
-Every Videorc window is opaque and sits on the chrome ground: a frosted still of Liquid Chrome, black with silver streaks in dark and its invert in light. [ChromeGround](/docs/primitives/chrome-ground) paints it once per window, under everything. The frost is baked into the image, so it costs nothing to draw.
+Every Videorc window is opaque and sits on the chrome ground: a frosted still, black with silver streaks in dark and its invert in light. [ChromeGround](/docs/primitives/chrome-ground) paints it once per window, under everything. The frost is baked into the image, so it costs nothing to draw.
 
 Over the ground, each region paints a coat of the theme's solid tone. How much of the solid a region paints is its cover:
 

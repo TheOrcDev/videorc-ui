@@ -10,4 +10,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-The Videorc name, the Videorc logo and app icon (`public/brand/logo.png`, `app/icon.png`, `app/apple-icon.png`) and the Liquid Chrome ground images (`public/chrome-ground/*.webp`) are Videorc brand assets. They are not covered by the MIT licence above, are not part of the registry, and are not installed by the shadcn CLI. See Videorc's trademark policy: https://github.com/TheOrcDev/videorc/blob/main/TRADEMARK.md
+The Videorc name, the Videorc logo and app icon (`public/brand/logo.png`, `app/icon.png`, `app/apple-icon.png`) the chrome ground images (`public/chrome-ground/*.webp`), the hero poster (`public/hero/*.webp`) and the hero backdrop (`components/home/hero-chrome.tsx`, `lib/hero-chrome/*`) are Videorc brand assets. They are not covered by the MIT licence above, are not part of the registry, and are not installed by the shadcn CLI. See Videorc's trademark policy: https://github.com/TheOrcDev/videorc/blob/main/TRADEMARK.md

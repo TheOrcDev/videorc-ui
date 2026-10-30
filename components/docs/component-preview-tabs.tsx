@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 
-import { PreviewGround } from "@/components/docs/preview-ground";
+import { PreviewSurface } from "@/components/docs/preview-surface";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,7 @@ export const ComponentPreviewTabs = ({
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
       <TabsContent value="preview">
-        <PreviewGround
+        <PreviewSurface
           className={cn(
             "text-foreground rounded-panel flex min-h-72 w-full justify-center border p-4 sm:p-10",
             align === "center" && "items-center",
@@ -37,7 +37,7 @@ export const ComponentPreviewTabs = ({
           data-slot="component-preview"
         >
           {preview}
-        </PreviewGround>
+        </PreviewSurface>
       </TabsContent>
       <TabsContent
         className="[&_figure]:my-0 [&_pre]:max-h-[32rem]"

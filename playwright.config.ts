@@ -9,8 +9,10 @@ export default defineConfig({
   fullyParallel: true,
   projects: [
     {
-      name: "chrome",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
+      // Playwright's own Chromium: the system Chrome can launch as x64 under
+      // Rosetta, which is slow enough to time pages out.
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   reporter: [["list"]],

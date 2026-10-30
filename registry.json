@@ -7,7 +7,7 @@
       "name": "theme",
       "type": "registry:theme",
       "title": "Theme",
-      "description": "The Videorc design tokens in light and dark: the Liquid Chrome coats, floating glass tiers, three text tiers, semantic tones, radius tiers and the desktop scale, plus the glass-chip, glass-float, chrome-* and tone-* utilities and the base layer. Every videorc/ui component depends on it.",
+      "description": "The Videorc design tokens in light and dark: the window coats, floating glass tiers, three text tiers, semantic tones, radius tiers and the desktop scale, plus the glass-chip, glass-float, chrome-* and tone-* utilities and the base layer. Every videorc/ui component depends on it.",
       "cssVars": {
         "dark": {
           "scrollbar-thumb": "oklch(1 0 0 / 12%)",
@@ -1087,7 +1087,7 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "Glass chips for status, tags and counts on the 7 px tag radius. Status chips keep their text monochrome and glow their tone in a dot; destructive and live tint the glass, and chrome and plate wear the Liquid Chrome.",
+      "description": "Glass chips for status, tags and counts on the 7 px tag radius. Status chips keep their text monochrome and glow their tone in a dot; destructive and live tint the glass, and chrome and plate wear the chrome finish.",
       "dependencies": ["@base-ui/react", "class-variance-authority"],
       "registryDependencies": ["@videorc/theme", "@videorc/utils"],
       "files": [
@@ -1252,7 +1252,7 @@
       "name": "chrome-row",
       "type": "registry:ui",
       "title": "Chrome Row",
-      "description": "The class names for the Stream Manager's chrome rows: the Liquid Chrome plate on the row that is on stream and the quieter plate with a member-hue edge on a member's row.",
+      "description": "The class names for the Stream Manager's chrome rows: the chrome plate on the row that is on stream and the quieter plate with a member-hue edge on a member's row.",
       "registryDependencies": ["@videorc/theme"],
       "files": [
         {
@@ -1619,7 +1619,7 @@
       "name": "chrome-ground",
       "type": "registry:component",
       "title": "Chrome Ground",
-      "description": "The frosted still of Liquid Chrome under every Videorc window, black with silver streaks in dark and porcelain with graphite streaks in light. Sized to the display, swapped by the theme class, and never filtered or animated.",
+      "description": "The frosted still under every Videorc window, black with silver streaks in dark and porcelain with graphite streaks in light. Sized to the display, swapped by the theme class, and never filtered or animated.",
       "registryDependencies": ["@videorc/theme", "@videorc/utils"],
       "files": [
         {
@@ -1847,7 +1847,7 @@
       "name": "fader",
       "type": "registry:ui",
       "title": "Fader",
-      "description": "audiocn's volume fader in decibels, painted in Liquid Chrome: a chrome-fill range and a chrome-bead thumb, with tapers, detents, a scale, reset and an editable value. Forked from audiocn (MIT).",
+      "description": "audiocn's volume fader in decibels, restyled for Videorc: a chrome-fill range and a chrome-bead thumb, with tapers, detents, a scale, reset and an editable value. Forked from audiocn (MIT).",
       "dependencies": ["@base-ui/react", "class-variance-authority"],
       "registryDependencies": [
         "@videorc/theme",
@@ -1867,7 +1867,7 @@
       "name": "parameter-slider",
       "type": "registry:ui",
       "title": "Parameter Slider",
-      "description": "audiocn's labelled slider with a numeric input, unit, marks and reset, painted in Liquid Chrome: a chrome-fill range and a chrome-bead thumb. Forked from audiocn (MIT).",
+      "description": "audiocn's labelled slider with a numeric input, unit, marks and reset, restyled for Videorc: a chrome-fill range and a chrome-bead thumb. Forked from audiocn (MIT).",
       "dependencies": ["@base-ui/react"],
       "registryDependencies": [
         "@videorc/theme",

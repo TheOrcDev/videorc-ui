@@ -31,11 +31,13 @@
   }
 }
 
-/* The Liquid Chrome still Videorc's ChromeGround paints under every window. */
-@utility bg-chrome-ground {
-  background-image: url("/chrome-ground/light.webp");
-
-  .dark & {
-    background-image: url("/chrome-ground/dark.webp");
-  }
+/* The hero's scrim: the page's solid behind the headline and install command,
+   so the chrome moves at the edges and never under the words. */
+@utility hero-scrim {
+  background-image: radial-gradient(
+    ellipse 50% 58% at 50% 45%,
+    color-mix(in oklch, var(--glass-solid) 90%, transparent) 40%,
+    color-mix(in oklch, var(--glass-solid) 55%, transparent) 70%,
+    transparent 100%
+  );
 }
