@@ -4,12 +4,11 @@ import { describe, expect, it } from "vitest";
 import { Button } from "@/components/ui/button";
 
 describe("Button variants", () => {
-  it("draws the regular, chromatic and glitch fills from the theme", () => {
+  it("draws the regular and chromatic fills from the theme", () => {
     render(
       <>
         <Button variant="solid">Save scene</Button>
         <Button variant="chromatic">Go Live…</Button>
-        <Button variant="glitch">On air</Button>
       </>
     );
     const solid = screen.getByRole("button", { name: "Save scene" });
@@ -19,9 +18,5 @@ describe("Button variants", () => {
     const chromatic = screen.getByRole("button", { name: "Go Live…" });
     expect(chromatic).toHaveClass("chrome-chromatic", "border");
     expect(chromatic).not.toHaveClass("border-0");
-    expect(screen.getByRole("button", { name: "On air" })).toHaveClass(
-      "signal-glitch",
-      "border-0"
-    );
   });
 });

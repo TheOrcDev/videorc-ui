@@ -12,7 +12,6 @@ const ButtonVariants = () => (
     <Button variant="link">Link</Button>
     <Button variant="solid">Solid</Button>
     <Button variant="chromatic">Chromatic</Button>
-    <Button variant="glitch">Glitch</Button>
   </div>
 );
 

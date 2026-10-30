@@ -1,4 +1,4 @@
-import { LivestreamIcon, SparkleIcon } from "@/components/icons";
+import { SparkleIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 const ButtonStyles = () => (
@@ -9,10 +9,6 @@ const ButtonStyles = () => (
     </Button>
     <Button size="lg" variant="solid">
       Save scene
-    </Button>
-    <Button size="lg" variant="glitch">
-      <LivestreamIcon data-icon="inline-start" />
-      On air
     </Button>
   </div>
 );
