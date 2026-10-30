@@ -624,6 +624,86 @@
           }
         }
       }
+    },
+    {
+      "name": "icons",
+      "type": "registry:component",
+      "title": "Icons",
+      "description": "The semantic icon set: every component asks for a meaning (SourcesIcon, AlertIcon, RecordIcon), never a glyph, so a set is swapped in one file. Phosphor underneath.",
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "components/icons.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "accelerator",
+      "type": "registry:lib",
+      "title": "Accelerator",
+      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: ⇧⌘J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
+      "files": [
+        {
+          "path": "lib/accelerator.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "platform",
+      "type": "registry:lib",
+      "title": "Platform",
+      "description": "Platform awareness for copy and key glyphs: the current platform from the app, <html data-platform> or the user agent, shortcut labels, the command modifier, and OS names such as Finder and Trash.",
+      "registryDependencies": ["@videorc/accelerator"],
+      "files": [
+        {
+          "path": "lib/platform.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "modal-open",
+      "type": "registry:lib",
+      "title": "Modal open",
+      "description": "One answer to \"is something modal open?\": a dialog, alert, menu or open select. Global keys ask it before acting so they never fire from under a popup.",
+      "files": [
+        {
+          "path": "lib/modal-open.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "use-reduced-motion",
+      "type": "registry:hook",
+      "title": "useReducedMotion",
+      "description": "True when the system asks to reduce motion, plus smoothScrollBehavior() for script-driven scrolls.",
+      "files": [
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-theme-toggle",
+      "type": "registry:hook",
+      "title": "useThemeToggle",
+      "description": "Toggles light and dark with next-themes and the D key, never from a field or under a popup. Flipping back to the computer's own look returns to System.",
+      "dependencies": ["next-themes"],
+      "registryDependencies": ["@videorc/modal-open"],
+      "files": [
+        {
+          "path": "hooks/use-theme-toggle.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "lib/theme-toggle.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }
