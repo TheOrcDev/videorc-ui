@@ -1,0 +1,116 @@
+---
+title: Command
+description: A searchable list on cmdk at the ⌘K palette scale, with a borderless 18 px search field, 40 px rows and a footer. It paints no coat; the dialog or popover around it does.
+---
+
+<ComponentPreview name="command-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/command
+```
+
+## Usage
+
+```tsx
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+```
+
+```tsx
+<CommandDialog onOpenChange={setOpen} open={open}>
+  <CommandInput placeholder="Search commands…" />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup heading="Session">
+      <CommandItem keywords={["record"]} onSelect={startRecording}>
+        <RecordIcon />
+        Start recording
+      </CommandItem>
+    </CommandGroup>
+  </CommandList>
+</CommandDialog>
+```
+
+`CommandDialog` wraps its children in `Command` itself: every cmdk part reads the store `Command` provides, and one rendered outside it crashes on its first render. `Command` paints no surface of its own. In a dialog or a popover it stays transparent, and inline it needs a surface around it.
+
+## Anatomy
+
+```tsx
+<CommandDialog>
+  <CommandInput />
+  <CommandList>
+    <CommandEmpty />
+    <CommandGroup>
+      <CommandItem>
+        <CommandShortcut />
+      </CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+  </CommandList>
+  <CommandFooter />
+</CommandDialog>
+```
+
+## Examples
+
+### Palette
+
+The ⌘K palette: a `lg` dialog in the upper part of the window. `value` and `onValueChange` are the selected item, so the `CommandFooter` can name the action `Enter` runs.
+
+<ComponentPreview name="command-dialog" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `rounded-panel` | 12 px corners, matching the dialog tier around it |
+| `text-lg`, `size-6` | The 18 px search field and its 24 px icon, over a hairline |
+| `min-h-10`, `rounded-row` | 40 px rows with 8 px corners |
+| `data-selected="true"` | The selected row: the `bg-accent` block, shown instantly |
+| `text-subtle` | Group headings |
+| `data-checked="true"` | On an item, shows its check |
+
+## Keyboard
+
+| Key                    | Action                          |
+| ---------------------- | ------------------------------- |
+| Typing                 | Filters the list                |
+| `ArrowDown`, `ArrowUp` | Moves the selection             |
+| `Home`, `End`          | Moves to the first or last item |
+| `Enter`                | Runs the selected item          |
+| `Escape`               | Closes the dialog               |
+
+## Accessibility
+
+The input is a combobox and the list a listbox; the selection is announced as it moves. `CommandDialog` carries a visually hidden title ("Search") and description. Give `CommandInput` an `aria-label` when its placeholder is the only label in view.
+
+## API reference
+
+Every [cmdk](https://github.com/pacocoursey/cmdk) prop, plus:
+
+### CommandDialog
+
+Every [Base UI Dialog](https://base-ui.com/react/components/dialog) root prop, plus:
+
+<PropsTable
+  rows={[
+    ["title", "string", '"Search"', "The visually hidden title."],
+    [
+      "description",
+      "string",
+      '"Search for a command to run…"',
+      "The visually hidden description.",
+    ],
+    ["showCloseButton", "boolean", "false", null],
+    ["value", "string", null, "The selected item's value."],
+    ["onValueChange", "(value: string) => void", null, null],
+  ]}
+/>

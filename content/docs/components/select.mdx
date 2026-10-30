@@ -1,0 +1,140 @@
+---
+title: Select
+description: Choose one value from a list. A 28 px trigger (24 px in dense rows) and a list on the popup tier of the float glass; inside a Field, its label names it.
+---
+
+<ComponentPreview name="select-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/select
+```
+
+## Usage
+
+```tsx
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+```
+
+```tsx
+const frameRates = [
+  { label: "30 fps", value: "30" },
+  { label: "60 fps", value: "60" },
+];
+
+<Select defaultValue="60" items={frameRates}>
+  <SelectTrigger aria-label="Frame rate">
+    <SelectValue />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      {frameRates.map((rate) => (
+        <SelectItem key={rate.value} value={rate.value}>
+          {rate.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select>;
+```
+
+Pass `items` to the root so the trigger shows the chosen item's label rather than its raw value. Put items in a `SelectGroup`: the group brings the 4 px inset the items sit in.
+
+## Anatomy
+
+```tsx
+<Select>
+  <SelectTrigger>
+    <SelectValue />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel />
+      <SelectItem />
+    </SelectGroup>
+    <SelectSeparator />
+  </SelectContent>
+</Select>
+```
+
+## Examples
+
+### Placeholder
+
+The placeholder is an item with a `null` value in `items`. Leave it out of the list when it can't be chosen back.
+
+<ComponentPreview name="select-placeholder" />
+
+### Groups
+
+Label groups of like things with `SelectLabel`, and split them with a `SelectSeparator` inside the next group. With `alignItemWithTrigger={false}` the list opens under the trigger instead of over it.
+
+<ComponentPreview name="select-groups" />
+
+### Sizes
+
+`xs` (24 px) is for dense rows only: a row's trailing control, a card's actions, the Stream Manager's panes. A page's or a dialog's selects stay 28 px.
+
+<ComponentPreview name="select-sizes" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `bg-input/50`, `rounded-chip` | The trigger's fill and 6 px corners |
+| `h-control` | The 28 px trigger, by `data-size="default"`; `xs` is 24 px |
+| `data-placeholder` | On the trigger while nothing is chosen: muted text |
+| `glass-float`, `rounded-lg` | The popup tier and its 10 px corners |
+| `min-h-7`, `rounded-chip` | 28 px items with 6 px corners |
+| `data-align-trigger` | The list opens over the trigger, unanimated |
+| `overscroll-contain` | A long list's scroll doesn't chain to the page |
+
+`selectTriggerClassName` is the trigger's look on its own, for a button that opens a popover but must look exactly like a select.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter`, `Space`, `ArrowDown`, `ArrowUp` | On the trigger, opens the list |
+| `ArrowDown`, `ArrowUp` | Moves between items |
+| `Home`, `End` | Moves to the first or last item |
+| A letter | Moves to the next item that starts with it |
+| `Enter`, `Space` | Chooses the highlighted item |
+| `Escape` | Closes the list without choosing |
+
+## Accessibility
+
+Every trigger has a name. Inside a [Field](/docs/components/field) the `FieldLabel` names it and the `FieldDescription` describes it, with no ids to wire; outside one, give the trigger an `aria-label`. The list stops wheel events at its edge, so a fader or a scrolling pane behind it doesn't move.
+
+## API reference
+
+Every [Base UI Select](https://base-ui.com/react/components/select) prop, plus:
+
+### SelectTrigger
+
+<PropsTable rows={[["size", '"default" | "xs"', '"default"', null]]} />
+
+### SelectContent
+
+<PropsTable
+  rows={[
+    [
+      "alignItemWithTrigger",
+      "boolean",
+      "true",
+      "Opens over the trigger with the chosen item on its value. False opens it below.",
+    ],
+    ["side", '"top" | "right" | "bottom" | "left"', '"bottom"', null],
+    ["sideOffset", "number", "4", null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+    ["alignOffset", "number", "0", null],
+  ]}
+/>

@@ -1,0 +1,133 @@
+---
+title: Alert Dialog
+description: The question before something destructive, on the dialog tier. No close button, Cancel has focus on open, and Escape is the safe answer.
+---
+
+<ComponentPreview name="alert-dialog-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/alert-dialog
+```
+
+## Usage
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+```
+
+```tsx
+<AlertDialog onOpenChange={setOpen} open={open}>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Delete saved scene?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Only the saved snapshot is deleted. Your current scene and recording
+        continue.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction onClick={deleteScene} variant="destructive">
+        Delete scene
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+The title is "Verb object?", and one sentence names exactly what is lost. The safe answer ("Cancel", or "Keep …") is a ghost button; the destructive one reads verb and object. A consequential step that destroys nothing, such as a replace, keeps `variant="default"`.
+
+## Anatomy
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger />
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle />
+      <AlertDialogDescription />
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel />
+      <AlertDialogAction />
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+## Examples
+
+### Pending action
+
+`AlertDialogAction` doesn't close the dialog: the owner drops `open` once the action is done. While async work runs, the dialog stays up and says so ("Deleting…"), and the answers are disabled.
+
+<ComponentPreview name="alert-dialog-pending" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `dialogContentVariants({ size })` | The same surface, widths and height rule as [Dialog](/docs/components/dialog) |
+| `data-size` | `sm`, `md` (the default), `lg` or `xl` |
+| `bg-black/30` | The overlay, with no backdrop blur |
+
+## Keyboard
+
+| Key                | Action                                        |
+| ------------------ | --------------------------------------------- |
+| `Escape`           | Closes the dialog: the same answer as Cancel  |
+| `Tab`, `Shift+Tab` | Moves between the answers; focus stays inside |
+| `Enter`, `Space`   | Presses the focused answer                    |
+
+## Accessibility
+
+The dialog is an `alertdialog`, named by its title and described by its description. Cancel has focus on open, even when the body holds a control before it, so a stray `Enter` or `Space` never destroys anything. A click outside doesn't close it.
+
+## API reference
+
+Every [Base UI Alert Dialog](https://base-ui.com/react/components/alert-dialog) prop, plus:
+
+### AlertDialogContent
+
+<PropsTable
+  rows={[
+    ["size", '"sm" | "md" | "lg" | "xl"', '"md"', null],
+    [
+      "initialFocus",
+      "boolean | RefObject | (openType) => HTMLElement | boolean | void",
+      null,
+      "Defaults to the dialog's Cancel.",
+    ],
+  ]}
+/>
+
+### AlertDialogAction
+
+A [Button](/docs/components/button) that doesn't close the dialog.
+
+<PropsTable
+  rows={[
+    ["variant", "Button variant", '"default"', null],
+    ["size", "Button size", '"default"', null],
+  ]}
+/>
+
+### AlertDialogCancel
+
+<PropsTable
+  rows={[
+    ["variant", "Button variant", '"ghost"', null],
+    ["size", "Button size", '"default"', null],
+  ]}
+/>

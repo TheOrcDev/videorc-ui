@@ -1,0 +1,84 @@
+---
+title: Hover Card
+description: A preview of what a link points at, shown on hover or focus, on the popup tier of the float glass. Base UI's Preview Card under shadcn's name.
+---
+
+<ComponentPreview name="hover-card-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/hover-card
+```
+
+## Usage
+
+```tsx
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+```
+
+```tsx
+<HoverCard>
+  <HoverCardTrigger href="https://www.twitch.tv">Twitch</HoverCardTrigger>
+  <HoverCardContent>Live for 1:12:04 at 6,000 kbps.</HoverCardContent>
+</HoverCard>
+```
+
+The trigger is a link. Set how long it waits with `delay` and `closeDelay` on the trigger: a status bar's destinations use 400 ms and 80 ms, so the cards keep up as the pointer runs along the bar.
+
+## Anatomy
+
+```tsx
+<HoverCard>
+  <HoverCardTrigger />
+  <HoverCardContent />
+</HoverCard>
+```
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float` | The popup tier: the window's solid tone, a 1 px rim and the float drop |
+| `rounded-lg` | The popup tier's 10 px corners |
+| `w-72`, `p-3` | Its default width and padding |
+| `data-open`, `data-closed` | Fades and scales from 0.98 in 100 ms, with no slide |
+
+## Keyboard
+
+| Key      | Action                              |
+| -------- | ----------------------------------- |
+| `Tab`    | Focusing the trigger opens the card |
+| `Escape` | Closes the card                     |
+
+## Accessibility
+
+The card is a sighted user's preview. Keyboard and screen reader users reach the link, not the card, so never put the only copy of a fact or an action in it.
+
+## API reference
+
+Every [Base UI Preview Card](https://base-ui.com/react/components/preview-card) prop, plus:
+
+### HoverCardTrigger
+
+<PropsTable
+  rows={[
+    ["delay", "number", "600", "Milliseconds before the card opens."],
+    ["closeDelay", "number", "300", "Milliseconds before the card closes."],
+  ]}
+/>
+
+### HoverCardContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"bottom"', null],
+    ["sideOffset", "number", "4", null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+    ["alignOffset", "number", "0", null],
+  ]}
+/>

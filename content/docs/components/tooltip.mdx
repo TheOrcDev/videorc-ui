@@ -1,0 +1,106 @@
+---
+title: Tooltip
+description: A short label for a control on the tooltip tier of the float glass. It waits 600 ms for a deliberate hover, and its neighbours under one provider then open at once.
+---
+
+<ComponentPreview name="tooltip-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/tooltip
+```
+
+## Usage
+
+```tsx
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+```
+
+```tsx
+<Tooltip>
+  <TooltipTrigger
+    render={<Button aria-label="Keep on top" size="icon" variant="ghost" />}
+  >
+    <PinIcon />
+  </TooltipTrigger>
+  <TooltipContent>Keep on top</TooltipContent>
+</Tooltip>
+```
+
+Mount one `TooltipProvider` around each window. Tooltips under it share a delay group: once one is open, moving to the next opens it at once. A tooltip outside every provider still works, with its trigger's own 600 ms.
+
+## Anatomy
+
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger />
+    <TooltipContent />
+  </Tooltip>
+</TooltipProvider>
+```
+
+## Examples
+
+### With a shortcut
+
+Put a [Shortcut keys](/docs/components/shortcut-keys) chip after the label to show the bound shortcut. The tooltip tightens its end padding around the chip.
+
+<ComponentPreview name="tooltip-shortcut" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float-tooltip` | The tooltip tier: the window's solid tone, a 1 px rim and the float drop |
+| `rounded-row` | 8 px corners |
+| `text-xs` | 12 px text, never an inverted pill |
+| `data-open`, `data-closed` | Fades and scales from 0.98 in 100 ms, with no slide |
+| `data-side` | The side it opened on |
+
+## Keyboard
+
+| Key      | Action                                 |
+| -------- | -------------------------------------- |
+| `Tab`    | Focusing the trigger opens its tooltip |
+| `Escape` | Closes the tooltip                     |
+
+## Accessibility
+
+A tooltip is never the only place a fact lives, and `title=` is not an information channel. An icon-only trigger still needs its own `aria-label`: the tooltip repeats the name for sighted users. A disabled control takes no hover, so explain it with [Disabled reason](/docs/components/disabled-reason).
+
+## API reference
+
+Every [Base UI Tooltip](https://base-ui.com/react/components/tooltip) prop, plus:
+
+### TooltipProvider
+
+<PropsTable
+  rows={[
+    ["delay", "number", "600", "Milliseconds before a tooltip opens on hover."],
+    ["closeDelay", "number", "0", "Milliseconds before a tooltip closes."],
+    [
+      "timeout",
+      "number",
+      "400",
+      "Within this many milliseconds of one closing, the next opens at once.",
+    ],
+  ]}
+/>
+
+### TooltipContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"top"', null],
+    ["sideOffset", "number", "0", null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+    ["alignOffset", "number", "0", null],
+  ]}
+/>

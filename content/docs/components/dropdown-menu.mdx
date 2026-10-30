@@ -1,0 +1,159 @@
+---
+title: Dropdown Menu
+description: A menu of actions from a button, on the popup tier of the float glass, with 28 px items, a destructive variant, shortcuts, checkbox and radio items and submenus.
+---
+
+<ComponentPreview name="dropdown-menu-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/dropdown-menu
+```
+
+## Usage
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+```
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger
+    render={<Button aria-label="More actions" size="icon" variant="ghost" />}
+  >
+    <MoreIcon weight="bold" />
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end">
+    <DropdownMenuItem onClick={rename}>Rename…</DropdownMenuItem>
+    <DropdownMenuItem onClick={confirmDelete} variant="destructive">
+      Delete recording…
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+Group items with a hairline between groups, and put destructive items last. An item runs its action from `onClick` and closes the menu; checkbox and radio items keep it open.
+
+## Anatomy
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger />
+  <DropdownMenuContent>
+    <DropdownMenuLabel />
+    <DropdownMenuGroup>
+      <DropdownMenuLabel />
+      <DropdownMenuItem>
+        <DropdownMenuShortcut />
+      </DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuCheckboxItem />
+    <DropdownMenuRadioGroup>
+      <DropdownMenuRadioItem />
+    </DropdownMenuRadioGroup>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger />
+      <DropdownMenuSubContent />
+    </DropdownMenuSub>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+## Examples
+
+### Checkbox items
+
+Several filters on at once, such as which Activity events show. The menu stays open while you toggle.
+
+<ComponentPreview name="dropdown-menu-checkboxes" />
+
+### Radio group
+
+One choice from a few, such as where a chat message goes. A `DropdownMenuLabel` outside any group is a plain heading row; inside a group it names the group.
+
+<ComponentPreview name="dropdown-menu-radio-group" />
+
+### Submenu
+
+A list that would crowd the menu, such as the scenes a source can join.
+
+<ComponentPreview name="dropdown-menu-submenu" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float` | The popup tier: the window's solid tone, a 1 px rim and the float drop |
+| `rounded-lg` | The popup tier's 10 px corners, with a 4 px inset |
+| `min-h-7`, `rounded-chip` | 28 px items with 6 px corners, concentric inside the inset |
+| `bg-accent` | The highlighted item |
+| `data-variant="destructive"` | The destructive item's tone |
+| `data-popup-open` | On the trigger and sub trigger while their menu is open |
+| `overscroll-contain` | A long menu's scroll doesn't chain to the page |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter`, `Space`, `ArrowDown` | On the trigger, opens the menu |
+| `ArrowDown`, `ArrowUp` | Moves between items |
+| `ArrowRight`, `ArrowLeft` | Opens or closes a submenu |
+| `Enter`, `Space` | Chooses the highlighted item |
+| A letter | Moves to the next item that starts with it |
+| `Escape` | Closes the menu and returns focus to the trigger |
+
+## Accessibility
+
+An icon-only trigger needs an `aria-label`. A disabled item takes no hover, so a reason goes in text under it, not in a tooltip. The menu stops wheel events at its edge: it's portalled, but React still bubbles events through the trigger's ancestors, and a fader or a scrolling pane behind it shouldn't move.
+
+## API reference
+
+Every [Base UI Menu](https://base-ui.com/react/components/menu) prop, plus:
+
+### DropdownMenuContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"bottom"', null],
+    ["sideOffset", "number", "4", null],
+    ["align", '"start" | "center" | "end"', '"start"', null],
+    ["alignOffset", "number", "0", null],
+  ]}
+/>
+
+### DropdownMenuItem
+
+<PropsTable
+  rows={[
+    ["variant", '"default" | "destructive"', '"default"', null],
+    [
+      "closeOnClick",
+      "boolean",
+      "true",
+      "Checkbox and radio items default to false.",
+    ],
+  ]}
+/>
+
+### DropdownMenuSubContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"right"', null],
+    ["sideOffset", "number", "0", null],
+    ["align", '"start" | "center" | "end"', '"start"', null],
+    [
+      "alignOffset",
+      "number",
+      "-3",
+      "Lines its first item up with the sub trigger.",
+    ],
+  ]}
+/>

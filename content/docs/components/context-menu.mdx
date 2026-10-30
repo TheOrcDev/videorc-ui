@@ -1,0 +1,112 @@
+---
+title: Context Menu
+description: A menu at the pointer on right-click or long press, with the same popup tier and 28 px items as Dropdown Menu.
+---
+
+<ComponentPreview name="context-menu-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/context-menu
+```
+
+## Usage
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+```
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger>{sceneCard}</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem onClick={rename}>Rename…</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+A right-click is a shortcut, never the only way in: every action in a context menu is also in the item's [Dropdown Menu](/docs/components/dropdown-menu) or on screen.
+
+## Anatomy
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger />
+  <ContextMenuContent>
+    <ContextMenuLabel />
+    <ContextMenuGroup>
+      <ContextMenuItem>
+        <ContextMenuShortcut />
+      </ContextMenuItem>
+    </ContextMenuGroup>
+    <ContextMenuSeparator />
+    <ContextMenuCheckboxItem />
+    <ContextMenuRadioGroup>
+      <ContextMenuRadioItem />
+    </ContextMenuRadioGroup>
+    <ContextMenuSub>
+      <ContextMenuSubTrigger />
+      <ContextMenuSubContent />
+    </ContextMenuSub>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+## Examples
+
+### Checkbox items
+
+The Stream Manager's stats bar: right-click it to choose which stats show. Checkbox items keep the menu open.
+
+<ComponentPreview name="context-menu-checkboxes" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float` | The popup tier: the window's solid tone, a 1 px rim and the float drop |
+| `rounded-lg` | The popup tier's 10 px corners, with a 4 px inset |
+| `min-h-7`, `rounded-chip` | 28 px items with 6 px corners |
+| `bg-accent` | The highlighted item |
+| `data-variant="destructive"` | The destructive item's tone |
+| `select-none` | On the trigger, so a right-click doesn't select its text |
+
+## Keyboard
+
+| Key                       | Action                       |
+| ------------------------- | ---------------------------- |
+| `ArrowDown`, `ArrowUp`    | Moves between items          |
+| `ArrowRight`, `ArrowLeft` | Opens or closes a submenu    |
+| `Enter`, `Space`          | Chooses the highlighted item |
+| `Escape`                  | Closes the menu              |
+
+## Accessibility
+
+The menu opens from the pointer, so it has no keyboard path of its own; that is why its actions live somewhere else too. Like Dropdown Menu, it stops wheel events at its edge, and a `ContextMenuLabel` outside any group is a plain heading row.
+
+## API reference
+
+Every [Base UI Context Menu](https://base-ui.com/react/components/context-menu) prop, plus:
+
+### ContextMenuContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"right"', null],
+    ["sideOffset", "number", "0", null],
+    ["align", '"start" | "center" | "end"', '"start"', null],
+    ["alignOffset", "number", "4", null],
+  ]}
+/>
+
+### ContextMenuItem
+
+<PropsTable
+  rows={[["variant", '"default" | "destructive"', '"default"', null]]}
+/>

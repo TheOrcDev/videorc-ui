@@ -1,0 +1,129 @@
+---
+title: Dialog
+description: A modal on the dialog tier of the float glass in four widths, with a body that scrolls between a header and a footer that stay put, and no backdrop blur.
+---
+
+<ComponentPreview name="dialog-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/dialog
+```
+
+## Usage
+
+```tsx
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+```
+
+```tsx
+<Dialog>
+  <DialogTrigger render={<Button variant="secondary" />}>
+    Rename scene…
+  </DialogTrigger>
+  <DialogContent size="sm">
+    <DialogHeader>
+      <DialogTitle>Rename scene</DialogTitle>
+      <DialogDescription>The new name shows in the Studio.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose render={<Button variant="ghost" />}>Cancel</DialogClose>
+      <Button onClick={save}>Save</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+Size a dialog with `size`, never a `max-w-*` or `max-h-*` of its own.
+
+## Anatomy
+
+```tsx
+<Dialog>
+  <DialogTrigger />
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle />
+      <DialogDescription />
+    </DialogHeader>
+    <DialogBody />
+    <DialogFooter>
+      <DialogClose />
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+## Examples
+
+### Sizes
+
+`sm` (384 px) for a rename or one question, `md` (448 px, the default) for confirmations and short forms, `lg` (576 px) for forms, pickers and setup, `xl` (768 px) for review and media.
+
+<ComponentPreview name="dialog-sizes" />
+
+### Scrolling body
+
+A dialog is never taller than the window less 16 px a side. Put long content in a `DialogBody`: it takes the height the header and footer leave and scrolls, so they stay in view. A dialog without one scrolls whole.
+
+<ComponentPreview name="dialog-body" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float-dialog` | The dialog tier: a step brighter than the popup tier, with its own drop |
+| `rounded-panel`, `p-5`, `gap-5` | 12 px corners and the dialog's spacing |
+| `max-h-[calc(100vh-2rem)]` | The height rule |
+| `data-size` | `sm`, `md`, `lg` or `xl` |
+| `bg-black/30` | The overlay, with no backdrop blur: blur wedged the compositor on a vibrancy window |
+| `data-open`, `data-closed` | Fades and scales from 0.98 in 100 ms |
+
+`dialogContentVariants({ size })` returns the dialog's classes, `DIALOG_SURFACE_CLASS` the surface alone (for a card on the dialog tier that isn't a dialog), and `DIALOG_SIZE_CLASS` the widths.
+
+## Keyboard
+
+| Key                | Action                                                  |
+| ------------------ | ------------------------------------------------------- |
+| `Tab`, `Shift+Tab` | Moves through the dialog's controls; focus stays inside |
+| `Escape`           | Closes the dialog                                       |
+
+## Accessibility
+
+`DialogTitle` names the dialog and `DialogDescription` describes it. Focus moves to the first control on open (choose another with `initialFocus`) and back to the trigger on close. The close button reads "Close".
+
+## API reference
+
+Every [Base UI Dialog](https://base-ui.com/react/components/dialog) prop, plus:
+
+### DialogContent
+
+<PropsTable
+  rows={[
+    ["size", '"sm" | "md" | "lg" | "xl"', '"md"', null],
+    [
+      "showCloseButton",
+      "boolean",
+      "true",
+      "The ghost close button, top right.",
+    ],
+  ]}
+/>
+
+### DialogFooter
+
+<PropsTable
+  rows={[
+    ["showCloseButton", "boolean", "false", "Adds an outline Close button."],
+  ]}
+/>

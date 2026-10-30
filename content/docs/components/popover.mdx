@@ -1,0 +1,120 @@
+---
+title: Popover
+description: A floating panel for a short task, on the popup tier of the float glass. An Anchor part lines it up with something other than its trigger.
+---
+
+<ComponentPreview name="popover-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/popover
+```
+
+## Usage
+
+```tsx
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+```
+
+```tsx
+<Popover>
+  <PopoverTrigger render={<Button variant="secondary" />}>
+    Add marker…
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Add a marker</PopoverTitle>
+      <PopoverDescription>
+        Marks this moment in the recording.
+      </PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>
+```
+
+## Anatomy
+
+```tsx
+<Popover>
+  <PopoverAnchor />
+  <PopoverTrigger />
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle />
+      <PopoverDescription />
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>
+```
+
+## Examples
+
+### Anchor
+
+`PopoverAnchor` wraps what the popover should line up with when that isn't the trigger: here the whole status bar, so the sound board opens over its end rather than over the small Sounds button. The trigger still opens and closes it.
+
+<ComponentPreview name="popover-anchor" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float` | The popup tier: the window's solid tone, a 1 px rim and the float drop |
+| `rounded-lg` | The popup tier's 10 px corners |
+| `w-72`, `p-3`, `gap-3` | Its default width and spacing |
+| `data-open`, `data-closed` | Fades and scales from 0.98 in 100 ms, with no slide |
+| `data-side`, `data-align` | Where it opened |
+
+## Keyboard
+
+| Key              | Action                                              |
+| ---------------- | --------------------------------------------------- |
+| `Enter`, `Space` | On the trigger, opens or closes the popover         |
+| `Tab`            | Moves through the popover's controls                |
+| `Escape`         | Closes the popover and returns focus to the trigger |
+
+## Accessibility
+
+The popover is a dialog: `PopoverTitle` names it and `PopoverDescription` describes it. Focus moves into it on open and back to the trigger on close.
+
+## API reference
+
+Every [Base UI Popover](https://base-ui.com/react/components/popover) prop, plus:
+
+### PopoverContent
+
+<PropsTable
+  rows={[
+    ["side", '"top" | "right" | "bottom" | "left"', '"bottom"', null],
+    ["sideOffset", "number", "4", null],
+    ["align", '"start" | "center" | "end"', '"center"', null],
+    ["alignOffset", "number", "0", null],
+    [
+      "anchor",
+      "Element | RefObject<Element> | VirtualElement | null",
+      null,
+      "What to position against. Defaults to the PopoverAnchor, then the trigger.",
+    ],
+  ]}
+/>
+
+### PopoverAnchor
+
+<PropsTable
+  rows={[
+    [
+      "render",
+      "ReactElement | (props, state) => ReactElement",
+      null,
+      "Replaces the rendered <div>.",
+    ],
+  ]}
+/>

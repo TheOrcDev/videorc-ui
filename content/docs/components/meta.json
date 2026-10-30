@@ -23,6 +23,17 @@
     "kbd",
     "shortcut-keys",
     "shortcut-tooltip",
+    "---Overlays---",
+    "tooltip",
+    "popover",
+    "hover-card",
+    "dropdown-menu",
+    "context-menu",
+    "select",
+    "dialog",
+    "alert-dialog",
+    "command",
+    "sonner",
     "---Display---",
     "chart"
   ]

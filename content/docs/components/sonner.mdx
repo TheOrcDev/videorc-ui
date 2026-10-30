@@ -1,0 +1,90 @@
+---
+title: Sonner
+description: Toasts on sonner. Every toast is the same neutral float glass, a type colours its 16 px icon only, and each one can be dismissed.
+---
+
+<ComponentPreview name="sonner-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/sonner
+```
+
+## Usage
+
+```tsx
+import { Toaster } from "@/components/ui/sonner";
+```
+
+```tsx
+<Toaster />
+```
+
+Mount one `Toaster` per window, then call `toast()` from `sonner` anywhere:
+
+```tsx
+import { toast } from "sonner";
+
+toast.success("Recording saved");
+```
+
+Toasts are for news the interface doesn't already show: never for a routine change the user just watched happen, such as a scene, layout or source switch. When in doubt, don't toast. Give each kind of toast one `id`, so a newer one replaces the older and the same news never stacks.
+
+## Examples
+
+### Types
+
+The type is the meaning, and it colours the icon only. Error: it failed and needs you. Warning: it can't happen now, or it's degraded. Info: neutral news, or a step to take in the browser. Success: work that finished out of view. Loading shows the spinner until the same `id` settles it.
+
+<ComponentPreview name="sonner-types" />
+
+### Undo
+
+For a frequent action that is cheap to restore, act at once and offer Undo instead of asking first. A toast with an action stays until it's acted on or closed.
+
+<ComponentPreview name="sonner-undo" />
+
+## Theming
+
+The look lives in the theme's sonner block, not in the component: sonner injects unlayered CSS that a layered utility can't beat.
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `glass-float` | Every toast, whatever its type |
+| `data-type` | `success`, `info`, `warning` or `error`: sets `tone-*` for the icon |
+| `--chip-tone` | The icon's colour; the panel, its rim and the text stay neutral |
+
+## Keyboard
+
+| Key              | Action                                          |
+| ---------------- | ----------------------------------------------- |
+| `Alt+T`          | Moves focus to the toasts                       |
+| `Tab`            | Moves between a toast's action and close button |
+| `Enter`, `Space` | Presses the focused button                      |
+
+## Accessibility
+
+Toasts are announced from a live region labelled "Notifications". Each one has a close button labelled "Dismiss notification", and the toasts wait while the pointer is over them.
+
+## API reference
+
+Every [sonner Toaster](https://sonner.emilkowal.ski/toaster) prop, plus:
+
+<PropsTable
+  rows={[
+    ["closeButton", "boolean", "true", "Every toast can be dismissed."],
+    [
+      "toastOptions.closeButtonAriaLabel",
+      "string",
+      '"Dismiss notification"',
+      null,
+    ],
+    [
+      "theme",
+      '"light" | "dark" | "system"',
+      null,
+      "Follows next-themes unless set.",
+    ],
+  ]}
+/>
