@@ -2022,6 +2022,38 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "activity-feed",
+      "type": "registry:block",
+      "title": "Activity Feed",
+      "description": "The Stream Manager's Activity pane: follows, subs, gifts, tips, raids, streaks and destinations as rows that lead with who, kind chips with their counts, the platform filter, Auto-show, and an empty state that says what a platform can't share.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/chat-message",
+        "@videorc/chat-platform",
+        "@videorc/platform-filter",
+        "@videorc/icons",
+        "@videorc/kebab-menu",
+        "@videorc/status-dot",
+        "@videorc/badge",
+        "@videorc/button",
+        "@videorc/chrome-row",
+        "@videorc/dropdown-menu",
+        "@videorc/empty",
+        "@videorc/scroll-area",
+        "@videorc/shortcut-tooltip",
+        "@videorc/switch",
+        "@videorc/toggle-group",
+        "@videorc/tooltip",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/stream-manager/activity-feed.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

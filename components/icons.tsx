@@ -66,6 +66,7 @@ export type IconSetCheck = AssertIconProps<
     | "Check"
     | "CheckCircle"
     | "CircleNotch"
+    | "Coins"
     | "ClosedCaptioning"
     | "Copy"
     | "Crosshair"
@@ -84,6 +85,7 @@ export type IconSetCheck = AssertIconProps<
     | "FrameCorners"
     | "Gauge"
     | "GearSix"
+    | "Gift"
     | "Heartbeat"
     | "ImageBroken"
     | "ImageSquare"
@@ -94,6 +96,7 @@ export type IconSetCheck = AssertIconProps<
     | "LockKey"
     | "MagnifyingGlass"
     | "MagnifyingGlassPlus"
+    | "Megaphone"
     | "Microphone"
     | "MinusCircle"
     | "Monitor"
@@ -114,6 +117,7 @@ export type IconSetCheck = AssertIconProps<
     | "SpeakerHigh"
     | "SpeakerSlash"
     | "SquaresFour"
+    | "Star"
     | "Stop"
     | "Sun"
     | "TerminalWindow"
@@ -126,6 +130,8 @@ export type IconSetCheck = AssertIconProps<
     | "UploadSimple"
     | "User"
     | "UserCircle"
+    | "UserPlus"
+    | "UsersThree"
     | "VideoCamera"
     | "Warning"
     | "WarningCircle"
@@ -265,6 +271,17 @@ export {
   // People watching now: the stats bar's viewer count. Never AccountIcon,
   // which is the streamer's own account.
   User as ViewersIcon,
+  UserPlus as FollowIcon,
+  // A sub, a membership: someone who pays to support the channel.
+  Star as SupporterIcon,
+  // A gifted sub or membership.
+  Gift as GiftIcon,
+  // Bits, Power-ups, Super Chats and Super Stickers.
+  Coins as TipIcon,
+  // Another channel sends its viewers over.
+  UsersThree as RaidIcon,
+  // The platform's own announcement in chat.
+  Megaphone as AnnouncementIcon,
 } from "@phosphor-icons/react";
 /**
  * AI, tooling and appearance. Buddy (code name `cohost`) has its own mark,

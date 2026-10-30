@@ -11,6 +11,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "accordion-multiple": dynamic(
     () => import("@/components/examples/accordion-multiple")
   ),
+  "activity-feed-demo": dynamic(
+    () => import("@/components/examples/activity-feed-demo")
+  ),
+  "activity-feed-empty": dynamic(
+    () => import("@/components/examples/activity-feed-empty")
+  ),
   "alert-demo": dynamic(() => import("@/components/examples/alert-demo")),
   "alert-dialog-demo": dynamic(
     () => import("@/components/examples/alert-dialog-demo")

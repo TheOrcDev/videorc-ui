@@ -1,0 +1,167 @@
+---
+title: Activity Feed
+description: The Stream Manager's Activity pane. Follows, subs, gifts, tips, raids, streaks and destinations as rows that lead with who, kind chips with their counts, the platform filter and Auto-show.
+---
+
+<ComponentPreview name="activity-feed-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/activity-feed
+```
+
+## Usage
+
+```tsx
+import { ActivityFeed } from "@/components/blocks/stream-manager/activity-feed";
+import type { ActivityItem } from "@/components/blocks/stream-manager/activity-feed";
+```
+
+```tsx
+const items: ActivityItem[] = [
+  {
+    id: "a1",
+    kind: "subscription",
+    platform: "twitch",
+    name: "nightowl_jonas",
+    short: "Resub · 14 months",
+    line: "Resubscribed for 14 months at Tier 1",
+    message: "Fourteen months of two-camera streams.",
+    time: "1m",
+  },
+];
+
+<ActivityFeed
+  items={items}
+  onShowOnStream={showOnStream}
+  onThank={thankInChat}
+  platforms={["youtube", "twitch", "x"]}
+/>;
+```
+
+Activity is structured events, never chat text. Each event is plain data: who (`name`), the fact at a glance (`short`: "Resub · 14 months"), the sentence (`line`, on hover and for Copy), the viewer's own words, and the time as you show it ("now", "2m"). The pane derives each event's kind chip from its `kind`.
+
+- **A row leads with who.** An event about one named viewer or channel shows their avatar, or their initials until it loads. Counts the platform never named (`unnamed`), announcements and destinations keep their glyph.
+- **One tint per row,** like chat: a channel point reward paints `bg-reward/8`, a tip chat's paid fill without its ring, and a sub or membership the member plate. The row on stream wears the live plate instead.
+- **The ⋯ menu** holds Show on stream (with a `messageId`), Thank in chat, Reconnect Twitch on an unnamed Twitch count, and Copy.
+
+The pane's tabs, Activity beside Buddy, belong to the window: the Stream Manager puts them over the pane, as the demo does.
+
+## Examples
+
+### Empty, with what a platform can't share
+
+Until something happens the pane says what will show, and `note` says what never can on these platforms: `activityCapabilityNote(platforms, options)` writes it. With `twitchNeeds.followNames` and `onReconnectTwitch`, Reconnect Twitch asks for the permission that names each follower.
+
+<ComponentPreview name="activity-feed-empty" />
+
+## Responsive
+
+Inside the Stream Manager the filter strip follows the window's width: from 640 px the platform and kind chips are inline, with each kind's count, and below it they fold into one Filters menu. On its own the chips always show.
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `divide-y` | Flush rows split by hairlines |
+| `chrome-row-live` | The row on stream |
+| `chrome-row-member`, `bg-warning/10`, `bg-reward/8` | A sub or membership, a tip, a reward |
+| `hover:bg-accent` | Hover, over any tint |
+| `group/activity`, `group/kebab-host` | The row the time and the ⋯ wait for |
+| `data-kind`, `data-row-tint`, `data-highlight-phase` | On each row |
+| `data-slot` | `activity-feed`, `activity-row`, `activity-avatar`, `activity-glyph`, `activity-line` |
+
+## Accessibility
+
+The pane is a region named "Activity", and its rows an ordered list. A row's sentence is what a screen reader hears when the short fact says less; on screen it's the fact's tooltip, never a native `title`. The kind chips are a group named "Filter activity", each explained on hover. Auto-show's switch is named by what it does.
+
+## API reference
+
+<PropsTable
+  rows={[
+    ["items", "readonly ActivityItem[]", "[]", null],
+    [
+      "platforms",
+      "readonly ChatPlatform[]",
+      null,
+      "The platforms on this stream: the platform chips.",
+    ],
+    [
+      "note",
+      "string | null",
+      null,
+      "What Activity can't show here, under the empty line.",
+    ],
+    [
+      "timestamps",
+      '"always" | "hover"',
+      '"always"',
+      "hover: a row's time waits for the pointer, as while live.",
+    ],
+    [
+      "onShowOnStream",
+      "(item) => void",
+      null,
+      "Show on stream, for rows with a messageId.",
+    ],
+    ["onThank", "(item) => void", null, "Thank in chat."],
+    [
+      "twitchNeeds",
+      "{ followNames?: boolean; bitsAndPoints?: boolean }",
+      null,
+      "The Twitch permissions still missing.",
+    ],
+    [
+      "onReconnectTwitch",
+      "() => void",
+      null,
+      "Reconnect Twitch, wherever it's asked.",
+    ],
+    ["autoShow", "boolean", "false", null],
+    [
+      "onAutoShowChange",
+      "(on: boolean) => void",
+      null,
+      "Shows the Auto-show switch.",
+    ],
+  ]}
+/>
+
+### ActivityItem
+
+<PropsTable
+  rows={[
+    ["id", "string", null, null],
+    [
+      "kind",
+      '"follow" | "subscription" | "membership" | "cheer" | "super-chat" | "super-sticker" | "power-up" | "redemption" | "raid" | "watch-streak" | "announcement" | "destination-failed" | "destination-recovered"',
+      null,
+      null,
+    ],
+    ["platform", "ChatPlatform", null, null],
+    [
+      "name",
+      "string",
+      null,
+      "Who: the viewer, the raiding channel, the destination.",
+    ],
+    ["short", "string", null, '"Resub · 14 months".'],
+    ["line", "string", null, "The sentence, on hover and for Copy."],
+    ["message", "string", null, "The viewer's own words."],
+    ["time", "string", null, '"now", "2m", "1h".'],
+    ["at", "string", null, "ISO, for the time element."],
+    [
+      "messageId",
+      "string",
+      null,
+      "The chat message Show on stream puts on stream.",
+    ],
+    ["authorAvatarUrl", "string", null, null],
+    ["gift", "boolean", null, "A gifted sub or membership: the gift glyph."],
+    ["unnamed", "boolean", null, "A count the platform never named."],
+    ["highlight", "ChatMessageHighlight", null, "Its place on stream."],
+  ]}
+/>
+
+`ACTIVITY_FILTERS`, `activityFilterFor`, `filterActivity`, `activityFilterCounts`, `activityRowShowsPerson`, `activityRowTint` and `activityRowActions` are the rules the pane follows.
