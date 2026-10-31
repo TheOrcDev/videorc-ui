@@ -255,6 +255,15 @@ export const examples: Record<string, ComponentType | undefined> = {
   "progress-steps": dynamic(
     () => import("@/components/examples/progress-steps")
   ),
+  "record-button-demo": dynamic(
+    () => import("@/components/examples/record-button-demo")
+  ),
+  "record-button-states": dynamic(
+    () => import("@/components/examples/record-button-states")
+  ),
+  "record-button-transport": dynamic(
+    () => import("@/components/examples/record-button-transport")
+  ),
   "scroll-area-chat": dynamic(
     () => import("@/components/examples/scroll-area-chat")
   ),

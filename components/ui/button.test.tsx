@@ -19,4 +19,12 @@ describe("Button variants", () => {
     expect(chromatic).toHaveClass("chrome-chromatic", "border");
     expect(chromatic).not.toHaveClass("border-0");
   });
+
+  it("draws the record LED's bezel in the border box", () => {
+    render(<Button variant="record">Record</Button>);
+    const record = screen.getByRole("button", { name: "Record" });
+    expect(record).toHaveAttribute("data-variant", "record");
+    expect(record).toHaveClass("chrome-led", "border");
+    expect(record).not.toHaveClass("border-0");
+  });
 });

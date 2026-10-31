@@ -86,6 +86,11 @@ export const previewOptions: Record<string, SocialPreviewOptions | undefined> =
     "panel-section-demo": { zoom: 0.9 },
     "popover-demo": openWithClick,
     "power-slider-demo": { zoom: 1.25 },
+    // The click starts a recording, so the card shows the LED lit.
+    "record-button-demo": {
+      open: { action: "click", target: "button" },
+      zoom: 2.5,
+    },
     "scroll-area-demo": { zoom: 1 },
     "section-label-demo": { zoom: 1 },
     "select-demo": { open: { action: "click" } },
@@ -185,6 +190,8 @@ export const previewDescriptions: Record<string, string | undefined> = {
   "power-slider-demo":
     "a Noise cleanup slider at 60% with a Beta tag and a reset button",
   "progress-demo": "a progress bar, Uploading recording at 42%",
+  "record-button-demo":
+    "a lit Stop recording button, a red LED lens in a chrome bezel with its bloom",
   "scroll-area-demo": "a scrolling list of recordings and their lengths",
   "section-label-demo":
     "a sidebar with a Setup section of Sources, Scene, Assets and Livestream",

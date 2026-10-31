@@ -36,10 +36,11 @@ const buttonVariants = cva(
         link: "text-primary border-transparent underline-offset-4 hover:underline",
         outline:
           "border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-input/30 bg-transparent",
-        // Record and its stop button only: a red LED, lit with `data-lit`
-        // while a recording or livestream runs. Delete and every other
-        // destructive action stay `destructive`.
-        record: "chrome-led border-0",
+        // Record and its stop button only: a red LED lens in a bezel of
+        // chrome, which takes the border. Lit with `data-lit` while a
+        // recording or livestream runs, when its bloom breathes. Delete and
+        // every other destructive action stay `destructive`.
+        record: "chrome-led",
         // The chip recipe: the same glass as a badge, with the secondary
         // tone under it on hover.
         secondary:
