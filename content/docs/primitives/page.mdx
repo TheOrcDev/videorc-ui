@@ -24,7 +24,7 @@ import {
 ```
 
 ```tsx
-<PaneBody>
+<PaneBody className="@container/page">
   <PageHeader
     description="Quality for recordings and livestreams on this computer."
     title="Output"
@@ -36,11 +36,11 @@ import {
 </PaneBody>
 ```
 
-Pages compose these instead of hand-rolling grids. `lg` is the one layout breakpoint; a form's own sub-grid uses `sm` and `md`.
+Pages compose these instead of hand-rolling grids. A page follows its own width, never the window's: the pane body around it is a container, `@container/page`, and 940 px of it is the one layout breakpoint (a 1,024 px viewport counted the 208 px sidebar as page and squeezed two columns into 816 px). A form's own sub-grid uses `sm` and `md`.
 
 | Archetype | Pages | Built with |
 | --- | --- | --- |
-| Config grid | Sources, Livestream, Output, Settings | A `ConfigGrid` of [Panel Sections](/docs/primitives/panel-section): one column, two at `lg` |
+| Config grid | Sources, Livestream, Output, Settings | A `ConfigGrid` of [Panel Sections](/docs/primitives/panel-section): one column, two from 940 px of page |
 | Stack | One section, or a tab | A `PageStack` of Panel Sections |
 | Gallery | Assets, Screens | A `Gallery` of picture cards |
 | Browse | Library | A flush list or table in the pane body |
@@ -58,16 +58,17 @@ Cards are only for objects with a picture: backgrounds, scenes, Buddies, library
 
 ### Two sections that fill the height
 
-A tab of exactly two sections passes `CONFIG_GRID_PAIR` to its ConfigGrid. At `lg` the grid fills the visible height, so the hairline between the columns runs the full height however short the tab is. Stacked, the rows keep their content height. The preview above does this.
+A tab of exactly two sections passes `CONFIG_GRID_PAIR` to its ConfigGrid. In two columns the grid fills the visible height, so the hairline between the columns runs the full height however short the tab is. Stacked, the rows keep their content height. The preview above does this.
 
 ## Theming
 
 | Token or attribute | Meaning |
 | --- | --- |
 | `px-gutter` | The PageHeader's 16 px sides |
-| `lg:grid-cols-2` | The config grid's two columns |
-| `lg:[&>*:nth-child(odd)]:border-r` | The hairline between the columns |
-| `CONFIG_GRID_PAIR` | `flex-1 content-start lg:content-stretch lg:[&>*]:border-b-0` |
+| `@container/page` | The pane body the page sits in: the width the grid follows |
+| `@min-[940px]/page:grid-cols-2` | The config grid's two columns |
+| `@min-[940px]/page:[&>*:nth-child(odd)]:border-r` | The hairline between the columns |
+| `CONFIG_GRID_PAIR` | `flex-1 content-start @min-[940px]/page:content-stretch @min-[940px]/page:[&>*]:border-b-0` |
 | `data-slot` | `page-header`, `config-grid`, `gallery`, `page-stack` |
 
 ## Accessibility
