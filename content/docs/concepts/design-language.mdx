@@ -71,12 +71,12 @@ The controls you touch shine, and nothing else does. Light is the crisp invert: 
 | `chrome-fill` | The polished primary fill | [Button](/docs/components/button) `default`, a checked checkbox, a switch that's on, progress, slider ranges |
 | `chrome-plate` | Selected or active | The active segment of a [SegmentedControl](/docs/components/segmented-control), the active tab, a pressed toggle, the sidebar's current page |
 | `chrome-bead`, `chrome-bead-ink` | Knobs and thumbs | Slider thumbs and the switch knob; `-ink` is the dark bead for a knob on a chrome track |
-| `chrome-led` | A red LED | Button `record` only: Record and its stop button. `data-lit` makes it glow while a recording or livestream runs |
+| `chrome-led` | Metallic red | Button `record` only: Record and its stop button. `data-lit` lights it and makes it glow while a recording or livestream runs |
 
 - **Only components wear materials.** A screen gets the shine through a component's variant, never by adding a class.
 - **Everything else stays flat.** Panels, sections, rows, menus, dialogs, toasts and text never take a material or a gradient. No gradient text, no sheen on toolbars or panes.
 - **States.** A fill lifts a little on hover and turns concave when pressed. Disabled is flat. Hover on a plated segment stays the flat `bg-accent`, because the plate means selected.
-- **A lit LED only ever means record or live.** Delete stays `destructive`, never `record`.
+- **Lit red only ever means record or live.** Delete stays `destructive`, never `record`.
 - The materials write into Tailwind's shadow stack, so a `ring-*` focus ring still draws over them.
 
 ## Glass chips and tones

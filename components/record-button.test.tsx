@@ -7,8 +7,17 @@ import { RECORD_BUTTON_LABELS, RecordButton } from "@/components/record-button";
 // Record and its stop button, as one control.
 
 /** The path an icon draws, to tell the record dot from the stop square. */
-const glyphOf = (element: Element): string | null | undefined =>
-  element.querySelector("svg path")?.getAttribute("d");
+const glyphOf = (element: Element | null): string | null | undefined =>
+  element?.querySelector("svg path")?.getAttribute("d");
+
+/** Every state's glyph and words, stacked in the button's one cell. */
+const layersOf = (button: HTMLElement): HTMLElement[] => [
+  ...button.querySelectorAll<HTMLElement>(":scope > span > span"),
+];
+
+/** The layer the current state shows. */
+const shownOf = (button: HTMLElement): HTMLElement | null =>
+  layersOf(button).find((layer) => !layer.hasAttribute("aria-hidden")) ?? null;
 
 const pathOf = (Icon: typeof RecordIcon): string | null | undefined => {
   const { container, unmount } = render(<Icon weight="fill" />);
@@ -33,7 +42,7 @@ describe("RecordButton", () => {
     expect(button).toHaveAttribute("data-state", "idle");
     expect(button).not.toHaveAttribute("data-lit");
     expect(button).not.toHaveAttribute("aria-pressed");
-    expect(glyphOf(button)).toBe(pathOf(RecordIcon));
+    expect(glyphOf(shownOf(button))).toBe(pathOf(RecordIcon));
     fireEvent.click(button);
     expect(onClick).toHaveBeenCalledOnce();
   });
@@ -45,16 +54,40 @@ describe("RecordButton", () => {
     expect(button).toHaveAttribute("data-lit");
     expect(button).toHaveAttribute("data-state", "running");
     expect(button).toBeEnabled();
-    expect(glyphOf(button)).toBe(pathOf(StopIcon));
+    expect(glyphOf(shownOf(button))).toBe(pathOf(StopIcon));
     fireEvent.click(button);
     expect(onClick).toHaveBeenCalledOnce();
   });
 
   it("says the caller's words, such as a livestream's", () => {
-    render(<RecordButton state="running">End livestream</RecordButton>);
+    render(
+      <RecordButton labels={{ running: "End livestream" }} state="running" />
+    );
     expect(
       screen.getByRole("button", { name: "End livestream" })
     ).toHaveAttribute("data-lit");
+  });
+
+  it("lays out every state's words, so its width never changes", () => {
+    render(
+      <RecordButton labels={{ running: "End livestream" }} state="idle" />
+    );
+    const button = screen.getByRole("button", { name: "Record" });
+    const layers = layersOf(button);
+    expect(layers.map((layer) => layer.textContent)).toEqual([
+      "Record",
+      "Record",
+      "End livestream",
+      "Stopping…",
+    ]);
+    // Only the current state's layer shows, and only it names the button.
+    const hidden = layers.filter((layer) => layer !== shownOf(button));
+    expect(hidden).toHaveLength(3);
+    for (const layer of hidden) {
+      expect(layer).toHaveAttribute("aria-hidden", "true");
+      expect(layer).toHaveClass("invisible");
+    }
+    expect(shownOf(button)).not.toHaveClass("invisible");
   });
 
   it.each([
@@ -73,7 +106,7 @@ describe("RecordButton", () => {
       expect(button).not.toHaveAttribute("disabled");
       button.focus();
       expect(button).toHaveFocus();
-      expect(glyphOf(button)).toBe(pathOf(icon));
+      expect(glyphOf(shownOf(button))).toBe(pathOf(icon));
       fireEvent.click(button);
       expect(onClick).not.toHaveBeenCalled();
     }
@@ -87,11 +120,7 @@ describe("RecordButton", () => {
   });
 
   it("passes Button's props through", () => {
-    render(
-      <RecordButton className="flex-1" data-testid="record" size="lg">
-        Record
-      </RecordButton>
-    );
+    render(<RecordButton className="flex-1" data-testid="record" size="lg" />);
     const button = screen.getByTestId("record");
     expect(button).toHaveClass("flex-1");
     expect(button).toHaveAttribute("data-size", "lg");

@@ -5,8 +5,8 @@ import { parse } from "postcss";
 import type { AtRule, Container, Declaration, Rule } from "postcss";
 import { describe, expect, it } from "vitest";
 
-// The record LED material (Button's `record`, RecordButton): a red lens in a
-// still chrome bezel, whose bloom alone breathes.
+// Record's material (Button's `record`, RecordButton): metallic red with no
+// border or ring, whose glow alone breathes.
 
 const root = parse(
   readFileSync(path.join(import.meta.dirname, "videorc.css"), "utf-8")
@@ -85,7 +85,7 @@ const colours = (value: string): number[] =>
 const contrast = (first: number, second: number): number =>
   (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
 
-const LENS_TOKENS = [
+const METAL_TOKENS = [
   "--chrome-led-off-stops",
   "--chrome-led-off-flat",
   "--chrome-led-stops",
@@ -93,15 +93,9 @@ const LENS_TOKENS = [
 ];
 
 describe("chrome-led", () => {
-  it("gives both themes the whole LED: lens, dome, rim light, bezel and bloom", () => {
+  it("gives both themes the whole material: idle and lit metal, and the glow", () => {
     for (const [theme, vars] of Object.entries(THEMES)) {
-      for (const token of [
-        ...LENS_TOKENS,
-        "--chrome-led-dome",
-        "--chrome-led-rim-light",
-        "--chrome-led-bezel-flat",
-        "--chrome-led-glow",
-      ]) {
+      for (const token of [...METAL_TOKENS, "--chrome-led-glow"]) {
         expect(vars.get(token), `${theme} ${token}`).toBeDefined();
       }
       expect(vars.get("--chrome-led-glow")).toMatch(
@@ -110,11 +104,11 @@ describe("chrome-led", () => {
     }
   });
 
-  it("keeps the white label at 4.5:1 on every stop of the lens, off and lit", () => {
+  it("keeps the white label at 4.5:1 on every stop of the metal, idle and lit", () => {
     for (const [theme, vars] of Object.entries(THEMES)) {
       const [label] = colours(vars.get("--live-foreground") ?? "");
       expect(label, `${theme} --live-foreground`).toBeDefined();
-      for (const token of LENS_TOKENS) {
+      for (const token of METAL_TOKENS) {
         const stops = colours(vars.get(token) ?? "");
         expect(stops.length, `${theme} ${token}`).toBeGreaterThan(0);
         for (const stop of stops) {
@@ -127,7 +121,7 @@ describe("chrome-led", () => {
     }
   });
 
-  it("breathes the bloom alone, on opacity alone", () => {
+  it("breathes the glow alone, on opacity alone", () => {
     expect(utility).toBeDefined();
     expect(keyframes).toBeDefined();
     keyframes?.walkDecls((decl) => {
@@ -141,10 +135,12 @@ describe("chrome-led", () => {
     expect(moving.join("\n")).toContain("chrome-led-breathe");
   });
 
-  it("holds the bezel's metal still and keeps Tailwind's ring stack", () => {
+  it("draws no border or ring around the face, and keeps Tailwind's ring stack", () => {
     const body = utility?.toString() ?? "";
-    expect(body).not.toContain("--chrome-chromatic-flow");
-    expect(body).not.toContain("--chrome-chromatic-surge");
+    utility?.walkDecls(/^border/u, (decl) => {
+      expect(decl.prop, selectorPath(decl)).toBe("border-radius");
+    });
+    expect(body).not.toContain("--chrome-chromatic");
     expect(body).not.toMatch(/backdrop-filter/u);
     expect(body).toContain("var(--tw-ring-shadow)");
   });

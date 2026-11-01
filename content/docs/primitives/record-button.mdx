@@ -1,6 +1,6 @@
 ---
 title: Record Button
-description: Record and its stop button as one control. A red LED lens in a bezel of chrome, switched off at idle, lit from the click, and breathing like a camera's tally light while the session runs.
+description: Record and its stop button as one control. Metallic red, lit from the click, with a glow that breathes like a camera's tally light while the session runs. One width through every state.
 ---
 
 <ComponentPreview name="record-button-demo" />
@@ -23,15 +23,21 @@ import { RecordButton } from "@/components/record-button";
 <RecordButton onClick={toggleRecording} state={session} />
 ```
 
-`state` is where the session stands, and comes in from your app: `idle`, `starting` after the click, `running` once it records or streams, and `stopping` while it finishes. The button picks its glyph, lights its LED and says each state's words. Pass your own words as children ("End livestream" while on air, "Force stop" after a stop that drags on).
+`state` is where the session stands, and comes in from your app: `idle`, `starting` after the click, `running` once it records or streams, and `stopping` while it finishes. The button picks its glyph, lights up and says each state's words. Pass your own words for any state in `labels` ("End livestream" while on air, "Force stop" after a stop that drags on).
 
-Use it for Record and the button that stops the session, and nothing else: a lit LED only ever means record or live. Delete stays a `destructive` Button, and Go Live… stays the chrome primary beside it.
+```tsx
+<RecordButton labels={{ running: "End livestream" }} state={session} />
+```
+
+Every state's words are laid out in the same spot and only the current one shows, so the button is as wide as its longest words and never changes width as the session moves on.
+
+Use it for Record and the button that stops the session, and nothing else: lit red only ever means record or live. Delete stays a `destructive` Button, and Go Live… stays the chrome primary beside it.
 
 ## Examples
 
 ### States
 
-Starting and stopping answer from the click: the lens is lit, the button takes no click, keeps its focus and doesn't dim. Only a running session's bloom breathes. Blocked is a disabled button, flat and dimmed; say why with [Disabled reason](/docs/components/disabled-reason).
+Starting and stopping answer from the click: the button is lit, takes no click, keeps its focus and doesn't dim. Only a running session's glow breathes. Blocked is a disabled button, flat and dimmed; say why with [Disabled reason](/docs/components/disabled-reason).
 
 <ComponentPreview name="record-button-states" />
 
@@ -46,14 +52,13 @@ The Studio's transport puts Record, with its Space key, beside Go Live…. While
 | Token or attribute | Meaning |
 | --- | --- |
 | `chrome-led` | The material, on Button's `record` variant |
-| `--chrome-led-off-stops`, `--chrome-led-stops` | The lens, switched off and lit |
-| `--chrome-led-dome`, `--chrome-led-rim-light` | The lens's dome of light, and the light at its rim while lit |
-| `--chrome-led-glow` | The bloom past the bezel |
-| `--chrome-chromatic-bands` | The bezel's metal, the chromatic ring's, held still |
-| `data-lit` | Lights the LED: set from `starting` on |
+| `--chrome-led-off-stops`, `--chrome-led-stops` | The metal's bands, idle and lit |
+| `--chrome-led-hi`, `--chrome-led-lo` | The light along its top edge and the shade along its foot |
+| `--chrome-led-glow` | The glow around it while the session runs |
+| `data-lit` | Lights it: set from `starting` on |
 | `data-state` | `idle`, `starting`, `running` or `stopping` |
 
-Every lens stop keeps the white label at 4.5:1 or more in both themes, so the light comes from the rim and the bloom, never from a brighter face. The bloom is a layer of its own that breathes on opacity alone, so a session that runs for hours never repaints the button. Under reduced motion, it holds steady. Increase Contrast adds an edge around the bezel, and forced colours draw it as a border.
+It's polished the way the default button's chrome is: a bright band, a dark horizon just below the middle and the light coming back at the foot. Every stop keeps the white label at 4.5:1 or more in both themes, so the shine is in the bands, never a brighter face. The glow is a layer of its own that breathes on opacity alone, so a session that runs for hours never repaints the button. Under reduced motion, it holds steady. Increase Contrast adds an edge around it.
 
 ## Keyboard
 
@@ -69,7 +74,7 @@ It's a one-shot action whose words change ("Record", then "Stop recording"), so 
 
 ## API reference
 
-Every [Button](/docs/components/button) prop except `variant`, plus:
+Every [Button](/docs/components/button) prop except `variant` and `children`, plus:
 
 <PropsTable
   rows={[
@@ -80,10 +85,10 @@ Every [Button](/docs/components/button) prop except `variant`, plus:
       "Where the session stands.",
     ],
     [
-      "children",
-      "ReactNode",
+      "labels",
+      "Partial<Record<state, ReactNode>>",
       null,
-      'The words. Defaults to "Record", "Stop recording" and "Stopping…".',
+      'Your words for any state. Defaults to "Record", "Stop recording" and "Stopping…".',
     ],
     [
       "disabled",

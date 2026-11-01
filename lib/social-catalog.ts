@@ -86,7 +86,7 @@ export const previewOptions: Record<string, SocialPreviewOptions | undefined> =
     "panel-section-demo": { zoom: 0.9 },
     "popover-demo": openWithClick,
     "power-slider-demo": { zoom: 1.25 },
-    // The click starts a recording, so the card shows the LED lit.
+    // The click starts a recording, so the card shows it lit.
     "record-button-demo": {
       open: { action: "click", target: "button" },
       zoom: 2.5,
@@ -191,7 +191,7 @@ export const previewDescriptions: Record<string, string | undefined> = {
     "a Noise cleanup slider at 60% with a Beta tag and a reset button",
   "progress-demo": "a progress bar, Uploading recording at 42%",
   "record-button-demo":
-    "a lit Stop recording button, a red LED lens in a chrome bezel with its bloom",
+    "a lit Stop recording button in metallic red with its glow",
   "scroll-area-demo": "a scrolling list of recordings and their lengths",
   "section-label-demo":
     "a sidebar with a Setup section of Sources, Scene, Assets and Livestream",
@@ -225,7 +225,8 @@ export const previewDescriptions: Record<string, string | undefined> = {
   "switch-demo": "a Made for kids switch with its description",
   "tabs-demo": "Chat, Activity and Buddy tabs with Chat selected",
   "textarea-demo": "a description textarea with its hint",
-  theme: "chrome, glass and record LED buttons above status chips in each tone",
+  theme:
+    "chrome, glass and metallic red record buttons above status chips in each tone",
   "theme-toggle-demo": "the light and dark theme toggle",
   "toggle-demo": "a pressed pin toggle beside a visibility toggle and Markers",
   "toggle-group-demo":

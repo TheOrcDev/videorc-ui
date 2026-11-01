@@ -42,19 +42,17 @@ const RecordButtonTransport = () => {
   // button that was clicked answers.
   const checking = state === "starting" && live;
   const session = state === "running" || state === "stopping";
-  // Record shows its key; a livestream ends in its own words; every other
-  // state says the button's own.
-  let words: ReactNode;
-  if (idle || checking) {
-    words = (
+  // Record shows its key, and a livestream ends in its own words. The
+  // button keeps one width through them all.
+  const labels = {
+    idle: (
       <>
         Record
         <ShortcutKeys accelerator="Space" className="ml-0.5" />
       </>
-    );
-  } else if (state === "running" && live) {
-    words = "End livestream";
-  }
+    ),
+    running: live ? "End livestream" : undefined,
+  };
   // Go Live… says "Checking…" from its click, as in Videorc.
   let goLive: ReactNode = null;
   if (checking) {
@@ -82,12 +80,11 @@ const RecordButtonTransport = () => {
       <RecordButton
         className="flex-1"
         disabled={checking}
+        labels={labels}
         onClick={idle ? () => start(false) : stop}
         size="lg"
         state={checking ? "idle" : state}
-      >
-        {words}
-      </RecordButton>
+      />
       {goLive}
     </div>
   );

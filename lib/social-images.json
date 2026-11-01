@@ -5,7 +5,7 @@
   },
   "/docs": {
     "alt": "Introduction — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
-    "url": "/og/introduction-8f70b2230385.png"
+    "url": "/og/introduction-eaa1f18a004d.png"
   },
   "/docs/blocks": {
     "alt": "Blocks — videorc/ui: Videorc's Stream Manager window with live stats, platform chat, a paid message, the composer and the status bar, in the dark theme.",
@@ -49,7 +49,7 @@
   },
   "/docs/components": {
     "alt": "Components — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
-    "url": "/og/components-c98ccbbbe9a8.png"
+    "url": "/og/components-39881423e2bb.png"
   },
   "/docs/components/accordion": {
     "alt": "Accordion — videorc/ui: an accordion with Video open and Audio and Output closed, in the dark theme.",
@@ -73,7 +73,7 @@
   },
   "/docs/components/button": {
     "alt": "Button — videorc/ui: a red Record button, a chrome Go Live button, a glass Open Stream Manager button and a ghost Cancel, in the dark theme.",
-    "url": "/og/components-button-42ae570825a7.png"
+    "url": "/og/components-button-761c2f353deb.png"
   },
   "/docs/components/chart": {
     "alt": "Chart — videorc/ui: a line chart of upload bitrate dipping below its target, in the dark theme.",
@@ -225,7 +225,7 @@
   },
   "/docs/concepts/design-language": {
     "alt": "Design language — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
-    "url": "/og/concepts-design-language-0305c96217eb.png"
+    "url": "/og/concepts-design-language-273a98b1e523.png"
   },
   "/docs/concepts/desktop": {
     "alt": "Desktop base — videorc/ui: a Notes window with traffic lights, a pinned header, a list and a status bar, in the dark theme.",
@@ -244,8 +244,8 @@
     "url": "/og/concepts-icons-cf461f754a01.png"
   },
   "/docs/concepts/theme": {
-    "alt": "Theme — videorc/ui: chrome, glass and record LED buttons above status chips in each tone, in the dark theme.",
-    "url": "/og/concepts-theme-dffacb9fa700.png"
+    "alt": "Theme — videorc/ui: chrome, glass and metallic red record buttons above status chips in each tone, in the dark theme.",
+    "url": "/og/concepts-theme-eb7dff1d84f6.png"
   },
   "/docs/hooks": {
     "alt": "Hooks and libs — videorc/ui: Search, Open Preview, Open Stream Manager and Start or stop recording with their shortcuts, in the dark theme.",
@@ -277,7 +277,7 @@
   },
   "/docs/installation": {
     "alt": "Installation — videorc/ui: Record, Go Live and Open Preview buttons, a theme switch, a slider and status badges, in the dark theme.",
-    "url": "/og/installation-8f711c641643.png"
+    "url": "/og/installation-cb08e7218b77.png"
   },
   "/docs/primitives": {
     "alt": "Primitives — videorc/ui: a Settings page with General, Recording and Shortcuts tabs and switch rows, in the dark theme.",
@@ -344,8 +344,8 @@
     "url": "/og/primitives-power-slider-ac1a2f4629fd.png"
   },
   "/docs/primitives/record-button": {
-    "alt": "Record Button — videorc/ui: a lit Stop recording button, a red LED lens in a chrome bezel with its bloom, in the dark theme.",
-    "url": "/og/primitives-record-button-762cc983f749.png"
+    "alt": "Record Button — videorc/ui: a lit Stop recording button in metallic red with its glow, in the dark theme.",
+    "url": "/og/primitives-record-button-b1234d4368c0.png"
   },
   "/docs/primitives/section-label": {
     "alt": "Section Label — videorc/ui: a sidebar with a Setup section of Sources, Scene, Assets and Livestream, in the dark theme.",

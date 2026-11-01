@@ -1,6 +1,6 @@
 ---
 title: Button
-description: Desktop-sized buttons on Base UI. The default is polished chrome, secondary is a glass chip, and record is the red LED that lights while a session runs.
+description: Desktop-sized buttons on Base UI. The default is polished chrome, secondary is a glass chip, and record is metallic red that lights while a session runs.
 ---
 
 <ComponentPreview name="button-demo" />
@@ -45,7 +45,7 @@ Every control is 28 px tall. `xs` and `icon-xs` (24 px) are for dense rows only;
 
 ### Record
 
-`record` is for Record and its stop button, nothing else: a red LED lens in a bezel of chrome. Set `data-lit` while a recording or livestream runs, and the lens lights and its bloom breathes. Delete stays `destructive`.
+`record` is for Record and its stop button, nothing else: metallic red, polished like the default's chrome. Set `data-lit` while a recording or livestream runs, and it turns the brand red and its glow breathes. Delete stays `destructive`.
 
 For the whole control, with its glyph, its words and the starting and stopping states, use [Record Button](/docs/primitives/record-button).
 
@@ -62,7 +62,7 @@ A link that looks like a button is still a link: put `buttonVariants()` on a pla
 | Token or attribute | Meaning |
 | --- | --- |
 | `chrome-fill` | The default fill: polished silver in dark, graphite in light |
-| `chrome-led` | The record LED: a lens in a chrome bezel, lit by `data-lit`, with a `--chrome-led-glow` bloom |
+| `chrome-led` | Record's metallic red, lit by `data-lit`, with a `--chrome-led-glow` glow |
 | `chrome-chromatic` | The chromatic ring: `--chrome-chromatic-bands` of metal around `--chrome-chromatic-face-stops` |
 | `glass-chip` | The secondary fill |
 | `h-control`, `size-control` | The 28 px desktop control height |
