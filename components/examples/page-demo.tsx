@@ -16,7 +16,7 @@ const PageDemo = () => {
     <div className="bg-glass-content rounded-panel flex h-80 w-full max-w-xl overflow-hidden border">
       <Pane>
         <Toolbar title="Output" />
-        <PaneBody className="flex flex-col">
+        <PaneBody className="@container/page flex flex-col">
           <PageHeader
             action={<Button variant="secondary">Test recording…</Button>}
             description="Quality for recordings and livestreams on this computer."
