@@ -26,6 +26,15 @@ describe("Badge", () => {
     expect(badge.className).toContain("text-foreground");
   });
 
+  it("gives a truncating child a line box that holds Segoe UI's descenders", () => {
+    // 11 px Segoe UI is 14.6 px from ascent to descent: a 16 px line fits it
+    // inside the 20 px chip, and `leading-none` (11 px) cut the "g".
+    render(<Badge variant="outline">Recording</Badge>);
+    const badge = screen.getByText("Recording");
+    expect(badge).toHaveClass("h-5", "leading-4");
+    expect(badge).not.toHaveClass("leading-none");
+  });
+
   it("renders another element through render, as a button chip", () => {
     render(
       <Badge

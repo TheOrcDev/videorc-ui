@@ -37,6 +37,19 @@ describe("PowerSlider", () => {
     ).toBeNull();
   });
 
+  it("truncates its label inside a line box that holds Segoe UI's descenders", () => {
+    render(
+      <PowerSlider
+        label="Strength"
+        max={100}
+        min={0}
+        onChange={vi.fn()}
+        value={40}
+      />
+    );
+    expect(screen.getByText("Strength")).toHaveClass("truncate", "leading-5");
+  });
+
   it("resets to the default once the value drifts, and commits it", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

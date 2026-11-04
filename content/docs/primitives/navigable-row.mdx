@@ -35,6 +35,8 @@ Use it for a fact another page owns: the Studio's Session rows, a Settings row t
 
 Don't use it for a row that changes something in place: that's a [List Row](/docs/primitives/list-row) with a control, or a [Settings row](/docs/components/field).
 
+A long text value gives way first: the label keeps its width and the value truncates ("Microphone" beside "Microphone (HD Pro Webcam C920)", never "Mic…"). A control value, such as a Stop button, keeps its width instead, and the label truncates.
+
 When a value sums up several facts ("1080p · 60 fps", "2 on"), `hint` shows them on hover and on focus. `NavigableRowHintLines` puts one fact on each line. Only a row that navigates takes a hint, since only a button takes focus.
 
 ## Theming
@@ -46,7 +48,7 @@ When a value sums up several facts ("1080p · 60 fps", "2 on"), `hint` shows the
 | `text-muted-foreground` | The icon, the label and the chevron |
 | `text-foreground` | The value, at weight 500 |
 | `hover:bg-accent` | The hover of a row that navigates |
-| `data-slot` | `navigable-row` on the row, `navigable-row-hint` on a hint's lines |
+| `data-slot` | `navigable-row` on the row, `navigable-row-label` and `navigable-row-value` on its parts, `navigable-row-hint` on a hint's lines |
 
 ## Keyboard
 
