@@ -33,6 +33,16 @@ describe("StatusBadge", () => {
     expect(badge?.querySelector("svg")).toHaveClass("text-(--chip-tone)");
   });
 
+  it("truncates the value inside a line box that holds Segoe UI's descenders", () => {
+    // The value clips at its own line box: 12 px Segoe UI needs 16 px (1.33
+    // em from ascent to descent), and `leading-none` cut "Receiving"'s "g".
+    const { container } = render(<StatusBadge tone="good" value="Receiving" />);
+    const badge = container.querySelector("[data-slot=status-badge]");
+    expect(badge).toHaveClass("h-[22px]", "leading-4");
+    expect(badge).not.toHaveClass("leading-none");
+    expect(screen.getByText("Receiving")).toHaveClass("truncate");
+  });
+
   it("refuses a raw status value under test", () => {
     expect(() =>
       render(<StatusBadge tone="warn" value="device-missing" />)
@@ -49,6 +59,16 @@ describe("StatusDot", () => {
     expect(dot).toHaveClass("tone-live", "text-muted-foreground");
     expect(dot?.querySelector(".motion-safe\\:animate-ping")).not.toBeNull();
     expect(screen.getByText("Recording")).toBeInTheDocument();
+  });
+
+  it("truncates the value inside a line box that holds Segoe UI's descenders", () => {
+    // The value clips at its own line box: 12 px Segoe UI needs 16 px (1.33
+    // em from ascent to descent), and `leading-none` cut "Receiving"'s "g".
+    const { container } = render(<StatusBadge tone="good" value="Receiving" />);
+    const badge = container.querySelector("[data-slot=status-badge]");
+    expect(badge).toHaveClass("h-[22px]", "leading-4");
+    expect(badge).not.toHaveClass("leading-none");
+    expect(screen.getByText("Receiving")).toHaveClass("truncate");
   });
 
   it("refuses a raw status value under test", () => {

@@ -40,6 +40,37 @@ describe("NavigableRow", () => {
     expect(onNavigate).toHaveBeenCalledTimes(1);
   });
 
+  it("truncates a long text value, never the label beside it", () => {
+    const { container } = render(
+      <NavigableRow
+        icon={MicrophoneIcon}
+        label="Microphone"
+        onNavigate={vi.fn()}
+        value="Microphone (HD Pro Webcam C920)"
+      />
+    );
+    const label = container.querySelector("[data-slot=navigable-row-label]");
+    const value = container.querySelector("[data-slot=navigable-row-value]");
+    expect(label).toHaveClass("shrink-0");
+    expect(label).not.toHaveClass("flex-1");
+    expect(value).toHaveClass("min-w-0", "flex-1");
+    expect(screen.getByText("Microphone (HD Pro Webcam C920)")).toHaveClass(
+      "truncate"
+    );
+  });
+
+  it("keeps a control value whole and lets a long label truncate", () => {
+    const { container } = render(
+      <NavigableRow
+        label="Claude Code and Codex are using Videorc"
+        value={<button type="button">Stop</button>}
+      />
+    );
+    const label = container.querySelector("[data-slot=navigable-row-label]");
+    expect(label).toHaveClass("flex-1", "truncate");
+    expect(label).not.toHaveClass("shrink-0");
+  });
+
   it("keeps the row's own slot when a hint makes it a tooltip trigger", () => {
     render(
       <NavigableRow
