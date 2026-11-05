@@ -4,12 +4,13 @@ import {
   DocsBrandNavTitle,
   HomeBrandNavTitle,
 } from "@/components/brand-nav-title";
+import { GitHubStarsLink } from "@/components/docs/github-stars-link";
 import { SidebarControls } from "@/components/docs/sidebar-controls";
 
 interface BaseOptionsConfig {
   /**
-   * Docs layout: drop the Docs link (the sidebar is the docs) and move the
-   * light/dark switch into the sidebar footer. Default false.
+   * Docs layout: drop the Docs link (the sidebar is the docs) and move
+   * GitHub and the light/dark switch into the sidebar footer. Default false.
    */
   docs?: boolean;
 }
@@ -24,6 +25,15 @@ export const baseOptions = ({
     { active: "nested-url", text: "Components", url: "/docs/components" },
     { active: "nested-url", text: "Primitives", url: "/docs/primitives" },
     { active: "nested-url", text: "Blocks", url: "/docs/blocks" },
+    ...(docs
+      ? []
+      : [
+          {
+            children: <GitHubStarsLink />,
+            secondary: true,
+            type: "custom",
+          } as const,
+        ]),
   ],
   slots: { navTitle: docs ? DocsBrandNavTitle : HomeBrandNavTitle },
   ...(docs && { themeSwitch: { component: <SidebarControls /> } }),

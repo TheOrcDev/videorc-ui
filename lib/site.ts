@@ -7,5 +7,6 @@ export const siteConfig = {
   registryUrl: "https://ui.videorc.com/r/{name}.json",
   title: "videorc/ui — The Videorc component library for shadcn/ui",
   url: "https://ui.videorc.com",
+  videorcRepo: "TheOrcDev/videorc",
   videorcUrl: "https://videorc.com",
 } as const;
