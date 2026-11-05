@@ -7,7 +7,7 @@ const ONE_HOUR_IN_SECONDS = 3600;
 const getStargazersCount = async (): Promise<number | null> => {
   try {
     const response = await fetch(
-      `https://api.github.com/repos/${siteConfig.videorcRepo}`,
+      `https://api.github.com/repos/${siteConfig.githubRepo}`,
       {
         headers: { Accept: "application/vnd.github+json" },
         next: { revalidate: ONE_HOUR_IN_SECONDS },
@@ -25,14 +25,14 @@ const getStargazersCount = async (): Promise<number | null> => {
   }
 };
 
-/** Link to Videorc's repo with a server-fetched star count, revalidated hourly. */
+/** Link to the library's repo with a server-fetched star count, revalidated hourly. */
 export const GitHubStarsLink = async () => {
   const stargazersCount = await getStargazersCount();
 
   return (
     <GitHubStars
-      name="Videorc"
-      repo={siteConfig.videorcRepo}
+      name={siteConfig.name}
+      repo={siteConfig.githubRepo}
       stargazersCount={stargazersCount}
     />
   );

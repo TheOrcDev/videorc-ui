@@ -27,7 +27,7 @@ const formatsFor = (locales: Intl.LocalesArgument) =>
 export interface GitHubStarsProps {
   /** GitHub repository in `owner/repo` format. */
   repo: string;
-  /** What the repository is called in the label, e.g. "Videorc". */
+  /** What the repository is called in the label, e.g. "videorc/ui". */
   name: string;
   /** Number of stars to display; `null` when GitHub didn't answer. */
   stargazersCount: number | null;
