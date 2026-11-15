@@ -82,7 +82,7 @@ describe("ShortcutKeys", () => {
     expect(container.innerHTML).toBe("");
   });
 
-  it("takes the filled button style inside primary, destructive and record buttons", () => {
+  it("takes the filled button style inside primary, destructive, record and Go Live buttons", () => {
     const { container } = render(
       <Button>
         Save
@@ -93,7 +93,7 @@ describe("ShortcutKeys", () => {
     for (const token of KBD_ON_FILLED_BUTTON.split(" ")) {
       expect(kbd(container)?.className).toContain(token);
     }
-    for (const variant of ["default", "destructive", "record"]) {
+    for (const variant of ["default", "destructive", "record", "go-live"]) {
       expect(KBD_ON_FILLED_BUTTON).toContain(
         `[[data-slot=button][data-variant=${variant}]_&]:text-current`
       );

@@ -1,0 +1,100 @@
+---
+title: Go Live Button
+description: Go Live and its End livestream as one control. Polished copper, a metal of its own beside the silver primary and Record's red, that answers from the click and keeps one width through every state.
+---
+
+<ComponentPreview name="go-live-button-demo" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @videorc/go-live-button
+```
+
+It brings [Button](/docs/components/button) with it.
+
+## Usage
+
+```tsx
+import { GoLiveButton } from "@/components/go-live-button";
+```
+
+```tsx
+<GoLiveButton onClick={live ? endLivestream : goLive} state={state} />
+```
+
+`state` is where the livestream stands, and comes in from your app: `idle`, `checking` while the destinations answer, `live` once it's on air, and `stopping` while it ends. The button picks its glyph and says each state's words. Pass your own words for any state in `labels`.
+
+```tsx
+<GoLiveButton labels={{ idle: "Go Live…" }} state={state} />
+```
+
+Every state's words are laid out in the same spot and only the current one shows, so the button is as wide as its longest words and never changes width as the livestream moves on.
+
+Use it for Go Live and the button that ends the livestream, and nothing else: copper only ever means Go Live. The default button stays silver, and Record stays red beside it.
+
+## Examples
+
+### States
+
+Checking and stopping answer from the click: the button stays copper, takes no click, keeps its focus and doesn't dim. Blocked is a disabled button, flat and dimmed; say why with [Disabled reason](/docs/components/disabled-reason).
+
+<ComponentPreview name="go-live-button-states" />
+
+### In the transport
+
+The Studio's transport puts copper Go Live beside Record. While a session runs, one stop button takes the row.
+
+<ComponentPreview name="record-button-transport" />
+
+## Theming
+
+| Token or attribute | Meaning |
+| --- | --- |
+| `chrome-copper` | The material, on Button's `go-live` variant |
+| `--chrome-copper-stops`, `--chrome-copper-flat` | The metal's bands, and the flat copper under them |
+| `--chrome-copper-ink` | The words and glyph: a deep copper-brown |
+| `--chrome-copper-hi`, `--chrome-copper-lo` | The light along its top edge and the shade along its foot |
+| `--chrome-copper-drop`, `--chrome-copper-lift` | The drop under it, and the lift on hover |
+| `data-state` | `idle`, `checking`, `live` or `stopping` |
+
+It's polished the way the default button's chrome is: a bright band, a darker waist just below the middle and the light coming back at the foot. The same copper serves both themes, and every stop keeps the ink at 4.5:1 or more. It's still: no glow and no motion, which stay Record's. Increase Contrast adds an edge around it.
+
+## Keyboard
+
+| Key              | Action                           |
+| ---------------- | -------------------------------- |
+| `Enter`, `Space` | Goes live or ends the livestream |
+
+## Accessibility
+
+It's a one-shot action whose words change ("Go Live", then "End livestream"), so it takes no `aria-pressed`. While checking or stopping, it's `aria-disabled` and stays focusable, so keyboard focus isn't lost under the user's hands. Announce the livestream's state in a status region, such as a [Status Badge](/docs/primitives/status-badge) with `role="status"`, not on the button.
+
+## API reference
+
+Every [Button](/docs/components/button) prop except `variant` and `children`, plus:
+
+<PropsTable
+  rows={[
+    [
+      "state",
+      '"idle" | "checking" | "live" | "stopping"',
+      '"idle"',
+      "Where the livestream stands.",
+    ],
+    [
+      "labels",
+      "Partial<Record<state, ReactNode>>",
+      null,
+      'Your words for any state. Defaults to "Go Live", "Checking…", "End livestream" and "Stopping…".',
+    ],
+    [
+      "disabled",
+      "boolean",
+      "false",
+      "Going live is blocked. Busy states disable the button for you.",
+    ],
+  ]}
+/>
+
+`GO_LIVE_BUTTON_LABELS` holds each state's default words.

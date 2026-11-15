@@ -20,6 +20,13 @@ describe("Button variants", () => {
     expect(chromatic).not.toHaveClass("border-0");
   });
 
+  it("draws Go Live as polished copper with no border", () => {
+    render(<Button variant="go-live">Go Live</Button>);
+    const goLive = screen.getByRole("button", { name: "Go Live" });
+    expect(goLive).toHaveAttribute("data-variant", "go-live");
+    expect(goLive).toHaveClass("chrome-copper", "border-0");
+  });
+
   it("draws Record as metallic red with no border", () => {
     render(<Button variant="record">Record</Button>);
     const record = screen.getByRole("button", { name: "Record" });

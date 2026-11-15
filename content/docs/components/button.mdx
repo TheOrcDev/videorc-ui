@@ -51,6 +51,14 @@ For the whole control, with its glyph, its words and the starting and stopping s
 
 <ComponentPreview name="button-record" />
 
+### Go Live
+
+`go-live` is for Go Live and the button that ends the livestream, nothing else: polished copper, a metal of its own beside the silver default and Record's red. It's still, with no glow. Use it for the Studio's Go Live and the Go Live dialog's start button.
+
+For the whole control, with its glyph, its words and the checking and stopping states, use [Go Live Button](/docs/primitives/go-live-button).
+
+<ComponentPreview name="button-go-live" />
+
 ### As a link
 
 A link that looks like a button is still a link: put `buttonVariants()` on a plain `<a>`. Rendering an `<a>` through `render` with `nativeButton={false}` keeps Base UI's button behaviour and adds `role="button"`, which is right only for an element that acts like a button.
@@ -63,6 +71,7 @@ A link that looks like a button is still a link: put `buttonVariants()` on a pla
 | --- | --- |
 | `chrome-fill` | The default fill: polished silver in dark, graphite in light |
 | `chrome-led` | Record's metallic red, lit by `data-lit`, with a `--chrome-led-glow` glow |
+| `chrome-copper` | Go Live's polished copper, with `--chrome-copper-ink` words |
 | `chrome-chromatic` | The chromatic ring: `--chrome-chromatic-bands` of metal around `--chrome-chromatic-face-stops` |
 | `glass-chip` | The secondary fill |
 | `h-control`, `size-control` | The 28 px desktop control height |

@@ -37,6 +37,9 @@ export const examples: Record<string, ComponentType | undefined> = {
     () => import("@/components/examples/badge-variants")
   ),
   "button-demo": dynamic(() => import("@/components/examples/button-demo")),
+  "button-go-live": dynamic(
+    () => import("@/components/examples/button-go-live")
+  ),
   "button-link": dynamic(() => import("@/components/examples/button-link")),
   "button-record": dynamic(() => import("@/components/examples/button-record")),
   "button-sizes": dynamic(() => import("@/components/examples/button-sizes")),
@@ -148,6 +151,12 @@ export const examples: Record<string, ComponentType | undefined> = {
   "field-demo": dynamic(() => import("@/components/examples/field-demo")),
   "field-settings-row": dynamic(
     () => import("@/components/examples/field-settings-row")
+  ),
+  "go-live-button-demo": dynamic(
+    () => import("@/components/examples/go-live-button-demo")
+  ),
+  "go-live-button-states": dynamic(
+    () => import("@/components/examples/go-live-button-states")
   ),
   "hover-card-demo": dynamic(
     () => import("@/components/examples/hover-card-demo")
