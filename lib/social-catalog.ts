@@ -67,6 +67,7 @@ export const previewOptions: Record<string, SocialPreviewOptions | undefined> =
       open: { action: "click", target: 'button:has-text("Simulate a crash")' },
     },
     "field-demo": { zoom: 0.85 },
+    "go-live-button-demo": { zoom: 2.5 },
     "hover-card-demo": { align: "start", open: { action: "hover" } },
     icons: { zoom: 1 },
     "info-tooltip-demo": {
@@ -158,6 +159,7 @@ export const previewDescriptions: Record<string, string | undefined> = {
   "fader-demo": "a microphone fader at −6 dB above a decibel scale",
   "field-demo":
     "a form with a title and its character count, a description and a Made for kids switch",
+  "go-live-button-demo": "a Go Live button in polished copper",
   "hover-card-demo": "a hover card previewing a live Twitch stream",
   icons: "twelve semantic icons, from Record and Go Live to Clip and Library",
   "info-tooltip-demo":

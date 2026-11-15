@@ -104,6 +104,13 @@
           "chrome-led-drop": "oklch(0 0 0 / 50%)",
           "chrome-led-lift": "oklch(1 0 0 / 10%)",
           "chrome-led-glow": "color-mix(in oklch, var(--live) 60%, transparent)",
+          "chrome-copper-stops": "oklch(0.86 0.09 62) 0%, oklch(0.76 0.12 55) 40%, oklch(0.63 0.12 48) 53%, oklch(0.7 0.12 52) 80%, oklch(0.8 0.1 58) 100%",
+          "chrome-copper-flat": "oklch(0.72 0.12 52)",
+          "chrome-copper-ink": "oklch(0.2 0.04 45)",
+          "chrome-copper-hi": "oklch(1 0 0 / 55%)",
+          "chrome-copper-lo": "oklch(0.35 0.08 45 / 45%)",
+          "chrome-copper-drop": "oklch(0 0 0 / 60%)",
+          "chrome-copper-lift": "oklch(1 0 0 / 14%)",
           "chrome-edge": "transparent",
           "chrome-chromatic-face-stops": "oklch(0.22 0 0) 0%, oklch(0.16 0 0) 60%, oklch(0.13 0 0) 100%",
           "chrome-chromatic-bands": "oklch(0.3 0 0) 0deg, oklch(0.7 0 0) 34deg, oklch(1 0 0) 46deg, oklch(0.82 0 0) 54deg, oklch(0.5 0 0) 74deg, oklch(0.16 0 0) 96deg, oklch(0.3 0 0) 120deg",
@@ -131,6 +138,7 @@
           "glass-content": "oklch(var(--glass-base) / calc(1 - (1 - var(--glass-cover-work)) / max(1 - var(--glass-cover-body), 0.001)))",
           "chrome-fill-shadow": "inset 0 1px 0 var(--chrome-fill-hi), inset 0 -1px 0 var(--chrome-fill-lo), 0 1px 3px var(--chrome-fill-drop), 0 0 0 1px var(--chrome-edge)",
           "chrome-led-shadow": "inset 0 1px 0 var(--chrome-led-hi), inset 0 -1px 0 var(--chrome-led-lo), 0 1px 3px var(--chrome-led-drop), 0 0 0 1px var(--chrome-edge)",
+          "chrome-copper-shadow": "inset 0 1px 0 var(--chrome-copper-hi), inset 0 -1px 0 var(--chrome-copper-lo), 0 1px 3px var(--chrome-copper-drop), 0 0 0 1px var(--chrome-edge)",
           "chrome-pressed-shadow": "inset 0 1px 2px var(--chrome-press), 0 0 0 1px var(--chrome-edge)",
           "chrome-chromatic-glints": "transparent 0deg, oklch(1 0 0 / 65%) 8deg, transparent 18deg, transparent 50deg, oklch(0 0 0 / 40%) 62deg, transparent 74deg, transparent 90deg",
           "chrome-chromatic-sheen": "oklch(1 0 0 / 35%) 0%, transparent 30%, transparent 70%, oklch(0 0 0 / 35%) 100%",
@@ -245,6 +253,13 @@
           "chrome-led-drop": "oklch(0 0 0 / 30%)",
           "chrome-led-lift": "oklch(1 0 0 / 10%)",
           "chrome-led-glow": "color-mix(in oklch, var(--live) 45%, transparent)",
+          "chrome-copper-stops": "oklch(0.86 0.09 62) 0%, oklch(0.76 0.12 55) 40%, oklch(0.63 0.12 48) 53%, oklch(0.7 0.12 52) 80%, oklch(0.8 0.1 58) 100%",
+          "chrome-copper-flat": "oklch(0.72 0.12 52)",
+          "chrome-copper-ink": "oklch(0.2 0.04 45)",
+          "chrome-copper-hi": "oklch(1 0 0 / 55%)",
+          "chrome-copper-lo": "oklch(0.35 0.08 45 / 45%)",
+          "chrome-copper-drop": "oklch(0.3 0.06 45 / 35%)",
+          "chrome-copper-lift": "oklch(1 0 0 / 14%)",
           "chrome-edge": "transparent",
           "chrome-chromatic-face-stops": "oklch(1 0 0) 0%, oklch(0.985 0 0) 60%, oklch(0.95 0 0) 100%",
           "chrome-chromatic-bands": "oklch(0.27 0 0) 0deg, oklch(0.63 0 0) 34deg, oklch(0.92 0 0) 46deg, oklch(0.74 0 0) 54deg, oklch(0.45 0 0) 74deg, oklch(0.14 0 0) 96deg, oklch(0.27 0 0) 120deg",
@@ -272,6 +287,7 @@
           "glass-content": "oklch(var(--glass-base) / calc(1 - (1 - var(--glass-cover-work)) / max(1 - var(--glass-cover-body), 0.001)))",
           "chrome-fill-shadow": "inset 0 1px 0 var(--chrome-fill-hi), inset 0 -1px 0 var(--chrome-fill-lo), 0 1px 3px var(--chrome-fill-drop), 0 0 0 1px var(--chrome-edge)",
           "chrome-led-shadow": "inset 0 1px 0 var(--chrome-led-hi), inset 0 -1px 0 var(--chrome-led-lo), 0 1px 3px var(--chrome-led-drop), 0 0 0 1px var(--chrome-edge)",
+          "chrome-copper-shadow": "inset 0 1px 0 var(--chrome-copper-hi), inset 0 -1px 0 var(--chrome-copper-lo), 0 1px 3px var(--chrome-copper-drop), 0 0 0 1px var(--chrome-edge)",
           "chrome-pressed-shadow": "inset 0 1px 2px var(--chrome-press), 0 0 0 1px var(--chrome-edge)",
           "chrome-chromatic-glints": "transparent 0deg, oklch(1 0 0 / 65%) 8deg, transparent 18deg, transparent 50deg, oklch(0 0 0 / 40%) 62deg, transparent 74deg, transparent 90deg",
           "chrome-chromatic-sheen": "oklch(1 0 0 / 35%) 0%, transparent 30%, transparent 70%, oklch(0 0 0 / 35%) 100%",
@@ -556,6 +572,25 @@
             "&::after": {
               "content": "none"
             }
+          }
+        },
+        "@utility chrome-copper": {
+          "color": "var(--chrome-copper-ink)",
+          "background-color": "var(--chrome-copper-flat)",
+          "background-image": "linear-gradient(to bottom, var(--chrome-copper-stops))",
+          "background-origin": "border-box",
+          "--tw-shadow": "var(--chrome-copper-shadow)",
+          "box-shadow": "var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)",
+          "&:is(button, a):hover:not(:disabled, [aria-disabled=\"true\"])": {
+            "background-image": "linear-gradient(var(--chrome-copper-lift), var(--chrome-copper-lift)), linear-gradient(to bottom, var(--chrome-copper-stops))"
+          },
+          "&:is(button, a):active:not(:disabled, [aria-disabled=\"true\"])": {
+            "background-image": "linear-gradient(to top, var(--chrome-copper-stops))",
+            "--tw-shadow": "var(--chrome-pressed-shadow)"
+          },
+          "&:disabled": {
+            "background-image": "none",
+            "--tw-shadow": "0 0 0 1px var(--chrome-edge)"
           }
         },
         "@keyframes chrome-led-breathe": {
@@ -1727,6 +1762,23 @@
       "files": [
         {
           "path": "components/record-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "go-live-button",
+      "type": "registry:component",
+      "title": "Go Live Button",
+      "description": "Go Live and its End livestream as one control. Polished copper, a metal of its own beside the silver primary and Record's red, that answers from the click. One width through every state.",
+      "registryDependencies": [
+        "@videorc/theme",
+        "@videorc/icons",
+        "@videorc/button"
+      ],
+      "files": [
+        {
+          "path": "components/go-live-button.tsx",
           "type": "registry:component"
         }
       ]

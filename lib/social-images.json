@@ -295,6 +295,10 @@
     "alt": "Error Boundary — videorc/ui: a pane after a crash, This pane hit a problem, with Reload pane and Copy details, in the dark theme.",
     "url": "/og/primitives-error-boundary-fb4ac257dac1.png"
   },
+  "/docs/primitives/go-live-button": {
+    "alt": "Go Live Button — videorc/ui: a Go Live button in polished copper, in the dark theme.",
+    "url": "/og/primitives-go-live-button-a2ba34353575.png"
+  },
   "/docs/primitives/kebab-context-menu": {
     "alt": "Kebab Context Menu — videorc/ui: a row's right-click menu with Rename, Show in Finder and Delete scene, in the dark theme.",
     "url": "/og/primitives-kebab-context-menu-4dfde4237846.png"
