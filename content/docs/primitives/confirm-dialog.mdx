@@ -24,7 +24,7 @@ import { ConfirmDialog } from "@/components/confirm-dialog";
   onCancel={() => setOpen(false)}
   onConfirm={deleteScene}
   open={open}
-  title="Delete saved scene?"
+  title="Delete scene?"
 />
 ```
 
@@ -33,7 +33,7 @@ import { ConfirmDialog } from "@/components/confirm-dialog";
 Every destructive action either asks first or can be undone.
 
 - **Confirm** with `ConfirmDialog` when the loss is real and hard to restore:
-  - the title is "Verb object?": "Delete saved scene?";
+  - the title is "Verb object?": "Delete scene?";
   - one sentence names exactly what is lost;
   - the safe answer ("Cancel", or "Keep …") is a ghost button with focus on open, and Escape is the same answer;
   - the destructive button reads verb + object: "Delete scene";

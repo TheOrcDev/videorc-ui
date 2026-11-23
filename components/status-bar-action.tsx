@@ -25,6 +25,13 @@ type StatusBarActionProps = {
   platform?: string;
   /** A toggle that is on. */
   pressed?: boolean;
+  /**
+   * The tooltip's words when they are neither the hint nor the whole name
+   * (the bell is named "Notifications, 2 unread"; its tooltip says
+   * "Notifications"), with the shortcut the bar has no room to print.
+   */
+  tooltip?: string;
+  tooltipAccelerator?: string;
 } & Omit<ComponentProps<"button">, "children" | "title">;
 
 /**
@@ -44,10 +51,12 @@ function StatusBarAction({
   accelerator,
   platform,
   pressed,
+  tooltip,
+  tooltipAccelerator,
   className,
   ...props
 }: StatusBarActionProps): ReactElement {
-  const tip = hint ?? (text ? undefined : label);
+  const tip = tooltip ?? hint ?? (text ? undefined : label);
   const button = (
     <button
       // A global attribute since ARIA 1.3, and Chromium reads it; the lint's
@@ -56,7 +65,13 @@ function StatusBarAction({
       aria-description={hint}
       aria-label={label}
       aria-pressed={pressed}
-      className={cn(STATUS_BAR_ACTION_CLASS, className)}
+      // An icon alone needs no side bearing for a word: a 22 px chip, so a
+      // full bar of them still fits (the Stream Manager's).
+      className={cn(
+        STATUS_BAR_ACTION_CLASS,
+        icon && !text && "px-1",
+        className
+      )}
       type="button"
       {...props}
       // After the spread: a menu or tooltip trigger rendering it keeps the slot.
@@ -85,7 +100,12 @@ function StatusBarAction({
   return (
     <Tooltip>
       <TooltipTrigger render={button} />
-      <TooltipContent side="top">{tip}</TooltipContent>
+      <TooltipContent side="top">
+        {tip}
+        {tooltipAccelerator ? (
+          <ShortcutKeys accelerator={tooltipAccelerator} platform={platform} />
+        ) : null}
+      </TooltipContent>
     </Tooltip>
   );
 }

@@ -52,8 +52,8 @@ Each tone brings one glyph in one weight. Pass `icon` to show the subject's own 
 | Token or attribute | Meaning |
 | --- | --- |
 | `rounded-row` | The 8 px row radius; no border and no shadow |
-| `bg-foreground/4` | The tint of `default`, `quiet` and `locked` |
-| `bg-success/10`, `bg-warning/10`, `bg-destructive/10` | The tone tints; the icon takes the tone colour, the text stays monochrome |
+| `bg-foreground/4` | The one neutral fill of every tone. A tone never tints the row, as it never tints a toast |
+| `text-success`, `text-warning`, `text-destructive` | The tone colours the icon only; the text stays monochrome |
 | `data-variant` | The tone, for styling a part from the alert with `group-data-[variant=…]/alert` |
 | `data-slot="alert-icon"` | The leading icon |
 
@@ -73,7 +73,7 @@ Every `<div>` prop, plus:
       "variant",
       '"default" | "quiet" | "locked" | "success" | "warning" | "destructive"',
       '"default"',
-      "The tone: the tint, the icon and the role.",
+      "The tone: the icon, its colour and the role.",
     ],
     [
       "icon",

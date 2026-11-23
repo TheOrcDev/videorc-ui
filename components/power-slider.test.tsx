@@ -129,4 +129,55 @@ describe("PowerSlider", () => {
       screen.getByText("Turn on the microphone to adjust it.")
     ).toBeInTheDocument();
   });
+
+  it("commits nothing when Escape drops a typed number", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    const onCommit = vi.fn();
+    render(
+      <PowerSlider
+        label="Mic delay"
+        max={500}
+        min={0}
+        numericInput
+        onChange={onChange}
+        onCommit={onCommit}
+        step={10}
+        value={120}
+      />
+    );
+    const input = screen.getByRole("textbox", { name: "Mic delay value" });
+    await user.clear(input);
+    await user.type(input, "300{Escape}");
+    expect(input).not.toHaveFocus();
+    expect(onChange).not.toHaveBeenCalled();
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(input).toHaveValue("120");
+  });
+
+  it("never changes while disabled, not even on a double-click", () => {
+    const onChange = vi.fn();
+    const onCommit = vi.fn();
+    const { container } = render(
+      <PowerSlider
+        defaultValue={50}
+        disabled
+        label="Noise cleanup"
+        max={100}
+        min={0}
+        onChange={onChange}
+        onCommit={onCommit}
+        value={80}
+      />
+    );
+    const track = container.querySelector(
+      '[data-slot="power-slider"] > div.relative'
+    );
+    if (!track) {
+      throw new Error("No track");
+    }
+    fireEvent.doubleClick(track);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(onCommit).not.toHaveBeenCalled();
+  });
 });

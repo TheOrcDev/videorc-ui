@@ -314,7 +314,13 @@ describe("StatusBarAction", () => {
     expect(action?.hasAttribute("title")).toBe(false);
     expect(action?.dataset.popupOpen).toBeUndefined();
     expect(action?.getAttribute("type")).toBe("button");
-    expect(action?.className).toContain(STATUS_BAR_ACTION_CLASS);
+    // An icon alone trades the word's side bearing for a 22 px chip.
+    for (const token of STATUS_BAR_ACTION_CLASS.replace("px-1.5", "px-1").split(
+      " "
+    )) {
+      expect(action?.classList.contains(token)).toBe(true);
+    }
+    expect(action?.classList.contains("px-1.5")).toBe(false);
     if (action) {
       fireEvent.click(action);
     }

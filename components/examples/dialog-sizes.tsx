@@ -16,7 +16,7 @@ const SIZES: { size: DialogSize; title: string; use: string }[] = [
   { size: "sm", title: "Rename scene", use: "384 px: a rename, one question." },
   {
     size: "md",
-    title: "Delete saved scene?",
+    title: "Delete scene?",
     use: "448 px, the default: confirmations and short forms.",
   },
   {

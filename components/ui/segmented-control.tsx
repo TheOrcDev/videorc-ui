@@ -4,8 +4,9 @@ import * as React from "react";
 
 import { useFieldLabelledBy } from "@/components/ui/field-context";
 import {
-  tabsListVariants,
-  tabsTriggerBaseClassName,
+  segmentedItemClassName,
+  segmentedTrackClassName,
+  segmentedTrackVariantClassName,
 } from "@/components/ui/tabs-variants";
 import {
   Tooltip,
@@ -16,7 +17,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * One segmented control: pick one of 2–4 exclusive options. It wears the Tabs
- * track (`tabsListVariants`) without Base UI Tabs, so it costs the initial
+ * track's look (`segmentedTrackClassName`, without the rules a TabsList takes
+ * from its Tabs root) without Base UI Tabs, so it costs the initial
  * bundle nothing (an icon option's `tooltip` uses the Tooltip every window
  * already loads).
  *
@@ -91,6 +93,7 @@ type SegmentedControlProps<T extends string = string> = Omit<
   disabledReason?: string | null;
   activationMode?: "automatic" | "manual";
   size?: "default" | "sm";
+  variant?: "default" | "lcd";
 };
 
 /**
@@ -162,6 +165,7 @@ function SegmentedControl<T extends string>({
   disabledReason,
   activationMode = "automatic",
   size = "default",
+  variant = "default",
   className,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -233,9 +237,13 @@ function SegmentedControl<T extends string>({
         {...buttonProps}
         aria-checked={checked}
         className={cn(
-          tabsTriggerBaseClassName,
-          size === "sm" ? "h-5 px-2 text-xs" : "h-6",
-          "aria-checked:text-foreground aria-checked:chrome-plate",
+          variant === "lcd"
+            ? "rounded-chip inline-flex min-w-0 flex-1 items-center justify-center px-1.5 py-0.5 text-(--lcd-display-ink-dim) uppercase outline-none hover:bg-(--lcd-display-ink-unlit) hover:text-(--lcd-display-lit) focus-visible:ring-1 focus-visible:ring-(--lcd-display-lit) disabled:pointer-events-none disabled:opacity-50 aria-checked:bg-(--lcd-display-ink-unlit) aria-checked:text-(--lcd-display-lit)"
+            : cn(
+                segmentedItemClassName,
+                size === "sm" ? "h-5 px-2 text-xs" : "h-6",
+                "aria-checked:text-foreground aria-checked:chrome-plate"
+              ),
           optionClassName
         )}
         data-checked={checked ? "" : undefined}
@@ -277,10 +285,17 @@ function SegmentedControl<T extends string>({
       aria-disabled={disabled || undefined}
       aria-labelledby={labelledBy}
       className={cn(
-        tabsListVariants({ variant: "default" }),
-        // One row when it fits; a narrow pane wraps it instead of clipping.
-        "flex-wrap",
-        size === "sm" ? "min-h-6" : "min-h-control",
+        variant === "lcd"
+          ? "flex w-full min-w-0 items-center gap-1"
+          : cn(
+              segmentedTrackClassName,
+              segmentedTrackVariantClassName,
+              // One row when it fits; a narrow pane wraps it instead of
+              // clipping, and the track grows with its rows (never a fixed
+              // height), so every option stays inside it.
+              "flex-wrap gap-y-0.5",
+              size === "sm" ? "min-h-6" : "min-h-control"
+            ),
         className
       )}
       data-size={size}

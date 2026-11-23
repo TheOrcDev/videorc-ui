@@ -386,4 +386,42 @@ describe("segmented keyboard targets", () => {
     expect(segmentedTabStop([false, true, true], 0)).toBe(1);
     expect(segmentedTabStop([false, false], -1)).toBe(-1);
   });
+
+  it("grows with its wrapped rows inside a Tabs root, never pinned to one row", () => {
+    render(
+      <div className="group/tabs" data-horizontal="">
+        <Controlled
+          aria-label="Theme"
+          changes={[]}
+          initial="dark"
+          options={THEMES}
+        />
+      </div>
+    );
+    // A TabsList's rules match any Tabs ancestor, so the track wears only the
+    // bare look: no rule keyed off a Tabs root reaches it.
+    expect(group().className).not.toContain("/tabs:");
+    expect(group().className).toContain("flex-wrap");
+    expect(group().className).toContain("min-h-control");
+    for (const candidate of radios()) {
+      expect(candidate.className).not.toContain("/tabs:");
+    }
+  });
+
+  it("draws lit words with no track in the lcd variant", () => {
+    render(
+      <Controlled
+        aria-label="Key"
+        changes={[]}
+        initial="dark"
+        options={THEMES}
+        variant="lcd"
+      />
+    );
+    expect(group().className).not.toContain("ring-border");
+    expect(radio("Dark").className).toContain(
+      "aria-checked:text-(--lcd-display-lit)"
+    );
+    expect(radio("Dark").className).not.toContain("chrome-plate");
+  });
 });

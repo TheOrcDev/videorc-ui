@@ -57,7 +57,7 @@ Tabs switch a view: a page or a pane with its own content. Choosing a value amon
 
 ## Theming
 
-The track and the trigger's shape come from `tabs-variants`, shared with Segmented control: `tabsListVariants({ variant })` and `tabsTriggerBaseClassName`. Tabs re-exports `tabsListVariants`.
+The track and the trigger's shape come from `tabs-variants`, shared with Segmented control: `tabsListVariants({ variant })` and `tabsTriggerBaseClassName`. Tabs re-exports `tabsListVariants`. Both are two layers: the bare look (`segmentedTrackClassName`, `segmentedItemClassName`), which Segmented control wears alone, plus the rules a TabsList and a TabsTrigger take from their Tabs root.
 
 | Token or attribute | Meaning |
 | --- | --- |
