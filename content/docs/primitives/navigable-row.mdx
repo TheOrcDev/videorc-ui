@@ -35,6 +35,23 @@ Use it for a fact another page owns: the Studio's Session rows, a Settings row t
 
 Don't use it for a row that changes something in place: that's a [List Row](/docs/primitives/list-row) with a control, or a [Settings row](/docs/components/field).
 
+A row that opens a popover in place (a picker under the Studio's Camera row) is the same row, so it looks like its neighbours: the popover's trigger renders it, and the row takes the trigger's props, ref and click.
+
+```tsx
+<Popover>
+  <PopoverTrigger
+    render={
+      <NavigableRow
+        label="Background"
+        leading={<Thumbnail />}
+        value="Code Demo"
+      />
+    }
+  />
+  <PopoverContent>…</PopoverContent>
+</Popover>
+```
+
 A long text value gives way first: the label keeps its width and the value truncates ("Microphone" beside "Microphone (HD Pro Webcam C920)", never "Mic…"). A control value, such as a Stop button, keeps its width instead, and the label truncates.
 
 When a value sums up several facts ("1080p · 60 fps", "2 on"), `hint` shows them on hover and on focus. `NavigableRowHintLines` puts one fact on each line. Only a row that navigates takes a hint, since only a button takes focus.
@@ -71,6 +88,12 @@ A row that navigates is a button named by its label and value; the chevron is de
     ["value", "ReactNode", null, "The fact. A string truncates."],
     ["icon", "AppIcon", null, "A 16 px duotone icon before the label."],
     [
+      "leading",
+      "ReactNode",
+      null,
+      "A small picture in the icon's place, 16 px tall. Ignored with icon.",
+    ],
+    [
       "onNavigate",
       "() => void",
       null,
@@ -83,6 +106,12 @@ A row that navigates is a button named by its label and value; the chevron is de
       "The facts the value stands for, on hover and on focus. Only with onNavigate.",
     ],
     ["className", "string", null, null],
+    [
+      "...props",
+      'ComponentProps<"button">',
+      null,
+      "Go to the button of a row that navigates, so a popover's trigger can render it.",
+    ],
   ]}
 />
 
