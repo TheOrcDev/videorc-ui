@@ -37,6 +37,7 @@ function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
 function DropdownMenuContent({
   align = "start",
   alignOffset = 0,
+  anchor,
   side = "bottom",
   sideOffset = 4,
   className,
@@ -45,13 +46,16 @@ function DropdownMenuContent({
 }: MenuPrimitive.Popup.Props &
   Pick<
     MenuPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
+    "align" | "alignOffset" | "anchor" | "side" | "sideOffset"
   >) {
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
+        // A menu opened at a point (a list's right-click) anchors there
+        // instead of at its trigger; absent, the trigger anchors it.
+        anchor={anchor}
         className="isolate z-50 outline-none"
         side={side}
         sideOffset={sideOffset}

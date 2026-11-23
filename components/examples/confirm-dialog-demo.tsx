@@ -24,7 +24,7 @@ const ConfirmDialogDemo = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)} variant="destructive">
-        Delete saved scene…
+        Delete scene…
       </Button>
       <ConfirmDialog
         cancelDisabled={deleting}
@@ -38,7 +38,7 @@ const ConfirmDialogDemo = () => {
         }}
         onConfirm={confirm}
         open={open}
-        title="Delete saved scene?"
+        title="Delete scene?"
       />
     </>
   );

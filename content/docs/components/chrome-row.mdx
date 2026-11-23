@@ -27,8 +27,8 @@ import { CHROME_ROW_CLASS } from "@/components/ui/chrome-row";
 
 | Token or attribute | Meaning |
 | --- | --- |
-| `CHROME_ROW_CLASS.live` (`chrome-row-live`) | The row that's on stream: a chrome plate, a top line, a rim and a 2 px polished edge down the left |
-| `CHROME_ROW_CLASS.member` (`chrome-row-member`) | A member's row: a plate at half strength with a 2 px edge in `--member`, so a paid message still reads louder |
+| `CHROME_ROW_CLASS.live` (`chrome-row-live`) | The row that's on stream: a chrome plate, a top line and a rim |
+| `CHROME_ROW_CLASS.member` (`chrome-row-member`) | A member's row: a plate at half strength, so a paid message still reads louder. No row has a stripe down its left |
 | `--chrome-row-*` | The plates' stops, rim and hover lift, per theme |
 
 Both plates sit on the theme's solid, so the text tiers keep their contrast whatever sits behind. Hover adds a faint lift. They're static: no transition, no motion and no `backdrop-filter`, so a long virtualized chat costs no more than a flat tint.

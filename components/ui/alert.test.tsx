@@ -114,9 +114,9 @@ describe("Alert", () => {
     );
   });
 
-  it("stays a flush row: a tint, the row radius, no border and no shadow", () => {
+  it("stays a flush row: one neutral fill, the row radius, no border and no shadow", () => {
     const tag = alertTag(<Alert variant="warning" />);
-    for (const token of ["rounded-row", "px-3", "py-2.5", "bg-warning/10"]) {
+    for (const token of ["rounded-row", "px-3", "py-2.5", "bg-foreground/4"]) {
       expect(tag).toContain(token);
     }
     expect(tag).not.toMatch(/\bborder\b|shadow/u);
@@ -125,5 +125,24 @@ describe("Alert", () => {
       "utf-8"
     );
     expect(source).not.toMatch(/\bshadow|rounded-(?:lg|xl|2xl|panel)/u);
+  });
+
+  it("never tints the row: every tone shares the neutral fill and colours only its icon", () => {
+    const tones = [
+      "default",
+      "quiet",
+      "locked",
+      "success",
+      "warning",
+      "destructive",
+    ] as const;
+    for (const variant of tones) {
+      const tag = alertTag(<Alert variant={variant} />);
+      expect(tag).toContain("bg-foreground/4");
+      expect(tag).not.toMatch(/\bbg-(?:success|warning|destructive)\//u);
+    }
+    expect(alertTag(<Alert variant="warning" />)).toContain(
+      "*:[svg]:text-warning"
+    );
   });
 });

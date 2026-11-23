@@ -61,8 +61,12 @@ Draw an option as an icon with an `aria-label`, and give it a `tooltip`: its nam
 
 Segmented control wears the same track and segment as [Tabs](/docs/components/tabs). Both read it from `tabs-variants`, a small module with no Base UI import, so a segmented control costs a window's first bundle nothing:
 
-- `tabsListVariants({ variant })` is the track.
-- `tabsTriggerBaseClassName` is one segment, before its selected state.
+- `segmentedTrackClassName` and `segmentedTrackVariantClassName` are the track.
+- `segmentedItemClassName` is one segment, before its selected state.
+
+It wears only that bare layer, never `tabsListVariants` or `tabsTriggerBaseClassName`. Those add rules keyed off a Tabs root (`group-data-horizontal/tabs:h-control`), and they match any Tabs ancestor: on a page inside [Page tabs](/docs/primitives/page-tabs) they pinned the track to one 28 px row, and a wrapped option spilled over the text under it. The track grows with its rows instead, so every option stays inside it.
+
+`variant="lcd"` draws the options as lit words on an LCD display's glass, with no track: the selected one lit, the rest dim. It reads the `--lcd-display-*` tokens the display sets, so use it only inside one.
 
 | Token or attribute | Meaning |
 | --- | --- |
@@ -72,6 +76,7 @@ Segmented control wears the same track and segment as [Tabs](/docs/components/ta
 | `min-h-control`, `min-h-6` | The `default` and `sm` track heights |
 | `data-checked`, `data-unchecked` | On every segment, as a Base UI radio marks it |
 | `data-size` | On the track: `default` or `sm` |
+| `--lcd-display-lit`, `--lcd-display-ink-dim`, `--lcd-display-ink-unlit` | The `lcd` variant's lit, dim and unlit ink, from the LCD display around it |
 
 ## Keyboard
 
@@ -122,6 +127,12 @@ Every `div` prop, plus:
     ],
     ["activationMode", '"automatic" | "manual"', '"automatic"', null],
     ["size", '"default" | "sm"', '"default"', null],
+    [
+      "variant",
+      '"default" | "lcd"',
+      '"default"',
+      "The glass track, or lit words inside an LCD display.",
+    ],
   ]}
 />
 

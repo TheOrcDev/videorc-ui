@@ -57,12 +57,15 @@ A section under another section's heading passes `headingLevel={3}`, so the outl
 | `h-5` | The action's line, as tall as the title, so a 28 px button or a switch centres on it |
 | `data-slot` | `panel-section`, `panel-section-header`, `panel-section-description`, `panel-section-action`, `panel-section-content` |
 | `data-*` | Any `data-` prop lands on the section, for tests and probes |
+| `<section>` props | The rest pass through to the section, such as drag handlers for one that takes dropped files |
 
 ## Accessibility
 
 The title is an `h2` under the toolbar's `h1`, or an `h3` with `headingLevel={3}`. A section without a title has no heading, for when the layout around it already names it. A switch or an icon button in `action` needs its own `aria-label`.
 
 ## API reference
+
+Every `<section>` prop except `title`, plus:
 
 <PropsTable
   rows={[

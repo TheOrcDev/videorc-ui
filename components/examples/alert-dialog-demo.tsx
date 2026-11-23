@@ -24,7 +24,7 @@ const AlertDialogDemo = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete saved scene?</AlertDialogTitle>
+          <AlertDialogTitle>Delete scene?</AlertDialogTitle>
           <AlertDialogDescription>
             Only the saved snapshot is deleted. Your current scene and recording
             continue.
