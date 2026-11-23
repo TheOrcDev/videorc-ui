@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { MicrophoneIcon } from "@/components/icons";
@@ -90,7 +91,8 @@ describe("NavigableRow", () => {
     expect(row).not.toHaveAttribute("title");
   });
 
-  it("is the button of a popover's trigger, chevron and all", () => {
+  it("is the button of a popover's trigger, chevron and all", async () => {
+    const ref = createRef<HTMLButtonElement>();
     render(
       <Popover>
         <PopoverTrigger
@@ -98,6 +100,7 @@ describe("NavigableRow", () => {
             <NavigableRow
               data-testid="background-row"
               label="Background"
+              ref={ref}
               leading={<span data-testid="thumbnail" />}
               value="Code Demo"
             />
@@ -116,6 +119,13 @@ describe("NavigableRow", () => {
     fireEvent.click(row);
     expect(row).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByText("Backgrounds")).toBeInTheDocument();
+    // The ref reaches the button, and Escape hands focus back to the row.
+    expect(ref.current).toBe(row);
+    fireEvent.keyDown(document.activeElement ?? document.body, {
+      key: "Escape",
+    });
+    await waitFor(() => expect(row).toHaveAttribute("aria-expanded", "false"));
+    await waitFor(() => expect(row).toHaveFocus());
   });
 });
 
