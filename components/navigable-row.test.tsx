@@ -6,6 +6,11 @@ import {
   NavigableRow,
   NavigableRowHintLines,
 } from "@/components/navigable-row";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 describe("NavigableRow", () => {
   it("is a fact with no chevron when nothing owns the value elsewhere", () => {
@@ -83,6 +88,34 @@ describe("NavigableRow", () => {
     const row = screen.getByRole("button", { name: /Destinations/u });
     expect(row).toHaveAttribute("data-slot", "navigable-row");
     expect(row).not.toHaveAttribute("title");
+  });
+
+  it("is the button of a popover's trigger, chevron and all", () => {
+    render(
+      <Popover>
+        <PopoverTrigger
+          render={
+            <NavigableRow
+              data-testid="background-row"
+              label="Background"
+              leading={<span data-testid="thumbnail" />}
+              value="Code Demo"
+            />
+          }
+        />
+        <PopoverContent>Backgrounds</PopoverContent>
+      </Popover>
+    );
+    const row = screen.getByRole("button", { name: /Background/u });
+    expect(row).toHaveAttribute("data-slot", "navigable-row");
+    expect(row).toHaveAttribute("data-testid", "background-row");
+    expect(row).toHaveAttribute("aria-expanded", "false");
+    // The thumbnail stands where an icon would, before the label.
+    expect(row.firstElementChild).toHaveAttribute("data-testid", "thumbnail");
+    expect(row.querySelector("svg")).not.toBeNull();
+    fireEvent.click(row);
+    expect(row).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("Backgrounds")).toBeInTheDocument();
   });
 });
 
