@@ -272,12 +272,33 @@ const parseHex = (hex) => {
   );
 };
 
+// CSS's oklch(): lightness 100% is 1, chroma 100% is 0.4, hue in degrees.
+const CHROMA_FULL = 0.4;
+
+const readChroma = (source) => {
+  const { n, unit } = evaluate(source);
+  return unit === "%" ? (n / FULL_PERCENT) * CHROMA_FULL : fraction(source);
+};
+
+const readHue = (source) => {
+  const { n, unit } = evaluate(source);
+  if (unit === "deg" || unit === "") {
+    return n;
+  }
+  throw new Error(`"${source}" is not a hue`);
+};
+
 const parseOklch = (body) => {
   const [components, alpha] = splitTop(body, "/");
-  const [l, c, h] = splitTop(components ?? "", " ").map(fraction);
-  if (l === undefined || c === undefined || h === undefined) {
+  const parts = splitTop(components ?? "", " ");
+  if (parts.length !== 3) {
     throw new Error(`oklch(${body}) needs three components`);
   }
+  const [l, c, h] = [
+    fraction(parts[0]),
+    readChroma(parts[1]),
+    readHue(parts[2]),
+  ];
   return {
     ...oklchToOklab(l, c, h),
     alpha: alpha === undefined ? 1 : fraction(alpha),
@@ -466,6 +487,14 @@ const placeStops = (stops) => {
   }
   if (last && last.at === undefined) {
     last.at = 1;
+  }
+  // A position before an earlier one moves up to it.
+  let furthest = 0;
+  for (const stop of placed) {
+    if (stop.at !== undefined) {
+      stop.at = Math.max(stop.at, furthest);
+      furthest = stop.at;
+    }
   }
   let start = 0;
   for (let index = 1; index < placed.length; index += 1) {

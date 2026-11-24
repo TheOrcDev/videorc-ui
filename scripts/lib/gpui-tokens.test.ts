@@ -52,6 +52,8 @@ describe("gpui tokens", () => {
     expect(hex("oklch(1 0 0 / 35%)")).toBe("0xffffff59");
     expect(hex("#ff0033")).toBe("0xff0033ff");
     expect(hex("transparent")).toBe("0x00000000");
+    // Percent chroma is of 0.4, and a hue may carry deg.
+    expect(hex("oklch(55% 60% 27deg)")).toBe(hex("oklch(0.55 0.24 27)"));
   });
 
   it("mixes premultiplied in srgb, oklab and oklch", () => {
@@ -81,6 +83,12 @@ describe("gpui tokens", () => {
     expect(bead.kind).toBe("stops");
     expect(bead.stops?.map((stop: { at?: number }) => stop.at)).toEqual([
       0, 0.55, 1,
+    ]);
+    const backwards = classify(
+      "oklch(1 0 0) 60%, oklch(0.5 0 0), oklch(0 0 0) 20%"
+    );
+    expect(backwards.stops?.map((stop: { at?: number }) => stop.at)).toEqual([
+      0.6, 0.6, 0.6,
     ]);
     const bands = classify("oklch(0.3 0 0) 0deg, oklch(0.3 0 0) 120deg");
     expect(bands.stops?.at(-1)?.at).toBeCloseTo(1 / 3);
