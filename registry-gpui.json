@@ -67,12 +67,22 @@
       "name": "icons",
       "type": "registry:lib",
       "title": "Icons",
-      "description": "The few icons the primitives draw themselves: Phosphor's regular, fill and bold weights (MIT) as SVG masks the text colour tints.",
+      "description": "The icons the primitives and the Studio draw: Phosphor's regular, fill and bold weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
           "path": "gpui/kit/src/icon.rs",
           "type": "registry:file",
           "target": "src/icon.rs"
+        },
+        {
+          "path": "gpui/kit/icons/arrow-square-out.svg",
+          "type": "registry:file",
+          "target": "icons/arrow-square-out.svg"
+        },
+        {
+          "path": "gpui/kit/icons/broadcast.svg",
+          "type": "registry:file",
+          "target": "icons/broadcast.svg"
         },
         {
           "path": "gpui/kit/icons/caret-down.svg",
@@ -110,6 +120,11 @@
           "target": "icons/dots-three-bold.svg"
         },
         {
+          "path": "gpui/kit/icons/frame-corners.svg",
+          "type": "registry:file",
+          "target": "icons/frame-corners.svg"
+        },
+        {
           "path": "gpui/kit/icons/info-fill.svg",
           "type": "registry:file",
           "target": "icons/info-fill.svg"
@@ -123,6 +138,11 @@
           "path": "gpui/kit/icons/lock-key-fill.svg",
           "type": "registry:file",
           "target": "icons/lock-key-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/warning-circle.svg",
+          "type": "registry:file",
+          "target": "icons/warning-circle.svg"
         },
         {
           "path": "gpui/kit/icons/warning-fill.svg",
