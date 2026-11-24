@@ -3,14 +3,21 @@ import { execFileSync } from "node:child_process";
 // styles/. The CSS files are the source of truth (comments and all); the
 // shadcn CLI installs CSS through an item's `cssVars` and `css`, so this
 // script converts one into the other and writes them into registry.json.
+// It also writes the GPUI flavour's tokens, gpui/kit/src/tokens.rs: the
+// theme resolved per appearance (scripts/lib/gpui-tokens.mjs).
 //
-//   node scripts/build-theme.mjs          rewrite registry.json
-//   node scripts/build-theme.mjs --check  fail if registry.json is stale
-import { readFileSync, writeFileSync } from "node:fs";
+//   node scripts/build-theme.mjs          rewrite registry.json and tokens.rs
+//   node scripts/build-theme.mjs --check  fail if either is stale
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
 import { parse } from "postcss";
 
+import { renderTokens, resolveTokens } from "./lib/gpui-tokens.mjs";
+
 const REGISTRY = "registry.json";
+const THEME = "styles/videorc.css";
+const GPUI_TOKENS = "gpui/kit/src/tokens.rs";
 const SOURCES = [
   { file: "styles/videorc.css", item: "theme" },
   { file: "styles/desktop.css", item: "desktop" },
@@ -140,11 +147,29 @@ const formatted = execFileSync(
   { encoding: "utf-8", input: next }
 );
 
+const tokens = renderTokens(resolveTokens(readFileSync(THEME, "utf-8"), THEME));
+
+const current = (file) => {
+  try {
+    return readFileSync(file, "utf-8");
+  } catch {
+    return "";
+  }
+};
+
 if (process.argv.includes("--check")) {
-  if (formatted !== readFileSync(REGISTRY, "utf-8")) {
-    console.error("registry.json is stale: run `pnpm theme:build`.");
+  const stale = [
+    [REGISTRY, formatted],
+    [GPUI_TOKENS, tokens],
+  ].filter(([file, expected]) => expected !== current(file));
+  for (const [file] of stale) {
+    console.error(`${file} is stale: run \`pnpm theme:build\`.`);
+  }
+  if (stale.length > 0) {
     process.exit(1);
   }
 } else {
   writeFileSync(REGISTRY, formatted);
+  mkdirSync(path.dirname(GPUI_TOKENS), { recursive: true });
+  writeFileSync(GPUI_TOKENS, tokens);
 }

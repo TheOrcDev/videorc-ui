@@ -54,7 +54,7 @@ pnpm typecheck
 pnpm build          # examples, theme check, registry, site
 pnpm test:e2e       # every docs page in Chrome (after a build)
 pnpm test:install   # installs every item into a Next app and a Vite app, then type-checks
-pnpm theme:build    # regenerate the theme items from styles/*.css
+pnpm theme:build    # regenerate the theme items and gpui/kit/src/tokens.rs from styles/*.css
 ```
 
 ## Licence
