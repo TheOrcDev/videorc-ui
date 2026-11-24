@@ -69,7 +69,7 @@ Copyright 2022 - 2025 Zed Industries, Inc.
 
 ## Phosphor Icons (MIT)
 
-`gpui/kit/icons/*.svg` are Phosphor's regular-weight CheckCircle, XCircle, Warning, Info, X, CaretDown and Check paths, taken from `@phosphor-icons/react` 2.1.10 (the same icons `components/icons.tsx` uses), for the GPUI primitives that draw their own icons. https://phosphoricons.com
+`gpui/kit/icons/*.svg` are Phosphor's regular-weight CheckCircle, XCircle, Warning, Info, X, CaretDown, CaretRight and Check paths and its fill-weight Info, XCircle, LockKey, CheckCircle and Warning paths, taken from `@phosphor-icons/react` 2.1.10 (the same icons `components/icons.tsx` uses), for the GPUI primitives that draw their own icons. https://phosphoricons.com
 
 ```text
 MIT License

@@ -67,7 +67,7 @@
       "name": "icons",
       "type": "registry:lib",
       "title": "Icons",
-      "description": "The few icons the primitives draw themselves: Phosphor's regular weight (MIT) as SVG masks the text colour tints.",
+      "description": "The few icons the primitives draw themselves: Phosphor's regular and fill weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
           "path": "gpui/kit/src/icon.rs",
@@ -80,9 +80,14 @@
           "target": "icons/caret-down.svg"
         },
         {
-          "path": "gpui/kit/icons/check.svg",
+          "path": "gpui/kit/icons/caret-right.svg",
           "type": "registry:file",
-          "target": "icons/check.svg"
+          "target": "icons/caret-right.svg"
+        },
+        {
+          "path": "gpui/kit/icons/check-circle-fill.svg",
+          "type": "registry:file",
+          "target": "icons/check-circle-fill.svg"
         },
         {
           "path": "gpui/kit/icons/check-circle.svg",
@@ -90,9 +95,29 @@
           "target": "icons/check-circle.svg"
         },
         {
+          "path": "gpui/kit/icons/check.svg",
+          "type": "registry:file",
+          "target": "icons/check.svg"
+        },
+        {
+          "path": "gpui/kit/icons/info-fill.svg",
+          "type": "registry:file",
+          "target": "icons/info-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/info.svg",
           "type": "registry:file",
           "target": "icons/info.svg"
+        },
+        {
+          "path": "gpui/kit/icons/lock-key-fill.svg",
+          "type": "registry:file",
+          "target": "icons/lock-key-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/warning-fill.svg",
+          "type": "registry:file",
+          "target": "icons/warning-fill.svg"
         },
         {
           "path": "gpui/kit/icons/warning.svg",
@@ -100,14 +125,19 @@
           "target": "icons/warning.svg"
         },
         {
-          "path": "gpui/kit/icons/x.svg",
+          "path": "gpui/kit/icons/x-circle-fill.svg",
           "type": "registry:file",
-          "target": "icons/x.svg"
+          "target": "icons/x-circle-fill.svg"
         },
         {
           "path": "gpui/kit/icons/x-circle.svg",
           "type": "registry:file",
           "target": "icons/x-circle.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x.svg",
+          "type": "registry:file",
+          "target": "icons/x.svg"
         }
       ],
       "meta": {
@@ -571,6 +601,193 @@
           },
           "smallvec": {
             "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:lib",
+      "title": "Alert",
+      "description": "A flush inline status row on the row radius: default, quiet, locked, success, warning and destructive tones, each with its own icon. Only destructive is an assertive alert; every other tone is a polite status.",
+      "files": [
+        {
+          "path": "gpui/kit/src/alert.rs",
+          "type": "registry:file",
+          "target": "src/alert.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "section-label",
+      "type": "registry:lib",
+      "title": "Section Label",
+      "description": "The small name over a group of rows or fields, 11 px at 600 in the tertiary tier. One recipe for the sidebar's groups, a grouped list's label and a block of fields.",
+      "files": [
+        {
+          "path": "gpui/kit/src/section_label.rs",
+          "type": "registry:file",
+          "target": "src/section_label.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "list-row",
+      "type": "registry:lib",
+      "title": "List Row",
+      "description": "The one row for every icon, title and meta list, and the inset grouped list it sits in. 32 px rows split by hairlines, facts unless they say otherwise, with a whole-row button when a row acts.",
+      "files": [
+        {
+          "path": "gpui/kit/src/list_row.rs",
+          "type": "registry:file",
+          "target": "src/list_row.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/section-label",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "navigable-row",
+      "type": "registry:lib",
+      "title": "Navigable Row",
+      "description": "A fact row of icon, label and value. When the value's home is another page, the row becomes a button with a chevron that jumps there, and a hint lists the facts a short value stands for.",
+      "files": [
+        {
+          "path": "gpui/kit/src/navigable_row.rs",
+          "type": "registry:file",
+          "target": "src/navigable_row.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/list-row",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "panel-section",
+      "type": "registry:lib",
+      "title": "Panel Section",
+      "description": "The flush section every pane is built from. A 13 px header as an h2, a 12 px description, an action on the title line, 16 px of padding and a hairline to the next section, with no box around it.",
+      "files": [
+        {
+          "path": "gpui/kit/src/panel_section.rs",
+          "type": "registry:file",
+          "target": "src/panel_section.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:lib",
+      "title": "Skeleton",
+      "description": "A muted placeholder that pulses where content is loading, on the 8 px row radius.",
+      "files": [
+        {
+          "path": "gpui/kit/src/skeleton.rs",
+          "type": "registry:file",
+          "target": "src/skeleton.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
           }
         },
         "patches": [
