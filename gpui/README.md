@@ -41,4 +41,4 @@ Each item is a registry item in `registry-gpui.json` beside the React `registry.
 
 A patch is our own copy of only the patched crate, pinned to the version it was cut from, through `[patch.crates-io]`; Videorc's plan treats a fourth one as a stop sign. Today there is one:
 
-- `patches/gpui-pre-apple/`: gpui-pre-apple 0.3.14 with system-font instances and font weights on Apple's scale, so weight 500 draws SF Medium instead of Regular. The change is `patches/gpui-pre-apple.patch`; it goes away when a gpui-pre release carries it.
+- `patches/gpui-pre-apple/`: gpui-pre-apple 0.3.14 with system-font instances and font weights on Apple's scale, so weight 500 draws SF Medium instead of Regular. The change is `patches/gpui-pre-apple.patch`; it goes away when a gpui-pre release carries the upstream fix, zed-industries/zed#67416. Every item lists it in `meta.patches`, and Videorc's `ui:check` fails while the app's root `Cargo.toml` lacks it.
