@@ -67,7 +67,7 @@
       "name": "icons",
       "type": "registry:lib",
       "title": "Icons",
-      "description": "The few icons the primitives draw themselves: Phosphor's regular and fill weights (MIT) as SVG masks the text colour tints.",
+      "description": "The few icons the primitives draw themselves: Phosphor's regular, fill and bold weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
           "path": "gpui/kit/src/icon.rs",
@@ -98,6 +98,16 @@
           "path": "gpui/kit/icons/check.svg",
           "type": "registry:file",
           "target": "icons/check.svg"
+        },
+        {
+          "path": "gpui/kit/icons/circle-notch.svg",
+          "type": "registry:file",
+          "target": "icons/circle-notch.svg"
+        },
+        {
+          "path": "gpui/kit/icons/dots-three-bold.svg",
+          "type": "registry:file",
+          "target": "icons/dots-three-bold.svg"
         },
         {
           "path": "gpui/kit/icons/info-fill.svg",
@@ -916,6 +926,10 @@
           "gpui": {
             "package": "gpui-pre",
             "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
           }
         },
         "patches": [
@@ -955,6 +969,136 @@
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:lib",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions from a button on the popup tier of the float glass: 28 px items, a destructive variant, shortcuts, checkbox and radio items and submenus. It keeps the wheel from reaching what sits behind it.",
+      "files": [
+        {
+          "path": "gpui/kit/src/dropdown_menu.rs",
+          "type": "registry:file",
+          "target": "src/dropdown_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/popover",
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:lib",
+      "title": "Context Menu",
+      "description": "A menu at the pointer on right-click or long press, with Dropdown Menu's popup tier and 28 px items. It keeps the wheel from reaching what sits behind it.",
+      "files": [
+        {
+          "path": "gpui/kit/src/context_menu.rs",
+          "type": "registry:file",
+          "target": "src/context_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/dropdown-menu",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "kebab-menu",
+      "type": "registry:lib",
+      "title": "Kebab Menu",
+      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "files": [
+        {
+          "path": "gpui/kit/src/kebab_menu.rs",
+          "type": "registry:file",
+          "target": "src/kebab_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/dropdown-menu",
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "kebab-context-menu",
+      "type": "registry:lib",
+      "title": "Kebab Context Menu",
+      "description": "The right-click twin of a row's ⋯ menu, built from the same item list so the two menus can never disagree.",
+      "files": [
+        {
+          "path": "gpui/kit/src/kebab_context_menu.rs",
+          "type": "registry:file",
+          "target": "src/kebab_context_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/context-menu",
+        "@videorc-gpui/kebab-menu",
         "@videorc-gpui/theme"
       ]
     }

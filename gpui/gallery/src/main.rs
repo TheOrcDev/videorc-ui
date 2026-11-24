@@ -10,6 +10,7 @@
 mod controls;
 mod frames;
 mod items;
+mod menus;
 mod overlays;
 mod rows;
 #[cfg(feature = "shots")]
@@ -135,6 +136,22 @@ const ITEMS: &[Item] = &[
     Item {
         name: "status-dot",
         show: frames::status_dot_page,
+    },
+    Item {
+        name: "dropdown-menu",
+        show: menus::dropdown_menu_page,
+    },
+    Item {
+        name: "context-menu",
+        show: menus::context_menu_page,
+    },
+    Item {
+        name: "kebab-menu",
+        show: menus::kebab_menu_page,
+    },
+    Item {
+        name: "kebab-context-menu",
+        show: menus::kebab_context_menu_page,
     },
 ];
 
