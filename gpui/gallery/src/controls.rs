@@ -4,8 +4,8 @@
 
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
-    Appearance, Input, InputState, Segment, SegmentedControl, Slider, SliderState, Switch, Tabs,
-    TabsVariant, ToggleGroup, ToggleItem, hsla,
+    Appearance, Checkbox, CheckboxChecked, Input, InputState, Segment, SegmentedControl, Slider,
+    SliderState, Switch, Tabs, TabsVariant, ToggleGroup, ToggleItem, hsla,
 };
 
 use crate::section;
@@ -74,6 +74,56 @@ fn row(children: Vec<AnyElement>) -> impl IntoElement {
         .items_center()
         .gap(px(12.0))
         .children(children)
+}
+
+/// `checkbox`: unchecked, checked, mixed (Select all), and disabled reason.
+pub fn checkbox_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let off = kept(a, "check-off", window, cx, |_, _| {
+        CheckboxChecked::Unchecked
+    });
+    let on = kept(a, "check-on", window, cx, |_, _| CheckboxChecked::Checked);
+    let mixed = kept(a, "check-mixed", window, cx, |_, _| CheckboxChecked::Mixed);
+    let choose = |state: &Entity<CheckboxChecked>| {
+        let state = state.clone();
+        move |next: CheckboxChecked, _: &mut Window, cx: &mut App| {
+            state.update(cx, |value, cx| {
+                *value = next;
+                cx.notify();
+            })
+        }
+    };
+    let box_ =
+        |id: &'static str, state: &Entity<CheckboxChecked>, label: &'static str, cx: &App| {
+            Checkbox::new(id)
+                .state(*state.read(cx))
+                .accessibility_label(label)
+                .on_change(choose(state))
+                .appearance(a)
+        };
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "States",
+            row(vec![
+                box_("Off", &off, "Off", cx).into_any_element(),
+                box_("On", &on, "On", cx).into_any_element(),
+                box_("Mixed", &mixed, "Select all recordings in view", cx).into_any_element(),
+            ]),
+        ))
+        .child(section(
+            t,
+            "Disabled",
+            Checkbox::new("check-off-disabled")
+                .disabled(true)
+                .disabled_reason("Finish the import before changing the selection.")
+                .accessibility_label("Select all")
+                .appearance(a),
+        ))
+        .into_any_element()
 }
 
 /// `switch`: off and on, both sizes, disabled.
