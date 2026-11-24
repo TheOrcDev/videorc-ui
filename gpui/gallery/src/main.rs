@@ -85,6 +85,10 @@ const ITEMS: &[Item] = &[
         show: overlays::tooltip_page,
     },
     Item {
+        name: "hover-card",
+        show: overlays::hover_card_page,
+    },
+    Item {
         name: "sonner",
         show: overlays::toast_page,
     },
