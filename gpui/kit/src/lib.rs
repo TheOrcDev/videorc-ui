@@ -40,6 +40,7 @@ pub mod panel_section;
 pub mod popover;
 pub mod scroll_area;
 pub mod section_label;
+pub mod segmented_control;
 pub mod select;
 pub mod shortcut_keys;
 pub mod skeleton;
@@ -52,6 +53,7 @@ pub mod switch;
 pub mod tabs;
 pub mod theme;
 pub mod toast;
+pub mod toggle_group;
 pub mod tokens;
 pub mod tooltip;
 pub mod window;
@@ -75,6 +77,7 @@ pub use panel_section::PanelSection;
 pub use popover::Popover;
 pub use scroll_area::ScrollArea;
 pub use section_label::SectionLabel;
+pub use segmented_control::{Segment, SegmentedControl};
 pub use select::Select;
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
 pub use skeleton::Skeleton;
@@ -87,6 +90,7 @@ pub use switch::Switch;
 pub use tabs::{Tabs, TabsVariant};
 pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
 pub use toast::{ToastData, ToastKind, Toaster, toast_card};
+pub use toggle_group::{ToggleGroup, ToggleItem};
 pub use tooltip::{tooltip, tooltip_with_shortcut};
 pub use window_frame::{WindowFrame, WindowHeader};
 
@@ -97,4 +101,5 @@ pub fn init(cx: &mut gpui::App) {
     // sliders and popups right to left on an Arabic or Hebrew system.
     gpui_base::LayoutDirection::Ltr.set_global(cx);
     gpui_base::init(cx);
+    segmented_control::init(cx);
 }

@@ -66,6 +66,14 @@ const ITEMS: &[Item] = &[
         show: controls::tabs_page,
     },
     Item {
+        name: "toggle-group",
+        show: controls::toggle_group_page,
+    },
+    Item {
+        name: "segmented-control",
+        show: controls::segmented_control_page,
+    },
+    Item {
         name: "input",
         show: controls::input_page,
     },
