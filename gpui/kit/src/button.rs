@@ -80,8 +80,10 @@ pub struct Button {
     size: ButtonSize,
     disabled: bool,
     lit: bool,
+    selected: bool,
     ground: Option<Color>,
     accessibility_label: Option<SharedString>,
+    tooltip: Option<SharedString>,
     on_click: Option<ClickHandler>,
     children: SmallVec<[AnyElement; 2]>,
     appearance: Option<Appearance>,
@@ -96,8 +98,10 @@ impl Button {
             size: ButtonSize::Default,
             disabled: false,
             lit: false,
+            selected: false,
             ground: None,
             accessibility_label: None,
+            tooltip: None,
             on_click: None,
             children: SmallVec::new(),
             appearance: None,
@@ -143,6 +147,12 @@ impl Button {
         self
     }
 
+    /// A tooltip in the float glass's tooltip tier.
+    pub fn tooltip(mut self, text: impl Into<SharedString>) -> Self {
+        self.tooltip = Some(text.into());
+        self
+    }
+
     pub fn on_click(
         mut self,
         handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static,
@@ -155,6 +165,19 @@ impl Button {
     pub fn appearance(mut self, appearance: Appearance) -> Self {
         self.appearance = Some(appearance);
         self
+    }
+}
+
+/// A button opens a popover or a menu: it shows as expanded while open
+/// (`aria-expanded`), as the React variants do.
+impl gpui_base::Selectable for Button {
+    fn selected(mut self, selected: bool) -> Self {
+        self.selected = selected;
+        self
+    }
+
+    fn is_selected(&self) -> bool {
+        self.selected
     }
 }
 
@@ -244,9 +267,11 @@ impl RenderOnce for Button {
         let square = matches!(self.size, ButtonSize::Icon | ButtonSize::IconXs);
         let r = radius::CHIP;
 
+        let expanded = self.selected;
         let mut button = gpui_base::Button::new(self.id)
             .group(GROUP)
             .disabled(disabled)
+            .selected(expanded)
             .relative()
             .flex_none()
             .h(px(height))
@@ -265,6 +290,9 @@ impl RenderOnce for Button {
         };
         if let Some(label) = self.accessibility_label {
             button = button.accessibility_label(label);
+        }
+        if let Some(text) = self.tooltip {
+            button = button.tooltip(crate::tooltip::tooltip(text));
         }
         if let Some(on_click) = self.on_click {
             button = button.on_click(move |event, window, cx| on_click(event, window, cx));
@@ -343,7 +371,11 @@ impl RenderOnce for Button {
                 }
             }
             ButtonVariant::Solid => button
-                .bg(hsla(fade(t.primary)))
+                .bg(hsla(fade(if expanded {
+                    with_alpha(t.primary, 0.85)
+                } else {
+                    t.primary
+                })))
                 .text_color(hsla(fade(t.primary_foreground)))
                 .hover(|style| style.bg(hsla(with_alpha(t.primary, 0.85))))
                 .active(|style| style.bg(hsla(with_alpha(t.primary, 0.75))))
@@ -372,6 +404,7 @@ impl RenderOnce for Button {
                 }
             }
             ButtonVariant::Outline => button
+                .when(expanded, |button| button.bg(hsla(t.muted)))
                 .border_color(hsla(fade(t.border)))
                 .text_color(hsla(fade(t.foreground)))
                 .hover(|style| style.bg(hsla(t.muted)))
@@ -383,6 +416,7 @@ impl RenderOnce for Button {
                     t.muted
                 };
                 button
+                    .when(expanded, |button| button.bg(hsla(hover)))
                     .text_color(hsla(fade(t.foreground)))
                     .hover(|style| style.bg(hsla(hover)))
                     .child(content)

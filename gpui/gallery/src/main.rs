@@ -8,15 +8,16 @@
 
 mod controls;
 mod items;
+mod overlays;
 
 use std::time::Duration;
 
 use gpui::{
-    AnyElement, App, Bounds, Context, FontWeight, MouseButton, MouseDownEvent, Window, div,
+    AnyElement, App, Bounds, Context, Entity, FontWeight, MouseButton, MouseDownEvent, Window, div,
     prelude::*, px, size,
 };
 use videorc_kit::{
-    Appearance, FONT, TypeScale, hsla,
+    Appearance, FONT, Toaster, TypeScale, hsla,
     tokens::{Color, Theme, radius, size as metrics, text},
     window,
 };
@@ -61,6 +62,30 @@ const ITEMS: &[Item] = &[
         name: "input",
         show: controls::input_page,
     },
+    Item {
+        name: "select",
+        show: overlays::select_page,
+    },
+    Item {
+        name: "dialog",
+        show: overlays::dialog_page,
+    },
+    Item {
+        name: "popover",
+        show: overlays::popover_page,
+    },
+    Item {
+        name: "tooltip",
+        show: overlays::tooltip_page,
+    },
+    Item {
+        name: "toast",
+        show: overlays::toast_page,
+    },
+    Item {
+        name: "scroll-area",
+        show: overlays::scroll_area_page,
+    },
 ];
 
 fn theme_page(appearance: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
@@ -69,6 +94,7 @@ fn theme_page(appearance: Appearance, _: &mut Window, _: &mut App) -> AnyElement
 
 struct Gallery {
     selected: usize,
+    toaster: Entity<Toaster>,
 }
 
 impl Render for Gallery {
@@ -146,6 +172,7 @@ impl Render for Gallery {
             );
         }
         div()
+            .relative()
             .size_full()
             .flex()
             .bg(hsla(frame.glass_solid))
@@ -161,6 +188,8 @@ impl Render for Gallery {
                     .child(toolbar)
                     .child(div().flex_1().flex().children(columns)),
             )
+            // The window's toasts, over everything.
+            .child(self.toaster.clone())
     }
 }
 
@@ -357,7 +386,9 @@ fn main() {
                 cx.new(|cx: &mut Context<Gallery>| {
                     cx.observe_window_appearance(window, |_, _, cx| cx.notify())
                         .detach();
-                    Gallery { selected }
+                    let toaster = cx.new(Toaster::new);
+                    cx.set_global(overlays::GalleryToaster(toaster.clone()));
+                    Gallery { selected, toaster }
                 })
             },
         )
