@@ -46,7 +46,8 @@ pub enum ToastKind {
     Error,
 }
 
-type ActionHandler = Rc<dyn Fn(&mut Window, &mut App)>;
+/// A click handler: a toast's action, or its close button.
+pub type ActionHandler = Rc<dyn Fn(&mut Window, &mut App)>;
 
 /// One toast's words and its optional action.
 #[derive(Clone)]
@@ -185,7 +186,7 @@ pub fn toast_card(
     t: &'static Theme,
     id: SharedString,
     toast: &ToastData,
-    on_close: Option<Rc<dyn Fn(&mut Window, &mut App)>>,
+    on_close: Option<ActionHandler>,
     appearance: Option<Appearance>,
 ) -> AnyElement {
     let tone = kind_icon(toast.kind, t);
@@ -260,7 +261,7 @@ impl Render for Toaster {
             .map(|(id, toast, status)| {
                 let close_id = id.clone();
                 let this = this.clone();
-                let on_close: Rc<dyn Fn(&mut Window, &mut App)> = Rc::new(move |window, cx| {
+                let on_close: ActionHandler = Rc::new(move |window, cx| {
                     let _ = this.update(cx, |toaster, cx| toaster.dismiss(&close_id, window, cx));
                 });
                 let card = gpui_base::Toast::new(id.clone())
