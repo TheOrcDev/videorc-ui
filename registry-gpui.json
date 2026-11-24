@@ -125,6 +125,16 @@
           "target": "icons/frame-corners.svg"
         },
         {
+          "path": "gpui/kit/icons/gear-six.svg",
+          "type": "registry:file",
+          "target": "icons/gear-six.svg"
+        },
+        {
+          "path": "gpui/kit/icons/image-square.svg",
+          "type": "registry:file",
+          "target": "icons/image-square.svg"
+        },
+        {
           "path": "gpui/kit/icons/info-fill.svg",
           "type": "registry:file",
           "target": "icons/info-fill.svg"
