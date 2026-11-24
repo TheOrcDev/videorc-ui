@@ -207,7 +207,7 @@ The components read the variables, so customizing is editing them in your global
 
 Running `npx shadcn@latest add @videorc/theme` again merges the registry's values back over your edits.
 
-In this repository the theme is generated. `styles/videorc.css` is the source of truth, comments and all, and `pnpm theme:build` turns it into the registry's `theme` item. Edit the stylesheet, then run the build; `pnpm theme:check` fails while the registry is out of date.
+In this repository the theme is generated. `styles/videorc.css` is the source of truth, comments and all, and `pnpm theme:build` turns it into the registry's `theme` item. The same build writes `gpui/kit/src/tokens.rs`, the tokens for the GPUI flavour: every appearance (dark, light, and each under Increase Contrast) resolved to sRGB colours, with the radii, sizes and type scale in px. Edit the stylesheet, then run the build; `pnpm theme:check` fails while the registry or the tokens are out of date.
 
 ## On a web page
 
