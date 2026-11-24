@@ -178,6 +178,16 @@
           "path": "gpui/kit/icons/x.svg",
           "type": "registry:file",
           "target": "icons/x.svg"
+        },
+        {
+          "path": "gpui/kit/icons/magnifying-glass.svg",
+          "type": "registry:file",
+          "target": "icons/magnifying-glass.svg"
+        },
+        {
+          "path": "gpui/kit/icons/bell.svg",
+          "type": "registry:file",
+          "target": "icons/bell.svg"
         }
       ],
       "meta": {
@@ -290,7 +300,7 @@
       "name": "shortcut-keys",
       "type": "registry:lib",
       "title": "Shortcut Keys",
-      "description": "The one way to show a shortcut: it reads the binding from GPUI's keymap and prints it as the platform's menus do, ⇧⌘J on macOS and Ctrl+Shift+J elsewhere.",
+      "description": "The one way to show a shortcut: it reads the binding from GPUI's keymap and prints it as the platform's menus do, \u21e7\u2318J on macOS and Ctrl+Shift+J elsewhere.",
       "files": [
         {
           "path": "gpui/kit/src/shortcut_keys.rs",
@@ -1104,7 +1114,7 @@
       "name": "kebab-menu",
       "type": "registry:lib",
       "title": "Kebab Menu",
-      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "description": "The \u22ef menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
       "files": [
         {
           "path": "gpui/kit/src/kebab_menu.rs",
@@ -1135,7 +1145,7 @@
       "name": "kebab-context-menu",
       "type": "registry:lib",
       "title": "Kebab Context Menu",
-      "description": "The right-click twin of a row's ⋯ menu, built from the same item list so the two menus can never disagree.",
+      "description": "The right-click twin of a row's \u22ef menu, built from the same item list so the two menus can never disagree.",
       "files": [
         {
           "path": "gpui/kit/src/kebab_context_menu.rs",
@@ -1158,6 +1168,40 @@
       "registryDependencies": [
         "@videorc-gpui/context-menu",
         "@videorc-gpui/kebab-menu",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "The command palette input, rows and list on the shared dialog surface.",
+      "files": [
+        {
+          "path": "gpui/kit/src/command.rs",
+          "type": "registry:file",
+          "target": "src/command.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/dialog",
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
     }
