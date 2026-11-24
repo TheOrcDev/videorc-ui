@@ -108,9 +108,14 @@ const unquote = (value) =>
  * `[workspace.dependencies]` and `[patch.crates-io]` from gpui/Cargo.toml.
  * Only one-line entries are read; a multi-line one (gpui_platform's
  * features) is skipped, as no kit file uses it.
+ *
+ * @param {string} text
+ * @returns {{ dependencies: Record<string, Record<string, string | boolean>>, patches: string[] }}
  */
 export const parseWorkspaceCargo = (text) => {
+  /** @type {Record<string, Record<string, string | boolean>>} */
   const dependencies = {};
+  /** @type {string[]} */
   const patches = [];
   let section = "";
   for (const line of text.split("\n")) {
@@ -134,6 +139,7 @@ export const parseWorkspaceCargo = (text) => {
     if (value.startsWith('"')) {
       dependencies[name] = { version: JSON.parse(value) };
     } else if (value.startsWith("{") && value.endsWith("}")) {
+      /** @type {Record<string, string | boolean>} */
       const spec = {};
       for (const pair of value.matchAll(INLINE_PAIR)) {
         spec[pair[1]] = unquote(pair[2]);
@@ -219,9 +225,13 @@ const stripJsComments = (source) =>
  * A cva's variant groups in a React file: `{ variant: [...], size: [...] }`.
  * A group given as a constant (`size: DIALOG_SIZE_CLASS`) is read from that
  * constant's object literal in the same file.
+ *
+ * @param {string} source
+ * @returns {Record<string, string[]>}
  */
 export const reactVariantGroups = (source) => {
   const code = stripJsComments(source);
+  /** @type {Record<string, string[]>} */
   const groups = {};
   const at = code.indexOf("variants: {");
   if (at === -1) {
@@ -266,6 +276,7 @@ export const twinProblems = ({ name, rustSources, reactItem, reactSources }) => 
       enums.set(enumName, variants);
     }
   }
+  /** @type {Record<string, string[]>} */
   const groups = {};
   for (const source of reactSources) {
     Object.assign(groups, reactVariantGroups(source));
