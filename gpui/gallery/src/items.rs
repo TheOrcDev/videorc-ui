@@ -1,6 +1,6 @@
 //! The gallery's pages, one per registry item, each drawn in one appearance.
 
-use gpui::{AnyElement, IntoElement, div, prelude::*, px};
+use gpui::{AnyElement, App, IntoElement, Window, div, prelude::*, px};
 use videorc_kit::{
     Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, Kbd, ShortcutKeys,
     ShortcutStyle, hsla, kbd_group,
@@ -23,7 +23,7 @@ fn button(a: Appearance, id: &'static str, label: &'static str, variant: ButtonV
 
 /// `button`: every variant, Record and Go Live, the sizes, disabled, and a
 /// shortcut inside a filled button.
-pub fn button_page(a: Appearance) -> AnyElement {
+pub fn button_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     let t = a.theme();
     let variants = [
         ("default", "Continue", ButtonVariant::Default),
@@ -123,7 +123,7 @@ pub fn button_page(a: Appearance) -> AnyElement {
 }
 
 /// `badge`: every variant.
-pub fn badge_page(a: Appearance) -> AnyElement {
+pub fn badge_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     let t = a.theme();
     let badges = [
         ("Default", BadgeVariant::Default),
@@ -155,7 +155,7 @@ pub fn badge_page(a: Appearance) -> AnyElement {
 
 /// `kbd` and `shortcut-keys`: a key chip, a group, and shortcuts as macOS
 /// and as Windows and Linux print them.
-pub fn kbd_page(a: Appearance) -> AnyElement {
+pub fn kbd_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     let t = a.theme();
     let shortcut = |source: &'static str, mac: bool| {
         ShortcutKeys::keystrokes(source)
