@@ -1,11 +1,11 @@
 //! The gallery's pages for the controls that keep a value: Switch, Slider,
-//! Tabs, Input, ToggleGroup and SegmentedControl. Each column keeps its own
-//! values, keyed by appearance.
+//! Tabs, Input, Textarea, ToggleGroup and SegmentedControl. Each column keeps
+//! its own values, keyed by appearance.
 
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
     Appearance, Checkbox, CheckboxChecked, Input, InputState, Segment, SegmentedControl, Slider,
-    SliderState, Switch, Tabs, TabsVariant, ToggleGroup, ToggleItem, hsla,
+    SliderState, Switch, Tabs, TabsVariant, Textarea, TextareaState, ToggleGroup, ToggleItem, hsla,
 };
 
 use crate::section;
@@ -467,6 +467,84 @@ pub fn input_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElemen
                 )
                 .child(
                     Input::new("off", &off)
+                        .disabled(true)
+                        .accessibility_label("Locked")
+                        .appearance(a),
+                ),
+        ))
+        .into_any_element()
+}
+
+/// `textarea`: empty with a placeholder, filled, invalid and disabled.
+pub fn textarea_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let field = |placeholder: &'static str, value: &'static str| {
+        move |window: &mut Window, cx: &mut App| -> Entity<TextareaState> {
+            cx.new(|cx| {
+                TextareaState::new(window, cx)
+                    .placeholder(placeholder)
+                    .default_value(value)
+            })
+        }
+    };
+    let empty = held(
+        a,
+        "textarea-empty",
+        window,
+        cx,
+        field("Optional description", ""),
+    );
+    let filled = held(
+        a,
+        "textarea-filled",
+        window,
+        cx,
+        field("", "Talking through the new scene presets tonight."),
+    );
+    let invalid = held(
+        a,
+        "textarea-invalid",
+        window,
+        cx,
+        field("", "Too long for this destination."),
+    );
+    let off = held(
+        a,
+        "textarea-off",
+        window,
+        cx,
+        field("Locked while live", ""),
+    );
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(12.0))
+        .w(px(320.0))
+        .child(section(
+            t,
+            "Fields",
+            div()
+                .flex()
+                .flex_col()
+                .gap(px(8.0))
+                .child(
+                    Textarea::new("empty", &empty)
+                        .accessibility_label("Description")
+                        .appearance(a),
+                )
+                .child(
+                    Textarea::new("filled", &filled)
+                        .accessibility_label("Description")
+                        .appearance(a),
+                )
+                .child(
+                    Textarea::new("invalid", &invalid)
+                        .invalid(true)
+                        .accessibility_label("Description")
+                        .appearance(a),
+                )
+                .child(
+                    Textarea::new("off", &off)
                         .disabled(true)
                         .accessibility_label("Locked")
                         .appearance(a),

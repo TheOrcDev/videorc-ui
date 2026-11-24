@@ -82,6 +82,10 @@ const ITEMS: &[Item] = &[
         show: controls::input_page,
     },
     Item {
+        name: "textarea",
+        show: controls::textarea_page,
+    },
+    Item {
         name: "select",
         show: overlays::select_page,
     },

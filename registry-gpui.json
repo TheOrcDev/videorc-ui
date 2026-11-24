@@ -466,6 +466,38 @@
       ]
     },
     {
+      "name": "textarea",
+      "type": "registry:lib",
+      "title": "Textarea",
+      "description": "A multi-line field on gpui-base's editor: 14 px text, a recessed fill, the chip radius, a 64 px minimum and a 3 px focus ring.",
+      "files": [
+        {
+          "path": "gpui/kit/src/textarea.rs",
+          "type": "registry:file",
+          "target": "src/textarea.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:lib",
       "title": "Select",
