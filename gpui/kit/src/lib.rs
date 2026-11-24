@@ -19,8 +19,23 @@
 //! - anything that turns runs on GPUI's animation clock at 60 fps at most,
 //!   and stops under Reduce Motion.
 
+pub mod badge;
+pub mod button;
+pub mod chrome;
+pub mod kbd;
+pub mod shortcut_keys;
 pub mod theme;
 pub mod tokens;
 pub mod window;
 
-pub use theme::{Appearance, FONT, TypeScale, faded_over, hsla};
+pub use badge::{Badge, BadgeVariant};
+pub use button::{Button, ButtonSize, ButtonVariant};
+pub use kbd::{Kbd, kbd_group};
+pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
+pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
+
+/// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
+/// popovers, Reduce Motion). Call it once, before the first window opens.
+pub fn init(cx: &mut gpui::App) {
+    gpui_base::init(cx);
+}
