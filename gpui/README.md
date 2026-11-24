@@ -10,7 +10,7 @@ videorc-ui's components for [GPUI](https://www.gpui.rs), the Rust UI framework t
 | `kit/src/chrome.rs` | Liquid Chrome on S0.4's route: multi-stop fills and beads rasterised once per size and scale, the chromatic ring's turning sprites, token shadows |
 | `kit/src/button.rs`, `badge.rs`, `switch.rs`, `select.rs`, `dialog.rs`, `toast.rs`… | The primitives, each styling gpui-base's behaviour (focus, keyboard, AccessKit) with the tokens |
 | `kit/src/window.rs` | The kit's window frame: the title bar hidden, the traffic lights on the 40 px toolbar band |
-| `gallery/` | Every item in dark, light and both Increase Contrast appearances, side by side |
+| `gallery/` | Every item in dark, light and both Increase Contrast appearances, side by side; with `--features shots`, the docs' shots |
 | `kit/icons/` | The few icons the primitives draw (Phosphor, MIT) |
 | `patches/` | Our copies of patched GPUI crates (below) |
 
@@ -20,10 +20,20 @@ videorc-ui's components for [GPUI](https://www.gpui.rs), the Rust UI framework t
 cd gpui
 cargo run -p videorc-gallery                    # every item
 cargo run -p videorc-gallery -- --item theme    # open on one item
+cargo run -p videorc-gallery --features shots -- --shots ../public/gpui/shots   # the docs' shots
 cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace
 ```
 
 macOS builds with GPUI's `runtime_shaders`, so Xcode's Metal Toolchain is not needed. Linux needs the Wayland, X11, xkbcommon, fontconfig and Vulkan development packages (see `.github/workflows/gpui.yml`).
+
+## Publishing
+
+Each item is a registry item in `registry-gpui.json` beside the React `registry.json`, served at `https://ui.videorc.com/r/gpui/<item>.json` in the shadcn item shape, its files' content inlined. Videorc takes them with `pnpm ui:sync --flavour gpui <item>` into `crates/videorc-kit/src/`, and its `pnpm ui:check` fails when a synced file is edited there or its GPUI pin differs from the kit's.
+
+- **What to write by hand:** an item's name (its React twin's), title, description and the paths of its files. `pnpm gpui:registry` computes the rest from the sources and writes `public/r/gpui/`: each file's `target` (relative to the crate), `registryDependencies` from the `crate::` paths the files use, and `meta.crates`, the crates they use with this workspace's exact pins. `lib.rs` is the crate's own and ships in no item.
+- **`pnpm gpui:check`** (and the `registry` job) fails when `registry-gpui.json` is stale, a kit module is in no item, an item has no React twin or its `<Name>Variant` and `<Name>Size` differ from the twin's cva `variant` and `size`, or a shot is older than its sources.
+- **The docs' GPUI tab:** a component page whose item has a GPUI twin shows React and GPUI tabs. The GPUI tab is built from the sources: the module's `//!` header, the install lines, the gallery's shots, the gallery's page function as the usage (it builds with the kit, so it cannot drift), and the source.
+- **Shots:** `pnpm gpui:shots` builds the gallery with `--features shots` and saves each item's page, dark and light, to `public/gpui/shots/`, recording the sources each shot was taken from. GPUI renders the window's frame into an image, which it does on macOS and Windows; run it there, or run the workflow by hand with *shots* (and *commit*) ticked.
 
 ## The pin and the patches
 
@@ -31,4 +41,4 @@ macOS builds with GPUI's `runtime_shaders`, so Xcode's Metal Toolchain is not ne
 
 A patch is our own copy of only the patched crate, pinned to the version it was cut from, through `[patch.crates-io]`; Videorc's plan treats a fourth one as a stop sign. Today there is one:
 
-- `patches/gpui-pre-apple/`: gpui-pre-apple 0.3.14 with system-font instances and font weights on Apple's scale, so weight 500 draws SF Medium instead of Regular. The change is `patches/gpui-pre-apple.patch`; it goes away when a gpui-pre release carries it.
+- `patches/gpui-pre-apple/`: gpui-pre-apple 0.3.14 with system-font instances and font weights on Apple's scale, so weight 500 draws SF Medium instead of Regular. The change is `patches/gpui-pre-apple.patch`; it goes away when a gpui-pre release carries the upstream fix, zed-industries/zed#67416. Every item lists it in `meta.patches`, and Videorc's `ui:check` fails while the app's root `Cargo.toml` lacks it.

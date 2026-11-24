@@ -14,3 +14,8 @@ path = "src/main.rs"
 gpui.workspace = true
 gpui_platform.workspace = true
 videorc-kit.workspace = true
+
+[features]
+# `--shots <dir>` (src/shots.rs): GPUI's `Window::render_to_image`, which
+# GPUI builds only with its test support.
+shots = ["gpui/test-support", "gpui_platform/test-support"]

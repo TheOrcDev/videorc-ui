@@ -1,8 +1,10 @@
 name: GPUI kit
 
 # The GPUI flavour (gpui/) on the three desktop platforms: format, clippy,
-# tests, and the gallery opening. The site's build stays free of Rust;
-# Vercel runs `theme:check`, which covers gpui/kit/src/tokens.rs.
+# tests, and the gallery opening; its registry (registry-gpui.json, the twin
+# check, the shots' freshness); and, by hand, the gallery's shots for the
+# docs. The site's build stays free of Rust; Vercel runs `theme:check`, which
+# covers gpui/kit/src/tokens.rs, and `gpui:check`.
 
 on:
   pull_request:
@@ -10,18 +12,41 @@ on:
     paths:
       - "gpui/**"
       - "styles/**"
+      - "registry.json"
+      - "registry-gpui.json"
+      - "components/ui/**"
+      - "public/gpui/**"
       - "scripts/build-theme.mjs"
+      - "scripts/build-gpui-registry.mjs"
+      - "scripts/gpui-shots.mjs"
       - "scripts/lib/gpui-tokens.mjs"
+      - "scripts/lib/gpui-registry.mjs"
       - ".github/workflows/gpui.yml"
   push:
     branches: [main]
     paths:
       - "gpui/**"
       - "styles/**"
+      - "registry.json"
+      - "registry-gpui.json"
+      - "components/ui/**"
+      - "public/gpui/**"
       - "scripts/build-theme.mjs"
+      - "scripts/build-gpui-registry.mjs"
+      - "scripts/gpui-shots.mjs"
       - "scripts/lib/gpui-tokens.mjs"
+      - "scripts/lib/gpui-registry.mjs"
       - ".github/workflows/gpui.yml"
   workflow_dispatch:
+    inputs:
+      shots:
+        description: "Take the gallery's shots on macOS (the shots job)"
+        type: boolean
+        default: false
+      commit:
+        description: "Commit the shots to the branch the run is on"
+        type: boolean
+        default: false
 
 concurrency:
   group: gpui-${{ github.ref }}
@@ -31,6 +56,21 @@ permissions:
   contents: read
 
 jobs:
+  registry:
+    # Node only: registry-gpui.json is complete, every kit module is in an
+    # item, each item has a React twin with the same variants and sizes, and
+    # no shot is older than its sources.
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/build-gpui-registry.mjs --check
+      - run: node scripts/gpui-shots.mjs --check
+
   kit:
     # A draft held for Videorc plan 260's Phase 0 gate spends no runner time;
     # run it by hand with workflow_dispatch.
@@ -70,3 +110,43 @@ jobs:
       - name: The gallery opens (X11 on Xvfb, Vulkan on lavapipe)
         if: runner.os == 'Linux'
         run: xvfb-run -a cargo run -p videorc-gallery --locked -- --quit-after 5
+
+  shots:
+    # The docs' GPUI tab shows each item's gallery page, dark and light.
+    # Vercel never builds Rust, so a runner takes the shots and they are
+    # committed; `gpui-shots.mjs --check` fails once an item changes after
+    # its shot. macOS first; Windows next; GPUI's Linux renderer cannot
+    # render to an image yet.
+    if: github.event_name == 'workflow_dispatch' && inputs.shots
+    runs-on: macos-15
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    env:
+      CARGO_TERM_COLOR: always
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: gpui
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/gpui-shots.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gpui-shots
+          path: public/gpui/shots
+      - name: Commit the shots
+        if: inputs.commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/gpui/shots
+          if git diff --cached --quiet; then
+            echo "The shots are unchanged."
+          else
+            git commit -m "chore(gpui): retake the gallery's shots"
+            git push
+          fi

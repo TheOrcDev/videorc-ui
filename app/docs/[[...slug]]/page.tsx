@@ -7,9 +7,12 @@ import {
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { FlavourTabs } from "@/components/docs/flavour-tabs";
+import { GpuiDocs } from "@/components/docs/gpui-docs";
 import { PageActions } from "@/components/docs/page-actions";
 import { JsonLd } from "@/components/json-ld";
 import { buildCompactPrompt, markdownUrlFor } from "@/lib/docs/ai-prompt";
+import { getGpuiItem } from "@/lib/docs/gpui";
 import {
   registryItemForPath,
   registryItemPath,
@@ -35,6 +38,7 @@ const Page = async ({ params }: PageProps) => {
 
   const MdxContent = page.data.body;
   const item = registryItemForPath(page.url);
+  const gpuiItem = item && getGpuiItem(item.name);
   const crumbs = docsCrumbs(
     page.url,
     (pathname) => source.getPage(pathname.split("/").slice(2))?.data.title
@@ -67,7 +71,14 @@ const Page = async ({ params }: PageProps) => {
         />
       )}
       <DocsBody>
-        <MdxContent components={getMDXComponents()} />
+        {gpuiItem ? (
+          <FlavourTabs
+            gpui={<GpuiDocs item={gpuiItem} />}
+            react={<MdxContent components={getMDXComponents()} />}
+          />
+        ) : (
+          <MdxContent components={getMDXComponents()} />
+        )}
       </DocsBody>
     </DocsPage>
   );
