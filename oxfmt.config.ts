@@ -10,6 +10,8 @@ export default defineConfig({
     "**/.claude/skills",
     ".source/**",
     "public/r/**",
+    // Written by scripts/build-gpui-registry.mjs, whose --check compares it byte for byte
+    "registry-gpui.json",
     "lib/hero-chrome/**",
     "components/home/hero-chrome.tsx",
     "test-results/**",
