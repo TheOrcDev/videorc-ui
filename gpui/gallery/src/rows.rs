@@ -3,11 +3,11 @@
 //! Skeleton. The
 //! words are the Electron renderer's.
 
-use gpui::{AnyElement, App, IntoElement, SharedString, Window, div, prelude::*, px};
+use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
-    Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant,
-    GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel, Skeleton, Spinner,
-    Switch, hsla, icon,
+    Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, Empty,
+    GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel, SettingsGroup,
+    SettingsRow, Skeleton, Spinner, Switch, hsla, icon,
 };
 
 use crate::section;
@@ -318,6 +318,82 @@ pub fn spinner_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
                             .appearance(a),
                     )
                     .child("Loading"),
+            ),
+    )
+    .into_any_element()
+}
+
+/// `empty`: title, muted line and an action.
+pub fn empty_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "No recordings",
+        Empty::new()
+            .title("No recordings yet")
+            .description("Recordings you make in the Studio show up here.")
+            .appearance(a)
+            .child(
+                Button::new("open-studio")
+                    .label("Open Studio")
+                    .variant(ButtonVariant::Secondary)
+                    .appearance(a),
+            ),
+    )
+    .into_any_element()
+}
+
+/// `settings-row`: label, description and control in a grouped list.
+pub fn settings_row_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let flag = |name: &str, initial: bool| {
+        let key = SharedString::from(format!("{}/{name}", a.name()));
+        window.use_keyed_state(key, cx, |_, _| initial)
+    };
+    let save: Entity<bool> = flag("settings-save", true);
+    let chat: Entity<bool> = flag("settings-chat", false);
+    let toggle = |state: &Entity<bool>, id: &'static str, label: &'static str, cx: &App| {
+        let state = state.clone();
+        Switch::new(id)
+            .checked(*state.read(cx))
+            .accessibility_label(label)
+            .appearance(a)
+            .on_change(move |next, _, cx| {
+                state.update(cx, |value, cx| {
+                    *value = next;
+                    cx.notify();
+                })
+            })
+    };
+    section(
+        t,
+        "Grouped",
+        SettingsGroup::new()
+            .appearance(a)
+            .row(
+                SettingsRow::new("recordings-folder", "Recordings folder")
+                    .description("~/Movies/Videorc")
+                    .error("The recordings folder you chose isn't available.")
+                    .accessibility_label("Recordings folder")
+                    .appearance(a)
+                    .child(
+                        Button::new("choose-folder")
+                            .label("Choose…")
+                            .variant(ButtonVariant::Outline)
+                            .appearance(a),
+                    ),
+            )
+            .row(
+                SettingsRow::new("save-local", "Save local recording")
+                    .description("Keep a copy on this computer while you stream.")
+                    .appearance(a)
+                    .child(toggle(&save, "save-local", "Save local recording", cx)),
+            )
+            .row(
+                SettingsRow::new("chat-studio", "Chat in Studio")
+                    .description("Show chat under Session while you're on air.")
+                    .appearance(a)
+                    .child(toggle(&chat, "chat-studio", "Chat in Studio", cx)),
             ),
     )
     .into_any_element()

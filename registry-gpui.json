@@ -1323,6 +1323,100 @@
         "@videorc-gpui/theme",
         "@videorc-gpui/tooltip"
       ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:lib",
+      "title": "Empty",
+      "description": "An empty state in words only: short muted text, centred, with an optional 14 px title and an action. No media tile, no illustration and no dashed box.",
+      "files": [
+        {
+          "path": "gpui/kit/src/empty.rs",
+          "type": "registry:file",
+          "target": "src/empty.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "page-tabs",
+      "type": "registry:lib",
+      "title": "Page Tabs",
+      "description": "A page with tabs. One segmented tab list pinned in a strip under the toolbar, and only the region under it scrolls. Built on Tabs.",
+      "files": [
+        {
+          "path": "gpui/kit/src/page_tabs.rs",
+          "type": "registry:file",
+          "target": "src/page_tabs.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/tabs",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "settings-row",
+      "type": "registry:lib",
+      "title": "Settings Row",
+      "description": "One settings row: the label and its 12 px description on the left, the control on the right, in a grouped inset list. Twin of React's SettingsRow.",
+      "files": [
+        {
+          "path": "gpui/kit/src/settings_row.rs",
+          "type": "registry:file",
+          "target": "src/settings_row.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     }
   ]
 }

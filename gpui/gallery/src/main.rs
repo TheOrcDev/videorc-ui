@@ -126,12 +126,24 @@ const ITEMS: &[Item] = &[
         show: rows::panel_section_page,
     },
     Item {
+        name: "empty",
+        show: rows::empty_page,
+    },
+    Item {
+        name: "settings-row",
+        show: rows::settings_row_page,
+    },
+    Item {
         name: "spinner",
         show: rows::spinner_page,
     },
     Item {
         name: "skeleton",
         show: rows::skeleton_page,
+    },
+    Item {
+        name: "page-tabs",
+        show: controls::page_tabs_page,
     },
     Item {
         name: "window-frame",
