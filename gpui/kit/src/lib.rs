@@ -22,20 +22,31 @@
 pub mod badge;
 pub mod button;
 pub mod chrome;
+pub mod input;
 pub mod kbd;
 pub mod shortcut_keys;
+pub mod slider;
+pub mod switch;
+pub mod tabs;
 pub mod theme;
 pub mod tokens;
 pub mod window;
 
 pub use badge::{Badge, BadgeVariant};
 pub use button::{Button, ButtonSize, ButtonVariant};
+pub use input::{Input, InputState};
 pub use kbd::{Kbd, kbd_group};
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
+pub use slider::{Slider, SliderEvent, SliderState};
+pub use switch::Switch;
+pub use tabs::{Tabs, TabsVariant};
 pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
 
 /// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
 /// popovers, Reduce Motion). Call it once, before the first window opens.
 pub fn init(cx: &mut gpui::App) {
+    // Videorc's copy is English only: keep gpui-base from flipping tabs,
+    // sliders and popups right to left on an Arabic or Hebrew system.
+    gpui_base::LayoutDirection::Ltr.set_global(cx);
     gpui_base::init(cx);
 }

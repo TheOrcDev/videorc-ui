@@ -6,6 +6,7 @@
 //! that it opens. The frame around the columns follows the system's light
 //! or dark.
 
+mod controls;
 mod items;
 
 use std::time::Duration;
@@ -24,7 +25,7 @@ use videorc_kit::{
 /// appearance. S2.2c adds the primitives here, one per videorc-ui PR.
 struct Item {
     name: &'static str,
-    show: fn(Appearance) -> AnyElement,
+    show: fn(Appearance, &mut Window, &mut App) -> AnyElement,
 }
 
 const ITEMS: &[Item] = &[
@@ -44,9 +45,25 @@ const ITEMS: &[Item] = &[
         name: "kbd",
         show: items::kbd_page,
     },
+    Item {
+        name: "switch",
+        show: controls::switch_page,
+    },
+    Item {
+        name: "slider",
+        show: controls::slider_page,
+    },
+    Item {
+        name: "tabs",
+        show: controls::tabs_page,
+    },
+    Item {
+        name: "input",
+        show: controls::input_page,
+    },
 ];
 
-fn theme_page(appearance: Appearance) -> AnyElement {
+fn theme_page(appearance: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     theme(appearance.theme())
 }
 
@@ -106,24 +123,28 @@ impl Render for Gallery {
             .text_size(px(14.))
             .font_weight(FontWeight::SEMIBOLD)
             .child(item.name);
-        let columns = Appearance::ALL.into_iter().map(|appearance| {
+        let mut columns = Vec::new();
+        for appearance in Appearance::ALL {
             let theme = appearance.theme();
-            // An id per column, so the same button in four columns keeps
+            let page = (item.show)(appearance, window, cx);
+            // An id per column, so the same control in four columns keeps
             // four states.
-            div()
-                .id(appearance.name())
-                .flex_1()
-                .h_full()
-                .overflow_hidden()
-                .p(px(metrics::GUTTER))
-                .flex()
-                .flex_col()
-                .gap(px(16.))
-                .bg(hsla(theme.glass_solid))
-                .text_color(hsla(theme.foreground))
-                .child(label(theme, appearance.name()))
-                .child((item.show)(appearance))
-        });
+            columns.push(
+                div()
+                    .id(appearance.name())
+                    .flex_1()
+                    .h_full()
+                    .overflow_hidden()
+                    .p(px(metrics::GUTTER))
+                    .flex()
+                    .flex_col()
+                    .gap(px(16.))
+                    .bg(hsla(theme.glass_solid))
+                    .text_color(hsla(theme.foreground))
+                    .child(label(theme, appearance.name()))
+                    .child(page),
+            );
+        }
         div()
             .size_full()
             .flex()
