@@ -185,6 +185,26 @@ const OTHER_KEY_GLYPHS: Record<string, string> = {
   Right: "→",
   Up: "↑",
 };
+// Electron's numpad names (num4, numadd) read as the keycap does, everywhere.
+const NUMPAD_KEY_LABELS: Record<string, string> = {
+  numadd: "Num +",
+  numdec: "Num .",
+  numdiv: "Num /",
+  nummult: "Num *",
+  numsub: "Num -",
+};
+const NUMPAD_DIGIT = /^num\d$/u;
+
+function keyLabel(key: string, platform: string | undefined): string {
+  const glyph = (isMac(platform) ? MAC_KEY_GLYPHS : OTHER_KEY_GLYPHS)[key];
+  if (glyph) {
+    return glyph;
+  }
+  if (NUMPAD_DIGIT.test(key)) {
+    return `Num ${key.slice("num".length)}`;
+  }
+  return NUMPAD_KEY_LABELS[key] ?? key;
+}
 
 export function acceleratorModifierLabels(
   modifiers: readonly AcceleratorModifier[],
@@ -258,10 +278,9 @@ export function acceleratorDisplayKeys(
     }
     return accelerator?.trim() ? [accelerator.trim()] : [];
   }
-  const keyGlyphs = isMac(platform) ? MAC_KEY_GLYPHS : OTHER_KEY_GLYPHS;
   return [
     ...acceleratorModifierLabels(parsed.modifiers, platform),
-    keyGlyphs[parsed.key] ?? parsed.key,
+    keyLabel(parsed.key, platform),
   ];
 }
 

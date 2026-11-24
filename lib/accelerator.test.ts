@@ -57,6 +57,37 @@ describe("acceleratorLabel", () => {
     expect(acceleratorLabel("CmdOrCtrl+Enter", "win32")).toBe("Ctrl+Enter");
   });
 
+  it("names numpad keys as their keycaps on every platform", () => {
+    const keys = [
+      "Cmd+num4",
+      "Ctrl+numadd",
+      "Ctrl+numsub",
+      "Ctrl+nummult",
+      "Ctrl+numdiv",
+      "Ctrl+Alt+numdec",
+    ];
+    expect(keys.map((key) => acceleratorLabel(key, "darwin"))).toEqual([
+      "⌘Num 4",
+      "⌃Num +",
+      "⌃Num -",
+      "⌃Num *",
+      "⌃Num /",
+      "⌃⌥Num .",
+    ]);
+    expect(keys.map((key) => acceleratorLabel(key, "win32"))).toEqual([
+      "Ctrl+Num 4",
+      "Ctrl+Num +",
+      "Ctrl+Num -",
+      "Ctrl+Num *",
+      "Ctrl+Num /",
+      "Ctrl+Alt+Num .",
+    ]);
+    expect(acceleratorDisplayKeys("Super+num0", "linux")).toEqual([
+      "Win",
+      "Num 0",
+    ]);
+  });
+
   it("prints a lone modifier hint per platform (drag hints)", () => {
     expect(acceleratorLabel("Alt", "darwin")).toBe("⌥");
     expect(acceleratorLabel("Alt", "win32")).toBe("Alt");
