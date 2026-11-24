@@ -10,6 +10,7 @@
 mod controls;
 mod items;
 mod overlays;
+mod rows;
 #[cfg(feature = "shots")]
 mod shots;
 
@@ -89,6 +90,30 @@ const ITEMS: &[Item] = &[
     Item {
         name: "scroll-area",
         show: overlays::scroll_area_page,
+    },
+    Item {
+        name: "alert",
+        show: rows::alert_page,
+    },
+    Item {
+        name: "section-label",
+        show: rows::section_label_page,
+    },
+    Item {
+        name: "list-row",
+        show: rows::list_row_page,
+    },
+    Item {
+        name: "navigable-row",
+        show: rows::navigable_row_page,
+    },
+    Item {
+        name: "panel-section",
+        show: rows::panel_section_page,
+    },
+    Item {
+        name: "skeleton",
+        show: rows::skeleton_page,
     },
 ];
 

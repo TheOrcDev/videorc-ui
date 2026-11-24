@@ -1,6 +1,7 @@
 //! The few icons the primitives draw themselves (`components/icons.tsx`
-//! names them): Phosphor's regular weight, MIT, as SVG masks the element's
-//! text colour tints. Screens bring their own icons.
+//! names them): Phosphor, MIT, in the weight the React twin draws (regular,
+//! or fill for an alert's tone), as SVG masks the element's text colour
+//! tints. Screens bring their own icons.
 
 use gpui::{Hsla, IntoElement, Styled, Svg, px, svg};
 
@@ -20,6 +21,18 @@ pub enum IconName {
     CaretDown,
     /// A chosen option.
     Check,
+    /// `ChevronRightIcon`: a row that jumps to another page.
+    CaretRight,
+    /// An alert's tones, at Phosphor's fill weight: `InfoIcon`.
+    InfoFill,
+    /// `ErrorIcon`.
+    XCircleFill,
+    /// `SuccessIcon`.
+    CheckCircleFill,
+    /// `WarningIcon`.
+    WarningFill,
+    /// `LockIcon` (Phosphor's LockKey).
+    LockFill,
 }
 
 impl IconName {
@@ -32,6 +45,12 @@ impl IconName {
             IconName::X => include_bytes!("../icons/x.svg"),
             IconName::CaretDown => include_bytes!("../icons/caret-down.svg"),
             IconName::Check => include_bytes!("../icons/check.svg"),
+            IconName::CaretRight => include_bytes!("../icons/caret-right.svg"),
+            IconName::InfoFill => include_bytes!("../icons/info-fill.svg"),
+            IconName::XCircleFill => include_bytes!("../icons/x-circle-fill.svg"),
+            IconName::CheckCircleFill => include_bytes!("../icons/check-circle-fill.svg"),
+            IconName::WarningFill => include_bytes!("../icons/warning-fill.svg"),
+            IconName::LockFill => include_bytes!("../icons/lock-key-fill.svg"),
         }
     }
 }

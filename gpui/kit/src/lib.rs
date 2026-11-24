@@ -19,6 +19,7 @@
 //! - anything that turns runs on GPUI's animation clock at 60 fps at most,
 //!   and stops under Reduce Motion.
 
+pub mod alert;
 pub mod badge;
 pub mod button;
 pub mod chrome;
@@ -26,11 +27,16 @@ pub mod dialog;
 pub mod icon;
 pub mod input;
 pub mod kbd;
+pub mod list_row;
 pub mod motion;
+pub mod navigable_row;
+pub mod panel_section;
 pub mod popover;
 pub mod scroll_area;
+pub mod section_label;
 pub mod select;
 pub mod shortcut_keys;
+pub mod skeleton;
 pub mod slider;
 pub mod switch;
 pub mod tabs;
@@ -40,16 +46,22 @@ pub mod tokens;
 pub mod tooltip;
 pub mod window;
 
+pub use alert::{Alert, AlertVariant};
 pub use badge::{Badge, BadgeVariant};
 pub use button::{Button, ButtonSize, ButtonVariant};
 pub use dialog::{Dialog, DialogHandle, DialogSize};
 pub use icon::{IconName, icon};
 pub use input::{Input, InputState};
 pub use kbd::{Kbd, kbd_group};
+pub use list_row::{GroupedList, GroupedRow, ListRow};
+pub use navigable_row::NavigableRow;
+pub use panel_section::PanelSection;
 pub use popover::Popover;
 pub use scroll_area::ScrollArea;
+pub use section_label::SectionLabel;
 pub use select::Select;
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
+pub use skeleton::Skeleton;
 pub use slider::{Slider, SliderEvent, SliderState};
 pub use switch::Switch;
 pub use tabs::{Tabs, TabsVariant};
