@@ -1,5 +1,5 @@
-//! The gallery's pages for what floats: Dialog, Popover, Tooltip, Toast,
-//! Select, and the ScrollArea. A dialog, a popover and a select open over
+//! The gallery's pages for what floats: Dialog, Popover, HoverCard, the
+//! menus, Tooltip, Toast, Select, and the ScrollArea. A dialog, a popover and a select open over
 //! the whole window, in their column's appearance. Tooltips follow the
 //! window's appearance, as they do in the app.
 
@@ -9,8 +9,9 @@ use gpui::{
     AnyElement, App, Entity, Global, IntoElement, SharedString, Window, div, prelude::*, px,
 };
 use videorc_kit::{
-    Appearance, Button, ButtonVariant, Dialog, DialogHandle, HoverCard, Popover, ScrollArea,
-    Select, StatusDot, StatusTone, ToastData, ToastKind, Toaster, hsla, toast_card,
+    Appearance, Button, ButtonVariant, ContextMenu, Dialog, DialogHandle, DropdownMenu, HoverCard,
+    KEBAB_HOST, KebabMenu, MenuItem, Popover, ScrollArea, Select, StatusDot, StatusTone, ToastData,
+    ToastKind, Toaster, hsla, toast_card,
 };
 
 use crate::section;
@@ -136,6 +137,120 @@ pub fn hover_card_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement
                             .child("Follow alerts and the sub count need one more Twitch permission. Reconnect Twitch from Activity or Destinations → Setup."),
                     )
             }),
+    )
+    .into_any_element()
+}
+
+/// `dropdown-menu`: the chat reader's highlight position, a label over
+/// radio items.
+pub fn dropdown_menu_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let anchor = |label: &'static str, checked: bool| MenuItem::new(label).checked(checked);
+    section(
+        t,
+        "Highlight position",
+        DropdownMenu::new(key(a, "dropdown-menu"))
+            .trigger(button(
+                a,
+                key(a, "dropdown-menu-trigger"),
+                "Highlight position",
+                ButtonVariant::Outline,
+            ))
+            .label("Show highlighted messages in")
+            .item(anchor("Top left", false))
+            .item(anchor("Top right", false))
+            .item(anchor("Bottom left", false))
+            .item(anchor("Bottom right", true))
+            .appearance(a),
+    )
+    .into_any_element()
+}
+
+/// `context-menu`: right-click the Stream Manager's stats bar.
+pub fn context_menu_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let stat = |label: &'static str| MenuItem::new(label).checked(true);
+    section(
+        t,
+        "Right-click it",
+        ContextMenu::new(
+            key(a, "context-menu"),
+            div()
+                .px(px(12.0))
+                .py(px(8.0))
+                .rounded(px(8.0))
+                .border_1()
+                .border_color(hsla(t.border))
+                .text_color(hsla(t.muted_foreground))
+                .child("Clock · Viewers · Followers · Subs and members · Tips · Chat pace"),
+        )
+        .min_width(208.0)
+        .label("Stats")
+        .item(stat("Followers"))
+        .item(stat("Subs and members"))
+        .item(stat("Tips"))
+        .item(stat("Chat pace"))
+        .separator()
+        .item(MenuItem::new("Move Followers left").disabled(true))
+        .item(MenuItem::new("Move Followers right"))
+        .separator()
+        .item(MenuItem::new("Reset stats").disabled(true))
+        .label("Drag a stat to move it.")
+        .appearance(a),
+    )
+    .into_any_element()
+}
+
+/// `kebab-menu`: an asset's ⋯, which waits for its row's hover, and one
+/// whose work is running.
+pub fn kebab_menu_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let items = || {
+        [
+            MenuItem::new("Rename"),
+            MenuItem::new("Replace image…"),
+            MenuItem::new("Reveal in Finder"),
+            MenuItem::new("Reset style to defaults"),
+            MenuItem::new("Remove").destructive(true),
+        ]
+    };
+    let row = |name: &'static str, kebab: KebabMenu| {
+        div()
+            .group(KEBAB_HOST)
+            .flex()
+            .items_center()
+            .justify_between()
+            .w(px(240.0))
+            .h(px(32.0))
+            .pl(px(8.0))
+            .rounded(px(8.0))
+            .text_color(hsla(t.foreground))
+            .child(name)
+            .child(kebab)
+    };
+    let mut hover = KebabMenu::new(key(a, "kebab-menu"))
+        .label("Actions for Logo")
+        .reveal_on_hover(true)
+        .appearance(a);
+    let mut busy = KebabMenu::new(key(a, "kebab-menu-busy"))
+        .label("Actions for Lower third")
+        .busy(true)
+        .appearance(a);
+    for item in items() {
+        hover = hover.item(item);
+    }
+    for item in items() {
+        busy = busy.item(item);
+    }
+    section(
+        t,
+        "Hover the row",
+        div()
+            .flex()
+            .flex_col()
+            .gap(px(8.0))
+            .child(row("Logo", hover))
+            .child(row("Lower third", busy)),
     )
     .into_any_element()
 }

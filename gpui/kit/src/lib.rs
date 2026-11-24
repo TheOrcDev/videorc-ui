@@ -23,11 +23,14 @@ pub mod alert;
 pub mod badge;
 pub mod button;
 pub mod chrome;
+pub mod context_menu;
 pub mod dialog;
+pub mod dropdown_menu;
 pub mod hover_card;
 pub mod icon;
 pub mod input;
 pub mod kbd;
+pub mod kebab_menu;
 pub mod list_row;
 pub mod motion;
 pub mod navigable_row;
@@ -39,6 +42,7 @@ pub mod select;
 pub mod shortcut_keys;
 pub mod skeleton;
 pub mod slider;
+pub mod spinner;
 pub mod status_bar;
 pub mod status_bar_action;
 pub mod status_dot;
@@ -54,11 +58,14 @@ pub mod window_frame;
 pub use alert::{Alert, AlertVariant};
 pub use badge::{Badge, BadgeVariant};
 pub use button::{Button, ButtonSize, ButtonVariant};
+pub use context_menu::ContextMenu;
 pub use dialog::{Dialog, DialogHandle, DialogSize};
+pub use dropdown_menu::{Align, DropdownMenu, MenuEntry, MenuItem};
 pub use hover_card::HoverCard;
 pub use icon::{IconName, icon};
 pub use input::{Input, InputState};
 pub use kbd::{Kbd, kbd_group};
+pub use kebab_menu::{KEBAB_HOST, KebabMenu, kebab_menu_groups};
 pub use list_row::{GroupedList, GroupedRow, ListRow};
 pub use navigable_row::NavigableRow;
 pub use panel_section::PanelSection;
@@ -69,6 +76,7 @@ pub use select::Select;
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
 pub use skeleton::Skeleton;
 pub use slider::{Slider, SliderEvent, SliderState};
+pub use spinner::Spinner;
 pub use status_bar::{StatusBar, StatusBarHint};
 pub use status_bar_action::StatusBarAction;
 pub use status_dot::{StatusDot, StatusTone};
@@ -80,10 +88,12 @@ pub use tooltip::{tooltip, tooltip_with_shortcut};
 pub use window_frame::{WindowFrame, WindowHeader};
 
 /// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
-/// popovers, Reduce Motion). Call it once, before the first window opens.
+/// popovers, Reduce Motion) and the menus' keys. Call it once, before the
+/// first window opens.
 pub fn init(cx: &mut gpui::App) {
     // Videorc's copy is English only: keep gpui-base from flipping tabs,
     // sliders and popups right to left on an Arabic or Hebrew system.
     gpui_base::LayoutDirection::Ltr.set_global(cx);
     gpui_base::init(cx);
+    dropdown_menu::init(cx);
 }

@@ -33,6 +33,10 @@ pub enum IconName {
     WarningFill,
     /// `LockIcon` (Phosphor's LockKey).
     LockFill,
+    /// `MoreIcon` (Phosphor's DotsThree), at the bold weight a kebab draws.
+    DotsThreeBold,
+    /// `SpinnerIcon` (Phosphor's CircleNotch).
+    CircleNotch,
 }
 
 impl IconName {
@@ -51,6 +55,8 @@ impl IconName {
             IconName::CheckCircleFill => include_bytes!("../icons/check-circle-fill.svg"),
             IconName::WarningFill => include_bytes!("../icons/warning-fill.svg"),
             IconName::LockFill => include_bytes!("../icons/lock-key-fill.svg"),
+            IconName::DotsThreeBold => include_bytes!("../icons/dots-three-bold.svg"),
+            IconName::CircleNotch => include_bytes!("../icons/circle-notch.svg"),
         }
     }
 }

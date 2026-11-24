@@ -67,7 +67,7 @@
       "name": "icons",
       "type": "registry:lib",
       "title": "Icons",
-      "description": "The few icons the primitives draw themselves: Phosphor's regular and fill weights (MIT) as SVG masks the text colour tints.",
+      "description": "The few icons the primitives draw themselves: Phosphor's regular, bold and fill weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
           "path": "gpui/kit/src/icon.rs",
@@ -98,6 +98,16 @@
           "path": "gpui/kit/icons/check.svg",
           "type": "registry:file",
           "target": "icons/check.svg"
+        },
+        {
+          "path": "gpui/kit/icons/circle-notch.svg",
+          "type": "registry:file",
+          "target": "icons/circle-notch.svg"
+        },
+        {
+          "path": "gpui/kit/icons/dots-three-bold.svg",
+          "type": "registry:file",
+          "target": "icons/dots-three-bold.svg"
         },
         {
           "path": "gpui/kit/icons/info-fill.svg",
@@ -575,6 +585,112 @@
       ]
     },
     {
+      "name": "dropdown-menu",
+      "type": "registry:lib",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions from a button on the popup tier of the float glass: 28 px items, a destructive tone, shortcuts, checkbox and radio items, the arrows, Home and End, and focus back where it was on close.",
+      "files": [
+        {
+          "path": "gpui/kit/src/dropdown_menu.rs",
+          "type": "registry:file",
+          "target": "src/dropdown_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/icons",
+        "@videorc-gpui/popover",
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:lib",
+      "title": "Context Menu",
+      "description": "A menu at the pointer on right-click, with Dropdown Menu's popup tier, 28 px items and keys.",
+      "files": [
+        {
+          "path": "gpui/kit/src/context_menu.rs",
+          "type": "registry:file",
+          "target": "src/context_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/dropdown-menu",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "kebab-menu",
+      "type": "registry:lib",
+      "title": "Kebab Menu",
+      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive items last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "files": [
+        {
+          "path": "gpui/kit/src/kebab_menu.rs",
+          "type": "registry:file",
+          "target": "src/kebab_menu.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/dropdown-menu",
+        "@videorc-gpui/icons",
+        "@videorc-gpui/spinner",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "sonner",
       "type": "registry:lib",
       "title": "Toast",
@@ -800,6 +916,35 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:lib",
+      "title": "Spinner",
+      "description": "The one spinner for work in flight, on the icon set's SpinnerIcon: a status named Loading unless it sits beside its own words. It stops turning under Reduce Motion.",
+      "files": [
+        {
+          "path": "gpui/kit/src/spinner.rs",
+          "type": "registry:file",
+          "target": "src/spinner.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
     },

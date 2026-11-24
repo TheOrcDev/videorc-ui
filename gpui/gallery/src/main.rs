@@ -89,6 +89,18 @@ const ITEMS: &[Item] = &[
         show: overlays::hover_card_page,
     },
     Item {
+        name: "dropdown-menu",
+        show: overlays::dropdown_menu_page,
+    },
+    Item {
+        name: "context-menu",
+        show: overlays::context_menu_page,
+    },
+    Item {
+        name: "kebab-menu",
+        show: overlays::kebab_menu_page,
+    },
+    Item {
         name: "sonner",
         show: overlays::toast_page,
     },
@@ -115,6 +127,10 @@ const ITEMS: &[Item] = &[
     Item {
         name: "panel-section",
         show: rows::panel_section_page,
+    },
+    Item {
+        name: "spinner",
+        show: rows::spinner_page,
     },
     Item {
         name: "skeleton",
