@@ -156,13 +156,13 @@ impl RenderOnce for Select {
                 s.content_focus.clone(),
             )
         };
-        let shown = presence(
+        let sample = presence(
             SharedString::from(format!("{}/motion", self.id)),
             open,
             window,
             cx,
         );
-        let progress = shown.progress;
+        let progress = sample.progress;
         let options = Rc::new(self.options);
         let chosen = self
             .value
@@ -250,7 +250,7 @@ impl RenderOnce for Select {
             });
 
         // Drawn while open and for the 100 ms fade out after.
-        let popup = shown.should_render().then(|| {
+        let popup = sample.should_render().then(|| {
             let rows = options.iter().enumerate().map(|(index, (_, label))| {
                 let choose = choose.clone();
                 let hover_state = state.clone();
