@@ -6,6 +6,8 @@
 //! that it opens. The frame around the columns follows the system's light
 //! or dark.
 
+mod items;
+
 use std::time::Duration;
 
 use gpui::{
@@ -22,13 +24,31 @@ use videorc_kit::{
 /// appearance. S2.2c adds the primitives here, one per videorc-ui PR.
 struct Item {
     name: &'static str,
-    show: fn(&Theme) -> AnyElement,
+    show: fn(Appearance) -> AnyElement,
 }
 
-const ITEMS: &[Item] = &[Item {
-    name: "theme",
-    show: theme,
-}];
+const ITEMS: &[Item] = &[
+    Item {
+        name: "theme",
+        show: theme_page,
+    },
+    Item {
+        name: "button",
+        show: items::button_page,
+    },
+    Item {
+        name: "badge",
+        show: items::badge_page,
+    },
+    Item {
+        name: "kbd",
+        show: items::kbd_page,
+    },
+];
+
+fn theme_page(appearance: Appearance) -> AnyElement {
+    theme(appearance.theme())
+}
 
 struct Gallery {
     selected: usize,
@@ -88,7 +108,10 @@ impl Render for Gallery {
             .child(item.name);
         let columns = Appearance::ALL.into_iter().map(|appearance| {
             let theme = appearance.theme();
+            // An id per column, so the same button in four columns keeps
+            // four states.
             div()
+                .id(appearance.name())
                 .flex_1()
                 .h_full()
                 .overflow_hidden()
@@ -99,7 +122,7 @@ impl Render for Gallery {
                 .bg(hsla(theme.glass_solid))
                 .text_color(hsla(theme.foreground))
                 .child(label(theme, appearance.name()))
-                .child((item.show)(theme))
+                .child((item.show)(appearance))
         });
         div()
             .size_full()
@@ -128,7 +151,11 @@ fn label(theme: &Theme, words: &'static str) -> impl IntoElement {
         .child(words)
 }
 
-fn section(theme: &Theme, words: &'static str, body: impl IntoElement) -> impl IntoElement {
+pub(crate) fn section(
+    theme: &Theme,
+    words: &'static str,
+    body: impl IntoElement,
+) -> impl IntoElement {
     div()
         .flex()
         .flex_col()
@@ -301,6 +328,7 @@ fn main() {
         }
     }
     gpui_platform::application().run(move |cx: &mut App| {
+        videorc_kit::init(cx);
         let bounds = Bounds::centered(None, size(px(1650.), px(962.)), cx);
         cx.open_window(
             window::options("videorc-ui gallery", bounds),

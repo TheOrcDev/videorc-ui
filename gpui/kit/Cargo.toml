@@ -8,3 +8,7 @@ publish.workspace = true
 
 [dependencies]
 gpui.workspace = true
+gpui_base.workspace = true
+resvg.workspace = true
+image.workspace = true
+smallvec.workspace = true

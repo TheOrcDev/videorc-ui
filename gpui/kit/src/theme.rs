@@ -1,9 +1,53 @@
 //! Which column of the token table a window draws, and the small bridges
 //! from the generated tokens to GPUI's types.
 
-use gpui::{FontWeight, Hsla, Styled, WindowAppearance, px, rgba};
+use gpui::{App, FontWeight, Global, Hsla, Styled, Window, WindowAppearance, px, rgba};
 
 use crate::tokens::{Color, Theme, text::TextStyle};
+
+/// Whether the system asks for more contrast. The app keeps it current
+/// from the platform layer (plan 260 S2.6); without it, contrast is normal.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct IncreaseContrast(pub bool);
+
+impl Global for IncreaseContrast {}
+
+/// Whether the system asks for less motion. The app keeps it current from
+/// the platform layer; anything that turns or breathes holds still under it.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct ReduceMotion(pub bool);
+
+impl Global for ReduceMotion {}
+
+/// Whether motion is allowed now.
+pub fn motion(cx: &App) -> bool {
+    !cx.try_global::<ReduceMotion>().is_some_and(|it| it.0)
+}
+
+/// The appearance `window` shows now.
+pub fn current(window: &Window, cx: &App) -> Appearance {
+    let increase_contrast = cx.try_global::<IncreaseContrast>().is_some_and(|it| it.0);
+    Appearance::of(window.appearance(), increase_contrast)
+}
+
+/// The theme a component draws with: the one it was given (the gallery
+/// draws every appearance in one window), or its window's.
+pub fn resolve(given: Option<Appearance>, window: &Window, cx: &App) -> &'static Theme {
+    given.unwrap_or_else(|| current(window, cx)).theme()
+}
+
+/// Whether `theme` is one of the dark columns (dark, or dark with
+/// Increase Contrast): the stylesheet's `dark:` variants.
+pub fn is_dark(theme: &Theme) -> bool {
+    theme.glass_solid == crate::tokens::DARK.glass_solid
+}
+
+/// `color` with its alpha scaled by `factor`: CSS's
+/// `color-mix(in oklch, color X%, transparent)`.
+pub fn with_alpha(color: Color, factor: f32) -> Color {
+    let alpha = ((color & 0xff) as f32 * factor.clamp(0.0, 1.0)).round() as u32;
+    (color & 0xffff_ff00) | alpha.min(0xff)
+}
 
 /// The system UI font on every platform: SF on macOS, Segoe UI on Windows,
 /// the desktop's sans on Linux. It is the stylesheet's `--font-sans` stack
