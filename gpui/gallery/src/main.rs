@@ -58,6 +58,10 @@ const ITEMS: &[Item] = &[
         show: controls::switch_page,
     },
     Item {
+        name: "checkbox",
+        show: controls::checkbox_page,
+    },
+    Item {
         name: "slider",
         show: controls::slider_page,
     },

@@ -22,6 +22,7 @@
 pub mod alert;
 pub mod badge;
 pub mod button;
+pub mod checkbox;
 pub mod chrome;
 pub mod command;
 pub mod context_menu;
@@ -66,6 +67,7 @@ pub mod window_frame;
 pub use alert::{Alert, AlertVariant};
 pub use badge::{Badge, BadgeVariant};
 pub use button::{Button, ButtonSize, ButtonVariant};
+pub use checkbox::{Checkbox, CheckboxChecked};
 pub use context_menu::ContextMenu;
 pub use dialog::{Dialog, DialogHandle, DialogSize};
 pub use dropdown_menu::{DropdownMenu, Menu, MenuAlign, MenuItem, MenuItemTone, MenuShortcut};
