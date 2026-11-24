@@ -356,6 +356,10 @@ pub fn paint_corners(window: &mut Window, bounds: Bounds<Pixels>, radius: f32, g
 pub const MASK_WHITE: Color = 0xffffffff;
 pub const MASK_BLACK: Color = 0x000000ff;
 
+/// The scrim under a dialog: the stylesheet's `bg-black/30` on
+/// `DialogOverlay`, a literal there too, the same in every appearance.
+pub const SCRIM: Color = 0x0000004d;
+
 /// The square every ring sprite fills: wider than a button's diagonal, so a
 /// turned sprite still covers every corner.
 pub const RING_SPRITE: f32 = 220.0;

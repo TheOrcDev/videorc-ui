@@ -22,25 +22,39 @@
 pub mod badge;
 pub mod button;
 pub mod chrome;
+pub mod dialog;
+pub mod icon;
 pub mod input;
 pub mod kbd;
+pub mod popover;
+pub mod scroll_area;
+pub mod select;
 pub mod shortcut_keys;
 pub mod slider;
 pub mod switch;
 pub mod tabs;
 pub mod theme;
+pub mod toast;
 pub mod tokens;
+pub mod tooltip;
 pub mod window;
 
 pub use badge::{Badge, BadgeVariant};
 pub use button::{Button, ButtonSize, ButtonVariant};
+pub use dialog::{Dialog, DialogHandle, DialogSize};
+pub use icon::{IconName, icon};
 pub use input::{Input, InputState};
 pub use kbd::{Kbd, kbd_group};
+pub use popover::Popover;
+pub use scroll_area::ScrollArea;
+pub use select::Select;
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
 pub use slider::{Slider, SliderEvent, SliderState};
 pub use switch::Switch;
 pub use tabs::{Tabs, TabsVariant};
 pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
+pub use toast::{ToastData, ToastKind, Toaster, toast_card};
+pub use tooltip::{tooltip, tooltip_with_shortcut};
 
 /// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
 /// popovers, Reduce Motion). Call it once, before the first window opens.
