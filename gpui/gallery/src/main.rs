@@ -118,6 +118,10 @@ const ITEMS: &[Item] = &[
         show: rows::panel_section_page,
     },
     Item {
+        name: "spinner",
+        show: rows::spinner_page,
+    },
+    Item {
         name: "skeleton",
         show: rows::skeleton_page,
     },

@@ -834,6 +834,35 @@
       ]
     },
     {
+      "name": "spinner",
+      "type": "registry:lib",
+      "title": "Spinner",
+      "description": "The one spinner for work in flight, on the icon set's SpinnerIcon: a status named Loading unless it sits beside its own words. It stops turning under Reduce Motion.",
+      "files": [
+        {
+          "path": "gpui/kit/src/spinner.rs",
+          "type": "registry:file",
+          "target": "src/spinner.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "skeleton",
       "type": "registry:lib",
       "title": "Skeleton",
