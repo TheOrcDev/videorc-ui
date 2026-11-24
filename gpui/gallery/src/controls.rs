@@ -1,8 +1,12 @@
 //! The gallery's pages for the controls that keep a value: Switch, Slider,
-//! Tabs and Input. Each column keeps its own values, keyed by appearance.
+//! Tabs, Input, ToggleGroup and SegmentedControl. Each column keeps its own
+//! values, keyed by appearance.
 
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
-use videorc_kit::{Appearance, Input, InputState, Slider, SliderState, Switch, Tabs, TabsVariant};
+use videorc_kit::{
+    Appearance, Input, InputState, Segment, SegmentedControl, Slider, SliderState, Switch, Tabs,
+    TabsVariant, ToggleGroup, ToggleItem,
+};
 
 use crate::section;
 
@@ -190,6 +194,121 @@ pub fn tabs_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement
                 .disabled_tab("Reports")
                 .selected(*line.read(cx))
                 .on_select(choose(&line))
+                .appearance(a),
+        ))
+        .into_any_element()
+}
+
+/// `toggle-group`: filter chips, several on at once, and the outline strip.
+pub fn toggle_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let kinds = kept(a, "toggle-kinds", window, cx, |_, _| -> Vec<SharedString> {
+        vec!["silences".into(), "fillers".into()]
+    });
+    let fit = kept(a, "toggle-fit", window, cx, |_, _| -> Vec<SharedString> {
+        vec!["fit".into()]
+    });
+    let choose = |state: &Entity<Vec<SharedString>>| {
+        let state = state.clone();
+        move |next: Vec<SharedString>, _: &mut Window, cx: &mut App| {
+            state.update(cx, |value, cx| {
+                *value = next;
+                cx.notify();
+            })
+        }
+    };
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "Filters",
+            ToggleGroup::new("toggle-kinds")
+                .multiple(true)
+                .xs(true)
+                .spacing(4.0)
+                .accessibility_label("Kinds of cuts")
+                .value(kinds.read(cx).clone())
+                .item(ToggleItem::new("silences", "Silences"))
+                .item(ToggleItem::new("fillers", "Ums"))
+                .item(ToggleItem::new("retakes", "Retakes"))
+                .item(ToggleItem::new("false-starts", "False starts"))
+                .on_change(choose(&kinds))
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Outline",
+            ToggleGroup::new("toggle-fit")
+                .outline(true)
+                .accessibility_label("Fit")
+                .value(fit.read(cx).clone())
+                .item(ToggleItem::new("fit", "Fit"))
+                .item(ToggleItem::new("fill", "Fill"))
+                .item(ToggleItem::new("stretch", "Stretch"))
+                .on_change(choose(&fit))
+                .appearance(a),
+        ))
+        .into_any_element()
+}
+
+/// `segmented-control`: one of a few options on the glass Tabs track.
+pub fn segmented_control_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let theme = kept(a, "segment-theme", window, cx, |_, _| {
+        SharedString::from("system")
+    });
+    let off = kept(a, "segment-off", window, cx, |_, _| {
+        SharedString::from("light")
+    });
+    let choose = |state: &Entity<SharedString>| {
+        let state = state.clone();
+        move |next: SharedString, _: &mut Window, cx: &mut App| {
+            state.update(cx, |value, cx| {
+                *value = next;
+                cx.notify();
+            })
+        }
+    };
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "Theme",
+            SegmentedControl::new("segment-theme")
+                .accessibility_label("Theme")
+                .value(Some(theme.read(cx).clone()))
+                .option(Segment::new("light", "Light"))
+                .option(Segment::new("dark", "Dark"))
+                .option(Segment::new("system", "System"))
+                .on_change(choose(&theme))
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Small",
+            SegmentedControl::new("segment-small")
+                .small(true)
+                .accessibility_label("Corner")
+                .value(Some(SharedString::from("rounded")))
+                .option(Segment::new("square", "Square"))
+                .option(Segment::new("rounded", "Rounded"))
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Disabled",
+            SegmentedControl::new("segment-off")
+                .disabled(true)
+                .disabled_reason("Turn off the livestream to change the theme.")
+                .accessibility_label("Theme while live")
+                .value(Some(off.read(cx).clone()))
+                .option(Segment::new("light", "Light"))
+                .option(Segment::new("dark", "Dark"))
+                .option(Segment::new("system", "System"))
                 .appearance(a),
         ))
         .into_any_element()
