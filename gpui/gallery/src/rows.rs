@@ -1,12 +1,13 @@
 //! The gallery's pages for the row-and-section items: Alert, SectionLabel,
-//! ListRow with GroupedList, NavigableRow, PanelSection and Skeleton. The
+//! ListRow with GroupedList, NavigableRow, PanelSection, Spinner and
+//! Skeleton. The
 //! words are the Electron renderer's.
 
-use gpui::{AnyElement, App, IntoElement, Window, div, prelude::*, px};
+use gpui::{AnyElement, App, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
     Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant,
-    GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel, Skeleton, Switch,
-    hsla, icon,
+    GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel, Skeleton, Spinner,
+    Switch, hsla, icon,
 };
 
 use crate::section;
@@ -284,6 +285,44 @@ pub fn panel_section_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElem
 }
 
 /// `skeleton`: placeholders while content loads.
+/// `spinner`: alone it is a status named Loading; beside its own words it
+/// is silent.
+pub fn spinner_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let id = |name: &str| SharedString::from(format!("{}/{name}", a.name()));
+    section(
+        t,
+        "Work in flight",
+        div()
+            .flex()
+            .items_center()
+            .gap(px(16.0))
+            .child(Spinner::new(id("spinner")).appearance(a))
+            .child(
+                Spinner::new(id("spinner-large"))
+                    .size(24.0)
+                    .color(t.muted_foreground)
+                    .appearance(a),
+            )
+            .child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap(px(6.0))
+                    .text_color(hsla(t.muted_foreground))
+                    .child(
+                        Spinner::new(id("spinner-words"))
+                            .size(14.0)
+                            .color(t.muted_foreground)
+                            .hidden(true)
+                            .appearance(a),
+                    )
+                    .child("Loading"),
+            ),
+    )
+    .into_any_element()
+}
+
 pub fn skeleton_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     let t = a.theme();
     section(
