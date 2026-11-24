@@ -279,7 +279,7 @@ impl RenderOnce for Button {
             .children(self.label)
             .children(self.children);
 
-        let button = match self.variant {
+        match self.variant {
             ButtonVariant::Default | ButtonVariant::Record | ButtonVariant::GoLive => {
                 let Some(metal) = metal_of(t, self.variant, self.lit) else {
                     unreachable!("a metal variant")
@@ -402,8 +402,7 @@ impl RenderOnce for Button {
             ButtonVariant::Chromatic => {
                 chromatic(button, t, ground, moving, disabled, r).child(content)
             }
-        };
-        button
+        }
     }
 }
 

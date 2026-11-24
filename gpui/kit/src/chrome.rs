@@ -196,7 +196,7 @@ fn rasterise(svg: &str, w: u32, h: u32) -> Option<Arc<RenderImage>> {
     );
     let (width, height) = (pixmap.width(), pixmap.height());
     let mut data = pixmap.take();
-    for pixel in data.chunks_exact_mut(4) {
+    for pixel in data.as_chunks_mut::<4>().0 {
         // Premultiplied RGBA to straight BGRA, as GPUI's own SVG images are.
         let alpha = pixel[3] as f32 / 255.0;
         let straight = |c: u8| {
