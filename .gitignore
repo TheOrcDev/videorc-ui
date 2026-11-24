@@ -8,6 +8,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# rust (the GPUI flavour)
+/gpui/target
+
 # testing
 /coverage
 

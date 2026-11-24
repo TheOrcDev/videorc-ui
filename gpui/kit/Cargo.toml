@@ -1,0 +1,10 @@
+[package]
+name = "videorc-kit"
+version = "0.0.1"
+description = "Videorc's components for GPUI: the GPUI flavour of videorc-ui."
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gpui.workspace = true

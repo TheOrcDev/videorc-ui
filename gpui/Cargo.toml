@@ -1,0 +1,49 @@
+# The GPUI flavour of videorc-ui (Videorc plan 260, D3 and D10): one module
+# per registry item in `kit/`, beside its React twin in `components/`, and the
+# gallery that shows every item in each appearance. The site's `pnpm build`
+# never touches this folder.
+
+[workspace]
+resolver = "3"
+members = ["kit", "gallery"]
+# The patched platform crate below is a path dependency inside this folder:
+# keep it out of the workspace so `cargo fmt --all` and clippy leave Zed's
+# code as it was published.
+exclude = ["patches"]
+
+[workspace.package]
+edition = "2024"
+license = "MIT"
+publish = false
+
+# One exact pin, the same as the app's (plan 260 D1). Bumping GPUI is two PRs
+# in order: this repo first (the kit builds, the gallery is looked at), then
+# Videorc (`ui:sync`, the pin, the bump slice's checks). gpui-base 0.11.0 is
+# cut against gpui-pre 0.3.14; S2.2c's primitives take their behaviour from it.
+[workspace.dependencies]
+gpui = { package = "gpui-pre", version = "=0.3.14" }
+# `runtime_shaders`: macOS compiles the Metal shaders at launch, so neither a
+# contributor nor a runner needs Xcode's Metal Toolchain (plan 260 S0.0).
+gpui_platform = { package = "gpui-pre-platform", version = "=0.3.14", features = [
+  "font-kit",
+  "runtime_shaders",
+] }
+gpui_base = { package = "gpui-base", version = "=0.11.0" }
+videorc-kit = { path = "kit" }
+
+# GPUI patches (plan 260 D1: our own copy of only the patched crate, pinned to
+# the version it was cut from; a fourth patch is a STOP).
+#
+# 1. gpui-pre-apple 0.3.14: system-font instances, and font weights read on
+#    Apple's NSFontWeight scale, so weight 500 draws SF Medium instead of
+#    Regular (S0.4). The diff is `patches/gpui-pre-apple.patch` (+55 −1).
+#    Drop it when a gpui-pre release carries the fix upstream.
+[patch.crates-io]
+gpui-pre-apple = { path = "patches/gpui-pre-apple" }
+
+[profile.dev]
+# GPUI is slow unoptimised; the gallery stays usable in debug builds.
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 2

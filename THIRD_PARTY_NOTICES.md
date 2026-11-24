@@ -57,3 +57,12 @@ Copyright (c) 2025 Base UI contributors
 ```
 
 Each MIT licence above carries the same permission notice and warranty disclaimer as this repository's `LICENSE`.
+
+## gpui-pre-apple (Apache-2.0)
+
+`gpui/patches/gpui-pre-apple/` is a copy of the `gpui-pre-apple` 0.3.14 crate from crates.io (Zed's `gpui_apple`, snapshot of zed@f126950, https://github.com/zed-industries/zed) with one change to `src/text_system.rs`, listed in `gpui/patches/gpui-pre-apple.patch`. Its licence is in `gpui/patches/gpui-pre-apple/LICENSE-APACHE`. The GPUI flavour builds against it through `[patch.crates-io]` in `gpui/Cargo.toml`.
+
+```text
+Apache License, Version 2.0
+Copyright 2022 - 2025 Zed Industries, Inc.
+```
