@@ -31,6 +31,7 @@ pub struct Popover {
     content: Option<Content>,
     anchor: Anchor,
     width: f32,
+    flush: bool,
     appearance: Option<Appearance>,
 }
 
@@ -45,6 +46,7 @@ impl Popover {
             content: None,
             anchor: Anchor::TopLeft,
             width: 288.0,
+            flush: false,
             appearance: None,
         }
     }
@@ -97,6 +99,12 @@ impl Popover {
         self
     }
 
+    /// Flush lists supply their own header, row and footer insets.
+    pub fn flush(mut self) -> Self {
+        self.flush = true;
+        self
+    }
+
     pub fn width(mut self, width: f32) -> Self {
         self.width = width;
         self
@@ -142,6 +150,7 @@ impl RenderOnce for Popover {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let t = resolve(self.appearance, window, cx);
         let width = self.width;
+        let flush = self.flush;
         let key = SharedString::from(format!("{}/motion", self.id));
         let motion = window.use_keyed_state(key.clone(), cx, |_, _| PopoverMotion {
             open: false,
@@ -164,7 +173,7 @@ impl RenderOnce for Popover {
                 div().flex().flex_col().gap(px(12.0)).children(content),
             )
             .w(px(width))
-            .p(px(12.0))
+            .p(px(if flush { 0.0 } else { 12.0 }))
             .text_size(px(14.0))
             .text_color(hsla(t.popover_foreground))
         };
