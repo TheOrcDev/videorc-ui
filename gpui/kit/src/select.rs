@@ -18,7 +18,8 @@ use gpui_base::{
 
 use crate::{
     icon::{IconName, icon},
-    popover::popup_surface,
+    motion::{floating, presence},
+    popover::popup_glass,
     theme::{Appearance, FONT, faded_over, hsla, resolve, with_alpha},
     tokens::{Color, radius, size},
 };
@@ -155,6 +156,13 @@ impl RenderOnce for Select {
                 s.content_focus.clone(),
             )
         };
+        let shown = presence(
+            SharedString::from(format!("{}/motion", self.id)),
+            open,
+            window,
+            cx,
+        );
+        let progress = shown.progress;
         let options = Rc::new(self.options);
         let chosen = self
             .value
@@ -241,7 +249,8 @@ impl RenderOnce for Select {
                 move |bounds, _, cx| state.update(cx, |s, _| s.bounds = bounds)
             });
 
-        let popup = open.then(|| {
+        // Drawn while open and for the 100 ms fade out after.
+        let popup = shown.should_render().then(|| {
             let rows = options.iter().enumerate().map(|(index, (_, label))| {
                 let choose = choose.clone();
                 let hover_state = state.clone();
@@ -267,7 +276,12 @@ impl RenderOnce for Select {
                             });
                         }
                     })
-                    .on_click(move |_, window, cx| choose(index, window, cx))
+                    .on_click(move |_, window, cx| {
+                        // A fading copy takes no input.
+                        if open {
+                            choose(index, window, cx);
+                        }
+                    })
                     .child(label.clone())
                     .when(Some(index) == chosen, |row| {
                         row.child(div().absolute().right(px(8.0)).child(icon(
@@ -298,20 +312,27 @@ impl RenderOnce for Select {
                     .offset(px(6.0))
                     .margin(px(8.0))
                     .child(
-                        popup_surface(t)
-                            .id("select-content")
-                            .occlude()
-                            .track_focus(&content_focus)
-                            .min_w(px(f32::from(bounds.size.width).max(144.0)))
-                            .p(px(4.0))
-                            .flex()
-                            .flex_col()
-                            .font_family(FONT)
-                            .text_size(px(14.0))
-                            .on_action(move |_: &SelectDown, window, cx| down(window, cx))
-                            .on_action(move |_: &SelectUp, window, cx| up(window, cx))
-                            .on_mouse_down_out(move |_, window, cx| close(window, cx))
-                            .children(rows),
+                        floating(
+                            popup_glass(t),
+                            progress,
+                            div().flex().flex_col().children(rows),
+                        )
+                        .id("select-content")
+                        .occlude()
+                        .track_focus(&content_focus)
+                        .min_w(px(f32::from(bounds.size.width).max(144.0)))
+                        .p(px(4.0))
+                        .font_family(FONT)
+                        .text_size(px(14.0))
+                        .text_color(hsla(t.popover_foreground))
+                        .on_action(move |_: &SelectDown, window, cx| down(window, cx))
+                        .on_action(move |_: &SelectUp, window, cx| up(window, cx))
+                        .on_mouse_down_out(move |_, window, cx| {
+                            // Only while open: a fading copy takes no input.
+                            if open {
+                                close(window, cx);
+                            }
+                        }),
                     ),
             )
             .with_priority(POPUP_PRIORITY)

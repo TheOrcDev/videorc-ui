@@ -2,17 +2,24 @@
 //! behaviour (the trigger toggles it, Enter and Space too; Escape and an
 //! outside press dismiss it and focus returns; the AccessKit dialog role),
 //! the popup tier of the float glass: 288 px wide, the popup radius, p-3.
+//! It fades and grows in and fades out in 100 ms (`motion.rs`).
 
-use gpui::{Anchor, AnyElement, App, ElementId, IntoElement, Window, div, prelude::*, px};
+use std::{cell::Cell, rc::Rc};
+
+use gpui::{
+    Anchor, AnyElement, App, Bounds, ElementId, IntoElement, Pixels, SharedString, Window,
+    anchored, deferred, div, prelude::*, px,
+};
 
 use crate::{
     button::Button,
     chrome,
+    motion::{Glass, floating, presence},
     theme::{Appearance, hsla, resolve},
     tokens::{Theme, radius},
 };
 
-type Content = Box<dyn FnOnce(&mut Window, &mut App) -> AnyElement>;
+type Content = Rc<dyn Fn(&mut Window, &mut App) -> AnyElement>;
 
 #[derive(IntoElement)]
 pub struct Popover {
@@ -42,12 +49,12 @@ impl Popover {
         self
     }
 
-    /// What it holds, built when it opens.
+    /// What it holds, built while it shows (and once more as it fades out).
     pub fn content<E: IntoElement>(
         mut self,
-        content: impl FnOnce(&mut Window, &mut App) -> E + 'static,
+        content: impl Fn(&mut Window, &mut App) -> E + 'static,
     ) -> Self {
-        self.content = Some(Box::new(move |window, cx| {
+        self.content = Some(Rc::new(move |window, cx| {
             content(window, cx).into_any_element()
         }));
         self
@@ -72,6 +79,17 @@ impl Popover {
 }
 
 /// `glass-float`: the popup tier, flat and opaque, its rim and drop.
+pub fn popup_glass(t: &Theme) -> Glass {
+    Glass {
+        fill: t.glass_float,
+        rim: t.glass_float_rim,
+        drop: t.glass_float_drop,
+        radius: radius::LG,
+    }
+}
+
+/// The popup tier at rest, for a surface that does not animate (a toast,
+/// whose stack moves it).
 pub fn popup_surface(t: &Theme) -> gpui::Div {
     div()
         .border_1()
@@ -82,29 +100,82 @@ pub fn popup_surface(t: &Theme) -> gpui::Div {
         .text_color(hsla(t.popover_foreground))
 }
 
+/// What a popover keeps between frames: whether it is open, and where its
+/// popup last stood, for the fade out after gpui-base has closed it.
+struct PopoverMotion {
+    open: bool,
+    bounds: Rc<Cell<Option<Bounds<Pixels>>>>,
+}
+
 impl RenderOnce for Popover {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let t = resolve(self.appearance, window, cx);
         let width = self.width;
+        let key = SharedString::from(format!("{}/motion", self.id));
+        let motion = window.use_keyed_state(key.clone(), cx, |_, _| PopoverMotion {
+            open: false,
+            bounds: Rc::new(Cell::new(None)),
+        });
+        let (open, last) = {
+            let state = motion.read(cx);
+            (state.open, state.bounds.clone())
+        };
+        let shown = presence(key, open, window, cx);
+        let progress = shown.progress;
+
+        let surface = move |progress: f32, content: Option<AnyElement>| {
+            floating(
+                popup_glass(t),
+                progress,
+                div().flex().flex_col().gap(px(12.0)).children(content),
+            )
+            .w(px(width))
+            .p(px(12.0))
+            .text_size(px(14.0))
+            .text_color(hsla(t.popover_foreground))
+        };
+
         let content = self.content;
+        let in_popup = content.clone();
+        let record = last.clone();
         let mut popover = gpui_base::Popover::new(self.id)
             .anchor(self.anchor)
             .offset(px(6.0))
+            .on_position(move |position, _| record.set(Some(position.bounds)))
+            .on_open_change({
+                let motion = motion.clone();
+                move |now_open, _, cx| {
+                    let now_open = *now_open;
+                    motion.update(cx, |state, cx| {
+                        state.open = now_open;
+                        cx.notify();
+                    });
+                }
+            })
             .content(move |_, window, cx| {
-                popup_surface(t)
-                    .id("popover-surface")
-                    .occlude()
-                    .w(px(width))
-                    .p(px(12.0))
-                    .flex()
-                    .flex_col()
-                    .gap(px(12.0))
-                    .text_size(px(14.0))
-                    .children(content.map(|content| content(window, cx)))
+                surface(
+                    progress,
+                    in_popup.as_ref().map(|content| content(window, cx)),
+                )
+                .id("popover-surface")
+                .occlude()
             });
         if let Some(trigger) = self.trigger {
             popover = popover.trigger(trigger);
         }
-        popover
+
+        // gpui-base drops the popup the frame it closes: a still copy where it
+        // stood fades out over it, taking no input.
+        let leaving = (!open && shown.should_render())
+            .then(|| last.get())
+            .flatten()
+            .map(|bounds| {
+                deferred(anchored().position(bounds.origin).child(surface(
+                    progress,
+                    content.as_ref().map(|content| content(window, cx)),
+                )))
+                .with_priority(gpui_base::POPUP_PRIORITY)
+            });
+        div().child(popover).children(leaving)
     }
 }

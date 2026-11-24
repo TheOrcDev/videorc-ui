@@ -8,16 +8,17 @@
 //! `handle.open(window, cx)`; focus moves into the dialog as it opens.
 
 use gpui::{
-    AnyElement, App, ElementId, FontWeight, IntoElement, ParentElement, SharedString, Window,
-    WindowControlArea, div, prelude::*, px,
+    AnyElement, App, ElementId, FocusHandle, FontWeight, IntoElement, ParentElement, SharedString,
+    Window, WindowControlArea, div, prelude::*, px,
 };
 pub use gpui_base::{DialogChangeReason, DialogHandle};
 use smallvec::SmallVec;
 
 use crate::{
-    chrome::{self, SCRIM},
+    chrome::SCRIM,
     icon::{IconName, icon},
-    theme::{Appearance, FONT, hsla, resolve},
+    motion::{Glass, floating, presence},
+    theme::{Appearance, FONT, hsla, resolve, with_alpha},
     tokens::{radius, size},
 };
 
@@ -115,13 +116,21 @@ impl ParentElement for Dialog {
 impl RenderOnce for Dialog {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let t = resolve(self.appearance, window, cx);
-        // One focus handle per dialog, kept while it is rendered; focus goes
-        // in when it opens.
-        let focus = window
-            .use_keyed_state(self.id.clone(), cx, |_, cx| cx.focus_handle())
-            .read(cx)
-            .clone();
-        let focus_on_open = focus.clone();
+        // One focus handle per dialog, kept while it is rendered: focus goes
+        // in when it opens and back where it was when it closes.
+        let state = window.use_keyed_state(self.id.clone(), cx, |_, cx| DialogFocus {
+            inside: cx.focus_handle(),
+            before: None,
+        });
+        let focus = state.read(cx).inside.clone();
+        let open = self.handle.is_open();
+        let shown = presence(
+            SharedString::from(format!("{}/motion", self.id)),
+            open,
+            window,
+            cx,
+        );
+        let progress = shown.progress;
         let max_height = f32::from(window.viewport_size().height) - 32.0;
 
         let header = div()
@@ -161,57 +170,91 @@ impl RenderOnce for Dialog {
             .gap(px(8.0))
             .children(self.footer);
         let close = self.close_button.then(|| {
-            div().absolute().top(px(12.0)).right(px(12.0)).child(
-                gpui_base::DialogClose::new().trigger(move |button| {
+            div()
+                .absolute()
+                .top(px(12.0))
+                .right(px(12.0))
+                .opacity(progress)
+                .child(gpui_base::DialogClose::new().trigger(move |button| {
                     button
                         .size(px(size::CONTROL))
                         .rounded(px(radius::CHIP))
                         .hover(|style| style.bg(hsla(t.muted)))
                         .accessibility_label("Close")
                         .child(icon(IconName::X, 16.0, hsla(t.muted_foreground)))
-                }),
-            )
+                }))
         });
-        let surface = div()
-            .id("dialog-surface")
-            .occlude()
-            .relative()
-            .w(px(self.size.width()))
-            .max_h(px(max_height))
-            .flex()
-            .flex_col()
-            .gap(px(20.0))
-            .p(px(20.0))
-            .rounded(px(radius::PANEL))
-            .border_1()
-            .border_color(hsla(t.glass_float_rim))
-            .bg(hsla(t.glass_float_dialog))
-            .shadow(chrome::shadows(t.glass_float_dialog_drop))
-            .font_family(FONT)
-            .text_size(px(14.0))
-            .text_color(hsla(t.popover_foreground))
-            .child(header)
-            .child(body)
-            .child(footer)
-            .children(close);
+        let glass = Glass {
+            fill: t.glass_float_dialog,
+            rim: t.glass_float_rim,
+            drop: t.glass_float_dialog_drop,
+            radius: radius::PANEL,
+        };
+        let surface = floating(
+            glass,
+            progress,
+            div()
+                .flex_1()
+                .min_h(px(0.0))
+                .flex()
+                .flex_col()
+                .gap(px(20.0))
+                .child(header)
+                .child(body)
+                .child(footer),
+        )
+        .id("dialog-surface")
+        .occlude()
+        .w(px(self.size.width()))
+        .max_h(px(max_height))
+        .flex()
+        .flex_col()
+        .p(px(20.0))
+        .font_family(FONT)
+        .text_size(px(14.0))
+        .text_color(hsla(t.popover_foreground))
+        .children(close);
 
-        gpui_base::Dialog::new(cx)
-            .handle(self.handle)
+        let dialog = gpui_base::Dialog::new(cx)
             .focus_handle(focus)
-            .on_open_change(move |open, _, window, cx| {
-                if open {
-                    focus_on_open.focus(window, cx);
-                }
-            })
             .accessibility_label(self.title)
             // The toolbar band stays the window's drag area under the scrim.
             .dismiss_below_y(px(size::TOOLBAR))
             .backdrop(
                 div()
                     .size_full()
-                    .bg(hsla(SCRIM))
+                    .bg(hsla(with_alpha(SCRIM, progress)))
                     .window_control_area(WindowControlArea::Drag),
             )
-            .popup(surface)
+            .popup(surface);
+        if open || !shown.should_render() {
+            dialog
+                .handle(self.handle)
+                .on_open_change(move |open, _, window, cx| {
+                    if open {
+                        let before = window.focused(cx);
+                        let inside = state.update(cx, |state, _| {
+                            state.before = before;
+                            state.inside.clone()
+                        });
+                        inside.focus(window, cx);
+                    } else if let Some(before) = state.update(cx, |state, _| state.before.take()) {
+                        before.focus(window, cx);
+                    }
+                })
+        } else {
+            // Closed, fading out: gpui-base would drop it this frame, so it
+            // stays up, open, for the exit, and takes no Escape or backdrop.
+            dialog
+                .open(true)
+                .close_on_escape(false)
+                .close_on_backdrop_press(false)
+        }
     }
+}
+
+/// A dialog's focus: its own handle, and what had focus before it opened.
+struct DialogFocus {
+    inside: FocusHandle,
+    before: Option<FocusHandle>,
 }

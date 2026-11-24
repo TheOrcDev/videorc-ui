@@ -26,6 +26,7 @@ pub mod dialog;
 pub mod icon;
 pub mod input;
 pub mod kbd;
+pub mod motion;
 pub mod popover;
 pub mod scroll_area;
 pub mod select;
