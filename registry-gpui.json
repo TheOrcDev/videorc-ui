@@ -58,7 +58,9 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       }
     },
     {
@@ -146,7 +148,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       }
     },
     {
@@ -176,7 +180,9 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
@@ -204,9 +210,13 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "kbd",
@@ -228,9 +238,13 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "shortcut-keys",
@@ -252,9 +266,14 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/kbd", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/kbd",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "switch",
@@ -280,9 +299,13 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "slider",
@@ -308,9 +331,14 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/switch", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/switch",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "tabs",
@@ -336,9 +364,14 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/badge", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "input",
@@ -364,9 +397,13 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "select",
@@ -392,7 +429,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
@@ -427,9 +466,14 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/icons", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "popover",
@@ -455,9 +499,14 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/button", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "tooltip",
@@ -483,7 +532,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/shortcut-keys",
@@ -514,7 +565,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/button",
@@ -550,9 +603,13 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "alert",
@@ -574,9 +631,14 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/icons", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "section-label",
@@ -598,9 +660,13 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "list-row",
@@ -629,7 +695,9 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/section-label",
@@ -660,7 +728,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
@@ -692,9 +762,13 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "skeleton",
@@ -716,9 +790,13 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "window-frame",
@@ -743,9 +821,13 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     },
     {
       "name": "status-bar",
@@ -774,7 +856,9 @@
             "version": "1"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/shortcut-keys",
@@ -801,7 +885,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
       "registryDependencies": [
         "@videorc-gpui/shortcut-keys",
@@ -830,9 +916,14 @@
             "version": "=0.3.14"
           }
         },
-        "patches": ["gpui-pre-apple"]
+        "patches": [
+          "gpui-pre-apple"
+        ]
       },
-      "registryDependencies": ["@videorc-gpui/badge", "@videorc-gpui/theme"]
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/theme"
+      ]
     }
   ]
 }
