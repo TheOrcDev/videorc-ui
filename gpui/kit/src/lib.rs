@@ -38,6 +38,9 @@ pub mod select;
 pub mod shortcut_keys;
 pub mod skeleton;
 pub mod slider;
+pub mod status_bar;
+pub mod status_bar_action;
+pub mod status_dot;
 pub mod switch;
 pub mod tabs;
 pub mod theme;
@@ -45,6 +48,7 @@ pub mod toast;
 pub mod tokens;
 pub mod tooltip;
 pub mod window;
+pub mod window_frame;
 
 pub use alert::{Alert, AlertVariant};
 pub use badge::{Badge, BadgeVariant};
@@ -63,11 +67,15 @@ pub use select::Select;
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
 pub use skeleton::Skeleton;
 pub use slider::{Slider, SliderEvent, SliderState};
+pub use status_bar::{StatusBar, StatusBarHint};
+pub use status_bar_action::StatusBarAction;
+pub use status_dot::{StatusDot, StatusTone};
 pub use switch::Switch;
 pub use tabs::{Tabs, TabsVariant};
 pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
 pub use toast::{ToastData, ToastKind, Toaster, toast_card};
 pub use tooltip::{tooltip, tooltip_with_shortcut};
+pub use window_frame::{WindowFrame, WindowHeader};
 
 /// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
 /// popovers, Reduce Motion). Call it once, before the first window opens.
