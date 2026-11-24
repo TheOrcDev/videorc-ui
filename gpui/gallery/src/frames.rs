@@ -4,9 +4,9 @@
 
 use gpui::{AnyElement, App, IntoElement, Window, div, prelude::*, px};
 use videorc_kit::{
-    Appearance, Button, ButtonSize, ButtonVariant, IconName, ShortcutKeys, StatusBar,
-    StatusBarAction, StatusBarHint, StatusDot, StatusTone, WindowFrame, WindowHeader, hsla, icon,
-    status_bar::ACTION_ICON, tokens::radius,
+    Appearance, Button, ButtonSize, ButtonVariant, IconName, PinWindowButton, ShortcutKeys,
+    StatusBar, StatusBarAction, StatusBarHint, StatusDot, StatusTone, WindowFrame, WindowHeader,
+    hsla, icon, status_bar::ACTION_ICON, tokens::radius,
 };
 
 use crate::section;
@@ -163,6 +163,43 @@ pub fn status_bar_action_page(a: Appearance, _: &mut Window, _: &mut App) -> Any
                         .disabled(true)
                         .appearance(a),
                 ),
+        ))
+        .into_any_element()
+}
+
+/// `pin-window-button`: Keep on top in a WindowHeader (Notes) and in a
+/// status bar (Stream Manager), pinned and unpinned.
+pub fn pin_window_button_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "In a header",
+            framed(
+                a,
+                WindowFrame::new().appearance(a).child(
+                    WindowHeader::new("Notes").mac(true).appearance(a).child(
+                        PinWindowButton::new("pin-header")
+                            .pinned(true)
+                            .on_pinned_change(|_, _, _, _| {})
+                            .appearance(a),
+                    ),
+                ),
+            ),
+        ))
+        .child(section(
+            t,
+            "In a status bar",
+            StatusBar::new().appearance(a).child(
+                PinWindowButton::new("pin-status")
+                    .status_bar()
+                    .pinned(false)
+                    .on_pinned_change(|_, _, _, _| {})
+                    .appearance(a),
+            ),
         ))
         .into_any_element()
 }

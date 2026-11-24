@@ -150,6 +150,10 @@ const ITEMS: &[Item] = &[
         show: frames::status_dot_page,
     },
     Item {
+        name: "pin-window-button",
+        show: frames::pin_window_button_page,
+    },
+    Item {
         name: "dropdown-menu",
         show: menus::dropdown_menu_page,
     },
