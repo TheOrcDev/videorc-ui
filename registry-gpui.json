@@ -188,6 +188,16 @@
           "path": "gpui/kit/icons/bell.svg",
           "type": "registry:file",
           "target": "icons/bell.svg"
+        },
+        {
+          "path": "gpui/kit/icons/push-pin.svg",
+          "type": "registry:file",
+          "target": "icons/push-pin.svg"
+        },
+        {
+          "path": "gpui/kit/icons/push-pin-fill.svg",
+          "type": "registry:file",
+          "target": "icons/push-pin-fill.svg"
         }
       ],
       "meta": {
@@ -300,7 +310,7 @@
       "name": "shortcut-keys",
       "type": "registry:lib",
       "title": "Shortcut Keys",
-      "description": "The one way to show a shortcut: it reads the binding from GPUI's keymap and prints it as the platform's menus do, \u21e7\u2318J on macOS and Ctrl+Shift+J elsewhere.",
+      "description": "The one way to show a shortcut: it reads the binding from GPUI's keymap and prints it as the platform's menus do, ⇧⌘J on macOS and Ctrl+Shift+J elsewhere.",
       "files": [
         {
           "path": "gpui/kit/src/shortcut_keys.rs",
@@ -1042,6 +1052,42 @@
       ]
     },
     {
+      "name": "pin-window-button",
+      "type": "registry:lib",
+      "title": "Pin Window Button",
+      "description": "Keep on top, the pin every detached window shares. One name in every window, a filled pin while the window stays over other apps, a pressed state a screen reader hears, and a header or a status-bar look.",
+      "files": [
+        {
+          "path": "gpui/kit/src/pin_window_button.rs",
+          "type": "registry:file",
+          "target": "src/pin_window_button.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/status-bar",
+        "@videorc-gpui/status-bar-action",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:lib",
       "title": "Dropdown Menu",
@@ -1114,7 +1160,7 @@
       "name": "kebab-menu",
       "type": "registry:lib",
       "title": "Kebab Menu",
-      "description": "The \u22ef menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
       "files": [
         {
           "path": "gpui/kit/src/kebab_menu.rs",
@@ -1145,7 +1191,7 @@
       "name": "kebab-context-menu",
       "type": "registry:lib",
       "title": "Kebab Context Menu",
-      "description": "The right-click twin of a row's \u22ef menu, built from the same item list so the two menus can never disagree.",
+      "description": "The right-click twin of a row's ⋯ menu, built from the same item list so the two menus can never disagree.",
       "files": [
         {
           "path": "gpui/kit/src/kebab_context_menu.rs",
@@ -1173,7 +1219,7 @@
     },
     {
       "name": "command",
-      "type": "registry:ui",
+      "type": "registry:lib",
       "title": "Command",
       "description": "The command palette input, rows and list on the shared dialog surface.",
       "files": [
