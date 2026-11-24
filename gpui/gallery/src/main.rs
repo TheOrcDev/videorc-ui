@@ -4,11 +4,14 @@
 //! In `gpui/`: `cargo run -p videorc-gallery`. `--item <name>` opens on one
 //! item; `--quit-after <seconds>` closes the gallery, so a runner can check
 //! that it opens. The frame around the columns follows the system's light
-//! or dark.
+//! or dark. Built with `--features shots`, `--shots <dir>` saves each item's
+//! page in dark and light for the docs (`shots.rs`).
 
 mod controls;
 mod items;
 mod overlays;
+#[cfg(feature = "shots")]
+mod shots;
 
 use std::time::Duration;
 
@@ -22,8 +25,9 @@ use videorc_kit::{
     window,
 };
 
-/// One registry item: its name (the React twin's) and how it draws in one
-/// appearance. S2.2c adds the primitives here, one per videorc-ui PR.
+/// One registry item: its name in `registry-gpui.json` (the React twin's)
+/// and how it draws in one appearance. The docs' GPUI tab shows the `show`
+/// function's source as the item's usage, and its shots.
 struct Item {
     name: &'static str,
     show: fn(Appearance, &mut Window, &mut App) -> AnyElement,
@@ -79,7 +83,7 @@ const ITEMS: &[Item] = &[
         show: overlays::tooltip_page,
     },
     Item {
-        name: "toast",
+        name: "sonner",
         show: overlays::toast_page,
     },
     Item {
@@ -358,6 +362,7 @@ fn theme(t: &Theme) -> AnyElement {
 fn main() {
     let mut selected = 0;
     let mut quit_after = None;
+    let mut shots = None;
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
         match arg.as_str() {
@@ -372,13 +377,21 @@ fn main() {
                 let seconds = args.next().and_then(|value| value.parse::<u64>().ok());
                 quit_after = Some(seconds.expect("--quit-after takes whole seconds"));
             }
-            other => {
-                panic!("unknown argument {other}: use --item <name> or --quit-after <seconds>")
+            "--shots" => {
+                let dir = args.next().expect("--shots takes a folder");
+                shots = Some(std::path::PathBuf::from(dir));
             }
+            other => panic!(
+                "unknown argument {other}: use --item <name>, --quit-after <seconds> or --shots <dir>"
+            ),
         }
     }
     gpui_platform::application().run(move |cx: &mut App| {
         videorc_kit::init(cx);
+        if let Some(dir) = shots {
+            take_shots(dir, cx);
+            return;
+        }
         let bounds = Bounds::centered(None, size(px(1650.), px(962.)), cx);
         cx.open_window(
             window::options("videorc-ui gallery", bounds),
@@ -406,4 +419,17 @@ fn main() {
             .detach();
         }
     });
+}
+
+#[cfg(feature = "shots")]
+fn take_shots(dir: std::path::PathBuf, cx: &mut App) {
+    shots::run(dir, cx);
+}
+
+#[cfg(not(feature = "shots"))]
+fn take_shots(_: std::path::PathBuf, _: &mut App) {
+    eprintln!(
+        "--shots needs the shots feature: cargo run -p videorc-gallery --features shots -- --shots <dir>"
+    );
+    std::process::exit(2);
 }

@@ -1,0 +1,585 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "videorc-gpui",
+  "homepage": "https://ui.videorc.com",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:lib",
+      "title": "Theme",
+      "description": "Videorc's design tokens for GPUI, generated from the same stylesheet as the React theme, every appearance resolved to sRGB; the appearance a window draws, Increase Contrast and Reduce Motion; Liquid Chrome's rasterised fills, beads and token shadows; the overlay motion; and the kit's window frame. Every GPUI item depends on it.",
+      "files": [
+        {
+          "path": "gpui/kit/src/theme.rs",
+          "type": "registry:file",
+          "target": "src/theme.rs"
+        },
+        {
+          "path": "gpui/kit/src/tokens.rs",
+          "type": "registry:file",
+          "target": "src/tokens.rs"
+        },
+        {
+          "path": "gpui/kit/src/chrome.rs",
+          "type": "registry:file",
+          "target": "src/chrome.rs"
+        },
+        {
+          "path": "gpui/kit/src/motion.rs",
+          "type": "registry:file",
+          "target": "src/motion.rs"
+        },
+        {
+          "path": "gpui/kit/src/window.rs",
+          "type": "registry:file",
+          "target": "src/window.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "image": {
+            "version": "0.25",
+            "default-features": false
+          },
+          "resvg": {
+            "version": "=0.46.0",
+            "default-features": false
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      }
+    },
+    {
+      "name": "icons",
+      "type": "registry:lib",
+      "title": "Icons",
+      "description": "The few icons the primitives draw themselves: Phosphor's regular weight (MIT) as SVG masks the text colour tints.",
+      "files": [
+        {
+          "path": "gpui/kit/src/icon.rs",
+          "type": "registry:file",
+          "target": "src/icon.rs"
+        },
+        {
+          "path": "gpui/kit/icons/caret-down.svg",
+          "type": "registry:file",
+          "target": "icons/caret-down.svg"
+        },
+        {
+          "path": "gpui/kit/icons/check.svg",
+          "type": "registry:file",
+          "target": "icons/check.svg"
+        },
+        {
+          "path": "gpui/kit/icons/check-circle.svg",
+          "type": "registry:file",
+          "target": "icons/check-circle.svg"
+        },
+        {
+          "path": "gpui/kit/icons/info.svg",
+          "type": "registry:file",
+          "target": "icons/info.svg"
+        },
+        {
+          "path": "gpui/kit/icons/warning.svg",
+          "type": "registry:file",
+          "target": "icons/warning.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x.svg",
+          "type": "registry:file",
+          "target": "icons/x.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x-circle.svg",
+          "type": "registry:file",
+          "target": "icons/x-circle.svg"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      }
+    },
+    {
+      "name": "button",
+      "type": "registry:lib",
+      "title": "Button",
+      "description": "Desktop-sized buttons on gpui-base's Button. The default is polished chrome, Record is metallic red that lights while a session runs, Go Live is copper, Chromatic is a ring of flowing chrome, and the rest are flat.",
+      "files": [
+        {
+          "path": "gpui/kit/src/button.rs",
+          "type": "registry:file",
+          "target": "src/button.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:lib",
+      "title": "Badge",
+      "description": "A glass chip whose text stays monochrome: a status chip carries its tone in a glowing dot, an emphasis chip tints the glass.",
+      "files": [
+        {
+          "path": "gpui/kit/src/badge.rs",
+          "type": "registry:file",
+          "target": "src/badge.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:lib",
+      "title": "Kbd",
+      "description": "A glass keycap with a bright top edge and a dark bottom edge, alone or in a group.",
+      "files": [
+        {
+          "path": "gpui/kit/src/kbd.rs",
+          "type": "registry:file",
+          "target": "src/kbd.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "shortcut-keys",
+      "type": "registry:lib",
+      "title": "Shortcut Keys",
+      "description": "The one way to show a shortcut: it reads the binding from GPUI's keymap and prints it as the platform's menus do, ⇧⌘J on macOS and Ctrl+Shift+J elsewhere.",
+      "files": [
+        {
+          "path": "gpui/kit/src/shortcut_keys.rs",
+          "type": "registry:file",
+          "target": "src/shortcut_keys.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/kbd",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:lib",
+      "title": "Switch",
+      "description": "A Liquid Chrome switch on gpui-base's Switch: on, a chrome track and the inverse bead; off, a recessed track and a chrome bead.",
+      "files": [
+        {
+          "path": "gpui/kit/src/switch.rs",
+          "type": "registry:file",
+          "target": "src/switch.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:lib",
+      "title": "Slider",
+      "description": "A Liquid Chrome slider on gpui-base's Slider: a chrome range and a chrome bead inside the track at both ends.",
+      "files": [
+        {
+          "path": "gpui/kit/src/slider.rs",
+          "type": "registry:file",
+          "target": "src/slider.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/switch",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:lib",
+      "title": "Tabs",
+      "description": "Tabs on gpui-base's Tabs: a recessed glass track whose selected segment is a chrome plate, or a line of words with the selected one underlined.",
+      "files": [
+        {
+          "path": "gpui/kit/src/tabs.rs",
+          "type": "registry:file",
+          "target": "src/tabs.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:lib",
+      "title": "Input",
+      "description": "A text input on gpui-base's editor: 28 px, 14 px text, a recessed fill and a 3 px focus ring.",
+      "files": [
+        {
+          "path": "gpui/kit/src/input.rs",
+          "type": "registry:file",
+          "target": "src/input.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:lib",
+      "title": "Select",
+      "description": "A select on gpui-base's Select: a 28 px trigger with its chevron and a float-glass list that fades in and out.",
+      "files": [
+        {
+          "path": "gpui/kit/src/select.rs",
+          "type": "registry:file",
+          "target": "src/select.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/popover",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:lib",
+      "title": "Dialog",
+      "description": "A modal on gpui-base's dialog host: the dialog tier of the float glass in four widths, a scrolling body and a footer, fading and growing in.",
+      "files": [
+        {
+          "path": "gpui/kit/src/dialog.rs",
+          "type": "registry:file",
+          "target": "src/dialog.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:lib",
+      "title": "Popover",
+      "description": "A popover on gpui-base's Popover: the popup tier of the float glass, 288 px wide, fading and growing in and fading out.",
+      "files": [
+        {
+          "path": "gpui/kit/src/popover.rs",
+          "type": "registry:file",
+          "target": "src/popover.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:lib",
+      "title": "Tooltip",
+      "description": "The tooltip tier of the float glass on GPUI's own tooltip: 12 px words and an optional key chip.",
+      "files": [
+        {
+          "path": "gpui/kit/src/tooltip.rs",
+          "type": "registry:file",
+          "target": "src/tooltip.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:lib",
+      "title": "Toast",
+      "description": "Toasts on gpui-base's toast stack: one neutral float glass for every kind, the kind colouring its icon only, at most three above the status bar.",
+      "files": [
+        {
+          "path": "gpui/kit/src/toast.rs",
+          "type": "registry:file",
+          "target": "src/toast.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/button",
+        "@videorc-gpui/icons",
+        "@videorc-gpui/popover",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:lib",
+      "title": "Scroll Area",
+      "description": "A pane that scrolls with gpui-base's scrollbar, drawn as the React flavour draws it: no track and a 4 px thumb, shown on hover and while scrolling.",
+      "files": [
+        {
+          "path": "gpui/kit/src/scroll_area.rs",
+          "type": "registry:file",
+          "target": "src/scroll_area.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    }
+  ]
+}
