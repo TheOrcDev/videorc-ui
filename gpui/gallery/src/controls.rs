@@ -5,7 +5,7 @@
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
     Appearance, Input, InputState, Segment, SegmentedControl, Slider, SliderState, Switch, Tabs,
-    TabsVariant, ToggleGroup, ToggleItem,
+    TabsVariant, ToggleGroup, ToggleItem, hsla,
 };
 
 use crate::section;
@@ -312,6 +312,57 @@ pub fn segmented_control_page(a: Appearance, window: &mut Window, cx: &mut App) 
                 .appearance(a),
         ))
         .into_any_element()
+}
+
+/// `page-tabs`: a segmented strip under the toolbar; only the body scrolls.
+pub fn page_tabs_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let tab = kept(a, "page-tabs-selected", window, cx, |_, _| 0usize);
+    let choose = {
+        let tab = tab.clone();
+        move |index: usize, _: &mut Window, cx: &mut App| {
+            tab.update(cx, |value, cx| {
+                *value = index;
+                cx.notify();
+            })
+        }
+    };
+    let selected = *tab.read(cx);
+    let panel = match selected {
+        1 => "Recording settings live here.",
+        2 => "Shortcuts live here.",
+        _ => "General settings live here.",
+    };
+    section(
+        t,
+        "Settings",
+        div()
+            .w(px(360.0))
+            .h(px(220.0))
+            .flex()
+            .flex_col()
+            .overflow_hidden()
+            .rounded(px(12.0))
+            .border_1()
+            .border_color(hsla(t.border))
+            .bg(hsla(t.glass_solid))
+            .child(
+                videorc_kit::PageTabs::new("page-tabs", "Settings sections")
+                    .tab("General")
+                    .tab("Recording")
+                    .tab("Shortcuts")
+                    .selected(selected)
+                    .on_select(choose)
+                    .appearance(a)
+                    .child(
+                        div()
+                            .p(px(16.0))
+                            .text_color(hsla(t.muted_foreground))
+                            .child(panel),
+                    ),
+            ),
+    )
+    .into_any_element()
 }
 
 /// `input`: empty with a placeholder, filled, invalid and disabled.
