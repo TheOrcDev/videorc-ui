@@ -39,6 +39,7 @@ One Next.js app is the docs site, the registry source and the component source.
 | `components/examples/` | One file per live example |
 | `content/docs/` | The docs, one page per item |
 | `registry.json` | The registry; `pnpm registry:build` writes `public/r/` |
+| `gpui/` | The GPUI flavour (Rust): `kit/` has one module per item and the generated `tokens.rs`, `gallery/` shows every item in each appearance ([gpui/README.md](gpui/README.md)) |
 | `plans/` | The library plan, the inventory, conventions and the audiocn forks |
 
 Components are extracted from Videorc's `origin/main` and ported to Base UI. From then on they change here first, and Videorc pulls them with the shadcn CLI. `plans/003-conventions.md` is the rulebook for a new item.

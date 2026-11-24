@@ -14,5 +14,8 @@ export default defineConfig({
     "components/home/hero-chrome.tsx",
     "test-results/**",
     "playwright-report/**",
+    // Zed's published crate, kept byte for byte beside its patch
+    "gpui/patches/**",
+    "gpui/target/**",
   ],
 });

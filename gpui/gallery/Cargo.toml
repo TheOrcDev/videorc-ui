@@ -1,0 +1,16 @@
+[package]
+name = "videorc-gallery"
+version = "0.0.1"
+description = "Every videorc-ui GPUI item in each appearance, side by side."
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "gallery"
+path = "src/main.rs"
+
+[dependencies]
+gpui.workspace = true
+gpui_platform.workspace = true
+videorc-kit.workspace = true
