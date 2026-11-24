@@ -9,8 +9,8 @@ use gpui::{
     AnyElement, App, Entity, Global, IntoElement, SharedString, Window, div, prelude::*, px,
 };
 use videorc_kit::{
-    Appearance, Button, ButtonVariant, Dialog, DialogHandle, Popover, ScrollArea, Select,
-    ToastData, ToastKind, Toaster, hsla, toast_card,
+    Appearance, Button, ButtonVariant, Dialog, DialogHandle, HoverCard, Popover, ScrollArea,
+    Select, StatusDot, StatusTone, ToastData, ToastKind, Toaster, hsla, toast_card,
 };
 
 use crate::section;
@@ -96,6 +96,44 @@ pub fn popover_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
                         div()
                             .text_color(hsla(t.muted_foreground))
                             .child("6,000 kbps to YouTube, no dropped frames."),
+                    )
+            }),
+    )
+    .into_any_element()
+}
+
+/// `hover-card`: rest the pointer on the chat's state, as in the Stream
+/// Manager's status bar.
+pub fn hover_card_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Rest the pointer on it",
+        HoverCard::new(key(a, "hover-card"))
+            .trigger(
+                StatusDot::new(key(a, "hover-card-dot"))
+                    .tone(StatusTone::Good)
+                    .label("Twitch Connected")
+                    .appearance(a),
+            )
+            .width(256.0)
+            .padding(8.0)
+            .appearance(a)
+            .content(move |_, _| {
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(4.0))
+                    .text_size(px(12.0))
+                    .child(
+                        div()
+                            .text_color(hsla(t.foreground))
+                            .child("Twitch chat: reads and sends"),
+                    )
+                    .child(
+                        div()
+                            .text_color(hsla(t.muted_foreground))
+                            .child("Follow alerts and the sub count need one more Twitch permission. Reconnect Twitch from Activity or Destinations → Setup."),
                     )
             }),
     )

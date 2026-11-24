@@ -542,6 +542,39 @@
       ]
     },
     {
+      "name": "hover-card",
+      "type": "registry:lib",
+      "title": "Hover Card",
+      "description": "A card that opens when the pointer rests on its trigger and closes when it leaves: the popup tier of the float glass, 288 px wide, fading and growing in over 100 ms.",
+      "files": [
+        {
+          "path": "gpui/kit/src/hover_card.rs",
+          "type": "registry:file",
+          "target": "src/hover_card.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/popover",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "sonner",
       "type": "registry:lib",
       "title": "Toast",
