@@ -797,6 +797,132 @@
       "registryDependencies": [
         "@videorc-gpui/theme"
       ]
+    },
+    {
+      "name": "window-frame",
+      "type": "registry:lib",
+      "title": "Window Frame",
+      "description": "The frame of a single-pane window and its header row. The content coat over the window coat, and a 40 px header that shares its line with the macOS traffic lights, carries the window's title and drags the window.",
+      "files": [
+        {
+          "path": "gpui/kit/src/window_frame.rs",
+          "type": "registry:file",
+          "target": "src/window_frame.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "status-bar",
+      "type": "registry:lib",
+      "title": "Status Bar",
+      "description": "The window's 26 px status bar. The session state on the left, and quiet shortcut hints on the right that stay clickable, each pressed while the window it opens is open.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_bar.rs",
+          "type": "registry:file",
+          "target": "src/status_bar.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "status-bar-action",
+      "type": "registry:lib",
+      "title": "Status Bar Action",
+      "description": "One action in a status bar. An icon, a word or both, with its shortcut, named for assistive tech and on hover by a tooltip, never a native title. It can be a toggle, or a menu's trigger.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_bar_action.rs",
+          "type": "registry:file",
+          "target": "src/status_bar_action.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/status-bar",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:lib",
+      "title": "Status Dot",
+      "description": "Ambient status: the glass dot in its tone, optionally pulsing, beside a quiet monochrome label. It replaces a loud header badge.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_dot.rs",
+          "type": "registry:file",
+          "target": "src/status_dot.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
     }
   ]
 }
