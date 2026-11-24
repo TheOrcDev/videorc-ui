@@ -58,9 +58,7 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       }
     },
     {
@@ -148,9 +146,7 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       }
     },
     {
@@ -180,9 +176,7 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
@@ -210,13 +204,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "kbd",
@@ -238,13 +228,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "shortcut-keys",
@@ -266,14 +252,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/kbd",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/kbd", "@videorc-gpui/theme"]
     },
     {
       "name": "switch",
@@ -299,13 +280,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "slider",
@@ -331,14 +308,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/switch",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/switch", "@videorc-gpui/theme"]
     },
     {
       "name": "tabs",
@@ -364,14 +336,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/badge",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/badge", "@videorc-gpui/theme"]
     },
     {
       "name": "input",
@@ -397,13 +364,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "select",
@@ -429,9 +392,7 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
@@ -466,14 +427,9 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/icons",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/icons", "@videorc-gpui/theme"]
     },
     {
       "name": "popover",
@@ -499,14 +455,9 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/button",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/button", "@videorc-gpui/theme"]
     },
     {
       "name": "tooltip",
@@ -532,9 +483,7 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/shortcut-keys",
@@ -565,9 +514,7 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/button",
@@ -603,13 +550,9 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "alert",
@@ -631,14 +574,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/icons",
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/icons", "@videorc-gpui/theme"]
     },
     {
       "name": "section-label",
@@ -660,13 +598,9 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "list-row",
@@ -695,9 +629,7 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/section-label",
@@ -728,9 +660,7 @@
             "version": "=0.11.0"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
@@ -762,13 +692,9 @@
             "version": "1"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
       },
-      "registryDependencies": [
-        "@videorc-gpui/theme"
-      ]
+      "registryDependencies": ["@videorc-gpui/theme"]
     },
     {
       "name": "skeleton",
@@ -790,13 +716,123 @@
             "version": "=0.3.14"
           }
         },
-        "patches": [
-          "gpui-pre-apple"
-        ]
+        "patches": ["gpui-pre-apple"]
+      },
+      "registryDependencies": ["@videorc-gpui/theme"]
+    },
+    {
+      "name": "window-frame",
+      "type": "registry:lib",
+      "title": "Window Frame",
+      "description": "The frame the single-pane windows share (Stream Manager, Notes, Captions): the content coat over the window's solid, and the 40 px header band on the traffic lights' line that drags the window, with the title, a quiet inline fact and the window's few controls.",
+      "files": [
+        {
+          "path": "gpui/kit/src/window_frame.rs",
+          "type": "registry:file",
+          "target": "src/window_frame.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": ["gpui-pre-apple"]
+      },
+      "registryDependencies": ["@videorc-gpui/theme"]
+    },
+    {
+      "name": "status-bar",
+      "type": "registry:lib",
+      "title": "Status Bar",
+      "description": "The window's 26 px status bar: the state on the left and quiet, clickable shortcut hints on the right, each hint its key in the secondary tier and its word in the tertiary.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_bar.rs",
+          "type": "registry:file",
+          "target": "src/status_bar.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": ["gpui-pre-apple"]
       },
       "registryDependencies": [
+        "@videorc-gpui/shortcut-keys",
         "@videorc-gpui/theme"
       ]
+    },
+    {
+      "name": "status-bar-action",
+      "type": "registry:lib",
+      "title": "Status Bar Action",
+      "description": "One action in a status bar: an icon, a word or both, optionally its shortcut, a pressed state for a toggle, and a tooltip that says its name or more.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_bar_action.rs",
+          "type": "registry:file",
+          "target": "src/status_bar_action.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": ["gpui-pre-apple"]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/shortcut-keys",
+        "@videorc-gpui/status-bar",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:lib",
+      "title": "Status Dot",
+      "description": "Ambient status: the glass status dot in one of five tones, optionally pulsing, and a monochrome label in sentence case.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_dot.rs",
+          "type": "registry:file",
+          "target": "src/status_dot.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": ["gpui-pre-apple"]
+      },
+      "registryDependencies": ["@videorc-gpui/badge", "@videorc-gpui/theme"]
     }
   ]
 }

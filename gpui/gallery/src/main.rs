@@ -8,6 +8,7 @@
 //! page in dark and light for the docs (`shots.rs`).
 
 mod controls;
+mod frames;
 mod items;
 mod overlays;
 mod rows;
@@ -114,6 +115,22 @@ const ITEMS: &[Item] = &[
     Item {
         name: "skeleton",
         show: rows::skeleton_page,
+    },
+    Item {
+        name: "window-frame",
+        show: frames::window_frame_page,
+    },
+    Item {
+        name: "status-bar",
+        show: frames::status_bar_page,
+    },
+    Item {
+        name: "status-bar-action",
+        show: frames::status_bar_action_page,
+    },
+    Item {
+        name: "status-dot",
+        show: frames::status_dot_page,
     },
 ];
 
