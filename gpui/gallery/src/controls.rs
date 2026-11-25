@@ -9,8 +9,9 @@ use videorc_kit::tokens::Color;
 use videorc_kit::{
     Appearance, BarVisualizer, BarVisualizerState, Checkbox, CheckboxChecked, Field, FieldGroup,
     IconName, Input, InputGroup, InputGroupAddon, InputGroupText, InputState, Label, LiveWaveform,
-    Segment, SegmentedControl, Slider, SliderState, Switch, Tabs, TabsVariant, Textarea,
-    TextareaState, ToggleGroup, ToggleItem, hsla, icon,
+    Segment, SegmentedControl, Slider, SliderState, SoundPad, SoundPadGrid, SoundPadMode,
+    SoundPadProgressVariant, SoundPadSize, Switch, Tabs, TabsVariant, Textarea, TextareaState,
+    ToggleGroup, ToggleItem, hsla, icon,
 };
 
 use crate::section;
@@ -767,4 +768,42 @@ pub fn live_waveform_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElem
             LiveWaveform::new("wave-off").appearance(a),
         ))
         .into_any_element()
+}
+
+/// `sound-pad`: soundboard pads with playing ring and progress.
+pub fn sound_pad_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Pads",
+        SoundPadGrid::new("board")
+            .columns(4)
+            .appearance(a)
+            .child(
+                SoundPad::new("kick", "Kick")
+                    .hotkey("1")
+                    .size(SoundPadSize::Sm)
+                    .appearance(a),
+            )
+            .child(
+                SoundPad::new("snare", "Snare")
+                    .hotkey("2")
+                    .playing(true)
+                    .progress(0.55)
+                    .progress_variant(SoundPadProgressVariant::Ring)
+                    .mode(SoundPadMode::Toggle)
+                    .size(SoundPadSize::Sm)
+                    .appearance(a),
+            )
+            .child(
+                SoundPad::new("hat", "Hat")
+                    .hotkey("3")
+                    .playing(true)
+                    .progress(0.3)
+                    .progress_variant(SoundPadProgressVariant::Bar)
+                    .size(SoundPadSize::Sm)
+                    .appearance(a),
+            ),
+    )
+    .into_any_element()
 }
