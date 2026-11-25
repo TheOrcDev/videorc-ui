@@ -2329,6 +2329,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "qr-code",
+      "type": "registry:ui",
+      "title": "QR Code",
+      "description": "Dark-on-light QR for Phone Pair: ECC Medium, quiet zone of 2, scanners need the contrast in both themes.",
+      "dependencies": ["uqr"],
+      "registryDependencies": ["@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/qr-code.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
