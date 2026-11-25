@@ -7,8 +7,9 @@ use gpui::{
 };
 use videorc_kit::tokens::Color;
 use videorc_kit::{
-    Appearance, Checkbox, CheckboxChecked, Input, InputState, Segment, SegmentedControl, Slider,
-    SliderState, Switch, Tabs, TabsVariant, Textarea, TextareaState, ToggleGroup, ToggleItem, hsla,
+    Appearance, Checkbox, CheckboxChecked, IconName, Input, InputState, Segment, SegmentedControl,
+    Slider, SliderState, Switch, Tabs, TabsVariant, Textarea, TextareaState, ToggleGroup,
+    ToggleItem, hsla, icon,
 };
 
 use crate::section;
@@ -388,6 +389,9 @@ pub fn segmented_control_page(a: Appearance, window: &mut Window, cx: &mut App) 
     let off = kept(a, "segment-off", window, cx, |_, _| {
         SharedString::from("light")
     });
+    let orient = kept(a, "segment-orient", window, cx, |_, _| {
+        SharedString::from("horizontal")
+    });
     let choose = |state: &Entity<SharedString>| {
         let state = state.clone();
         move |next: SharedString, _: &mut Window, cx: &mut App| {
@@ -435,6 +439,25 @@ pub fn segmented_control_page(a: Appearance, window: &mut Window, cx: &mut App) 
                 .option(Segment::new("light", "Light"))
                 .option(Segment::new("dark", "Dark"))
                 .option(Segment::new("system", "System"))
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Icons",
+            SegmentedControl::new("segment-orient")
+                .accessibility_label("Studio orientation")
+                .value(Some(orient.read(cx).clone()))
+                .option(
+                    Segment::new("horizontal", "Horizontal")
+                        .child(icon(IconName::Monitor, 16.0, hsla(t.foreground)))
+                        .tooltip("Horizontal · 16:9"),
+                )
+                .option(
+                    Segment::new("vertical", "Vertical")
+                        .child(icon(IconName::DeviceMobile, 16.0, hsla(t.foreground)))
+                        .tooltip("Vertical · 9:16"),
+                )
+                .on_change(choose(&orient))
                 .appearance(a),
         ))
         .into_any_element()
