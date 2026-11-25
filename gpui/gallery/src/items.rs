@@ -2,8 +2,8 @@
 
 use gpui::{AnyElement, App, IntoElement, Window, div, prelude::*, px};
 use videorc_kit::{
-    Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, Kbd, ShortcutKeys,
-    ShortcutStyle, hsla, kbd_group,
+    Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, IconName, Kbd,
+    ShortcutKeys, ShortcutStyle, hsla, icon, kbd_group,
 };
 
 use crate::section;
@@ -122,7 +122,7 @@ pub fn button_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
         .into_any_element()
 }
 
-/// `badge`: every variant.
+/// `badge`: every variant, plus a leading icon (Screen hidden).
 pub fn badge_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     let t = a.theme();
     let badges = [
@@ -137,20 +137,40 @@ pub fn badge_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
         ("On stream", BadgeVariant::Chrome),
         ("Member", BadgeVariant::Plate),
     ];
-    section(
-        t,
-        "Variants",
-        row(badges
-            .into_iter()
-            .map(|(label, variant)| {
-                Badge::new(label)
-                    .variant(variant)
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "Variants",
+            row(badges
+                .into_iter()
+                .map(|(label, variant)| {
+                    Badge::new(label)
+                        .variant(variant)
+                        .appearance(a)
+                        .into_any_element()
+                })
+                .collect()),
+        ))
+        .child(section(
+            t,
+            "Icon",
+            row(vec![
+                Badge::new("Screen hidden")
+                    .variant(BadgeVariant::Warning)
+                    .icon(icon(IconName::EyeSlash, 12.0, hsla(t.warning)))
                     .appearance(a)
-                    .into_any_element()
-            })
-            .collect()),
-    )
-    .into_any_element()
+                    .into_any_element(),
+                Badge::new("Arrived")
+                    .variant(BadgeVariant::Outline)
+                    .icon(icon(IconName::ChatCircle, 12.0, hsla(t.muted_foreground)))
+                    .appearance(a)
+                    .into_any_element(),
+            ]),
+        ))
+        .into_any_element()
 }
 
 /// `kbd` and `shortcut-keys`: a key chip, a group, and shortcuts as macOS

@@ -82,6 +82,26 @@ const ITEMS: &[Item] = &[
         show: controls::input_page,
     },
     Item {
+        name: "label",
+        show: controls::label_page,
+    },
+    Item {
+        name: "field",
+        show: controls::field_page,
+    },
+    Item {
+        name: "input-group",
+        show: controls::input_group_page,
+    },
+    Item {
+        name: "bar-visualizer",
+        show: controls::bar_visualizer_page,
+    },
+    Item {
+        name: "live-waveform",
+        show: controls::live_waveform_page,
+    },
+    Item {
         name: "textarea",
         show: controls::textarea_page,
     },
