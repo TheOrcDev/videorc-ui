@@ -961,7 +961,7 @@
       "name": "sonner",
       "type": "registry:lib",
       "title": "Toast",
-      "description": "Toasts on gpui-base's toast stack: one neutral float glass for every kind, the kind colouring its icon only, at most three above the status bar.",
+      "description": "Toasts on gpui-base's toast stack: one neutral float glass for every kind, the kind colouring its icon only, at most three above the status bar. Sonner layout: 16 px pad, centred row, corner close, inverted action + cancel chips.",
       "files": [
         {
           "path": "gpui/kit/src/toast.rs",
@@ -986,7 +986,6 @@
         ]
       },
       "registryDependencies": [
-        "@videorc-gpui/button",
         "@videorc-gpui/icons",
         "@videorc-gpui/popover",
         "@videorc-gpui/theme"
