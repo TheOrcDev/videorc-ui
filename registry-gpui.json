@@ -365,6 +365,11 @@
           "target": "icons/lightning.svg"
         },
         {
+          "path": "gpui/kit/icons/link-simple.svg",
+          "type": "registry:file",
+          "target": "icons/link-simple.svg"
+        },
+        {
           "path": "gpui/kit/icons/lock-key-fill.svg",
           "type": "registry:file",
           "target": "icons/lock-key-fill.svg"
