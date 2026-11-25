@@ -53,10 +53,10 @@ pub mod popover;
 pub mod progress;
 pub mod qr_code;
 pub mod scroll_area;
-pub mod selectable_text;
 pub mod section_label;
 pub mod segmented_control;
 pub mod select;
+pub mod selectable_text;
 pub mod separator;
 pub mod settings_row;
 pub mod shortcut_keys;
@@ -109,10 +109,10 @@ pub use popover::Popover;
 pub use progress::Progress;
 pub use qr_code::{DEFAULT_SIZE, QrCode, path_for};
 pub use scroll_area::ScrollArea;
-pub use selectable_text::SelectableText;
 pub use section_label::SectionLabel;
 pub use segmented_control::{Segment, SegmentedControl};
 pub use select::{Select, SelectOption};
+pub use selectable_text::SelectableText;
 pub use separator::{Separator, SeparatorOrientation};
 pub use settings_row::{SettingsGroup, SettingsRow};
 pub use shortcut_keys::{ShortcutKeys, ShortcutStyle};
@@ -131,9 +131,7 @@ pub use textarea::{Textarea, TextareaState};
 pub use theme::{Appearance, FONT, IncreaseContrast, ReduceMotion, TypeScale, faded_over, hsla};
 pub use toast::{ToastData, ToastKind, Toaster, toast_card};
 pub use toggle_group::{ToggleGroup, ToggleItem};
-pub use tooltip::{
-    tooltip, tooltip_with_accelerator, tooltip_with_action, tooltip_with_shortcut,
-};
+pub use tooltip::{tooltip, tooltip_with_accelerator, tooltip_with_action, tooltip_with_shortcut};
 pub use window_frame::{WindowFrame, WindowHeader};
 
 /// Sets up the kit for an app: gpui-base's behaviour (focus traps, dialogs,
