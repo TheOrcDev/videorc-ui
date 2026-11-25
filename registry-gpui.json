@@ -105,6 +105,11 @@
           "target": "icons/bell.svg"
         },
         {
+          "path": "gpui/kit/icons/bookmark-simple.svg",
+          "type": "registry:file",
+          "target": "icons/bookmark-simple.svg"
+        },
+        {
           "path": "gpui/kit/icons/brain.svg",
           "type": "registry:file",
           "target": "icons/brain.svg"
@@ -400,6 +405,11 @@
           "target": "icons/terminal.svg"
         },
         {
+          "path": "gpui/kit/icons/text-aa.svg",
+          "type": "registry:file",
+          "target": "icons/text-aa.svg"
+        },
+        {
           "path": "gpui/kit/icons/tiktok-logo.svg",
           "type": "registry:file",
           "target": "icons/tiktok-logo.svg"
@@ -470,6 +480,16 @@
           "target": "icons/x-circle.svg"
         },
         {
+          "path": "gpui/kit/icons/x-logo-lockup-black-on-white.svg",
+          "type": "registry:file",
+          "target": "icons/x-logo-lockup-black-on-white.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x-logo-lockup-white-on-black.svg",
+          "type": "registry:file",
+          "target": "icons/x-logo-lockup-white-on-black.svg"
+        },
+        {
           "path": "gpui/kit/icons/x-logo.svg",
           "type": "registry:file",
           "target": "icons/x-logo.svg"
@@ -478,6 +498,11 @@
           "path": "gpui/kit/icons/x.svg",
           "type": "registry:file",
           "target": "icons/x.svg"
+        },
+        {
+          "path": "gpui/kit/icons/youtube-icon-red.svg",
+          "type": "registry:file",
+          "target": "icons/youtube-icon-red.svg"
         },
         {
           "path": "gpui/kit/icons/youtube-logo.svg",
@@ -536,6 +561,7 @@
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme",
         "@videorc-gpui/tooltip"
       ]
@@ -1884,6 +1910,36 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "platform-glyph",
+      "type": "registry:lib",
+      "title": "Platform glyph",
+      "description": "The 30×24 destination mark: YouTube's official play mark, X's theme lockup, and tinted 24 px tiles for every other platform.",
+      "files": [
+        {
+          "path": "gpui/kit/src/platform_glyph.rs",
+          "type": "registry:file",
+          "target": "src/platform_glyph.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/chat-platform",
         "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]

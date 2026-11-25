@@ -2075,6 +2075,19 @@
       ]
     },
     {
+      "name": "platform-glyph",
+      "type": "registry:ui",
+      "title": "Platform Glyph",
+      "description": "The 30×24 destination mark: YouTube's play mark, X's theme lockup, and tinted 24 px tiles for every other platform.",
+      "registryDependencies": ["@videorc/theme", "@videorc/icons", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/platform-glyph.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "chat-message",
       "type": "registry:block",
       "title": "Chat Message",

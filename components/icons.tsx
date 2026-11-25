@@ -314,4 +314,5 @@ export {
   TiktokLogo as TiktokIcon,
   InstagramLogo as InstagramIcon,
   FacebookLogo as FacebookIcon,
+  KickLogo as KickIcon,
 } from "@phosphor-icons/react";
