@@ -70,11 +70,6 @@
       "description": "The icons the primitives and the Studio draw: Phosphor's regular, fill and bold weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
-          "path": "gpui/kit/src/icon.rs",
-          "type": "registry:file",
-          "target": "src/icon.rs"
-        },
-        {
           "path": "gpui/kit/icons/arrow-counter-clockwise.svg",
           "type": "registry:file",
           "target": "icons/arrow-counter-clockwise.svg"
@@ -240,6 +235,11 @@
           "target": "icons/gear-six.svg"
         },
         {
+          "path": "gpui/kit/icons/heartbeat.svg",
+          "type": "registry:file",
+          "target": "icons/heartbeat.svg"
+        },
+        {
           "path": "gpui/kit/icons/image-broken.svg",
           "type": "registry:file",
           "target": "icons/image-broken.svg"
@@ -395,6 +395,11 @@
           "target": "icons/stop.svg"
         },
         {
+          "path": "gpui/kit/icons/terminal.svg",
+          "type": "registry:file",
+          "target": "icons/terminal.svg"
+        },
+        {
           "path": "gpui/kit/icons/tiktok-logo.svg",
           "type": "registry:file",
           "target": "icons/tiktok-logo.svg"
@@ -478,6 +483,11 @@
           "path": "gpui/kit/icons/youtube-logo.svg",
           "type": "registry:file",
           "target": "icons/youtube-logo.svg"
+        },
+        {
+          "path": "gpui/kit/src/icon.rs",
+          "type": "registry:file",
+          "target": "src/icon.rs"
         }
       ],
       "meta": {
@@ -2092,6 +2102,66 @@
       },
       "registryDependencies": [
         "@videorc-gpui/kbd",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:lib",
+      "title": "Progress",
+      "description": "One determinate bar: a 6 px round track with the chrome fill. Name it with a label or accessibility_label.",
+      "files": [
+        {
+          "path": "gpui/kit/src/progress.rs",
+          "type": "registry:file",
+          "target": "src/progress.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "selectable-text",
+      "type": "registry:lib",
+      "title": "Selectable Text",
+      "description": "Pointer-selectable copy for values a streamer may select and copy. Wraps gpui-base SelectableText.",
+      "files": [
+        {
+          "path": "gpui/kit/src/selectable_text.rs",
+          "type": "registry:file",
+          "target": "src/selectable_text.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
         "@videorc-gpui/theme"
       ]
     }
