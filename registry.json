@@ -1486,6 +1486,19 @@
       ]
     },
     {
+      "name": "selectable-text",
+      "type": "registry:ui",
+      "title": "Selectable Text",
+      "description": "Pointer-selectable copy for values a streamer may select and copy.",
+      "registryDependencies": ["@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/selectable-text.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",

@@ -8,8 +8,8 @@
 use std::{rc::Rc, time::Duration};
 
 use gpui::{
-    App, ElementId, Hsla, IntoElement, SharedString, TimedTransformation, Transformation, Window,
-    div, prelude::*,
+    div, prelude::*, App, ElementId, Hsla, IntoElement, SharedString, TimedTransformation,
+    Transformation, Window,
 };
 
 use crate::{
@@ -17,8 +17,8 @@ use crate::{
     dropdown_menu::{
         DropdownMenu, Menu, MenuAlign, MenuHandler, MenuIcon, MenuItem, MenuItemTone, MenuShortcut,
     },
-    icon::{IconName, icon},
-    theme::{Appearance, hsla, motion, resolve},
+    icon::{icon, IconName},
+    theme::{hsla, motion, resolve, Appearance},
 };
 
 /// One action in a row's ⋯ menu, and in its right-click twin.
@@ -162,7 +162,8 @@ pub enum KebabReveal {
     #[default]
     Always,
     /// Hidden until its host row (the element with `.group(KEBAB_HOST)`) is
-    /// hovered; it stays while the menu is open or an item's work runs.
+    /// hovered or holds focus; it stays while the menu is open or an item's
+    /// work runs. Matches Electron `group-focus-within/kebab-host`.
     Hover,
 }
 
@@ -257,6 +258,17 @@ impl RenderOnce for KebabMenu {
         // a hover-revealed trigger stays while its menu is open.
         let open_key = SharedString::from(format!("{}/open", self.id));
         let open = *window.use_keyed_state(open_key, cx, |_, _| false).read(cx);
+        // Focus-within of this host (tab to the trigger, or into the open menu)
+        // reveals the same way Electron's group-focus-within does.
+        let focus = window
+            .use_keyed_state(
+                SharedString::from(format!("{}/focus", self.id)),
+                cx,
+                |_, cx| cx.focus_handle(),
+            )
+            .read(cx)
+            .clone();
+        let focus_within = focus.contains_focused(window, cx);
         let mut dropdown = DropdownMenu::new(self.id)
             .trigger(trigger)
             .align(MenuAlign::End)
@@ -264,9 +276,11 @@ impl RenderOnce for KebabMenu {
         if let Some(appearance) = self.appearance {
             dropdown = dropdown.appearance(appearance);
         }
-        let hidden_until_hover = self.reveal == KebabReveal::Hover && !self.busy && !open;
+        let hidden_until_hover =
+            self.reveal == KebabReveal::Hover && !self.busy && !open && !focus_within;
         div()
             .flex_none()
+            .track_focus(&focus)
             .when(hidden_until_hover, |host| {
                 host.opacity(0.0)
                     .group_hover(KEBAB_HOST, |style| style.opacity(1.0))

@@ -3,7 +3,7 @@
 //! weight the React twin draws (regular, fill for an alert's tone, bold for
 //! the kebab's dots), as SVG masks the element's text colour tints.
 
-use gpui::{Hsla, IntoElement, Styled, Svg, px, svg};
+use gpui::{px, svg, Hsla, IntoElement, Styled, Svg};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum IconName {
@@ -143,6 +143,10 @@ pub enum IconName {
     FilmReel,
     /// `HealthIcon` / `HealthRowIcon` (Phosphor's Pulse): account menu Health.
     Pulse,
+    /// `HeartbeatIcon` (Phosphor's Heartbeat): distinct from Pulse/Health.
+    Heartbeat,
+    /// `TerminalIcon` / Agents row (Phosphor's Terminal).
+    Terminal,
     /// `FolderIcon` (Phosphor's FolderOpen).
     FolderOpen,
     /// `WaveformMutedIcon` (Phosphor's WaveformSlash).
@@ -244,6 +248,8 @@ impl IconName {
             IconName::Smiley => include_bytes!("../icons/smiley.svg"),
             IconName::FilmReel => include_bytes!("../icons/film-reel.svg"),
             IconName::Pulse => include_bytes!("../icons/pulse.svg"),
+            IconName::Heartbeat => include_bytes!("../icons/heartbeat.svg"),
+            IconName::Terminal => include_bytes!("../icons/terminal.svg"),
             IconName::FolderOpen => include_bytes!("../icons/folder-open.svg"),
             IconName::WaveformSlash => include_bytes!("../icons/waveform-slash.svg"),
             IconName::Desktop => include_bytes!("../icons/desktop.svg"),
