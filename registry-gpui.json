@@ -896,6 +896,7 @@
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
+        "@videorc-gpui/kbd",
         "@videorc-gpui/theme",
         "@videorc-gpui/tooltip"
       ]
