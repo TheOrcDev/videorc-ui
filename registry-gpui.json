@@ -190,6 +190,16 @@
           "target": "icons/push-pin.svg"
         },
         {
+          "path": "gpui/kit/icons/squares-four.svg",
+          "type": "registry:file",
+          "target": "icons/squares-four.svg"
+        },
+        {
+          "path": "gpui/kit/icons/video-camera.svg",
+          "type": "registry:file",
+          "target": "icons/video-camera.svg"
+        },
+        {
           "path": "gpui/kit/icons/warning-circle.svg",
           "type": "registry:file",
           "target": "icons/warning-circle.svg"
