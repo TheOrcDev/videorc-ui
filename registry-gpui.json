@@ -365,6 +365,11 @@
           "target": "icons/lightning.svg"
         },
         {
+          "path": "gpui/kit/icons/link-simple.svg",
+          "type": "registry:file",
+          "target": "icons/link-simple.svg"
+        },
+        {
           "path": "gpui/kit/icons/lock-key-fill.svg",
           "type": "registry:file",
           "target": "icons/lock-key-fill.svg"
@@ -373,6 +378,11 @@
           "path": "gpui/kit/icons/lock-key.svg",
           "type": "registry:file",
           "target": "icons/lock-key.svg"
+        },
+        {
+          "path": "gpui/kit/icons/magnifying-glass-plus.svg",
+          "type": "registry:file",
+          "target": "icons/magnifying-glass-plus.svg"
         },
         {
           "path": "gpui/kit/icons/magnifying-glass.svg",
@@ -413,6 +423,16 @@
           "path": "gpui/kit/icons/note-pencil.svg",
           "type": "registry:file",
           "target": "icons/note-pencil.svg"
+        },
+        {
+          "path": "gpui/kit/icons/pause-fill.svg",
+          "type": "registry:file",
+          "target": "icons/pause-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/pause.svg",
+          "type": "registry:file",
+          "target": "icons/pause.svg"
         },
         {
           "path": "gpui/kit/icons/pencil-simple.svg",
@@ -871,7 +891,8 @@
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
-        "@videorc-gpui/theme"
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
       ]
     },
     {
@@ -903,7 +924,8 @@
         ]
       },
       "registryDependencies": [
-        "@videorc-gpui/theme"
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
       ]
     },
     {
