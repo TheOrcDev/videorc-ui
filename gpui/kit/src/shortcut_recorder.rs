@@ -72,13 +72,19 @@ impl ShortcutRecorder {
         self
     }
 
-    pub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {
+    pub fn on_click(
+        mut self,
+        handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static,
+    ) -> Self {
         self.on_click = Some(Rc::new(handler));
         self
     }
 
     /// Clear (X) on the trailing addon when a binding is set.
-    pub fn on_clear(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {
+    pub fn on_clear(
+        mut self,
+        handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static,
+    ) -> Self {
         self.on_clear = Some(Rc::new(handler));
         self
     }
@@ -154,16 +160,14 @@ impl RenderOnce for ShortcutRecorder {
             .border_color(hsla(rim))
             .bg(hsla(with_alpha(t.input, 0.5)))
             .when(self.armed || (self.invalid && !self.armed), |shell| {
-                shell.shadow(vec![crate::chrome::box_shadow(
-                    &crate::tokens::Shadow {
-                        inset: false,
-                        x: 0.0,
-                        y: 0.0,
-                        blur: 0.0,
-                        spread: 3.0,
-                        color: ring,
-                    },
-                )])
+                shell.shadow(vec![crate::chrome::box_shadow(&crate::tokens::Shadow {
+                    inset: false,
+                    x: 0.0,
+                    y: 0.0,
+                    blur: 0.0,
+                    spread: 3.0,
+                    color: ring,
+                })])
             })
             .child(field)
             .children(clear)

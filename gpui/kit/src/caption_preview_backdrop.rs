@@ -88,14 +88,12 @@ impl RenderOnce for CaptionPreviewBackdropEl {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let t = resolve(self.appearance, window, cx);
         match self.kind {
-            CaptionPreviewBackdrop::Light => div()
-                .size_full()
-                .bg(linear_gradient(
-                    135.0,
-                    linear_color_stop(hsla(t.video_ground_foreground), 0.0),
-                    linear_color_stop(hsla(t.video_ground_muted), 1.0),
-                )
-                .color_space(ColorSpace::Oklab)),
+            CaptionPreviewBackdrop::Light => div().size_full().bg(linear_gradient(
+                135.0,
+                linear_color_stop(hsla(t.video_ground_foreground), 0.0),
+                linear_color_stop(hsla(t.video_ground_muted), 1.0),
+            )
+            .color_space(ColorSpace::Oklab)),
             CaptionPreviewBackdrop::Dark | CaptionPreviewBackdrop::Mixed => {
                 let svg = match self.kind {
                     CaptionPreviewBackdrop::Dark => dark_svg(),
