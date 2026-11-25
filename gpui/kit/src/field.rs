@@ -114,7 +114,7 @@ impl ParentElement for Field {
 impl RenderOnce for Field {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let t = resolve(self.appearance, window, cx);
-        let invalid = self.invalid;
+        let _invalid = self.invalid;
         let label_row = self.label.map(|label| {
             let mut row = div()
                 .flex()
@@ -128,11 +128,9 @@ impl RenderOnce for Field {
                         .text_size(px(14.0))
                         .line_height(px(20.0))
                         .font_weight(FontWeight::MEDIUM)
-                        .text_color(hsla(if invalid {
-                            t.destructive
-                        } else {
-                            t.foreground
-                        }))
+                        // Electron keeps the label in the foreground; the error
+                        // line below carries the refusal.
+                        .text_color(hsla(t.foreground))
                         .child(label),
                 );
             if let Some(end) = self.label_end {
@@ -174,7 +172,7 @@ impl RenderOnce for Field {
                 .flex()
                 .w_full()
                 .flex_col()
-                .gap(px(8.0))
+                .gap(px(12.0))
                 .children(label_row)
                 .children(self.children)
                 .children(description)
