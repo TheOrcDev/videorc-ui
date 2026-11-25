@@ -1161,6 +1161,19 @@
       ]
     },
     {
+      "name": "shortcut-recorder",
+      "type": "registry:ui",
+      "title": "Shortcut Recorder",
+      "description": "176 px recorder control with key chips.",
+      "registryDependencies": ["@videorc/theme", "@videorc/icons", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/shortcut-recorder.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "shortcut-tooltip",
       "type": "registry:ui",
       "title": "Shortcut Tooltip",
@@ -1247,6 +1260,19 @@
       "files": [
         {
           "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "caption-preview-backdrop",
+      "type": "registry:ui",
+      "title": "Caption Preview Backdrop",
+      "description": "Preview gradient surfaces for captions.",
+      "registryDependencies": ["@videorc/theme", "@videorc/utils"],
+      "files": [
+        {
+          "path": "components/caption-preview-backdrop.tsx",
           "type": "registry:ui"
         }
       ]

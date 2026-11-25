@@ -70,6 +70,11 @@
       "description": "The icons the primitives and the Studio draw: Phosphor's regular, fill and bold weights (MIT) as SVG masks the text colour tints.",
       "files": [
         {
+          "path": "gpui/kit/icons/arrow-clockwise.svg",
+          "type": "registry:file",
+          "target": "icons/arrow-clockwise.svg"
+        },
+        {
           "path": "gpui/kit/icons/arrow-counter-clockwise.svg",
           "type": "registry:file",
           "target": "icons/arrow-counter-clockwise.svg"
@@ -93,6 +98,11 @@
           "path": "gpui/kit/icons/arrow-square-out.svg",
           "type": "registry:file",
           "target": "icons/arrow-square-out.svg"
+        },
+        {
+          "path": "gpui/kit/icons/arrow-up.svg",
+          "type": "registry:file",
+          "target": "icons/arrow-up.svg"
         },
         {
           "path": "gpui/kit/icons/arrows-clockwise.svg",
@@ -120,6 +130,11 @@
           "target": "icons/broadcast.svg"
         },
         {
+          "path": "gpui/kit/icons/bug.svg",
+          "type": "registry:file",
+          "target": "icons/bug.svg"
+        },
+        {
           "path": "gpui/kit/icons/caret-down.svg",
           "type": "registry:file",
           "target": "icons/caret-down.svg"
@@ -138,6 +153,11 @@
           "path": "gpui/kit/icons/chat-circle.svg",
           "type": "registry:file",
           "target": "icons/chat-circle.svg"
+        },
+        {
+          "path": "gpui/kit/icons/check-bold.svg",
+          "type": "registry:file",
+          "target": "icons/check-bold.svg"
         },
         {
           "path": "gpui/kit/icons/check-circle-fill.svg",
@@ -363,6 +383,11 @@
           "path": "gpui/kit/icons/sign-out.svg",
           "type": "registry:file",
           "target": "icons/sign-out.svg"
+        },
+        {
+          "path": "gpui/kit/icons/sliders-horizontal.svg",
+          "type": "registry:file",
+          "target": "icons/sliders-horizontal.svg"
         },
         {
           "path": "gpui/kit/icons/smiley.svg",
@@ -652,6 +677,39 @@
       ]
     },
     {
+      "name": "shortcut-recorder",
+      "type": "registry:lib",
+      "title": "Shortcut recorder",
+      "description": "176 px recorder control with key chips (Electron w-44).",
+      "files": [
+        {
+          "path": "gpui/kit/src/shortcut_recorder.rs",
+          "type": "registry:file",
+          "target": "src/shortcut_recorder.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:lib",
       "title": "Switch",
@@ -778,6 +836,7 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
     },
@@ -1400,6 +1459,36 @@
       ]
     },
     {
+      "name": "status-badge",
+      "type": "registry:lib",
+      "title": "Status badge",
+      "description": "22 px round glass status chip with label, value and tone dot.",
+      "files": [
+        {
+          "path": "gpui/kit/src/status_badge.rs",
+          "type": "registry:file",
+          "target": "src/status_badge.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/status-dot",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "pin-window-button",
       "type": "registry:lib",
       "title": "Pin Window Button",
@@ -1705,6 +1794,34 @@
       ]
     },
     {
+      "name": "caption-preview-backdrop",
+      "type": "registry:lib",
+      "title": "Caption preview backdrop",
+      "description": "Rasterised dark/mixed caption preview gradients; light uses tokens.",
+      "files": [
+        {
+          "path": "gpui/kit/src/caption_preview_backdrop.rs",
+          "type": "registry:file",
+          "target": "src/caption_preview_backdrop.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "page-tabs",
       "type": "registry:lib",
       "title": "Page Tabs",
@@ -1764,6 +1881,7 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
     },
