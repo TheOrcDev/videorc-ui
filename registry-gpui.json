@@ -80,6 +80,11 @@
           "target": "icons/arrow-square-out.svg"
         },
         {
+          "path": "gpui/kit/icons/bell.svg",
+          "type": "registry:file",
+          "target": "icons/bell.svg"
+        },
+        {
           "path": "gpui/kit/icons/broadcast.svg",
           "type": "registry:file",
           "target": "icons/broadcast.svg"
@@ -115,6 +120,11 @@
           "target": "icons/circle-notch.svg"
         },
         {
+          "path": "gpui/kit/icons/device-mobile.svg",
+          "type": "registry:file",
+          "target": "icons/device-mobile.svg"
+        },
+        {
           "path": "gpui/kit/icons/dots-three-bold.svg",
           "type": "registry:file",
           "target": "icons/dots-three-bold.svg"
@@ -145,9 +155,39 @@
           "target": "icons/info.svg"
         },
         {
+          "path": "gpui/kit/icons/layout.svg",
+          "type": "registry:file",
+          "target": "icons/layout.svg"
+        },
+        {
           "path": "gpui/kit/icons/lock-key-fill.svg",
           "type": "registry:file",
           "target": "icons/lock-key-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/lock-key.svg",
+          "type": "registry:file",
+          "target": "icons/lock-key.svg"
+        },
+        {
+          "path": "gpui/kit/icons/magnifying-glass.svg",
+          "type": "registry:file",
+          "target": "icons/magnifying-glass.svg"
+        },
+        {
+          "path": "gpui/kit/icons/monitor.svg",
+          "type": "registry:file",
+          "target": "icons/monitor.svg"
+        },
+        {
+          "path": "gpui/kit/icons/push-pin-fill.svg",
+          "type": "registry:file",
+          "target": "icons/push-pin-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/push-pin.svg",
+          "type": "registry:file",
+          "target": "icons/push-pin.svg"
         },
         {
           "path": "gpui/kit/icons/warning-circle.svg",
@@ -178,26 +218,6 @@
           "path": "gpui/kit/icons/x.svg",
           "type": "registry:file",
           "target": "icons/x.svg"
-        },
-        {
-          "path": "gpui/kit/icons/magnifying-glass.svg",
-          "type": "registry:file",
-          "target": "icons/magnifying-glass.svg"
-        },
-        {
-          "path": "gpui/kit/icons/bell.svg",
-          "type": "registry:file",
-          "target": "icons/bell.svg"
-        },
-        {
-          "path": "gpui/kit/icons/push-pin.svg",
-          "type": "registry:file",
-          "target": "icons/push-pin.svg"
-        },
-        {
-          "path": "gpui/kit/icons/push-pin-fill.svg",
-          "type": "registry:file",
-          "target": "icons/push-pin-fill.svg"
         }
       ],
       "meta": {
