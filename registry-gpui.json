@@ -80,6 +80,11 @@
           "target": "icons/arrow-square-out.svg"
         },
         {
+          "path": "gpui/kit/icons/arrows-clockwise.svg",
+          "type": "registry:file",
+          "target": "icons/arrows-clockwise.svg"
+        },
+        {
           "path": "gpui/kit/icons/bell.svg",
           "type": "registry:file",
           "target": "icons/bell.svg"
@@ -190,9 +195,19 @@
           "target": "icons/push-pin.svg"
         },
         {
+          "path": "gpui/kit/icons/sparkle.svg",
+          "type": "registry:file",
+          "target": "icons/sparkle.svg"
+        },
+        {
           "path": "gpui/kit/icons/squares-four.svg",
           "type": "registry:file",
           "target": "icons/squares-four.svg"
+        },
+        {
+          "path": "gpui/kit/icons/upload-simple.svg",
+          "type": "registry:file",
+          "target": "icons/upload-simple.svg"
         },
         {
           "path": "gpui/kit/icons/video-camera.svg",
