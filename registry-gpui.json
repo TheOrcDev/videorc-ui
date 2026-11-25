@@ -2610,6 +2610,7 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/scroll-area",
         "@videorc-gpui/theme"
       ]
     },
