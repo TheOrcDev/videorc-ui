@@ -694,7 +694,7 @@
       "name": "tabs",
       "type": "registry:lib",
       "title": "Tabs",
-      "description": "Tabs on gpui-base's Tabs: a recessed glass track whose selected segment is a chrome plate, or a line of words with the selected one underlined.",
+      "description": "Tabs on gpui-base's Tabs: a recessed glass track that hugs its labels (w-fit), whose selected segment is a chrome plate, or a line of words with the selected one underlined.",
       "files": [
         {
           "path": "gpui/kit/src/tabs.rs",
@@ -1683,7 +1683,7 @@
       "name": "page-tabs",
       "type": "registry:lib",
       "title": "Page Tabs",
-      "description": "A page with tabs. One segmented tab list pinned in a strip under the toolbar, and only the region under it scrolls. Built on Tabs.",
+      "description": "A page with tabs. One segmented tab list pinned left in a strip under the toolbar (hugs its labels), and only the region under it scrolls. Built on Tabs.",
       "files": [
         {
           "path": "gpui/kit/src/page_tabs.rs",
