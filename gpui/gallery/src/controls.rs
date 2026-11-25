@@ -2,7 +2,10 @@
 //! Tabs, Input, Textarea, ToggleGroup and SegmentedControl. Each column keeps
 //! its own values, keyed by appearance.
 
-use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
+use gpui::{
+    AnyElement, App, Entity, FontWeight, IntoElement, SharedString, Window, div, prelude::*, px,
+};
+use videorc_kit::tokens::Color;
 use videorc_kit::{
     Appearance, Checkbox, CheckboxChecked, Input, InputState, Segment, SegmentedControl, Slider,
     SliderState, Switch, Tabs, TabsVariant, Textarea, TextareaState, ToggleGroup, ToggleItem, hsla,
@@ -249,7 +252,8 @@ pub fn tabs_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement
         .into_any_element()
 }
 
-/// `toggle-group`: filter chips, several on at once, and the outline strip.
+/// `toggle-group`: filter chips, several on at once, the outline strip, and
+/// a custom-child preview (Captions Style).
 pub fn toggle_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
     let t = a.theme();
     let kinds = kept(a, "toggle-kinds", window, cx, |_, _| -> Vec<SharedString> {
@@ -257,6 +261,9 @@ pub fn toggle_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> An
     });
     let fit = kept(a, "toggle-fit", window, cx, |_, _| -> Vec<SharedString> {
         vec!["fit".into()]
+    });
+    let style = kept(a, "toggle-style", window, cx, |_, _| -> Vec<SharedString> {
+        vec!["clean".into()]
     });
     let choose = |state: &Entity<Vec<SharedString>>| {
         let state = state.clone();
@@ -266,6 +273,54 @@ pub fn toggle_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> An
                 cx.notify();
             })
         }
+    };
+    let style_chip = |title: &'static str, hint: &'static str, plate: Color| {
+        div()
+            .flex()
+            .flex_col()
+            .gap(px(8.0))
+            .w_full()
+            .min_w(px(0.0))
+            .child(
+                div()
+                    .h(px(48.0))
+                    .w_full()
+                    .rounded(px(8.0))
+                    .bg(hsla(plate))
+                    .flex()
+                    .items_end()
+                    .justify_start()
+                    .p(px(8.0))
+                    .child(
+                        div()
+                            .px(px(8.0))
+                            .py(px(4.0))
+                            .rounded(px(4.0))
+                            .bg(hsla(t.glass_solid))
+                            .text_size(px(8.0))
+                            .text_color(hsla(t.foreground))
+                            .child("Make every word count"),
+                    ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(2.0))
+                    .child(
+                        div()
+                            .text_size(px(12.0))
+                            .font_weight(FontWeight::MEDIUM)
+                            .text_color(hsla(t.foreground))
+                            .child(title),
+                    )
+                    .child(
+                        div()
+                            .text_size(px(11.0))
+                            .text_color(hsla(t.muted_foreground))
+                            .child(hint),
+                    ),
+            )
     };
     div()
         .flex()
@@ -298,6 +353,27 @@ pub fn toggle_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> An
                 .item(ToggleItem::new("fill", "Fill"))
                 .item(ToggleItem::new("stretch", "Stretch"))
                 .on_change(choose(&fit))
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "With preview",
+            ToggleGroup::new("toggle-style")
+                .outline(true)
+                .spacing(8.0)
+                .accessibility_label("Caption style")
+                .value(style.read(cx).clone())
+                .item(ToggleItem::new("clean", "Clean").child(style_chip(
+                    "Clean",
+                    "Clear plate under the words",
+                    t.muted,
+                )))
+                .item(ToggleItem::new("bold", "Bold").child(style_chip(
+                    "Bold",
+                    "Heavy type on a solid band",
+                    t.secondary,
+                )))
+                .on_change(choose(&style))
                 .appearance(a),
         ))
         .into_any_element()
