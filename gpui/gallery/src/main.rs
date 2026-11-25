@@ -150,6 +150,14 @@ const ITEMS: &[Item] = &[
         show: rows::skeleton_page,
     },
     Item {
+        name: "separator",
+        show: rows::separator_page,
+    },
+    Item {
+        name: "collapsible",
+        show: rows::collapsible_page,
+    },
+    Item {
         name: "page-tabs",
         show: controls::page_tabs_page,
     },
