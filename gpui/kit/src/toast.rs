@@ -258,11 +258,7 @@ fn kind_icon(kind: ToastKind, t: &Theme) -> Option<(IconName, Color)> {
 }
 
 fn description_color(t: &Theme) -> Color {
-    if is_dark(t) {
-        DESC_DARK
-    } else {
-        DESC_LIGHT
-    }
+    if is_dark(t) { DESC_DARK } else { DESC_LIGHT }
 }
 
 /// Sonner `[data-button]`: inverted chip (popover-foreground on glass-float).
@@ -325,11 +321,7 @@ fn toast_cancel_chip(
 }
 
 /// Sonner close: 20×20 circle on the card's top-left corner.
-fn toast_close(
-    id: SharedString,
-    on_close: ActionHandler,
-    t: &Theme,
-) -> AnyElement {
+fn toast_close(id: SharedString, on_close: ActionHandler, t: &Theme) -> AnyElement {
     let dark = is_dark(t);
     let border = if dark {
         t.glass_float_rim
@@ -365,11 +357,7 @@ fn toast_close(
         .items_center()
         .justify_center()
         .cursor_pointer()
-        .hover(|style| {
-            style
-                .bg(hsla(hover_bg))
-                .border_color(hsla(hover_border))
-        })
+        .hover(|style| style.bg(hsla(hover_bg)).border_color(hsla(hover_border)))
         .aria_label("Dismiss notification")
         .on_click(move |_, window, cx| on_close(window, cx))
         .child(icon(IconName::X, 14.0, hsla(glyph)))
@@ -423,9 +411,8 @@ pub fn toast_card(
             t,
         )
     });
-    let close = on_close.map(|on_close| {
-        toast_close(SharedString::from(format!("{id}-close")), on_close, t)
-    });
+    let close = on_close
+        .map(|on_close| toast_close(SharedString::from(format!("{id}-close")), on_close, t));
 
     popup_surface(t)
         .relative()

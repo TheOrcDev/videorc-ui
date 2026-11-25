@@ -4,13 +4,13 @@
 //! element, or `Button::tooltip`.
 
 use gpui::{
-    div, prelude::*, px, Action, AnyView, App, Context, IntoElement, Render, SharedString, Window,
+    Action, AnyView, App, Context, IntoElement, Render, SharedString, Window, div, prelude::*, px,
 };
 
 use crate::{
-    motion::{floating, presence, Glass},
+    motion::{Glass, floating, presence},
     shortcut_keys::ShortcutKeys,
-    theme::{current, hsla, FONT},
+    theme::{FONT, current, hsla},
     tokens::radius,
 };
 

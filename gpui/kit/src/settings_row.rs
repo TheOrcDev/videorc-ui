@@ -11,7 +11,7 @@ use smallvec::SmallVec;
 
 use crate::{
     icon::{IconName, icon},
-    theme::{Appearance, hsla, resolve},
+    theme::{Appearance, TypeScale, hsla, resolve},
     tokens::{radius, text},
 };
 

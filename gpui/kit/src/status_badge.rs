@@ -3,9 +3,7 @@
 //! glowing 6 px tone dot leads, unless the tone is error/live (tinted chip,
 //! no dot) or a leading icon replaces the dot.
 
-use gpui::{
-    AnyElement, App, FontWeight, IntoElement, SharedString, Window, div, prelude::*, px,
-};
+use gpui::{AnyElement, App, FontWeight, IntoElement, SharedString, Window, div, prelude::*, px};
 
 use crate::{
     badge::{dot, glass_chip, tinted},
@@ -109,7 +107,6 @@ impl RenderOnce for StatusBadge {
             .flex()
             .flex_none()
             .h(px(22.0))
-            .w_fit()
             .items_center()
             .gap(px(6.0))
             .overflow_hidden()

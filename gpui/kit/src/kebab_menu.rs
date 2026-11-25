@@ -8,8 +8,8 @@
 use std::{rc::Rc, time::Duration};
 
 use gpui::{
-    div, prelude::*, App, ElementId, Hsla, IntoElement, SharedString, TimedTransformation,
-    Transformation, Window,
+    App, ElementId, Hsla, IntoElement, SharedString, TimedTransformation, Transformation, Window,
+    div, prelude::*,
 };
 
 use crate::{
@@ -17,8 +17,8 @@ use crate::{
     dropdown_menu::{
         DropdownMenu, Menu, MenuAlign, MenuHandler, MenuIcon, MenuItem, MenuItemTone, MenuShortcut,
     },
-    icon::{icon, IconName},
-    theme::{hsla, motion, resolve, Appearance},
+    icon::{IconName, icon},
+    theme::{Appearance, hsla, motion, resolve},
 };
 
 /// One action in a row's ⋯ menu, and in its right-click twin.

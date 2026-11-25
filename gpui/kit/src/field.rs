@@ -116,23 +116,18 @@ impl RenderOnce for Field {
         let t = resolve(self.appearance, window, cx);
         let _invalid = self.invalid;
         let label_row = self.label.map(|label| {
-            let mut row = div()
-                .flex()
-                .w_full()
-                .items_center()
-                .gap(px(8.0))
-                .child(
-                    div()
-                        .flex_1()
-                        .min_w(px(0.0))
-                        .text_size(px(14.0))
-                        .line_height(px(20.0))
-                        .font_weight(FontWeight::MEDIUM)
-                        // Electron keeps the label in the foreground; the error
-                        // line below carries the refusal.
-                        .text_color(hsla(t.foreground))
-                        .child(label),
-                );
+            let mut row = div().flex().w_full().items_center().gap(px(8.0)).child(
+                div()
+                    .flex_1()
+                    .min_w(px(0.0))
+                    .text_size(px(14.0))
+                    .line_height(px(20.0))
+                    .font_weight(FontWeight::MEDIUM)
+                    // Electron keeps the label in the foreground; the error
+                    // line below carries the refusal.
+                    .text_color(hsla(t.foreground))
+                    .child(label),
+            );
             if let Some(end) = self.label_end {
                 row = row.child(
                     div()

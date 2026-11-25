@@ -105,6 +105,11 @@
           "target": "icons/arrow-up.svg"
         },
         {
+          "path": "gpui/kit/icons/arrows-clockwise-fill.svg",
+          "type": "registry:file",
+          "target": "icons/arrows-clockwise-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/arrows-clockwise.svg",
           "type": "registry:file",
           "target": "icons/arrows-clockwise.svg"
@@ -123,6 +128,11 @@
           "path": "gpui/kit/icons/brain.svg",
           "type": "registry:file",
           "target": "icons/brain.svg"
+        },
+        {
+          "path": "gpui/kit/icons/broadcast-fill.svg",
+          "type": "registry:file",
+          "target": "icons/broadcast-fill.svg"
         },
         {
           "path": "gpui/kit/icons/broadcast.svg",
@@ -180,9 +190,24 @@
           "target": "icons/circle-notch.svg"
         },
         {
+          "path": "gpui/kit/icons/closed-captioning-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/closed-captioning-duotone.svg"
+        },
+        {
+          "path": "gpui/kit/icons/closed-captioning-fill.svg",
+          "type": "registry:file",
+          "target": "icons/closed-captioning-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/closed-captioning.svg",
           "type": "registry:file",
           "target": "icons/closed-captioning.svg"
+        },
+        {
+          "path": "gpui/kit/icons/code.svg",
+          "type": "registry:file",
+          "target": "icons/code.svg"
         },
         {
           "path": "gpui/kit/icons/copy.svg",
@@ -193,6 +218,11 @@
           "path": "gpui/kit/icons/crosshair.svg",
           "type": "registry:file",
           "target": "icons/crosshair.svg"
+        },
+        {
+          "path": "gpui/kit/icons/desktop-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/desktop-duotone.svg"
         },
         {
           "path": "gpui/kit/icons/desktop.svg",
@@ -215,6 +245,11 @@
           "target": "icons/download-simple.svg"
         },
         {
+          "path": "gpui/kit/icons/eye-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/eye-duotone.svg"
+        },
+        {
           "path": "gpui/kit/icons/eye-slash.svg",
           "type": "registry:file",
           "target": "icons/eye-slash.svg"
@@ -230,9 +265,19 @@
           "target": "icons/facebook-logo.svg"
         },
         {
+          "path": "gpui/kit/icons/file-video-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/file-video-duotone.svg"
+        },
+        {
           "path": "gpui/kit/icons/file-video.svg",
           "type": "registry:file",
           "target": "icons/file-video.svg"
+        },
+        {
+          "path": "gpui/kit/icons/film-reel-fill.svg",
+          "type": "registry:file",
+          "target": "icons/film-reel-fill.svg"
         },
         {
           "path": "gpui/kit/icons/film-reel.svg",
@@ -255,9 +300,19 @@
           "target": "icons/frame-corners.svg"
         },
         {
+          "path": "gpui/kit/icons/gear-six-fill.svg",
+          "type": "registry:file",
+          "target": "icons/gear-six-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/gear-six.svg",
           "type": "registry:file",
           "target": "icons/gear-six.svg"
+        },
+        {
+          "path": "gpui/kit/icons/heartbeat-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/heartbeat-duotone.svg"
         },
         {
           "path": "gpui/kit/icons/heartbeat.svg",
@@ -268,6 +323,11 @@
           "path": "gpui/kit/icons/image-broken.svg",
           "type": "registry:file",
           "target": "icons/image-broken.svg"
+        },
+        {
+          "path": "gpui/kit/icons/image-square-fill.svg",
+          "type": "registry:file",
+          "target": "icons/image-square-fill.svg"
         },
         {
           "path": "gpui/kit/icons/image-square.svg",
@@ -320,9 +380,24 @@
           "target": "icons/magnifying-glass.svg"
         },
         {
+          "path": "gpui/kit/icons/microphone-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/microphone-duotone.svg"
+        },
+        {
           "path": "gpui/kit/icons/microphone.svg",
           "type": "registry:file",
           "target": "icons/microphone.svg"
+        },
+        {
+          "path": "gpui/kit/icons/monitor-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/monitor-duotone.svg"
+        },
+        {
+          "path": "gpui/kit/icons/monitor-fill.svg",
+          "type": "registry:file",
+          "target": "icons/monitor-fill.svg"
         },
         {
           "path": "gpui/kit/icons/monitor.svg",
@@ -330,14 +405,34 @@
           "target": "icons/monitor.svg"
         },
         {
+          "path": "gpui/kit/icons/moon-fill.svg",
+          "type": "registry:file",
+          "target": "icons/moon-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/note-pencil.svg",
+          "type": "registry:file",
+          "target": "icons/note-pencil.svg"
+        },
+        {
           "path": "gpui/kit/icons/pencil-simple.svg",
           "type": "registry:file",
           "target": "icons/pencil-simple.svg"
         },
         {
+          "path": "gpui/kit/icons/play-fill.svg",
+          "type": "registry:file",
+          "target": "icons/play-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/play.svg",
           "type": "registry:file",
           "target": "icons/play.svg"
+        },
+        {
+          "path": "gpui/kit/icons/pulse-fill.svg",
+          "type": "registry:file",
+          "target": "icons/pulse-fill.svg"
         },
         {
           "path": "gpui/kit/icons/pulse.svg",
@@ -355,6 +450,11 @@
           "target": "icons/push-pin.svg"
         },
         {
+          "path": "gpui/kit/icons/record-fill.svg",
+          "type": "registry:file",
+          "target": "icons/record-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/record.svg",
           "type": "registry:file",
           "target": "icons/record.svg"
@@ -363,6 +463,11 @@
           "path": "gpui/kit/icons/robot.svg",
           "type": "registry:file",
           "target": "icons/robot.svg"
+        },
+        {
+          "path": "gpui/kit/icons/scissors-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/scissors-duotone.svg"
         },
         {
           "path": "gpui/kit/icons/scissors.svg",
@@ -390,9 +495,19 @@
           "target": "icons/sliders-horizontal.svg"
         },
         {
+          "path": "gpui/kit/icons/smiley-fill.svg",
+          "type": "registry:file",
+          "target": "icons/smiley-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/smiley.svg",
           "type": "registry:file",
           "target": "icons/smiley.svg"
+        },
+        {
+          "path": "gpui/kit/icons/sparkle-fill.svg",
+          "type": "registry:file",
+          "target": "icons/sparkle-fill.svg"
         },
         {
           "path": "gpui/kit/icons/sparkle.svg",
@@ -400,14 +515,34 @@
           "target": "icons/sparkle.svg"
         },
         {
+          "path": "gpui/kit/icons/speaker-high-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/speaker-high-duotone.svg"
+        },
+        {
+          "path": "gpui/kit/icons/speaker-high-fill.svg",
+          "type": "registry:file",
+          "target": "icons/speaker-high-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/speaker-high.svg",
           "type": "registry:file",
           "target": "icons/speaker-high.svg"
         },
         {
+          "path": "gpui/kit/icons/speaker-slash-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/speaker-slash-duotone.svg"
+        },
+        {
           "path": "gpui/kit/icons/speaker-slash.svg",
           "type": "registry:file",
           "target": "icons/speaker-slash.svg"
+        },
+        {
+          "path": "gpui/kit/icons/squares-four-fill.svg",
+          "type": "registry:file",
+          "target": "icons/squares-four-fill.svg"
         },
         {
           "path": "gpui/kit/icons/squares-four.svg",
@@ -423,6 +558,11 @@
           "path": "gpui/kit/icons/stop.svg",
           "type": "registry:file",
           "target": "icons/stop.svg"
+        },
+        {
+          "path": "gpui/kit/icons/sun-fill.svg",
+          "type": "registry:file",
+          "target": "icons/sun-fill.svg"
         },
         {
           "path": "gpui/kit/icons/terminal.svg",
@@ -450,9 +590,19 @@
           "target": "icons/twitch-logo.svg"
         },
         {
+          "path": "gpui/kit/icons/upload-simple-fill.svg",
+          "type": "registry:file",
+          "target": "icons/upload-simple-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/upload-simple.svg",
           "type": "registry:file",
           "target": "icons/upload-simple.svg"
+        },
+        {
+          "path": "gpui/kit/icons/user-circle-fill.svg",
+          "type": "registry:file",
+          "target": "icons/user-circle-fill.svg"
         },
         {
           "path": "gpui/kit/icons/user-circle.svg",
@@ -460,9 +610,24 @@
           "target": "icons/user-circle.svg"
         },
         {
+          "path": "gpui/kit/icons/user-sound-fill.svg",
+          "type": "registry:file",
+          "target": "icons/user-sound-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/user-sound.svg",
           "type": "registry:file",
           "target": "icons/user-sound.svg"
+        },
+        {
+          "path": "gpui/kit/icons/video-camera-duotone.svg",
+          "type": "registry:file",
+          "target": "icons/video-camera-duotone.svg"
+        },
+        {
+          "path": "gpui/kit/icons/video-camera-fill.svg",
+          "type": "registry:file",
+          "target": "icons/video-camera-fill.svg"
         },
         {
           "path": "gpui/kit/icons/video-camera.svg",
@@ -1964,6 +2129,10 @@
           "gpui": {
             "package": "gpui-pre",
             "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
           }
         },
         "patches": [

@@ -4,12 +4,12 @@
 //! [`gpui_base::init`] at startup so selection and copy work.
 
 use gpui::{
-    prelude::*, px, App, ElementId, FontWeight, IntoElement, SharedString, TextStyleRefinement,
-    Window,
+    App, ElementId, FontWeight, IntoElement, SharedString, TextStyleRefinement, Window, prelude::*,
+    px,
 };
 use gpui_base::SelectableText as BaseSelectableText;
 
-use crate::theme::{hsla, resolve, Appearance, FONT};
+use crate::theme::{Appearance, FONT, hsla, resolve};
 
 #[derive(IntoElement)]
 pub struct SelectableText {
