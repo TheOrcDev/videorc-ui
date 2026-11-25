@@ -400,6 +400,11 @@
           "target": "icons/user-circle.svg"
         },
         {
+          "path": "gpui/kit/icons/user-sound.svg",
+          "type": "registry:file",
+          "target": "icons/user-sound.svg"
+        },
+        {
           "path": "gpui/kit/icons/video-camera.svg",
           "type": "registry:file",
           "target": "icons/video-camera.svg"
