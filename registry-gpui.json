@@ -1687,6 +1687,63 @@
         "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:lib",
+      "title": "Separator",
+      "description": "A 1 px border rule that splits a column or a row.",
+      "files": [
+        {
+          "path": "gpui/kit/src/separator.rs",
+          "type": "registry:file",
+          "target": "src/separator.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:lib",
+      "title": "Collapsible",
+      "description": "A disclosure that keeps its trigger visible and shows or hides a panel.",
+      "files": [
+        {
+          "path": "gpui/kit/src/collapsible.rs",
+          "type": "registry:file",
+          "target": "src/collapsible.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
     }
   ]
 }

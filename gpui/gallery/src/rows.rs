@@ -5,9 +5,9 @@
 
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
-    Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, Empty,
-    GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel, SettingsGroup,
-    SettingsRow, Skeleton, Spinner, Switch, hsla, icon,
+    Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant,
+    Collapsible, Empty, GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel,
+    Separator, SettingsGroup, SettingsRow, Skeleton, Spinner, Switch, hsla, icon,
 };
 
 use crate::section;
@@ -417,6 +417,101 @@ pub fn skeleton_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
                     .h(px(90.0))
                     .appearance(a),
             ),
+    )
+    .into_any_element()
+}
+
+/// `separator`: a 1 px border rule, horizontal or vertical.
+pub fn separator_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(20.0))
+        .child(section(
+            t,
+            "Horizontal",
+            div()
+                .w_full()
+                .flex()
+                .flex_col()
+                .gap(px(8.0))
+                .child(
+                    div()
+                        .text_size(px(12.0))
+                        .text_color(hsla(t.muted_foreground))
+                        .child("Above"),
+                )
+                .child(Separator::new().appearance(a))
+                .child(
+                    div()
+                        .text_size(px(12.0))
+                        .text_color(hsla(t.muted_foreground))
+                        .child("Below"),
+                ),
+        ))
+        .child(section(
+            t,
+            "Vertical",
+            div()
+                .h(px(48.0))
+                .flex()
+                .items_center()
+                .gap(px(12.0))
+                .child(
+                    div()
+                        .text_size(px(12.0))
+                        .text_color(hsla(t.muted_foreground))
+                        .child("Left"),
+                )
+                .child(Separator::new().vertical().appearance(a))
+                .child(
+                    div()
+                        .text_size(px(12.0))
+                        .text_color(hsla(t.muted_foreground))
+                        .child("Right"),
+                ),
+        ))
+        .into_any_element()
+}
+
+/// `collapsible`: a disclosure trigger with a panel.
+pub fn collapsible_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let open = window.use_keyed_state(
+        SharedString::from(format!("{}/collapsible-open", a.name())),
+        cx,
+        |_, _| true,
+    );
+    let is_open = *open.read(cx);
+    section(
+        t,
+        "Panel",
+        Collapsible::new("collapsible-demo")
+            .open(is_open)
+            .appearance(a)
+            .trigger(
+                div()
+                    .text_size(px(13.0))
+                    .font_weight(gpui::FontWeight::MEDIUM)
+                    .text_color(hsla(t.foreground))
+                    .child("Diagnostics"),
+            )
+            .content(
+                div()
+                    .text_size(px(12.0))
+                    .text_color(hsla(t.muted_foreground))
+                    .child("Suggestions and checks for this session."),
+            )
+            .on_toggle({
+                let open = open.clone();
+                move |next, _, cx| {
+                    open.update(cx, |value, cx| {
+                        *value = next;
+                        cx.notify();
+                    });
+                }
+            }),
     )
     .into_any_element()
 }
