@@ -776,8 +776,7 @@ pub fn qr_code_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
     section(
         t,
         "Pairing URL",
-        QrCode::new("pair")
-            .value("https://videorc.example/pair?t=demo")
+        QrCode::new("pair", "https://videorc.example/pair?t=demo")
             .accessibility_label("Pairing QR code")
             .appearance(a),
     )

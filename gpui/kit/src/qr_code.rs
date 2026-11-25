@@ -1,93 +1,92 @@
 //! QrCode (`components/ui/qr-code.tsx`): dark modules on white paper in both
 //! themes. Scanners need the contrast; the style guard allowlists the fixed
 //! black/white ink. ECC Medium and a quiet zone of 2 modules match Electron
-//! Phone Pair (`uqr` + `qrCodePath`).
+//! Phone Pair (`uqr` + `qrCodePath`). C5 Sweep B wires Pair a phone against
+//! [`QrCode::new`].
+
+use std::sync::Arc;
 
 use gpui::{
-    App, Bounds, ElementId, IntoElement, SharedString, StyleRefinement, Window, canvas, div, fill,
-    point, prelude::*, px, size,
+    App, Bounds, ElementId, IntoElement, RenderImage, SharedString, Window, canvas, div,
+    prelude::*, px,
 };
+use qrcode::{Color as ModuleColor, EcLevel, QrCode as Encoder};
 
 use crate::{
+    chrome,
     theme::{Appearance, hsla, resolve},
     tokens::{Color, radius},
 };
 
 /// Paper under the modules (`bg-white`). Fixed for scanners in both themes.
 const PAPER: Color = 0xffff_ffff;
-/// Module ink (`#000`). Fixed for scanners in both themes.
-const INK: Color = 0x0000_00ff;
-/// Quiet zone around the symbol, in modules (uqr's `border: 2`).
-const BORDER: usize = 2;
-/// Electron's `size-56` (14 rem at 16 px).
-const DEFAULT_SIZE: f32 = 224.0;
+/// Default on-screen edge, matching Electron's `size-56` (14 rem).
+pub const DEFAULT_SIZE: f32 = 224.0;
 /// Electron's `p-1` around the modules.
 const PAD: f32 = 4.0;
 
-/// Encoded modules as a square bit matrix (row-major, including quiet zone).
-#[derive(Clone, Debug, Default)]
-struct Modules {
-    /// Side length in modules (including quiet zone).
-    size: usize,
-    /// `true` = dark. Length `size * size`.
-    dark: Vec<bool>,
+/// One SVG path for the whole code (a run per dark span), matching
+/// Electron's `qrCodePath`. Quiet zone of 2 modules is included in `size`.
+pub fn path_for(text: &str) -> Option<(String, usize)> {
+    if text.is_empty() {
+        return None;
+    }
+    let code = Encoder::with_error_correction_level(text.as_bytes(), EcLevel::M).ok()?;
+    let width = code.width();
+    let border = 2;
+    let size = width + border * 2;
+    let mut path = String::new();
+    for y in 0..width {
+        let mut x = 0;
+        while x < width {
+            if code[(x, y)] != ModuleColor::Dark {
+                x += 1;
+                continue;
+            }
+            let mut run = 1;
+            while x + run < width && code[(x + run, y)] == ModuleColor::Dark {
+                run += 1;
+            }
+            let px = x + border;
+            let py = y + border;
+            path.push_str(&format!("M{px} {py}h{run}v1h-{run}z"));
+            x += run;
+        }
+    }
+    Some((path, size))
 }
 
-impl Modules {
-    fn encode(value: &str) -> Self {
-        if value.is_empty() {
-            return Modules::default();
-        }
-        let Ok(code) =
-            qrcode::QrCode::with_error_correction_level(value.as_bytes(), qrcode::EcLevel::M)
-        else {
-            return Modules::default();
-        };
-        let core = code.width();
-        let size = core + BORDER * 2;
-        let mut dark = vec![false; size * size];
-        for y in 0..core {
-            for x in 0..core {
-                if code[(x, y)] == qrcode::Color::Dark {
-                    dark[(y + BORDER) * size + (x + BORDER)] = true;
-                }
-            }
-        }
-        Modules { size, dark }
-    }
+fn svg_for(text: &str) -> Option<String> {
+    let (path, size) = path_for(text)?;
+    Some(format!(
+        r##"<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 {size} {size}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#ffffff"/><path d="{path}" fill="#000000"/></svg>"##
+    ))
 }
 
 #[derive(IntoElement)]
 pub struct QrCode {
     id: ElementId,
-    base: gpui::Div,
-    value: SharedString,
-    display_size: f32,
+    text: SharedString,
+    size: f32,
     accessibility_label: SharedString,
     appearance: Option<Appearance>,
 }
 
 impl QrCode {
-    pub fn new(id: impl Into<ElementId>) -> Self {
+    /// Pairing URL (or any payload) to encode.
+    pub fn new(id: impl Into<ElementId>, text: impl Into<SharedString>) -> Self {
         QrCode {
             id: id.into(),
-            base: div(),
-            value: SharedString::default(),
-            display_size: DEFAULT_SIZE,
+            text: text.into(),
+            size: DEFAULT_SIZE,
             accessibility_label: "QR code".into(),
             appearance: None,
         }
     }
 
-    /// Payload to encode (pairing URL, etc.).
-    pub fn value(mut self, value: impl Into<SharedString>) -> Self {
-        self.value = value.into();
-        self
-    }
-
-    /// Outer edge length in px (default 224, Electron's `size-56`).
-    pub fn size(mut self, edge: f32) -> Self {
-        self.display_size = edge;
+    /// Outer edge length in px (default [`DEFAULT_SIZE`]).
+    pub fn size(mut self, size: f32) -> Self {
+        self.size = size;
         self
     }
 
@@ -103,69 +102,55 @@ impl QrCode {
     }
 }
 
-impl Styled for QrCode {
-    fn style(&mut self) -> &mut StyleRefinement {
-        self.base.style()
-    }
-}
-
-fn paint_modules(window: &mut Window, bounds: Bounds<Pixels>, modules: &Modules) {
-    if modules.size == 0 || bounds.size.width <= px(0.0) || bounds.size.height <= px(0.0) {
-        return;
-    }
-    let side = modules.size as f32;
-    let module_w = bounds.size.width / side;
-    let module_h = bounds.size.height / side;
-    let ink = hsla(INK);
-    for y in 0..modules.size {
-        let mut x = 0;
-        while x < modules.size {
-            if !modules.dark[y * modules.size + x] {
-                x += 1;
-                continue;
-            }
-            let mut run = 1;
-            while x + run < modules.size && modules.dark[y * modules.size + x + run] {
-                run += 1;
-            }
-            let rect = Bounds {
-                origin: point(
-                    bounds.origin.x + module_w * x as f32,
-                    bounds.origin.y + module_h * y as f32,
-                ),
-                size: size(module_w * run as f32, module_h),
-            };
-            window.paint_quad(fill(rect, ink));
-            x += run;
-        }
-    }
+fn paint_qr(window: &mut Window, bounds: Bounds<gpui::Pixels>, image: Arc<RenderImage>) {
+    let _ = window.paint_image(bounds, bounds, gpui::Corners::default(), image, 0, false);
 }
 
 impl RenderOnce for QrCode {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        // Appearance is resolved so the gallery's forced theme still paints;
-        // paper and ink stay fixed (scanners), not theme tokens.
-        let _t = resolve(self.appearance, window, cx);
-        let modules = Modules::encode(&self.value);
-        let label = self.accessibility_label;
-        self.base
+        let t = resolve(self.appearance, window, cx);
+        let edge = px(self.size);
+        let label = self.accessibility_label.clone();
+        let text = self.text.to_string();
+        let raster = svg_for(&text).and_then(|svg| {
+            let d = self.size.round().max(1.0) as u32;
+            chrome::rasterise_for_kit(&svg, d, d)
+        });
+        div()
             .id(self.id)
             .role(gpui::Role::Image)
             .aria_label(label)
+            .size(edge)
             .flex_none()
-            .size(px(self.display_size))
+            // Electron uses rounded-row; CHIP is too tight for the paper.
             .rounded(px(radius::ROW))
             .bg(hsla(PAPER))
             .p(px(PAD))
-            .child(
-                canvas(
-                    |_, _, _| (),
-                    move |bounds, _, window, _| {
-                        paint_modules(window, bounds, &modules);
-                    },
-                )
-                .size_full(),
-            )
+            .overflow_hidden()
+            .child(match raster {
+                Some(image) => div()
+                    .size_full()
+                    .child(
+                        canvas(
+                            move |_, _, _| (),
+                            move |bounds, _, window, _| {
+                                paint_qr(window, bounds, image.clone());
+                            },
+                        )
+                        .size_full(),
+                    )
+                    .into_any_element(),
+                None => div()
+                    .size_full()
+                    .flex()
+                    .items_center()
+                    .justify_center()
+                    .text_size(px(12.0))
+                    .line_height(px(16.0))
+                    .text_color(hsla(t.muted_foreground))
+                    .child("Couldn't draw the code.")
+                    .into_any_element(),
+            })
     }
 }
 
@@ -174,26 +159,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn encodes_medium_ecc_with_quiet_zone() {
-        let modules = Modules::encode("https://example.com/pair");
-        assert!(modules.size > BORDER * 2);
-        // Quiet zone is light.
-        for i in 0..modules.size {
-            assert!(!modules.dark[i], "top border");
-            assert!(
-                !modules.dark[(modules.size - 1) * modules.size + i],
-                "bottom"
-            );
-            assert!(!modules.dark[i * modules.size], "left");
-            assert!(!modules.dark[i * modules.size + modules.size - 1], "right");
-        }
-        assert!(modules.dark.iter().any(|&d| d), "has dark modules");
+    fn a_pairing_url_encodes_to_a_path() {
+        let (path, size) = path_for("http://192.168.1.10:8787/pair#secret").unwrap();
+        assert!(size >= 21);
+        assert!(path.contains('M'));
+        assert!(path.contains('h'));
     }
 
     #[test]
-    fn empty_value_is_blank() {
-        let modules = Modules::encode("");
-        assert_eq!(modules.size, 0);
-        assert!(modules.dark.is_empty());
+    fn empty_text_has_no_path() {
+        assert!(path_for("").is_none());
     }
 }
