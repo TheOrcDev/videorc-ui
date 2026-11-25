@@ -1045,6 +1045,24 @@
       ]
     },
     {
+      "name": "channel-toggle",
+      "type": "registry:ui",
+      "title": "Channel Toggle",
+      "description": "audiocn's mixer channel toggle at the 28 px desktop height: Mute, Solo and Monitor presets, each pressed in its channel tone (a 40% rim, a 15% wash, the tone's ink). Forked from audiocn (MIT).",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@videorc/theme",
+        "@audiocn/use-audio-config",
+        "@videorc/utils"
+      ],
+      "files": [
+        {
+          "path": "components/ui/channel-toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "toggle-group",
       "type": "registry:ui",
       "title": "Toggle Group",

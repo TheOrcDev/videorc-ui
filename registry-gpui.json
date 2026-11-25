@@ -33,6 +33,11 @@
           "path": "gpui/kit/src/window.rs",
           "type": "registry:file",
           "target": "src/window.rs"
+        },
+        {
+          "path": "gpui/kit/src/tracking.rs",
+          "type": "registry:file",
+          "target": "src/tracking.rs"
         }
       ],
       "meta": {
@@ -1876,6 +1881,43 @@
       ]
     },
     {
+      "name": "channel-toggle",
+      "type": "registry:lib",
+      "title": "Channel Toggle",
+      "description": "The mixer's 28 px channel toggle: muted at rest, pressed in its channel's tone; mute_toggle, solo_toggle and monitor_toggle are the presets.",
+      "files": [
+        {
+          "path": "gpui/kit/src/channel_toggle.rs",
+          "type": "registry:file",
+          "target": "src/channel_toggle.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
+      ]
+    },
+    {
       "name": "toggle-group",
       "type": "registry:lib",
       "title": "Toggle Group",
@@ -2489,6 +2531,77 @@
           "gpui": {
             "package": "gpui-pre",
             "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "media-card",
+      "type": "registry:lib",
+      "title": "Media Card",
+      "description": "A card for an object with a picture: the row radius, a 4% fill, a hairline and no shadow. The one in use wears the chrome plate; with on_click the whole card is one button.",
+      "files": [
+        {
+          "path": "gpui/kit/src/media_card.rs",
+          "type": "registry:file",
+          "target": "src/media_card.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "page",
+      "type": "registry:lib",
+      "title": "Page",
+      "description": "The page vocabulary: the config grid of flush sections in one column or two from 940 px of page, the picture gallery that fills by width, and the plain stack.",
+      "files": [
+        {
+          "path": "gpui/kit/src/page.rs",
+          "type": "registry:file",
+          "target": "src/page.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "gpui_base": {
+            "package": "gpui-base",
+            "version": "=0.11.0"
+          },
+          "smallvec": {
+            "version": "1"
           }
         },
         "patches": [
