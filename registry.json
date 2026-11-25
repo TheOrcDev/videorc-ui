@@ -2315,6 +2315,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "sound-pad",
+      "type": "registry:ui",
+      "title": "Sound Pad",
+      "description": "Audiocn-style soundboard pads and grid: modes, playing ring, hotkey chip, progress ring/bar/fill.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/sound-pad.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

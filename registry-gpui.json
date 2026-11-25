@@ -2005,6 +2005,38 @@
       "registryDependencies": [
         "@videorc-gpui/theme"
       ]
+    },
+    {
+      "name": "sound-pad",
+      "type": "registry:lib",
+      "title": "Sound Pad",
+      "description": "Audiocn-style soundboard pads and grid: modes, playing ring, hotkey chip, progress ring/bar/fill.",
+      "files": [
+        {
+          "path": "gpui/kit/src/sound_pad.rs",
+          "type": "registry:file",
+          "target": "src/sound_pad.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/kbd",
+        "@videorc-gpui/theme"
+      ]
     }
   ]
 }

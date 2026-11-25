@@ -66,6 +66,10 @@ const ITEMS: &[Item] = &[
         show: controls::slider_page,
     },
     Item {
+        name: "sound-pad",
+        show: controls::sound_pad_page,
+    },
+    Item {
         name: "tabs",
         show: controls::tabs_page,
     },
