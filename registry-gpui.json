@@ -509,7 +509,7 @@
       "name": "badge",
       "type": "registry:lib",
       "title": "Badge",
-      "description": "A glass chip whose text stays monochrome: a status chip carries its tone in a glowing dot, an emphasis chip tints the glass.",
+      "description": "A glass chip whose text stays monochrome: a status chip carries its tone in a glowing dot, an emphasis chip tints the glass. Optional leading icon (Screen hidden EyeSlash, chat arrival marks).",
       "files": [
         {
           "path": "gpui/kit/src/badge.rs",
@@ -1849,6 +1849,160 @@
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:lib",
+      "title": "Label",
+      "description": "14 px / 500 words that name a control. Twin of React's Label.",
+      "files": [
+        {
+          "path": "gpui/kit/src/label.rs",
+          "type": "registry:file",
+          "target": "src/label.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:lib",
+      "title": "Field",
+      "description": "A named control: label, description, error and the control. Twin of React's Field / FieldGroup.",
+      "files": [
+        {
+          "path": "gpui/kit/src/field.rs",
+          "type": "registry:file",
+          "target": "src/field.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:lib",
+      "title": "Input Group",
+      "description": "One recessed field with addons inside. Twin of React's InputGroup.",
+      "files": [
+        {
+          "path": "gpui/kit/src/input_group.rs",
+          "type": "registry:file",
+          "target": "src/input_group.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/input",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "bar-visualizer",
+      "type": "registry:lib",
+      "title": "Bar Visualizer",
+      "description": "A row of level bars for mic meters. Twin of Electron's BarVisualizer.",
+      "files": [
+        {
+          "path": "gpui/kit/src/bar_visualizer.rs",
+          "type": "registry:file",
+          "target": "src/bar_visualizer.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "live-waveform",
+      "type": "registry:lib",
+      "title": "Live Waveform",
+      "description": "Centred waveform bars for mic preview. Twin of Electron's LiveWaveform.",
+      "files": [
+        {
+          "path": "gpui/kit/src/live_waveform.rs",
+          "type": "registry:file",
+          "target": "src/live_waveform.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          },
+          "smallvec": {
+            "version": "1"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
         "@videorc-gpui/theme"
       ]
     }

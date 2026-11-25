@@ -7,9 +7,10 @@ use gpui::{
 };
 use videorc_kit::tokens::Color;
 use videorc_kit::{
-    Appearance, Checkbox, CheckboxChecked, IconName, Input, InputState, Segment, SegmentedControl,
-    Slider, SliderState, Switch, Tabs, TabsVariant, Textarea, TextareaState, ToggleGroup,
-    ToggleItem, hsla, icon,
+    Appearance, BarVisualizer, BarVisualizerState, Checkbox, CheckboxChecked, Field, FieldGroup,
+    IconName, Input, InputGroup, InputGroupAddon, InputGroupText, InputState, Label, LiveWaveform,
+    Segment, SegmentedControl, Slider, SliderState, Switch, Tabs, TabsVariant, Textarea,
+    TextareaState, ToggleGroup, ToggleItem, hsla, icon,
 };
 
 use crate::section;
@@ -648,6 +649,122 @@ pub fn textarea_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyEle
                         .accessibility_label("Locked")
                         .appearance(a),
                 ),
+        ))
+        .into_any_element()
+}
+
+/// `label`: 14 px / 500 words that name a control.
+pub fn label_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Label",
+        div()
+            .flex()
+            .flex_col()
+            .gap(px(8.0))
+            .child(Label::new("Stream title").appearance(a))
+            .child(Label::new("Disabled").disabled(true).appearance(a)),
+    )
+    .into_any_element()
+}
+
+/// `field`: named controls for Room sounds / routing.
+pub fn field_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Fields",
+        FieldGroup::new()
+            .appearance(a)
+            .child(
+                Field::new("room-preview")
+                    .label("Room sounds · Preview")
+                    .description("Guests hear these in the room.")
+                    .appearance(a)
+                    .child(
+                        Switch::new("room-on")
+                            .checked(true)
+                            .accessibility_label("Room sounds preview")
+                            .appearance(a),
+                    ),
+            )
+            .child(
+                Field::new("system-gain")
+                    .label("System gain · −6 dB")
+                    .error("The output device is missing.")
+                    .appearance(a),
+            ),
+    )
+    .into_any_element()
+}
+
+/// `input-group`: recessed field with addons.
+pub fn input_group_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
+    let t = a.theme();
+    let url = held(a, "input-group-url", window, cx, |window, cx| {
+        cx.new(|cx| {
+            InputState::new(window, cx)
+                .placeholder("live.example/stream")
+                .default_value("")
+        })
+    });
+    section(
+        t,
+        "Addons",
+        InputGroup::new("rtmp", &url)
+            .accessibility_label("Ingest URL")
+            .start(
+                InputGroupAddon::start()
+                    .appearance(a)
+                    .child(InputGroupText::new("rtmp://").appearance(a)),
+            )
+            .appearance(a),
+    )
+    .into_any_element()
+}
+
+/// `bar-visualizer`: mic meter bars.
+pub fn bar_visualizer_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let levels = [
+        0.2, 0.45, 0.7, 0.55, 0.9, 0.6, 0.35, 0.5, 0.25, 0.4, 0.65, 0.3,
+    ];
+    section(
+        t,
+        "Levels",
+        BarVisualizer::new("mic")
+            .bar_count(levels.len())
+            .levels(levels)
+            .state(BarVisualizerState::Speaking)
+            .color(t.foreground)
+            .appearance(a),
+    )
+    .into_any_element()
+}
+
+/// `live-waveform`: centred waveform for mic preview.
+pub fn live_waveform_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let levels = [0.15, 0.4, 0.8, 0.55, 0.3, 0.7, 0.45, 0.2, 0.6, 0.35];
+    div()
+        .flex()
+        .flex_col()
+        .gap(px(16.0))
+        .w_full()
+        .child(section(
+            t,
+            "Active",
+            LiveWaveform::new("wave-on")
+                .active(true)
+                .levels(levels)
+                .color(t.foreground)
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Idle",
+            LiveWaveform::new("wave-off").appearance(a),
         ))
         .into_any_element()
 }

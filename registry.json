@@ -783,7 +783,7 @@
       "name": "accelerator",
       "type": "registry:lib",
       "title": "Accelerator",
-      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: ⇧⌘J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
+      "description": "Parses Electron accelerators (CmdOrCtrl+Shift+J) and prints them per platform: \u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere, with aria-keyshortcuts to match.",
       "files": [
         {
           "path": "lib/accelerator.ts",
@@ -1100,7 +1100,7 @@
       "name": "segmented-control",
       "type": "registry:ui",
       "title": "Segmented Control",
-      "description": "Pick one of 2–4 exclusive options on the glass Tabs track: a radio group with roving focus and one tab stop, manual activation for heavy changes, icon options with tooltips, and a disabled state that says why.",
+      "description": "Pick one of 2\u20134 exclusive options on the glass Tabs track: a radio group with roving focus and one tab stop, manual activation for heavy changes, icon options with tooltips, and a disabled state that says why.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/tabs-variants",
@@ -1146,7 +1146,7 @@
       "name": "shortcut-keys",
       "type": "registry:ui",
       "title": "Shortcut Keys",
-      "description": "The one way to show a shortcut: takes an Electron accelerator and prints it the way the platform's menus do (⇧⌘J on macOS, Ctrl+Shift+J elsewhere), as a keycap or as quiet status bar text.",
+      "description": "The one way to show a shortcut: takes an Electron accelerator and prints it the way the platform's menus do (\u21e7\u2318J on macOS, Ctrl+Shift+J elsewhere), as a keycap or as quiet status bar text.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/kbd",
@@ -1527,7 +1527,7 @@
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
-      "description": "A searchable list on cmdk at the ⌘K palette scale: a borderless 18 px search field, 40 px rows and a footer. It paints no coat, and CommandDialog wraps its children in Command.",
+      "description": "A searchable list on cmdk at the \u2318K palette scale: a borderless 18 px search field, 40 px rows and a footer. It paints no coat, and CommandDialog wraps its children in Command.",
       "dependencies": ["cmdk"],
       "registryDependencies": [
         "@videorc/theme",
@@ -1875,7 +1875,7 @@
       "name": "kebab-menu",
       "type": "registry:component",
       "title": "Kebab Menu",
-      "description": "The ⋯ menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
+      "description": "The \u22ef menu for an item's low-frequency actions: one item list grouped by hairlines, the destructive item last, keys on the right, disabled reasons, a busy spinner, and a trigger that can wait for its row's hover.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/icons",
@@ -1895,7 +1895,7 @@
       "name": "kebab-context-menu",
       "type": "registry:component",
       "title": "Kebab Context Menu",
-      "description": "The right-click twin of a row's ⋯ menu, built from the same item list so the two menus can never disagree.",
+      "description": "The right-click twin of a row's \u22ef menu, built from the same item list so the two menus can never disagree.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/kebab-menu",
@@ -2065,7 +2065,7 @@
       "name": "chat-message",
       "type": "registry:block",
       "title": "Chat Message",
-      "description": "One chat message in the Stream Manager: the big-text row with its avatar, author, platform mark and words. A click puts it on stream under the live chrome plate; members, paid messages, mentions, Buddy's marks and removals each read at a glance, and the rest waits in its ⋯ menu.",
+      "description": "One chat message in the Stream Manager: the big-text row with its avatar, author, platform mark and words. A click puts it on stream under the live chrome plate; members, paid messages, mentions, Buddy's marks and removals each read at a glance, and the rest waits in its \u22ef menu.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/chat-platform",
@@ -2109,7 +2109,7 @@
       "name": "chat-toolbar",
       "type": "registry:block",
       "title": "Chat Toolbar",
-      "description": "The Stream Manager chat's filter strip: platform chips, Buddy's Questions, Mentions and a search field with its ⌘F key. Below 640 px of Stream Manager the filters fold into one Filters menu.",
+      "description": "The Stream Manager chat's filter strip: platform chips, Buddy's Questions, Mentions and a search field with its \u2318F key. Below 640 px of Stream Manager the filters fold into one Filters menu.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/chat-message",
@@ -2136,7 +2136,7 @@
       "name": "chat-composer",
       "type": "registry:block",
       "title": "Chat Composer",
-      "description": "The Stream Manager's composer: the \"To:\" picker, the message field with its count, the ↵ key and send, local commands after \"/\", and one quiet line for the exceptions: a destination the send skips, a failed send and Retry, a send in flight.",
+      "description": "The Stream Manager's composer: the \"To:\" picker, the message field with its count, the \u21b5 key and send, local commands after \"/\", and one quiet line for the exceptions: a destination the send skips, a failed send and Retry, a send in flight.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/chat-platform",
@@ -2221,7 +2221,7 @@
       "name": "stream-manager-status-bar",
       "type": "registry:block",
       "title": "Stream Manager Status Bar",
-      "description": "The Stream Manager's 32 px status bar: each destination's chat state as its mark and a dot, with a word only when something needs the streamer, and the window's labelled controls (Search, Write, Buddy, Hide screen, Keep on top, Highlight position, Clip, Banners, Clear, Preview) folding into one ⋯ menu below 640 px.",
+      "description": "The Stream Manager's 32 px status bar: each destination's chat state as its mark and a dot, with a word only when something needs the streamer, and the window's labelled controls (Search, Write, Buddy, Hide screen, Keep on top, Highlight position, Clip, Banners, Clear, Preview) folding into one \u22ef menu below 640 px.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/chat-platform",
@@ -2251,7 +2251,7 @@
       "name": "stream-manager",
       "type": "registry:block",
       "title": "Stream Manager",
-      "description": "Videorc's live dashboard window, whole: the title row, the stats bar, Chat beside Activity and Buddy, and the status bar. Three tiers by its own width through a container query, every pane rendered once, and the window's ⌘F, ⌘L and ⌘J keys.",
+      "description": "Videorc's live dashboard window, whole: the title row, the stats bar, Chat beside Activity and Buddy, and the status bar. Three tiers by its own width through a container query, every pane rendered once, and the window's \u2318F, \u2318L and \u2318J keys.",
       "registryDependencies": [
         "@videorc/theme",
         "@videorc/activity-feed",
@@ -2286,6 +2286,32 @@
       "files": [
         {
           "path": "components/ui/settings-row.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "bar-visualizer",
+      "type": "registry:ui",
+      "title": "Bar Visualizer",
+      "description": "A row of level bars for mic meters. Vendored from ElevenLabs UI and adapted for Videorc: currentColor bars, unstyled container, levels from a central analyser.",
+      "registryDependencies": ["@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/bar-visualizer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "live-waveform",
+      "type": "registry:ui",
+      "title": "Live Waveform",
+      "description": "Imperative waveform painter for mic preview: centred bars from analyser snapshots, idle midline, preparation shape.",
+      "registryDependencies": ["@videorc/utils"],
+      "files": [
+        {
+          "path": "components/ui/live-waveform.tsx",
           "type": "registry:ui"
         }
       ]
