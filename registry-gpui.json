@@ -727,7 +727,7 @@
       "name": "input",
       "type": "registry:lib",
       "title": "Input",
-      "description": "A text input on gpui-base's editor: 28 px, 14 px text, a recessed fill and a 3 px focus ring.",
+      "description": "A text input on gpui-base's editor: 28 px, 14 px text, a recessed fill and a 3 px focus ring. Escape can restore the value from when the field gained focus.",
       "files": [
         {
           "path": "gpui/kit/src/input.rs",
@@ -791,7 +791,7 @@
       "name": "select",
       "type": "registry:lib",
       "title": "Select",
-      "description": "A select on gpui-base's Select: a 28 px trigger with its chevron and a float-glass list that fades in and out.",
+      "description": "A select on gpui-base's Select: a 28 px trigger with its chevron and a float-glass list that fades in and out. Options may carry a rich body or a group label; searchable filters by label and group.",
       "files": [
         {
           "path": "gpui/kit/src/select.rs",
@@ -817,6 +817,7 @@
       },
       "registryDependencies": [
         "@videorc-gpui/icons",
+        "@videorc-gpui/input",
         "@videorc-gpui/popover",
         "@videorc-gpui/theme"
       ]
@@ -825,7 +826,7 @@
       "name": "dialog",
       "type": "registry:lib",
       "title": "Dialog",
-      "description": "A modal on gpui-base's dialog host: the dialog tier of the float glass in four widths, a scrolling body and a footer, fading and growing in.",
+      "description": "A modal on gpui-base's dialog host: the dialog tier of the float glass in four widths, a scrolling body and a footer, fading and growing in. Layer stacks a confirm over another open dialog.",
       "files": [
         {
           "path": "gpui/kit/src/dialog.rs",
@@ -1577,7 +1578,7 @@
       "name": "toggle-group",
       "type": "registry:lib",
       "title": "Toggle Group",
-      "description": "Filter chips on gpui-base's ToggleGroup and Toggle: array values and multiple, pressed items on the chrome plate, named by a Field's label.",
+      "description": "Filter chips on gpui-base's ToggleGroup and Toggle: array values and multiple, pressed items on the chrome plate, named by a Field's label. Items may carry a tooltip.",
       "files": [
         {
           "path": "gpui/kit/src/toggle_group.rs",
@@ -1606,7 +1607,8 @@
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
-        "@videorc-gpui/theme"
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
       ]
     },
     {
