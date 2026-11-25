@@ -119,6 +119,10 @@ pub enum IconName {
     ArrowCounterClockwise,
     /// `SignInIcon` (Phosphor's SignIn).
     SignIn,
+    /// `SignOutIcon` (Phosphor's SignOut): account menu Sign out.
+    SignOut,
+    /// `HealthIcon` (Phosphor's Pulse): account menu Health.
+    Pulse,
     /// `EditIcon` (Phosphor's PencilSimple).
     PencilSimple,
     /// `PreviewIcon` (Phosphor's Eye).
@@ -224,6 +228,8 @@ impl IconName {
                 include_bytes!("../icons/arrow-counter-clockwise.svg")
             }
             IconName::SignIn => include_bytes!("../icons/sign-in.svg"),
+            IconName::SignOut => include_bytes!("../icons/sign-out.svg"),
+            IconName::Pulse => include_bytes!("../icons/pulse.svg"),
             IconName::PencilSimple => include_bytes!("../icons/pencil-simple.svg"),
             IconName::Eye => include_bytes!("../icons/eye.svg"),
             IconName::CaretUp => include_bytes!("../icons/caret-up.svg"),
