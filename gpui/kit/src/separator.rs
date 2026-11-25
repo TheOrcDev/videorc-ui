@@ -2,9 +2,9 @@
 //! splits a column or a row. Horizontal fills the width; vertical stretches
 //! with its parent.
 
-use gpui::{div, prelude::*, px, App, Div, IntoElement, StyleRefinement, Window};
+use gpui::{App, Div, IntoElement, StyleRefinement, Window, div, prelude::*, px};
 
-use crate::theme::{hsla, resolve, Appearance};
+use crate::theme::{Appearance, hsla, resolve};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum SeparatorOrientation {

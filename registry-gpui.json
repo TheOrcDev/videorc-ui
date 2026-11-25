@@ -80,6 +80,11 @@
           "target": "icons/arrow-counter-clockwise.svg"
         },
         {
+          "path": "gpui/kit/icons/arrow-down.svg",
+          "type": "registry:file",
+          "target": "icons/arrow-down.svg"
+        },
+        {
           "path": "gpui/kit/icons/arrow-left.svg",
           "type": "registry:file",
           "target": "icons/arrow-left.svg"
@@ -190,9 +195,19 @@
           "target": "icons/download-simple.svg"
         },
         {
+          "path": "gpui/kit/icons/eye-slash.svg",
+          "type": "registry:file",
+          "target": "icons/eye-slash.svg"
+        },
+        {
           "path": "gpui/kit/icons/eye.svg",
           "type": "registry:file",
           "target": "icons/eye.svg"
+        },
+        {
+          "path": "gpui/kit/icons/facebook-logo.svg",
+          "type": "registry:file",
+          "target": "icons/facebook-logo.svg"
         },
         {
           "path": "gpui/kit/icons/file-video.svg",
@@ -238,6 +253,16 @@
           "path": "gpui/kit/icons/info.svg",
           "type": "registry:file",
           "target": "icons/info.svg"
+        },
+        {
+          "path": "gpui/kit/icons/instagram-logo.svg",
+          "type": "registry:file",
+          "target": "icons/instagram-logo.svg"
+        },
+        {
+          "path": "gpui/kit/icons/kick-logo.svg",
+          "type": "registry:file",
+          "target": "icons/kick-logo.svg"
         },
         {
           "path": "gpui/kit/icons/layout.svg",
@@ -340,14 +365,29 @@
           "target": "icons/squares-four.svg"
         },
         {
+          "path": "gpui/kit/icons/stop-fill.svg",
+          "type": "registry:file",
+          "target": "icons/stop-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/stop.svg",
           "type": "registry:file",
           "target": "icons/stop.svg"
         },
         {
+          "path": "gpui/kit/icons/tiktok-logo.svg",
+          "type": "registry:file",
+          "target": "icons/tiktok-logo.svg"
+        },
+        {
           "path": "gpui/kit/icons/trash.svg",
           "type": "registry:file",
           "target": "icons/trash.svg"
+        },
+        {
+          "path": "gpui/kit/icons/twitch-logo.svg",
+          "type": "registry:file",
+          "target": "icons/twitch-logo.svg"
         },
         {
           "path": "gpui/kit/icons/upload-simple.svg",
@@ -400,9 +440,19 @@
           "target": "icons/x-circle.svg"
         },
         {
+          "path": "gpui/kit/icons/x-logo.svg",
+          "type": "registry:file",
+          "target": "icons/x-logo.svg"
+        },
+        {
           "path": "gpui/kit/icons/x.svg",
           "type": "registry:file",
           "target": "icons/x.svg"
+        },
+        {
+          "path": "gpui/kit/icons/youtube-logo.svg",
+          "type": "registry:file",
+          "target": "icons/youtube-logo.svg"
         }
       ],
       "meta": {
@@ -1726,6 +1776,63 @@
           "path": "gpui/kit/src/collapsible.rs",
           "type": "registry:file",
           "target": "src/collapsible.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/icons",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:lib",
+      "title": "Avatar",
+      "description": "A round face with an optional image and a letter fallback.",
+      "files": [
+        {
+          "path": "gpui/kit/src/avatar.rs",
+          "type": "registry:file",
+          "target": "src/avatar.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
+      "name": "chat-platform",
+      "type": "registry:lib",
+      "title": "Chat platform",
+      "description": "Platform names, marks and brand tints for chat rows.",
+      "files": [
+        {
+          "path": "gpui/kit/src/chat_platform.rs",
+          "type": "registry:file",
+          "target": "src/chat_platform.rs"
         }
       ],
       "meta": {

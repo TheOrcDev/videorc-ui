@@ -5,9 +5,10 @@
 
 use gpui::{AnyElement, App, Entity, IntoElement, SharedString, Window, div, prelude::*, px};
 use videorc_kit::{
-    Alert, AlertVariant, Appearance, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant,
-    Collapsible, Empty, GroupedList, IconName, ListRow, NavigableRow, PanelSection, SectionLabel,
-    Separator, SettingsGroup, SettingsRow, Skeleton, Spinner, Switch, hsla, icon,
+    Alert, AlertVariant, Appearance, Avatar, Badge, BadgeVariant, Button, ButtonSize,
+    ButtonVariant, ChatPlatform, Collapsible, Empty, GroupedList, IconName, ListRow, NavigableRow,
+    PanelSection, SectionLabel, Separator, SettingsGroup, SettingsRow, Skeleton, Spinner, Switch,
+    hsla, icon,
 };
 
 use crate::section;
@@ -512,6 +513,62 @@ pub fn collapsible_page(a: Appearance, window: &mut Window, cx: &mut App) -> Any
                     });
                 }
             }),
+    )
+    .into_any_element()
+}
+
+/// `avatar`: round faces in the three sizes.
+pub fn avatar_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Fallback",
+        div()
+            .flex()
+            .items_center()
+            .gap(px(12.0))
+            .child(Avatar::new("A").sm().appearance(a))
+            .child(Avatar::new("VR").appearance(a))
+            .child(Avatar::new("K").lg().appearance(a)),
+    )
+    .into_any_element()
+}
+
+/// `chat-platform`: brand marks for chat rows.
+pub fn chat_platform_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    let marks = [
+        ChatPlatform::Youtube,
+        ChatPlatform::Twitch,
+        ChatPlatform::X,
+        ChatPlatform::Kick,
+        ChatPlatform::Tiktok,
+        ChatPlatform::Instagram,
+        ChatPlatform::Facebook,
+        ChatPlatform::Custom,
+    ];
+    section(
+        t,
+        "Marks",
+        div()
+            .flex()
+            .flex_wrap()
+            .items_center()
+            .gap(px(12.0))
+            .children(marks.into_iter().map(|platform| {
+                div()
+                    .flex()
+                    .items_center()
+                    .gap(px(6.0))
+                    .child(icon(platform.icon(), 20.0, platform.tint_hsla(t)))
+                    .child(
+                        div()
+                            .text_size(px(12.0))
+                            .text_color(hsla(t.muted_foreground))
+                            .child(platform.label()),
+                    )
+                    .into_any_element()
+            })),
     )
     .into_any_element()
 }
