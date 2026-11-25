@@ -507,7 +507,7 @@
       "name": "button",
       "type": "registry:lib",
       "title": "Button",
-      "description": "Desktop-sized buttons on gpui-base's Button. The default is polished chrome, Record is metallic red that lights while a session runs, Go Live is copper, Chromatic is a ring of flowing chrome, and the rest are flat.",
+      "description": "Desktop-sized buttons on gpui-base's Button. The default is polished chrome, Record is metallic red that lights while a session runs, Go Live is copper, Chromatic is a ring of flowing chrome, and the rest are flat. dense(true) pads 6 px at the control height (account trigger).",
       "files": [
         {
           "path": "gpui/kit/src/button.rs",
@@ -1836,7 +1836,7 @@
       "name": "avatar",
       "type": "registry:lib",
       "title": "Avatar",
-      "description": "A round face with an optional image and a letter fallback.",
+      "description": "A round face with an optional image and a letter fallback. Sizes: xs 20 (sidebar), sm 24, default 32, lg 40.",
       "files": [
         {
           "path": "gpui/kit/src/avatar.rs",
