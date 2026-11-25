@@ -215,6 +215,11 @@
           "target": "icons/file-video.svg"
         },
         {
+          "path": "gpui/kit/icons/film-reel.svg",
+          "type": "registry:file",
+          "target": "icons/film-reel.svg"
+        },
+        {
           "path": "gpui/kit/icons/floppy-disk.svg",
           "type": "registry:file",
           "target": "icons/floppy-disk.svg"
@@ -310,6 +315,11 @@
           "target": "icons/play.svg"
         },
         {
+          "path": "gpui/kit/icons/pulse.svg",
+          "type": "registry:file",
+          "target": "icons/pulse.svg"
+        },
+        {
           "path": "gpui/kit/icons/push-pin-fill.svg",
           "type": "registry:file",
           "target": "icons/push-pin-fill.svg"
@@ -343,6 +353,16 @@
           "path": "gpui/kit/icons/sign-in.svg",
           "type": "registry:file",
           "target": "icons/sign-in.svg"
+        },
+        {
+          "path": "gpui/kit/icons/sign-out.svg",
+          "type": "registry:file",
+          "target": "icons/sign-out.svg"
+        },
+        {
+          "path": "gpui/kit/icons/smiley.svg",
+          "type": "registry:file",
+          "target": "icons/smiley.svg"
         },
         {
           "path": "gpui/kit/icons/sparkle.svg",

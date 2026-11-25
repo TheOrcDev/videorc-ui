@@ -119,6 +119,8 @@ pub enum IconName {
     ArrowCounterClockwise,
     /// `SignInIcon` (Phosphor's SignIn).
     SignIn,
+    /// `SignOutIcon` (Phosphor's SignOut): account menu Sign out.
+    SignOut,
     /// `EditIcon` (Phosphor's PencilSimple).
     PencilSimple,
     /// `PreviewIcon` (Phosphor's Eye).
@@ -135,6 +137,12 @@ pub enum IconName {
     UserCircle,
     /// `BuddyPageIcon` / Sidekick mark (Phosphor's UserSound).
     UserSound,
+    /// `AvatarPageIcon` (Phosphor's Smiley): the Avatar page's sidebar row.
+    Smiley,
+    /// `LibraryIcon` / `LibraryRowIcon` (Phosphor's FilmReel).
+    FilmReel,
+    /// `HealthIcon` / `HealthRowIcon` (Phosphor's Pulse): account menu Health.
+    Pulse,
     /// `FolderIcon` (Phosphor's FolderOpen).
     FolderOpen,
     /// `WaveformMutedIcon` (Phosphor's WaveformSlash).
@@ -224,6 +232,7 @@ impl IconName {
                 include_bytes!("../icons/arrow-counter-clockwise.svg")
             }
             IconName::SignIn => include_bytes!("../icons/sign-in.svg"),
+            IconName::SignOut => include_bytes!("../icons/sign-out.svg"),
             IconName::PencilSimple => include_bytes!("../icons/pencil-simple.svg"),
             IconName::Eye => include_bytes!("../icons/eye.svg"),
             IconName::CaretUp => include_bytes!("../icons/caret-up.svg"),
@@ -232,6 +241,9 @@ impl IconName {
             IconName::ChatCircle => include_bytes!("../icons/chat-circle.svg"),
             IconName::UserCircle => include_bytes!("../icons/user-circle.svg"),
             IconName::UserSound => include_bytes!("../icons/user-sound.svg"),
+            IconName::Smiley => include_bytes!("../icons/smiley.svg"),
+            IconName::FilmReel => include_bytes!("../icons/film-reel.svg"),
+            IconName::Pulse => include_bytes!("../icons/pulse.svg"),
             IconName::FolderOpen => include_bytes!("../icons/folder-open.svg"),
             IconName::WaveformSlash => include_bytes!("../icons/waveform-slash.svg"),
             IconName::Desktop => include_bytes!("../icons/desktop.svg"),
