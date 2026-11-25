@@ -215,6 +215,11 @@
           "target": "icons/file-video.svg"
         },
         {
+          "path": "gpui/kit/icons/film-reel.svg",
+          "type": "registry:file",
+          "target": "icons/film-reel.svg"
+        },
+        {
           "path": "gpui/kit/icons/floppy-disk.svg",
           "type": "registry:file",
           "target": "icons/floppy-disk.svg"
@@ -353,6 +358,11 @@
           "path": "gpui/kit/icons/sign-out.svg",
           "type": "registry:file",
           "target": "icons/sign-out.svg"
+        },
+        {
+          "path": "gpui/kit/icons/smiley.svg",
+          "type": "registry:file",
+          "target": "icons/smiley.svg"
         },
         {
           "path": "gpui/kit/icons/sparkle.svg",
