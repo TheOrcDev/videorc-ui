@@ -70,6 +70,10 @@ const ITEMS: &[Item] = &[
         show: controls::sound_pad_page,
     },
     Item {
+        name: "qr-code",
+        show: controls::qr_code_page,
+    },
+    Item {
         name: "tabs",
         show: controls::tabs_page,
     },

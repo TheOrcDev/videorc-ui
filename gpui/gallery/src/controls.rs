@@ -9,7 +9,7 @@ use videorc_kit::tokens::Color;
 use videorc_kit::{
     Appearance, BarVisualizer, BarVisualizerState, Checkbox, CheckboxChecked, Field, FieldGroup,
     IconName, Input, InputGroup, InputGroupAddon, InputGroupText, InputState, Label, LiveWaveform,
-    Segment, SegmentedControl, Slider, SliderState, SoundPad, SoundPadGrid, SoundPadMode,
+    QrCode, Segment, SegmentedControl, Slider, SliderState, SoundPad, SoundPadGrid, SoundPadMode,
     SoundPadProgressVariant, SoundPadSize, Switch, Tabs, TabsVariant, Textarea, TextareaState,
     ToggleGroup, ToggleItem, hsla, icon,
 };
@@ -768,6 +768,19 @@ pub fn live_waveform_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElem
             LiveWaveform::new("wave-off").appearance(a),
         ))
         .into_any_element()
+}
+
+/// `qr-code`: dark-on-light Phone Pair code.
+pub fn qr_code_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
+    let t = a.theme();
+    section(
+        t,
+        "Pairing URL",
+        QrCode::new("pair", "https://videorc.example/pair?t=demo")
+            .accessibility_label("Pairing QR code")
+            .appearance(a),
+    )
+    .into_any_element()
 }
 
 /// `sound-pad`: soundboard pads with playing ring and progress.
