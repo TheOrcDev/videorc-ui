@@ -158,6 +158,14 @@ const ITEMS: &[Item] = &[
         show: rows::collapsible_page,
     },
     Item {
+        name: "avatar",
+        show: rows::avatar_page,
+    },
+    Item {
+        name: "chat-platform",
+        show: rows::chat_platform_page,
+    },
+    Item {
         name: "page-tabs",
         show: controls::page_tabs_page,
     },

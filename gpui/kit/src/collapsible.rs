@@ -6,13 +6,13 @@
 use std::rc::Rc;
 
 use gpui::{
-    div, prelude::*, px, AnyElement, App, Div, ElementId, InteractiveElement, IntoElement,
-    SharedString, StyleRefinement, Window,
+    AnyElement, App, Div, ElementId, InteractiveElement, IntoElement, SharedString,
+    StyleRefinement, Window, div, prelude::*, px,
 };
 
 use crate::{
-    icon::{icon, IconName},
-    theme::{hsla, resolve, Appearance},
+    icon::{IconName, icon},
+    theme::{Appearance, hsla, resolve},
     tokens::radius,
 };
 

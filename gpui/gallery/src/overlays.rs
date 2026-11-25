@@ -10,7 +10,7 @@ use gpui::{
 };
 use videorc_kit::{
     Appearance, Button, ButtonVariant, Dialog, DialogHandle, HoverCard, Popover, ScrollArea,
-    Select, StatusDot, StatusTone, ToastData, ToastKind, Toaster, hsla, toast_card,
+    Select, SelectOption, StatusDot, StatusTone, ToastData, ToastKind, Toaster, hsla, toast_card,
 };
 
 use crate::section;
@@ -279,6 +279,18 @@ pub fn select_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyEleme
                 .value(Some("auto".into()))
                 .disabled(true)
                 .width(160.0)
+                .appearance(a),
+        ))
+        .child(section(
+            t,
+            "Disabled options",
+            Select::new(key(a, "select-options-off"))
+                .option("fill", "Fill")
+                .option_item(SelectOption::new("fit", "Fit").disabled(true))
+                .option("freeform", "Freeform")
+                .value(Some("fill".into()))
+                .width(160.0)
+                .accessibility_label("Framing")
                 .appearance(a),
         ))
         .into_any_element()
