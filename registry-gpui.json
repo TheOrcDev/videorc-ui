@@ -175,6 +175,11 @@
           "target": "icons/caret-up.svg"
         },
         {
+          "path": "gpui/kit/icons/chat-circle-text.svg",
+          "type": "registry:file",
+          "target": "icons/chat-circle-text.svg"
+        },
+        {
           "path": "gpui/kit/icons/chat-circle.svg",
           "type": "registry:file",
           "target": "icons/chat-circle.svg"
@@ -258,6 +263,16 @@
           "path": "gpui/kit/icons/download-simple.svg",
           "type": "registry:file",
           "target": "icons/download-simple.svg"
+        },
+        {
+          "path": "gpui/kit/icons/eye-closed-fill.svg",
+          "type": "registry:file",
+          "target": "icons/eye-closed-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/eye-closed.svg",
+          "type": "registry:file",
+          "target": "icons/eye-closed.svg"
         },
         {
           "path": "gpui/kit/icons/eye-duotone.svg",
@@ -448,6 +463,16 @@
           "path": "gpui/kit/icons/note-pencil.svg",
           "type": "registry:file",
           "target": "icons/note-pencil.svg"
+        },
+        {
+          "path": "gpui/kit/icons/paper-plane-right-fill.svg",
+          "type": "registry:file",
+          "target": "icons/paper-plane-right-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/paper-plane-right.svg",
+          "type": "registry:file",
+          "target": "icons/paper-plane-right.svg"
         },
         {
           "path": "gpui/kit/icons/pause-fill.svg",
