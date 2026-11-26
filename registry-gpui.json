@@ -43,6 +43,11 @@
           "path": "gpui/kit/src/lcd_screen.rs",
           "type": "registry:file",
           "target": "src/lcd_screen.rs"
+        },
+        {
+          "path": "gpui/kit/src/balanced_text.rs",
+          "type": "registry:file",
+          "target": "src/balanced_text.rs"
         }
       ],
       "meta": {
