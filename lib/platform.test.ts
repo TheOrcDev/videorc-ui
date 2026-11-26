@@ -64,6 +64,19 @@ describe("displayKeyGlyph", () => {
 });
 
 describe("currentPlatform (plan 174 S1.2)", () => {
+  it.each([undefined, {}, { userAgent: "" }])(
+    "has no detected platform without a user agent (%j)",
+    (navigatorValue) => {
+      vi.stubGlobal("document", undefined);
+      vi.stubGlobal("navigator", navigatorValue);
+      expect(currentPlatform()).toBeUndefined();
+      expect(shortcutLabel("CmdOrCtrl+K")).toBe("Ctrl+K");
+      expect(currentPlatform("darwin")).toBe("darwin");
+      bootstrapPlatform("win32");
+      expect(currentPlatform()).toBe("win32");
+    }
+  );
+
   it("prefers the platform passed, then the bootstrap attribute, then the user agent", () => {
     bootstrapPlatform("win32");
     expect(currentPlatform("darwin")).toBe("darwin");
