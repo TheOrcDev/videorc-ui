@@ -750,6 +750,21 @@
           "target": "icons/x-logo.svg"
         },
         {
+          "path": "gpui/kit/icons/x-verified-business-gold.svg",
+          "type": "registry:file",
+          "target": "icons/x-verified-business-gold.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x-verified-government-gray.svg",
+          "type": "registry:file",
+          "target": "icons/x-verified-government-gray.svg"
+        },
+        {
+          "path": "gpui/kit/icons/x-verified-premium-blue.svg",
+          "type": "registry:file",
+          "target": "icons/x-verified-premium-blue.svg"
+        },
+        {
           "path": "gpui/kit/icons/x.svg",
           "type": "registry:file",
           "target": "icons/x.svg"
@@ -2366,7 +2381,8 @@
       "registryDependencies": [
         "@videorc-gpui/chat-platform",
         "@videorc-gpui/icons",
-        "@videorc-gpui/theme"
+        "@videorc-gpui/theme",
+        "@videorc-gpui/tooltip"
       ]
     },
     {
