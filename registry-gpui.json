@@ -520,6 +520,16 @@
           "target": "icons/scissors.svg"
         },
         {
+          "path": "gpui/kit/icons/seal-check-fill.svg",
+          "type": "registry:file",
+          "target": "icons/seal-check-fill.svg"
+        },
+        {
+          "path": "gpui/kit/icons/seal-check.svg",
+          "type": "registry:file",
+          "target": "icons/seal-check.svg"
+        },
+        {
           "path": "gpui/kit/icons/shield-check.svg",
           "type": "registry:file",
           "target": "icons/shield-check.svg"
