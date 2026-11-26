@@ -2039,6 +2039,7 @@
       },
       "registryDependencies": [
         "@videorc-gpui/badge",
+        "@videorc-gpui/icons",
         "@videorc-gpui/theme",
         "@videorc-gpui/tooltip"
       ]
