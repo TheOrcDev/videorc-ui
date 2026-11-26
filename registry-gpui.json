@@ -973,6 +973,39 @@
       ]
     },
     {
+      "name": "power-slider",
+      "type": "registry:lib",
+      "title": "Power Slider",
+      "description": "A labelled slider for one engine setting: the label with an icon and a status chip, the value or a typed number, a reset to the default (also a double-click on the track), marks and the reason it waits.",
+      "files": [
+        {
+          "path": "gpui/kit/src/power_slider.rs",
+          "type": "registry:file",
+          "target": "src/power_slider.rs"
+        }
+      ],
+      "meta": {
+        "flavour": "gpui",
+        "crates": {
+          "gpui": {
+            "package": "gpui-pre",
+            "version": "=0.3.14"
+          }
+        },
+        "patches": [
+          "gpui-pre-apple"
+        ]
+      },
+      "registryDependencies": [
+        "@videorc-gpui/badge",
+        "@videorc-gpui/button",
+        "@videorc-gpui/icons",
+        "@videorc-gpui/label",
+        "@videorc-gpui/slider",
+        "@videorc-gpui/theme"
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:lib",
       "title": "Tabs",
