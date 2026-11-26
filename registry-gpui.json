@@ -38,6 +38,11 @@
           "path": "gpui/kit/src/tracking.rs",
           "type": "registry:file",
           "target": "src/tracking.rs"
+        },
+        {
+          "path": "gpui/kit/src/lcd_screen.rs",
+          "type": "registry:file",
+          "target": "src/lcd_screen.rs"
         }
       ],
       "meta": {
