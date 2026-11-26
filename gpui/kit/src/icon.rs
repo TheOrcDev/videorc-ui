@@ -178,6 +178,8 @@ pub enum IconName {
     ChatCircleText,
     /// `SendIcon` (Phosphor's PaperPlaneRight): the chat composer's Send.
     PaperPlaneRight,
+    /// `SendIcon` at Phosphor's fill weight, as the composer draws it.
+    PaperPlaneRightFill,
     /// `ArrowDownIcon` for jump chips (Phosphor's ArrowDown).
     ArrowDown,
     /// YouTube platform mark.
@@ -323,6 +325,7 @@ impl IconName {
             IconName::FacebookLogo => IconName::FacebookLogoFill,
             IconName::SealCheck => IconName::SealCheckFill,
             IconName::EyeClosed => IconName::EyeClosedFill,
+            IconName::PaperPlaneRight => IconName::PaperPlaneRightFill,
             other => other,
         }
     }
@@ -416,6 +419,9 @@ impl IconName {
             IconName::EyeClosedFill => include_bytes!("../icons/eye-closed-fill.svg"),
             IconName::ChatCircleText => include_bytes!("../icons/chat-circle-text.svg"),
             IconName::PaperPlaneRight => include_bytes!("../icons/paper-plane-right.svg"),
+            IconName::PaperPlaneRightFill => {
+                include_bytes!("../icons/paper-plane-right-fill.svg")
+            }
             IconName::ArrowDown => include_bytes!("../icons/arrow-down.svg"),
             IconName::YoutubeLogo => include_bytes!("../icons/youtube-logo.svg"),
             IconName::TwitchLogo => include_bytes!("../icons/twitch-logo.svg"),
