@@ -347,7 +347,7 @@ pub fn empty_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
 /// `settings-row`: label, description and control in a grouped list.
 pub fn settings_row_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyElement {
     let t = a.theme();
-    let flag = |name: &str, initial: bool| {
+    let mut flag = |name: &str, initial: bool| {
         let key = SharedString::from(format!("{}/{name}", a.name()));
         window.use_keyed_state(key, cx, |_, _| initial)
     };
