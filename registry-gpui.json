@@ -275,6 +275,11 @@
           "target": "icons/eye.svg"
         },
         {
+          "path": "gpui/kit/icons/facebook-logo-fill.svg",
+          "type": "registry:file",
+          "target": "icons/facebook-logo-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/facebook-logo.svg",
           "type": "registry:file",
           "target": "icons/facebook-logo.svg"
@@ -358,6 +363,11 @@
           "path": "gpui/kit/icons/info.svg",
           "type": "registry:file",
           "target": "icons/info.svg"
+        },
+        {
+          "path": "gpui/kit/icons/instagram-logo-fill.svg",
+          "type": "registry:file",
+          "target": "icons/instagram-logo-fill.svg"
         },
         {
           "path": "gpui/kit/icons/instagram-logo.svg",
@@ -610,6 +620,11 @@
           "target": "icons/text-aa.svg"
         },
         {
+          "path": "gpui/kit/icons/tiktok-logo-fill.svg",
+          "type": "registry:file",
+          "target": "icons/tiktok-logo-fill.svg"
+        },
+        {
           "path": "gpui/kit/icons/tiktok-logo.svg",
           "type": "registry:file",
           "target": "icons/tiktok-logo.svg"
@@ -618,6 +633,11 @@
           "path": "gpui/kit/icons/trash.svg",
           "type": "registry:file",
           "target": "icons/trash.svg"
+        },
+        {
+          "path": "gpui/kit/icons/twitch-logo-fill.svg",
+          "type": "registry:file",
+          "target": "icons/twitch-logo-fill.svg"
         },
         {
           "path": "gpui/kit/icons/twitch-logo.svg",
