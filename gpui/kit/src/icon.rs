@@ -169,6 +169,15 @@ pub enum IconName {
     Desktop,
     /// `EyeSlashIcon` for Screen hidden (Phosphor's EyeSlash).
     EyeSlash,
+    /// `HiddenFromStreamIcon` (Phosphor's EyeClosed): the Stream Manager's
+    /// Hide from stream.
+    EyeClosed,
+    /// `HiddenFromStreamIcon` at Phosphor's fill weight, while hidden.
+    EyeClosedFill,
+    /// `ChatCommandsIcon` (Phosphor's ChatCircleText).
+    ChatCircleText,
+    /// `SendIcon` (Phosphor's PaperPlaneRight): the chat composer's Send.
+    PaperPlaneRight,
     /// `ArrowDownIcon` for jump chips (Phosphor's ArrowDown).
     ArrowDown,
     /// YouTube platform mark.
@@ -313,6 +322,7 @@ impl IconName {
             IconName::InstagramLogo => IconName::InstagramLogoFill,
             IconName::FacebookLogo => IconName::FacebookLogoFill,
             IconName::SealCheck => IconName::SealCheckFill,
+            IconName::EyeClosed => IconName::EyeClosedFill,
             other => other,
         }
     }
@@ -402,6 +412,10 @@ impl IconName {
             IconName::WaveformSlash => include_bytes!("../icons/waveform-slash.svg"),
             IconName::Desktop => include_bytes!("../icons/desktop.svg"),
             IconName::EyeSlash => include_bytes!("../icons/eye-slash.svg"),
+            IconName::EyeClosed => include_bytes!("../icons/eye-closed.svg"),
+            IconName::EyeClosedFill => include_bytes!("../icons/eye-closed-fill.svg"),
+            IconName::ChatCircleText => include_bytes!("../icons/chat-circle-text.svg"),
+            IconName::PaperPlaneRight => include_bytes!("../icons/paper-plane-right.svg"),
             IconName::ArrowDown => include_bytes!("../icons/arrow-down.svg"),
             IconName::YoutubeLogo => include_bytes!("../icons/youtube-logo.svg"),
             IconName::TwitchLogo => include_bytes!("../icons/twitch-logo.svg"),
