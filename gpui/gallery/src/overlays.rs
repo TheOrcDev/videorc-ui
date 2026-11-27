@@ -283,6 +283,40 @@ pub fn select_page(a: Appearance, window: &mut Window, cx: &mut App) -> AnyEleme
         ))
         .child(section(
             t,
+            "Empty value and disabled states on a card",
+            div()
+                .w_full()
+                .p(px(12.0))
+                .rounded(px(videorc_kit::tokens::radius::ROW))
+                .bg(hsla(t.card))
+                .flex()
+                .flex_col()
+                .gap(px(8.0))
+                .child(
+                    Select::new(key(a, "select-none"))
+                        .option("", "None")
+                        .value(Some("".into()))
+                        .full_width(true)
+                        .appearance(a),
+                )
+                .child(
+                    Select::new(key(a, "select-empty-value-disabled"))
+                        .option("", "None")
+                        .value(Some("".into()))
+                        .disabled(true)
+                        .full_width(true)
+                        .appearance(a),
+                )
+                .child(
+                    Select::new(key(a, "select-none-disabled"))
+                        .placeholder("None")
+                        .disabled(true)
+                        .full_width(true)
+                        .appearance(a),
+                ),
+        ))
+        .child(section(
+            t,
             "Disabled options",
             Select::new(key(a, "select-options-off"))
                 .option("fill", "Fill")

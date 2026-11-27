@@ -91,6 +91,20 @@ pub fn alert_page(a: Appearance, _: &mut Window, _: &mut App) -> AnyElement {
         ))
         .child(section(
             t,
+            "Long action with wrapping text",
+            alert("screen-permission", AlertVariant::Warning)
+                .title("Screen Recording permission is required for Videorc.")
+                .description("System Settings is blocking Screen Recording. Turn on Videorc in System Settings → Privacy & Security → Screen Recording.")
+                .action(
+                    Button::new("screen-permission-settings")
+                        .label("Open System Settings…")
+                        .variant(ButtonVariant::Outline)
+                        .size(ButtonSize::Xs)
+                        .appearance(a),
+                ),
+        ))
+        .child(section(
+            t,
             "Without an icon",
             alert("plain", AlertVariant::Default)
                 .no_icon()
