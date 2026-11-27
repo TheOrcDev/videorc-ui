@@ -306,6 +306,7 @@ impl Render for Gallery {
                 div()
                     .id(appearance.name())
                     .flex_1()
+                    .min_w_0()
                     .h_full()
                     .overflow_hidden()
                     .p(px(metrics::GUTTER))
@@ -329,6 +330,7 @@ impl Render for Gallery {
             .child(
                 div()
                     .flex_1()
+                    .min_w_0()
                     .h_full()
                     .flex()
                     .flex_col()
