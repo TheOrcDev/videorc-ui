@@ -263,6 +263,28 @@ impl RenderOnce for Input {
         if focused && !self.plain {
             frame = frame.child(ring_outline(focus_ring, radius::CHIP));
         }
+        // The field's right-click menu (`text_menu`), when it has something
+        // to offer: an editable field, or selected
+        // text in a read-only one. A right-click focuses the field first,
+        // so the menu's rows act on it and focus comes back to it.
+        let offers_menu = !disabled && {
+            let state = self.state.read(cx);
+            !readonly || !state.selected_range().is_empty()
+        };
+        if offers_menu {
+            let focus = self.state.read(cx).focus_handle(cx);
+            frame = frame.on_mouse_down(gpui::MouseButton::Right, move |_, window, cx| {
+                focus.focus(window, cx);
+            });
+            let state = self.state.clone();
+            frame = crate::context_menu::attach(
+                frame,
+                SharedString::from(format!("{}/text-menu", self.id)),
+                move |window, cx| build_text_menu(&state, window, cx),
+                window,
+                cx,
+            );
+        }
         let editor = frame.child(self.state.clone());
         let Some(step) = self.step.filter(|_| !self.plain) else {
             return editor.into_any_element();
@@ -361,4 +383,363 @@ fn nudge_number(state: &Entity<InputState>, delta: f64, window: &mut Window, cx:
     state.update(cx, |state, cx| {
         state.set_value(SharedString::from(next), window, cx);
     });
+}
+
+/// The field's right-click menu: `text_menu::entries` for what the field
+/// holds now, each row acting on the field as its key would.
+fn build_text_menu(
+    state: &Entity<InputState>,
+    _window: &mut Window,
+    cx: &mut App,
+) -> crate::dropdown_menu::Menu {
+    use crate::dropdown_menu::{Menu, MenuItem, MenuShortcut};
+    use text_menu::{Entry, Facts, NO_GUESSES, entries, spelling, spelling_word};
+    let (facts, word, focus) = {
+        let field = state.read(cx);
+        let presentation = field.presentation();
+        let editable = !presentation.is_disabled() && !presentation.is_readonly();
+        // A secret field (a stream key) never hands its text out.
+        let exposed = field.value_exposed();
+        let value = field.value().to_string();
+        let range = field.selected_range();
+        let selection_text = value.get(range.clone()).unwrap_or_default().to_string();
+        let selected = !range.is_empty();
+        let word = (editable && exposed)
+            .then(|| spelling_word(&value, range.clone()))
+            .flatten();
+        let misspelled = word
+            .as_ref()
+            .and_then(|word| spelling(cx).and_then(|speller| speller.check(&value[word.clone()])));
+        let can_paste = editable
+            && cx
+                .read_from_clipboard()
+                .and_then(|item| item.text())
+                .is_some_and(|text| !text.is_empty());
+        let facts = Facts {
+            editable,
+            selection_text: if exposed {
+                selection_text
+            } else {
+                String::new()
+            },
+            misspelled,
+            can_cut: editable && exposed && selected,
+            can_copy: exposed && selected,
+            can_paste,
+            can_select_all: !value.is_empty(),
+        };
+        (facts, word, field.focus_handle(cx))
+    };
+    let edit =
+        |label: &'static str, keys: &'static str, enabled: bool, action: Box<dyn gpui::Action>| {
+            let focus = focus.clone();
+            MenuItem::new(label)
+                .shortcut(MenuShortcut::Keys(keys))
+                .disabled(!enabled)
+                .on_select(move |window, cx| {
+                    focus.focus(window, cx);
+                    window.dispatch_action(action.boxed_clone(), cx);
+                })
+        };
+    let secondary = |mac: &'static str, other: &'static str| {
+        if cfg!(target_os = "macos") {
+            mac
+        } else {
+            other
+        }
+    };
+    let mut menu = Menu::new();
+    for entry in entries(&facts) {
+        menu = match entry {
+            Entry::Suggestion(suggestion) => {
+                let state = state.clone();
+                let focus = focus.clone();
+                let word = word.clone();
+                menu.item(
+                    MenuItem::new(suggestion.clone()).on_select(move |window, cx| {
+                        focus.focus(window, cx);
+                        if let Some(word) = word.clone() {
+                            let suggestion = suggestion.clone();
+                            state.update(cx, |field, cx| {
+                                field.set_selected_range(word, cx);
+                                field.replace(suggestion, window, cx);
+                            });
+                        }
+                    }),
+                )
+            }
+            Entry::NoGuesses => menu.item(MenuItem::new(NO_GUESSES).disabled(true)),
+            Entry::Cut { enabled } => menu.item(edit(
+                "Cut",
+                secondary("cmd-x", "ctrl-x"),
+                enabled,
+                Box::new(gpui_base::input::Cut),
+            )),
+            Entry::Copy { enabled } => menu.item(edit(
+                "Copy",
+                secondary("cmd-c", "ctrl-c"),
+                enabled,
+                Box::new(gpui_base::input::Copy),
+            )),
+            Entry::Paste { enabled } => menu.item(edit(
+                "Paste",
+                secondary("cmd-v", "ctrl-v"),
+                enabled,
+                Box::new(gpui_base::input::Paste),
+            )),
+            Entry::SelectAll { enabled } => menu.item(edit(
+                "Select All",
+                secondary("cmd-a", "ctrl-a"),
+                enabled,
+                Box::new(gpui_base::input::SelectAll),
+            )),
+            Entry::Separator => menu.separator(),
+        };
+    }
+    menu
+}
+
+/// A text field's right-click menu, as the platform's native edit menu: an
+/// editable field gets spelling suggestions first (up to five, or "No
+/// Guesses Found"), then Cut, Copy, Paste, a separator and Select All, each
+/// enabled as its key would act; selected text in a read-only field gets
+/// Copy alone; anything else gets no menu.
+///
+/// Spelling comes from the platform: the app installs a [`Spelling`]
+/// provider (`set_spelling`; macOS's `NSSpellChecker`). Without one there
+/// are no suggestions.
+///
+/// Pure here: [`entries`] lists the rows, [`spelling_word`] picks the word
+/// the suggestions are for. `input.rs` reads the field and builds the menu.
+pub mod text_menu {
+    use std::ops::Range;
+    use std::rc::Rc;
+
+    use gpui::{App, Global};
+
+    /// At most this many suggestions.
+    pub const MAX_SUGGESTIONS: usize = 5;
+    pub const NO_GUESSES: &str = "No Guesses Found";
+
+    /// The platform's spell checker.
+    pub trait Spelling: 'static {
+        /// `None` when `word` is spelled right (or can't be checked); else the
+        /// guesses for it, best first, possibly none.
+        fn check(&self, word: &str) -> Option<Vec<String>>;
+    }
+
+    struct SpellingProvider(Rc<dyn Spelling>);
+    impl Global for SpellingProvider {}
+
+    /// The app's spell checker for every field's menu.
+    pub fn set_spelling(provider: Rc<dyn Spelling>, cx: &mut App) {
+        cx.set_global(SpellingProvider(provider));
+    }
+
+    pub(crate) fn spelling(cx: &App) -> Option<Rc<dyn Spelling>> {
+        cx.try_global::<SpellingProvider>()
+            .map(|provider| provider.0.clone())
+    }
+
+    /// What the menu reads off the field.
+    #[derive(Debug, Clone, Default, PartialEq, Eq)]
+    pub struct Facts {
+        pub editable: bool,
+        pub selection_text: String,
+        /// The misspelled word and its guesses, when the field is editable and
+        /// the word at the caret (or the one selected word) is misspelled.
+        pub misspelled: Option<Vec<String>>,
+        pub can_cut: bool,
+        pub can_copy: bool,
+        pub can_paste: bool,
+        pub can_select_all: bool,
+    }
+
+    /// One row of the menu.
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub enum Entry {
+        Suggestion(String),
+        NoGuesses,
+        Cut { enabled: bool },
+        Copy { enabled: bool },
+        Paste { enabled: bool },
+        SelectAll { enabled: bool },
+        Separator,
+    }
+
+    /// The menu's rows for what the field holds. Empty: no menu.
+    pub fn entries(facts: &Facts) -> Vec<Entry> {
+        if facts.editable {
+            let mut rows = Vec::new();
+            if let Some(guesses) = &facts.misspelled {
+                if guesses.is_empty() {
+                    rows.push(Entry::NoGuesses);
+                } else {
+                    rows.extend(
+                        guesses
+                            .iter()
+                            .take(MAX_SUGGESTIONS)
+                            .map(|word| Entry::Suggestion(word.clone())),
+                    );
+                }
+                rows.push(Entry::Separator);
+            }
+            rows.extend([
+                Entry::Cut {
+                    enabled: facts.can_cut,
+                },
+                Entry::Copy {
+                    enabled: facts.can_copy,
+                },
+                Entry::Paste {
+                    enabled: facts.can_paste,
+                },
+                Entry::Separator,
+                Entry::SelectAll {
+                    enabled: facts.can_select_all,
+                },
+            ]);
+            return rows;
+        }
+        if !facts.selection_text.trim().is_empty() {
+            return vec![Entry::Copy {
+                enabled: facts.can_copy,
+            }];
+        }
+        Vec::new()
+    }
+
+    fn word_char(ch: char) -> bool {
+        ch.is_alphanumeric() || ch == '\'' || ch == '’'
+    }
+
+    /// The word the suggestions are for, as a byte range of `text`: the
+    /// selection when it is exactly one word, else (with nothing selected) the
+    /// word around the caret. A GPUI field doesn't move the caret on a
+    /// right-click, so this is the word being typed or selected rather than the
+    /// one under the pointer.
+    pub fn spelling_word(text: &str, selection: Range<usize>) -> Option<Range<usize>> {
+        let Range { start, end } = selection;
+        if start > end
+            || end > text.len()
+            || !text.is_char_boundary(start)
+            || !text.is_char_boundary(end)
+        {
+            return None;
+        }
+        if start < end {
+            let selected = &text[start..end];
+            return (selected.chars().all(word_char) && selected.chars().any(char::is_alphabetic))
+                .then_some(start..end);
+        }
+        let before = text[..start]
+            .char_indices()
+            .rev()
+            .take_while(|(_, ch)| word_char(*ch))
+            .last()
+            .map_or(start, |(index, _)| index);
+        let after = text[start..]
+            .char_indices()
+            .find(|(_, ch)| !word_char(*ch))
+            .map_or(text.len(), |(index, _)| start + index);
+        let word = &text[before..after];
+        // Trailing or leading apostrophes are quotes, not part of the word.
+        let trimmed_start = before + (word.len() - word.trim_start_matches(['\'', '’']).len());
+        let trimmed_end = after - (word.len() - word.trim_end_matches(['\'', '’']).len());
+        (trimmed_start < trimmed_end
+            && text[trimmed_start..trimmed_end]
+                .chars()
+                .any(char::is_alphabetic))
+        .then_some(trimmed_start..trimmed_end)
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        fn editable() -> Facts {
+            Facts {
+                editable: true,
+                can_paste: true,
+                can_select_all: true,
+                ..Facts::default()
+            }
+        }
+
+        #[test]
+        fn an_editable_field_gets_the_edit_rows_in_order() {
+            assert_eq!(
+                entries(&editable()),
+                vec![
+                    Entry::Cut { enabled: false },
+                    Entry::Copy { enabled: false },
+                    Entry::Paste { enabled: true },
+                    Entry::Separator,
+                    Entry::SelectAll { enabled: true },
+                ]
+            );
+        }
+
+        #[test]
+        fn a_misspelled_word_puts_up_to_five_guesses_first_or_no_guesses() {
+            let guesses: Vec<String> = ["a", "b", "c", "d", "e", "f"].map(String::from).to_vec();
+            let rows = entries(&Facts {
+                misspelled: Some(guesses),
+                ..editable()
+            });
+            assert_eq!(
+                rows[..6],
+                [
+                    Entry::Suggestion("a".into()),
+                    Entry::Suggestion("b".into()),
+                    Entry::Suggestion("c".into()),
+                    Entry::Suggestion("d".into()),
+                    Entry::Suggestion("e".into()),
+                    Entry::Separator,
+                ]
+            );
+            let none = entries(&Facts {
+                misspelled: Some(Vec::new()),
+                ..editable()
+            });
+            assert_eq!(none[..2], [Entry::NoGuesses, Entry::Separator]);
+        }
+
+        #[test]
+        fn read_only_text_gets_copy_when_selected_and_otherwise_no_menu() {
+            let selected = Facts {
+                selection_text: "words".into(),
+                can_copy: true,
+                ..Facts::default()
+            };
+            assert_eq!(entries(&selected), vec![Entry::Copy { enabled: true }]);
+            assert!(entries(&Facts::default()).is_empty());
+            let blank = Facts {
+                selection_text: "  ".into(),
+                ..Facts::default()
+            };
+            assert!(entries(&blank).is_empty());
+        }
+
+        #[test]
+        fn the_word_is_the_selected_word_or_the_one_at_the_caret() {
+            let text = "Helo wrold, it's 2026";
+            assert_eq!(spelling_word(text, 0..4), Some(0..4));
+            // Two words selected: no single word to spell.
+            assert_eq!(spelling_word(text, 0..10), None);
+            // The caret inside, before and after a word.
+            assert_eq!(spelling_word(text, 7..7), Some(5..10));
+            assert_eq!(spelling_word(text, 5..5), Some(5..10));
+            assert_eq!(spelling_word(text, 10..10), Some(5..10));
+            // An apostrophe inside a word belongs to it.
+            assert_eq!(spelling_word(text, 13..13), Some(12..16));
+            // Numbers are not spelled.
+            assert_eq!(spelling_word(text, 18..18), None);
+            // Quotes around a word are not part of it.
+            assert_eq!(spelling_word("say 'teh'", 6..6), Some(5..8));
+            // Not on a char boundary or out of range: nothing.
+            assert_eq!(spelling_word("café", 4..4), None);
+            assert_eq!(spelling_word("abc", 2..9), None);
+        }
+    }
 }

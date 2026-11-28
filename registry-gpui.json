@@ -1142,6 +1142,8 @@
         ]
       },
       "registryDependencies": [
+        "@videorc-gpui/context-menu",
+        "@videorc-gpui/dropdown-menu",
         "@videorc-gpui/icons",
         "@videorc-gpui/theme"
       ]
