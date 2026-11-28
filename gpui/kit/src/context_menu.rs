@@ -71,116 +71,153 @@ impl ContextMenu {
 
 impl RenderOnce for ContextMenu {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        let t = resolve(self.appearance, window, cx);
-        let key = SharedString::from(self.id.to_string());
-        let state = window.use_keyed_state(SharedString::from(format!("{key}/at")), cx, |_, _| {
-            ContextMenuState::default()
-        });
-        let nav = menu_nav(SharedString::from(format!("{key}/menu")), window, cx);
-        let at = state.read(cx).at;
-        let progress = presence(
-            SharedString::from(format!("{key}/open")),
-            at.is_some(),
+        let (open, popup) = parts(
+            SharedString::from(self.id.to_string()),
+            self.menu,
+            self.on_open_change,
+            self.appearance,
             window,
             cx,
-        )
-        .progress;
-        let on_open_change = self.on_open_change;
-
-        let close: MenuHandler = {
-            let state = state.clone();
-            let on_open_change = on_open_change.clone();
-            Rc::new(move |window, cx| {
-                let previous = state.update(cx, |state, cx| {
-                    cx.notify();
-                    state.at.take().map(|_| state.previous.take())
-                });
-                let Some(previous) = previous else {
-                    return;
-                };
-                match previous {
-                    Some(previous) => previous.focus(window, cx),
-                    None => window.blur(cx),
-                }
-                if let Some(on_open_change) = &on_open_change {
-                    on_open_change(false, window, cx);
-                }
-            })
-        };
-
-        let popup = at.map(|at| {
-            let menu = Rc::new(
-                self.menu
-                    .as_ref()
-                    .map(|build| build(window, cx))
-                    .unwrap_or_default(),
-            );
-            let exits = PanelExits {
-                close_all: close.clone(),
-                on_escape: Some(close.clone()),
-                close_self: None,
-            };
-            let panel = Panel {
-                key: key.clone(),
-                theme: t,
-                menu,
-                nav: nav.clone(),
-                exits,
-                progress,
-            };
-            let outside = {
-                let nav = nav.clone();
-                let close = close.clone();
-                move |_: &gpui::MouseDownEvent, window: &mut Window, cx: &mut App| {
-                    // A submenu stands outside the panel. A press outside
-                    // both closes the submenu during this event; one inside
-                    // it leaves it open, and is no press outside the menu.
-                    let nav = nav.clone();
-                    let close = close.clone();
-                    window.defer(cx, move |window, cx| {
-                        if !nav.read(cx).has_submenu() {
-                            close(window, cx);
-                        }
-                    });
-                }
-            };
-            deferred(
-                anchored()
-                    .position(at)
-                    .snap_to_window_with_margin(px(8.0))
-                    .child(menu_panel(panel, window, cx).on_mouse_down_out(outside)),
-            )
-            .with_priority(gpui_base::POPUP_PRIORITY)
-        });
-
+        );
         div()
             .id(self.id)
-            .on_mouse_down(MouseButton::Right, {
-                let state = state.clone();
-                let nav = nav.clone();
-                move |event, window, cx| {
-                    cx.stop_propagation();
-                    let focus = nav.update(cx, |nav, _| {
-                        nav.reset();
-                        nav.focus.clone()
-                    });
-                    let previous = window.focused(cx);
-                    let was_open = state.update(cx, |state, cx| {
-                        let was_open = state.at.is_some();
-                        state.at = Some(event.position);
-                        if !was_open {
-                            state.previous = previous;
-                        }
-                        cx.notify();
-                        was_open
-                    });
-                    window.defer(cx, move |window, cx| focus.focus(window, cx));
-                    if !was_open && let Some(on_open_change) = &on_open_change {
-                        on_open_change(true, window, cx);
-                    }
-                }
-            })
+            .on_mouse_down(MouseButton::Right, open)
             .child(self.area)
             .children(popup)
     }
+}
+
+/// The same menu on an element that is already there (a text field) with
+/// no wrapper, so the element keeps its own layout: a right-click on it
+/// opens the menu, and the popup is a deferred child. `key` names its state.
+pub fn attach<E>(
+    element: E,
+    key: impl Into<SharedString>,
+    menu: impl Fn(&mut Window, &mut App) -> Menu + 'static,
+    window: &mut Window,
+    cx: &mut App,
+) -> E
+where
+    E: InteractiveElement + ParentElement,
+{
+    let (open, popup) = parts(key.into(), Some(Rc::new(menu)), None, None, window, cx);
+    element
+        .on_mouse_down(MouseButton::Right, open)
+        .children(popup)
+}
+
+type OpenHandler = Box<dyn Fn(&gpui::MouseDownEvent, &mut Window, &mut App)>;
+
+/// The right-click that opens the menu at the pointer, and the menu while
+/// it is open.
+fn parts(
+    key: SharedString,
+    menu: Option<MenuBuilder>,
+    on_open_change: Option<OpenChange>,
+    appearance: Option<Appearance>,
+    window: &mut Window,
+    cx: &mut App,
+) -> (OpenHandler, Option<AnyElement>) {
+    let t = resolve(appearance, window, cx);
+    let state = window.use_keyed_state(SharedString::from(format!("{key}/at")), cx, |_, _| {
+        ContextMenuState::default()
+    });
+    let nav = menu_nav(SharedString::from(format!("{key}/menu")), window, cx);
+    let at = state.read(cx).at;
+    let progress = presence(
+        SharedString::from(format!("{key}/open")),
+        at.is_some(),
+        window,
+        cx,
+    )
+    .progress;
+
+    let close: MenuHandler = {
+        let state = state.clone();
+        let on_open_change = on_open_change.clone();
+        Rc::new(move |window, cx| {
+            let previous = state.update(cx, |state, cx| {
+                cx.notify();
+                state.at.take().map(|_| state.previous.take())
+            });
+            let Some(previous) = previous else {
+                return;
+            };
+            match previous {
+                Some(previous) => previous.focus(window, cx),
+                None => window.blur(cx),
+            }
+            if let Some(on_open_change) = &on_open_change {
+                on_open_change(false, window, cx);
+            }
+        })
+    };
+
+    let popup = at.map(|at| {
+        let menu = Rc::new(
+            menu.as_ref()
+                .map(|build| build(window, cx))
+                .unwrap_or_default(),
+        );
+        let exits = PanelExits {
+            close_all: close.clone(),
+            on_escape: Some(close.clone()),
+            close_self: None,
+        };
+        let panel = Panel {
+            key: key.clone(),
+            theme: t,
+            menu,
+            nav: nav.clone(),
+            exits,
+            progress,
+        };
+        let outside = {
+            let nav = nav.clone();
+            let close = close.clone();
+            move |_: &gpui::MouseDownEvent, window: &mut Window, cx: &mut App| {
+                // A submenu stands outside the panel. A press outside
+                // both closes the submenu during this event; one inside
+                // it leaves it open, and is no press outside the menu.
+                let nav = nav.clone();
+                let close = close.clone();
+                window.defer(cx, move |window, cx| {
+                    if !nav.read(cx).has_submenu() {
+                        close(window, cx);
+                    }
+                });
+            }
+        };
+        deferred(
+            anchored()
+                .position(at)
+                .snap_to_window_with_margin(px(8.0))
+                .child(menu_panel(panel, window, cx).on_mouse_down_out(outside)),
+        )
+        .with_priority(gpui_base::POPUP_PRIORITY)
+        .into_any_element()
+    });
+
+    let open: OpenHandler = Box::new(move |event, window, cx| {
+        cx.stop_propagation();
+        let focus = nav.update(cx, |nav, _| {
+            nav.reset();
+            nav.focus.clone()
+        });
+        let previous = window.focused(cx);
+        let was_open = state.update(cx, |state, cx| {
+            let was_open = state.at.is_some();
+            state.at = Some(event.position);
+            if !was_open {
+                state.previous = previous;
+            }
+            cx.notify();
+            was_open
+        });
+        window.defer(cx, move |window, cx| focus.focus(window, cx));
+        if !was_open && let Some(on_open_change) = &on_open_change {
+            on_open_change(true, window, cx);
+        }
+    });
+    (open, popup)
 }
